@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="概率论知识点 为什么二项分布的方差是 npq 方差计算公式 好的，没问题！概率论是研究随机现象规律的数学分支。下面为您梳理一些概率论中最基础、最重要的概念和公式，尽量用简单的方式来解释。\n1. 基本概念\n试验 (Experiment): 一个可以重复进行的过程，其结果具有不确定性（例如：掷骰子、抛硬币）。 样本空间 (Sample Space, S): 一个试验所有可能的基本结果组成的集合（例如：掷一次骰子的样本空间 S={1,2,3,4,5,6}）。 事件 (Event, A, B, &hellip;): 样本空间的一个子集，即我们关心的某一个或某一些结果（例如：掷骰子得到偶数，事件 A={2,4,6}）。 概率 (Probability, P(A)): 衡量一个事件 A 发生的可能性大小的数值，通常在 0 到 1 之间。P(A)=0 表示事件不可能发生，P(A)=1 表示事件必然发生。 2. 概率的基本计算\n古典概率 (Classical Probability): 如果一个试验的所有基本结果是有限的，并且每个基本结果发生的可能性相同，那么事件 A 的概率为： P(A)=样本空间 S 中基本结果的总数包含在事件 A 中的基本结果数\n例子： 掷一个均匀的骰子，得到偶数的概率 P(偶数)=∣{1,2,3,4,5,6}∣∣{2,4,6}∣=63=21。\n3. 概率的基本公理与性质 (Axioms and Properties)\n概率 P 必须满足以下三条公理：\n公理 1 (非负性): 对于任何事件 A，P(A)≥0。\n公理 2 (规范性): 整个样本空间 S（必然事件）的概率为 1，即 P(S)=1。\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="概率论知识点 为什么二项分布的方差是 npq 方差计算公式 好的，没问题！概率论是研究随机现象规律的数学分支。下面为您梳理一些概率论中最基础、最重要的概念和公式，尽量用简单的方式来解释。\n1. 基本概念\n试验 (Experiment): 一个可以重复进行的过程，其结果具有不确定性（例如：掷骰子、抛硬币）。 样本空间 (Sample Space, S): 一个试验所有可能的基本结果组成的集合（例如：掷一次骰子的样本空间 S={1,2,3,4,5,6}）。 事件 (Event, A, B, &hellip;): 样本空间的一个子集，即我们关心的某一个或某一些结果（例如：掷骰子得到偶数，事件 A={2,4,6}）。 概率 (Probability, P(A)): 衡量一个事件 A 发生的可能性大小的数值，通常在 0 到 1 之间。P(A)=0 表示事件不可能发生，P(A)=1 表示事件必然发生。 2. 概率的基本计算\n古典概率 (Classical Probability): 如果一个试验的所有基本结果是有限的，并且每个基本结果发生的可能性相同，那么事件 A 的概率为： P(A)=样本空间 S 中基本结果的总数包含在事件 A 中的基本结果数\n例子： 掷一个均匀的骰子，得到偶数的概率 P(偶数)=∣{1,2,3,4,5,6}∣∣{2,4,6}∣=63=21。\n3. 概率的基本公理与性质 (Axioms and Properties)\n">
 <title>概率论知识点</title>
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/'>
 
 <link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="概率论知识点">
-<meta property='og:description' content="概率论知识点 为什么二项分布的方差是 npq 方差计算公式 好的，没问题！概率论是研究随机现象规律的数学分支。下面为您梳理一些概率论中最基础、最重要的概念和公式，尽量用简单的方式来解释。\n1. 基本概念\n试验 (Experiment): 一个可以重复进行的过程，其结果具有不确定性（例如：掷骰子、抛硬币）。 样本空间 (Sample Space, S): 一个试验所有可能的基本结果组成的集合（例如：掷一次骰子的样本空间 S={1,2,3,4,5,6}）。 事件 (Event, A, B, &hellip;): 样本空间的一个子集，即我们关心的某一个或某一些结果（例如：掷骰子得到偶数，事件 A={2,4,6}）。 概率 (Probability, P(A)): 衡量一个事件 A 发生的可能性大小的数值，通常在 0 到 1 之间。P(A)=0 表示事件不可能发生，P(A)=1 表示事件必然发生。 2. 概率的基本计算\n古典概率 (Classical Probability): 如果一个试验的所有基本结果是有限的，并且每个基本结果发生的可能性相同，那么事件 A 的概率为： P(A)=样本空间 S 中基本结果的总数包含在事件 A 中的基本结果数\n例子： 掷一个均匀的骰子，得到偶数的概率 P(偶数)=∣{1,2,3,4,5,6}∣∣{2,4,6}∣=63=21。\n3. 概率的基本公理与性质 (Axioms and Properties)\n概率 P 必须满足以下三条公理：\n公理 1 (非负性): 对于任何事件 A，P(A)≥0。\n公理 2 (规范性): 整个样本空间 S（必然事件）的概率为 1，即 P(S)=1。\n">
+<meta property='og:description' content="概率论知识点 为什么二项分布的方差是 npq 方差计算公式 好的，没问题！概率论是研究随机现象规律的数学分支。下面为您梳理一些概率论中最基础、最重要的概念和公式，尽量用简单的方式来解释。\n1. 基本概念\n试验 (Experiment): 一个可以重复进行的过程，其结果具有不确定性（例如：掷骰子、抛硬币）。 样本空间 (Sample Space, S): 一个试验所有可能的基本结果组成的集合（例如：掷一次骰子的样本空间 S={1,2,3,4,5,6}）。 事件 (Event, A, B, &hellip;): 样本空间的一个子集，即我们关心的某一个或某一些结果（例如：掷骰子得到偶数，事件 A={2,4,6}）。 概率 (Probability, P(A)): 衡量一个事件 A 发生的可能性大小的数值，通常在 0 到 1 之间。P(A)=0 表示事件不可能发生，P(A)=1 表示事件必然发生。 2. 概率的基本计算\n古典概率 (Classical Probability): 如果一个试验的所有基本结果是有限的，并且每个基本结果发生的可能性相同，那么事件 A 的概率为： P(A)=样本空间 S 中基本结果的总数包含在事件 A 中的基本结果数\n例子： 掷一个均匀的骰子，得到偶数的概率 P(偶数)=∣{1,2,3,4,5,6}∣∣{2,4,6}∣=63=21。\n3. 概率的基本公理与性质 (Axioms and Properties)\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T22:36:06&#43;08:00'/><meta property='article:modified_time' content='2025-05-18T22:36:06&#43;08:00'/>
 <meta name="twitter:title" content="概率论知识点">
-<meta name="twitter:description" content="概率论知识点 为什么二项分布的方差是 npq 方差计算公式 好的，没问题！概率论是研究随机现象规律的数学分支。下面为您梳理一些概率论中最基础、最重要的概念和公式，尽量用简单的方式来解释。\n1. 基本概念\n试验 (Experiment): 一个可以重复进行的过程，其结果具有不确定性（例如：掷骰子、抛硬币）。 样本空间 (Sample Space, S): 一个试验所有可能的基本结果组成的集合（例如：掷一次骰子的样本空间 S={1,2,3,4,5,6}）。 事件 (Event, A, B, &hellip;): 样本空间的一个子集，即我们关心的某一个或某一些结果（例如：掷骰子得到偶数，事件 A={2,4,6}）。 概率 (Probability, P(A)): 衡量一个事件 A 发生的可能性大小的数值，通常在 0 到 1 之间。P(A)=0 表示事件不可能发生，P(A)=1 表示事件必然发生。 2. 概率的基本计算\n古典概率 (Classical Probability): 如果一个试验的所有基本结果是有限的，并且每个基本结果发生的可能性相同，那么事件 A 的概率为： P(A)=样本空间 S 中基本结果的总数包含在事件 A 中的基本结果数\n例子： 掷一个均匀的骰子，得到偶数的概率 P(偶数)=∣{1,2,3,4,5,6}∣∣{2,4,6}∣=63=21。\n3. 概率的基本公理与性质 (Axioms and Properties)\n概率 P 必须满足以下三条公理：\n公理 1 (非负性): 对于任何事件 A，P(A)≥0。\n公理 2 (规范性): 整个样本空间 S（必然事件）的概率为 1，即 P(S)=1。\n">
+<meta name="twitter:description" content="概率论知识点 为什么二项分布的方差是 npq 方差计算公式 好的，没问题！概率论是研究随机现象规律的数学分支。下面为您梳理一些概率论中最基础、最重要的概念和公式，尽量用简单的方式来解释。\n1. 基本概念\n试验 (Experiment): 一个可以重复进行的过程，其结果具有不确定性（例如：掷骰子、抛硬币）。 样本空间 (Sample Space, S): 一个试验所有可能的基本结果组成的集合（例如：掷一次骰子的样本空间 S={1,2,3,4,5,6}）。 事件 (Event, A, B, &hellip;): 样本空间的一个子集，即我们关心的某一个或某一些结果（例如：掷骰子得到偶数，事件 A={2,4,6}）。 概率 (Probability, P(A)): 衡量一个事件 A 发生的可能性大小的数值，通常在 0 到 1 之间。P(A)=0 表示事件不可能发生，P(A)=1 表示事件必然发生。 2. 概率的基本计算\n古典概率 (Classical Probability): 如果一个试验的所有基本结果是有限的，并且每个基本结果发生的可能性相同，那么事件 A 的概率为： P(A)=样本空间 S 中基本结果的总数包含在事件 A 中的基本结果数\n例子： 掷一个均匀的骰子，得到偶数的概率 P(偶数)=∣{1,2,3,4,5,6}∣∣{2,4,6}∣=63=21。\n3. 概率的基本公理与性质 (Axioms and Properties)\n">
     </head>
     <body class="
     article-page
@@ -367,34 +367,46 @@
     
     <h1 id="概率论知识点">概率论知识点
 </h1><h2 id="为什么二项分布的方差是-npq">为什么二项分布的方差是 npq
-</h2><p><img src="/huyang/assets/image-20250426160001477.png"
-	
-	
-	
+</h2><p><img src="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160001477.png"
+	width="1518"
+	height="878"
+	srcset="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160001477_hu_8c9f1682720cc1f7.png 480w, /huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160001477_hu_facc05eb2cbe0bea.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250426160001477"
 	
 	
+		class="gallery-image" 
+		data-flex-grow="172"
+		data-flex-basis="414px"
+	
 ></p>
-<p><img src="/huyang/assets/image-20250426160014000.png"
-	
-	
-	
+<p><img src="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160014000.png"
+	width="1456"
+	height="752"
+	srcset="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160014000_hu_dc0a6ae04b7336f7.png 480w, /huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160014000_hu_14d0830fe2d6a9ff.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250426160014000"
 	
 	
+		class="gallery-image" 
+		data-flex-grow="193"
+		data-flex-basis="464px"
+	
 ></p>
-<p><img src="/huyang/assets/image-20250426160023270.png"
-	
-	
-	
+<p><img src="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160023270.png"
+	width="1544"
+	height="722"
+	srcset="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160023270_hu_9ab0dd387486d160.png 480w, /huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160023270_hu_5893408a745bf678.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250426160023270"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="213"
+		data-flex-basis="513px"
 	
 ></p>
 <h2 id="方差计算公式">方差计算公式
@@ -508,63 +520,87 @@
 <li><strong>标准差 (Standard Deviation):</strong> 方差的平方根，记作 σ=Var(X)。量纲与随机变量本身相同。</li>
 </ul>
 <h2 id="切利雪夫不等式和马尔科夫不等式">切利雪夫不等式和马尔科夫不等式
-</h2><p><img src="/huyang/assets/image-20250426160536115.png"
-	
-	
-	
+</h2><p><img src="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160536115.png"
+	width="1562"
+	height="822"
+	srcset="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160536115_hu_5d114fa5d00227b9.png 480w, /huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160536115_hu_1b891190a31066ac.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250426160536115"
 	
 	
+		class="gallery-image" 
+		data-flex-grow="190"
+		data-flex-basis="456px"
+	
 ></p>
-<p><img src="/huyang/assets/image-20250426160546904.png"
-	
-	
-	
+<p><img src="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160546904.png"
+	width="1506"
+	height="928"
+	srcset="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160546904_hu_dffd0001c9694720.png 480w, /huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160546904_hu_c3d1f9f3ab0bf839.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250426160546904"
 	
 	
+		class="gallery-image" 
+		data-flex-grow="162"
+		data-flex-basis="389px"
+	
 ></p>
-<p><img src="/huyang/assets/image-20250426160557531.png"
-	
-	
-	
+<p><img src="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160557531.png"
+	width="1542"
+	height="890"
+	srcset="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160557531_hu_9fe8805fb56d2d9a.png 480w, /huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160557531_hu_e3072d64cfbb4981.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250426160557531"
 	
 	
+		class="gallery-image" 
+		data-flex-grow="173"
+		data-flex-basis="415px"
+	
 ></p>
-<p><img src="/huyang/assets/image-20250426160609256.png"
-	
-	
-	
+<p><img src="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160609256.png"
+	width="1462"
+	height="850"
+	srcset="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160609256_hu_fbf9d93be3a87745.png 480w, /huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160609256_hu_136d8a50ae926ed4.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250426160609256"
 	
 	
+		class="gallery-image" 
+		data-flex-grow="172"
+		data-flex-basis="412px"
+	
 ></p>
-<p><img src="/huyang/assets/image-20250426160617148.png"
-	
-	
-	
+<p><img src="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160617148.png"
+	width="1610"
+	height="774"
+	srcset="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160617148_hu_37c5e43fd0a96084.png 480w, /huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426160617148_hu_eb9e247b82595e8.png 1024w"
 	loading="lazy"
 	
 		alt="image-20250426160617148"
 	
 	
+		class="gallery-image" 
+		data-flex-grow="208"
+		data-flex-basis="499px"
+	
 ></p>
 <h2 id="期望可加性">期望可加性
-</h2><p><img src="/huyang/assets/image-20250426212433888.png"
-	
-	
-	
+</h2><p><img src="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426212433888.png"
+	width="1530"
+	height="922"
+	srcset="/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426212433888_hu_cf892a45480223d1.png 480w, /huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/image-20250426212433888_hu_a65532c072fe83a5.png 1024w"
 	loading="lazy"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="165"
+		data-flex-basis="398px"
 	
 ></p>
 
