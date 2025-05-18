@@ -7,7 +7,275 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Hu Yang</copyright>
-        <lastBuildDate>Sun, 18 May 2025 22:36:53 +0800</lastBuildDate><atom:link href="https://114514yangyi.github.io/huyang/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 18 May 2025 23:04:31 +0800</lastBuildDate><atom:link href="https://114514yangyi.github.io/huyang/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>奇艺值分解方法</title>
+        <link>https://114514yangyi.github.io/huyang/p/%E5%A5%87%E8%89%BA%E5%80%BC%E5%88%86%E8%A7%A3%E6%96%B9%E6%B3%95/</link>
+        <pubDate>Sun, 18 May 2025 23:04:31 +0800</pubDate>
+        
+        <guid>https://114514yangyi.github.io/huyang/p/%E5%A5%87%E8%89%BA%E5%80%BC%E5%88%86%E8%A7%A3%E6%96%B9%E6%B3%95/</guid>
+        <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css&#34;
+    integrity=&#34;sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X&#34; crossorigin=&#34;anonymous&#34;&gt;
+&lt;script defer src=&#34;https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js&#34;
+    integrity=&#34;sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz&#34;
+    crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+&lt;script defer src=&#34;https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js&#34;
+    integrity=&#34;sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05&#34;
+    crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+    document.addEventListener(&#34;DOMContentLoaded&#34;, function () {
+        renderMathInElement(document.body, {
+            // customised options
+            // • auto-render specific keys, e.g.:
+            delimiters: [
+                { left: &#39;$$&#39;, right: &#39;$$&#39;, display: true },
+                { left: &#39;$&#39;, right: &#39;$&#39;, display: false },
+                { left: &#39;\\(&#39;, right: &#39;\\)&#39;, display: false },
+                { left: &#39;\\[&#39;, right: &#39;\\]&#39;, display: true }
+            ],
+            // • rendering keys, e.g.:
+            throwOnError: false
+        });
+    });
+&lt;/script&gt;
+&lt;h1 id=&#34;数学-奇异值分解&#34;&gt;数学-奇异值分解
+&lt;/h1&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;奇异值分解&#34;&gt;奇异值分解 $$SVD$$
+&lt;/h1&gt;&lt;p&gt;奇异值分解 &lt;/p&gt;
+$$Singular Value Decomposition, SVD$$&lt;p&gt; 是线性代数中的一种重要工具。它可以将任意矩阵分解为三个特殊矩阵的乘积，广泛应用于机器学习、数据降维、推荐系统、图像处理等领域。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;1-奇异值分解的定义&#34;&gt;1. 奇异值分解的定义
+&lt;/h2&gt;&lt;p&gt;给定一个 $$ m \times n $$ 的矩阵 $$ A $$，SVD 将其分解为三个矩阵的乘积：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$$ A = U \Sigma V^T $$&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;$ U \in \mathbb{R}^{m \times m} \$&lt;/code&gt;：左奇异矩阵，由 &lt;code&gt;$ AA^T \$ &lt;/code&gt;的特征向量组成，是正交矩阵。&lt;/li&gt;
+&lt;li&gt;$$ V \in \mathbb{R}^{n \times n} $$：右奇异矩阵，由 $$ A^T A $$ 的特征向量组成，是正交矩阵。&lt;/li&gt;
+&lt;li&gt;$$ \Sigma \in \mathbb{R}^{m \times n} $$：奇异值矩阵，是一个对角矩阵，对角线上的元素为奇异值。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;若 $$ \Sigma $$ 的对角线元素为 $$ \sigma_1, \sigma_2, \dots, \sigma_r $$，它们满足：
+&lt;/p&gt;
+$$
+\sigma_1 \geq \sigma_2 \geq \cdots \geq \sigma_r \geq 0
+$$&lt;hr&gt;
+&lt;h2 id=&#34;2-奇异值分解的性质&#34;&gt;2. 奇异值分解的性质
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;奇异值与特征值的关系&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;奇异值是矩阵 $$ A^T A $$ 或 $$ AA^T $$ 的非负特征值的平方根。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;矩阵的秩&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;矩阵 $$ A $$ 的秩等于其非零奇异值的个数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;矩阵的范数&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Frobenius 范数&lt;/strong&gt;：$$|A|&lt;em&gt;F = \sqrt{\sum&lt;/em&gt;{i=1}^r \sigma_i^2}$$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;谱范数（2 范数）&lt;/strong&gt;：$$|A|_2 = \sigma_1$$（最大的奇异值）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;矩阵的近似&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;通过保留前 $$ k $$ 个最大的奇异值，可以构造一个低秩近似矩阵 $$ A_k $$：
+$$
+     A_k = \sum_{i=1}^k \sigma_i u_i v_i^T
+     $$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;3-svd-的几何解释&#34;&gt;3. SVD 的几何解释
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;矩阵 $$ V^T $$&lt;/strong&gt;：将输入空间中的基向量变换到一个新的正交基上。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;对角矩阵 $$ \Sigma $$&lt;/strong&gt;：按奇异值对变换后的基向量进行缩放。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;矩阵 $$ U $$&lt;/strong&gt;：将缩放后的基向量映射到输出空间。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;从几何上看，SVD 将矩阵的线性变换分解为三个步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;旋转输入空间。&lt;/li&gt;
+&lt;li&gt;缩放空间中的各轴（按奇异值）。&lt;/li&gt;
+&lt;li&gt;再次旋转到输出空间。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;4-svd-的计算步骤&#34;&gt;4. SVD 的计算步骤
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;计算 $$ A^T A $$ 或 $$ AA^T $$ 的特征值和特征向量：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$$ A^T A $$ 的特征向量构成矩阵 $$ V $$ 的列向量。&lt;/li&gt;
+&lt;li&gt;$$ AA^T $$ 的特征向量构成矩阵 $$ U $$ 的列向量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;计算奇异值：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;奇异值是 $$ A^T A $$ 或 $$ AA^T $$ 的特征值的平方根。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;构造奇异值矩阵 $$ \Sigma $$，将奇异值填入对角线。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;5-利用奇异值分解求矩阵伪逆&#34;&gt;5. 利用奇异值分解求矩阵伪逆
+&lt;/h2&gt;&lt;p&gt;矩阵伪逆（Moore-Penrose Pseudo-Inverse）可以通过 SVD 计算。假设矩阵 $$ A $$ 的奇异值分解为：
+&lt;/p&gt;
+$$
+A = U \Sigma V^T
+$$&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;构造伪逆的奇异值矩阵 $$ \Sigma^+ $$：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果奇异值为 $$ \sigma_i \neq 0 $$，则 $$ \Sigma^+ $$ 的对应对角线元素为 $$ 1 / \sigma_i $$。&lt;/li&gt;
+&lt;li&gt;如果奇异值为 0，则对应的对角线元素也为 0。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;计算伪逆矩阵 $$ A^+ $$：
+&lt;/p&gt;
+$$
+   A^+ = V \Sigma^+ U^T
+   $$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;6-示例&#34;&gt;6. 示例
+&lt;/h2&gt;&lt;p&gt;假设矩阵：
+&lt;/p&gt;
+$$
+A = 
+\begin{bmatrix}
+1 &amp; 2 \\
+3 &amp; 4 \\
+5 &amp; 6
+\end{bmatrix}
+$$&lt;p&gt;通过 SVD 分解：
+&lt;/p&gt;
+$$
+A = U \Sigma V^T
+$$&lt;ul&gt;
+&lt;li&gt;$$ U $$：&lt;/li&gt;
+&lt;/ul&gt;
+$$
+U =
+\begin{bmatrix}
+-0.2298 &amp;  0.8835 &amp;  0.4082 \\
+-0.5247 &amp;  0.2408 &amp; -0.8165 \\
+-0.8196 &amp; -0.4019 &amp;  0.4082
+\end{bmatrix}
+$$&lt;ul&gt;
+&lt;li&gt;$$ \Sigma $$：&lt;/li&gt;
+&lt;/ul&gt;
+$$
+\Sigma =
+\begin{bmatrix}
+9.5255 &amp; 0 \\
+0 &amp; 0.5143 \\
+0 &amp; 0
+\end{bmatrix}
+$$&lt;ul&gt;
+&lt;li&gt;$$ V^T $$：&lt;/li&gt;
+&lt;/ul&gt;
+$$
+V^T =
+\begin{bmatrix}
+-0.6196 &amp; -0.7849 \\
+-0.7849 &amp;  0.6196
+\end{bmatrix}
+$$&lt;p&gt;&lt;strong&gt;利用 SVD 求伪逆&lt;/strong&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;构造 $$ \Sigma^+ $$：
+&lt;/p&gt;
+$$
+   \Sigma^+ =
+   \begin{bmatrix}
+   1/9.5255 &amp; 0 \\
+   0 &amp; 1/0.5143 \\
+   0 &amp; 0
+   \end{bmatrix}
+   $$&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;计算 $$ A^+ $$：
+&lt;/p&gt;
+$$
+   A^+ = V \Sigma^+ U^T
+   $$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;7-svd-的应用&#34;&gt;7. SVD 的应用
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;数据降维（主成分分析，PCA）&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;通过保留前 $$ k $$ 个最大的奇异值实现降维。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;矩阵近似&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;保留前 $$ k $$ 个奇异值构造低秩近似矩阵。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;信息检索与文本分析&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在潜在语义分析（LSA）中提取文档的语义结构。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;图像压缩&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;仅保留最大的几个奇异值可以显著降低存储空间。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;最小二乘拟合&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;通过伪逆矩阵解决超定方程组问题。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;8-总结&#34;&gt;8. 总结
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;奇异值分解是一种强大的工具，可以将任意矩阵分解为三个特殊矩阵的乘积。&lt;/li&gt;
+&lt;li&gt;它广泛应用于数据降维、矩阵近似、图像处理和机器学习中。&lt;/li&gt;
+&lt;li&gt;利用奇异值分解可以轻松求解矩阵的伪逆，为复杂线性代数问题提供了简单优雅的解决方案。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>线性代数网站相关</title>
+        <link>https://114514yangyi.github.io/huyang/p/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%BD%91%E7%AB%99%E7%9B%B8%E5%85%B3/</link>
+        <pubDate>Sun, 18 May 2025 22:57:43 +0800</pubDate>
+        
+        <guid>https://114514yangyi.github.io/huyang/p/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%BD%91%E7%AB%99%E7%9B%B8%E5%85%B3/</guid>
+        <description>&lt;ol&gt;
+&lt;li&gt;向量的点积,叉乘的数学意义和相应的表示:
+&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/dcrmg/article/details/52416832&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://blog.csdn.net/dcrmg/article/details/52416832&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;奇异值分解:
+&lt;a class=&#34;link&#34; href=&#34;https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;线性代数知识汇总:
+&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/MyArrow/article/details/53365048&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://blog.csdn.net/MyArrow/article/details/53365048&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;排列组合:
+&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/m0_50068884/article/details/122619734&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://blog.csdn.net/m0_50068884/article/details/122619734&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;正定矩阵:
+&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/asd136912/article/details/79146151&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://blog.csdn.net/asd136912/article/details/79146151&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        </item>
+        <item>
         <title>协方差矩阵</title>
         <link>https://114514yangyi.github.io/huyang/p/%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5/</link>
         <pubDate>Sun, 18 May 2025 22:36:53 +0800</pubDate>

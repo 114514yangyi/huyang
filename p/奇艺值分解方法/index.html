@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head><script src="/huyang/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=huyang/livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 向量的点积,叉乘的数学意义和相应的表示: https://blog.csdn.net/dcrmg/article/details/52416832 奇异值分解: https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/ 线性代数知识汇总: https://blog.csdn.net/MyArrow/article/details/53365048 排列组合: https://blog.csdn.net/m0_50068884/article/details/122619734 正定矩阵: https://blog.csdn.net/asd136912/article/details/79146151 ">
-<title></title>
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 数学-奇异值分解 https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/\n奇异值分解 $$SVD$$ 奇异值分解 $$Singular Value Decomposition, SVD$$ 是线性代数中的一种重要工具。它可以将任意矩阵分解为三个特殊矩阵的乘积，广泛应用于机器学习、数据降维、推荐系统、图像处理等领域。\n">
+<title>奇艺值分解方法</title>
 
-<link rel='canonical' href='http://localhost:1313/huyang/p/'>
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E5%A5%87%E8%89%BA%E5%80%BC%E5%88%86%E8%A7%A3%E6%96%B9%E6%B3%95/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="">
-<meta property='og:description' content=" 向量的点积,叉乘的数学意义和相应的表示: https://blog.csdn.net/dcrmg/article/details/52416832 奇异值分解: https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/ 线性代数知识汇总: https://blog.csdn.net/MyArrow/article/details/53365048 排列组合: https://blog.csdn.net/m0_50068884/article/details/122619734 正定矩阵: https://blog.csdn.net/asd136912/article/details/79146151 ">
-<meta property='og:url' content='http://localhost:1313/huyang/p/'>
+<link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="奇艺值分解方法">
+<meta property='og:description' content=" 数学-奇异值分解 https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/\n奇异值分解 $$SVD$$ 奇异值分解 $$Singular Value Decomposition, SVD$$ 是线性代数中的一种重要工具。它可以将任意矩阵分解为三个特殊矩阵的乘积，广泛应用于机器学习、数据降维、推荐系统、图像处理等领域。\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E5%A5%87%E8%89%BA%E5%80%BC%E5%88%86%E8%A7%A3%E6%96%B9%E6%B3%95/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T22:57:43&#43;08:00'/><meta property='article:modified_time' content='2025-05-18T22:57:43&#43;08:00'/>
-<meta name="twitter:title" content="">
-<meta name="twitter:description" content=" 向量的点积,叉乘的数学意义和相应的表示: https://blog.csdn.net/dcrmg/article/details/52416832 奇异值分解: https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/ 线性代数知识汇总: https://blog.csdn.net/MyArrow/article/details/53365048 排列组合: https://blog.csdn.net/m0_50068884/article/details/122619734 正定矩阵: https://blog.csdn.net/asd136912/article/details/79146151 ">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T23:04:31&#43;08:00'/><meta property='article:modified_time' content='2025-05-18T23:04:31&#43;08:00'/>
+<meta name="twitter:title" content="奇艺值分解方法">
+<meta name="twitter:description" content=" 数学-奇异值分解 https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/\n奇异值分解 $$SVD$$ 奇异值分解 $$Singular Value Decomposition, SVD$$ 是线性代数中的一种重要工具。它可以将任意矩阵分解为三个特殊矩阵的乘积，广泛应用于机器学习、数据降维、推荐系统、图像处理等领域。\n">
     </head>
     <body class="
     article-page
@@ -231,11 +231,11 @@
 
                             <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
                                 
-                                    <option value="http://localhost:1313/huyang/" selected>English</option>
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
                                 
-                                    <option value="http://localhost:1313/huyang/zh-cn/" >中文</option>
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
                                 
-                                    <option value="http://localhost:1313/huyang/ar/" >عربي</option>
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
                                 
                             </select>
                         </li>
@@ -268,7 +268,45 @@
     </ol>
 </aside>
 
-    
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#1-奇异值分解的定义">1. 奇异值分解的定义</a></li>
+    <li><a href="#2-奇异值分解的性质">2. 奇异值分解的性质</a></li>
+    <li><a href="#3-svd-的几何解释">3. SVD 的几何解释</a></li>
+    <li><a href="#4-svd-的计算步骤">4. SVD 的计算步骤</a></li>
+    <li><a href="#5-利用奇异值分解求矩阵伪逆">5. 利用奇异值分解求矩阵伪逆</a></li>
+    <li><a href="#6-示例">6. 示例</a></li>
+    <li><a href="#7-svd-的应用">7. SVD 的应用</a></li>
+    <li><a href="#8-总结">8. 总结</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
             <main class="main full-width">
     <article class="main-article">
@@ -279,7 +317,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/huyang/p/"></a>
+            <a href="/huyang/p/%E5%A5%87%E8%89%BA%E5%80%BC%E5%88%86%E8%A7%A3%E6%96%B9%E6%B3%95/">奇艺值分解方法</a>
         </h2>
     
         
@@ -316,7 +354,7 @@
 
 
                 <time class="article-time--reading">
-                    1 minute read
+                    2 minute read
                 </time>
             </div>
         
@@ -331,23 +369,241 @@
     <section class="article-content">
     
     
-    <ol>
-<li>向量的点积,叉乘的数学意义和相应的表示:
-<a class="link" href="https://blog.csdn.net/dcrmg/article/details/52416832"  target="_blank" rel="noopener"
-    >https://blog.csdn.net/dcrmg/article/details/52416832</a></li>
-<li>奇异值分解:
-<a class="link" href="https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/"  target="_blank" rel="noopener"
-    >https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/</a></li>
-<li>线性代数知识汇总:
-<a class="link" href="https://blog.csdn.net/MyArrow/article/details/53365048"  target="_blank" rel="noopener"
-    >https://blog.csdn.net/MyArrow/article/details/53365048</a></li>
-<li>排列组合:
-<a class="link" href="https://blog.csdn.net/m0_50068884/article/details/122619734"  target="_blank" rel="noopener"
-    >https://blog.csdn.net/m0_50068884/article/details/122619734</a></li>
-<li>正定矩阵:
-<a class="link" href="https://blog.csdn.net/asd136912/article/details/79146151"  target="_blank" rel="noopener"
-    >https://blog.csdn.net/asd136912/article/details/79146151</a></li>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css"
+    integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js"
+    integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz"
+    crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+    crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        renderMathInElement(document.body, {
+            // customised options
+            // • auto-render specific keys, e.g.:
+            delimiters: [
+                { left: '$$', right: '$$', display: true },
+                { left: '$', right: '$', display: false },
+                { left: '\\(', right: '\\)', display: false },
+                { left: '\\[', right: '\\]', display: true }
+            ],
+            // • rendering keys, e.g.:
+            throwOnError: false
+        });
+    });
+</script>
+<h1 id="数学-奇异值分解">数学-奇异值分解
+</h1><p><a class="link" href="https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/"  target="_blank" rel="noopener"
+    >https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/</a></p>
+<h1 id="奇异值分解">奇异值分解 $$SVD$$
+</h1><p>奇异值分解 </p>
+$$Singular Value Decomposition, SVD$$<p> 是线性代数中的一种重要工具。它可以将任意矩阵分解为三个特殊矩阵的乘积，广泛应用于机器学习、数据降维、推荐系统、图像处理等领域。</p>
+<hr>
+<h2 id="1-奇异值分解的定义">1. 奇异值分解的定义
+</h2><p>给定一个 $$ m \times n $$ 的矩阵 $$ A $$，SVD 将其分解为三个矩阵的乘积：</p>
+<p><code>$$ A = U \Sigma V^T $$</code></p>
+<p>其中：</p>
+<ul>
+<li><code>$ U \in \mathbb{R}^{m \times m} \$</code>：左奇异矩阵，由 <code>$ AA^T \$ </code>的特征向量组成，是正交矩阵。</li>
+<li>$$ V \in \mathbb{R}^{n \times n} $$：右奇异矩阵，由 $$ A^T A $$ 的特征向量组成，是正交矩阵。</li>
+<li>$$ \Sigma \in \mathbb{R}^{m \times n} $$：奇异值矩阵，是一个对角矩阵，对角线上的元素为奇异值。</li>
+</ul>
+<p>若 $$ \Sigma $$ 的对角线元素为 $$ \sigma_1, \sigma_2, \dots, \sigma_r $$，它们满足：
+</p>
+$$
+\sigma_1 \geq \sigma_2 \geq \cdots \geq \sigma_r \geq 0
+$$<hr>
+<h2 id="2-奇异值分解的性质">2. 奇异值分解的性质
+</h2><ol>
+<li>
+<p><strong>奇异值与特征值的关系</strong>：</p>
+<ul>
+<li>奇异值是矩阵 $$ A^T A $$ 或 $$ AA^T $$ 的非负特征值的平方根。</li>
+</ul>
+</li>
+<li>
+<p><strong>矩阵的秩</strong>：</p>
+<ul>
+<li>矩阵 $$ A $$ 的秩等于其非零奇异值的个数。</li>
+</ul>
+</li>
+<li>
+<p><strong>矩阵的范数</strong>：</p>
+<ul>
+<li><strong>Frobenius 范数</strong>：$$|A|<em>F = \sqrt{\sum</em>{i=1}^r \sigma_i^2}$$</li>
+<li><strong>谱范数（2 范数）</strong>：$$|A|_2 = \sigma_1$$（最大的奇异值）。</li>
+</ul>
+</li>
+<li>
+<p><strong>矩阵的近似</strong>：</p>
+<ul>
+<li>通过保留前 $$ k $$ 个最大的奇异值，可以构造一个低秩近似矩阵 $$ A_k $$：
+$$
+     A_k = \sum_{i=1}^k \sigma_i u_i v_i^T
+     $$</li>
+</ul>
+</li>
 </ol>
+<hr>
+<h2 id="3-svd-的几何解释">3. SVD 的几何解释
+</h2><ul>
+<li><strong>矩阵 $$ V^T $$</strong>：将输入空间中的基向量变换到一个新的正交基上。</li>
+<li><strong>对角矩阵 $$ \Sigma $$</strong>：按奇异值对变换后的基向量进行缩放。</li>
+<li><strong>矩阵 $$ U $$</strong>：将缩放后的基向量映射到输出空间。</li>
+</ul>
+<p>从几何上看，SVD 将矩阵的线性变换分解为三个步骤：</p>
+<ol>
+<li>旋转输入空间。</li>
+<li>缩放空间中的各轴（按奇异值）。</li>
+<li>再次旋转到输出空间。</li>
+</ol>
+<hr>
+<h2 id="4-svd-的计算步骤">4. SVD 的计算步骤
+</h2><ol>
+<li>
+<p>计算 $$ A^T A $$ 或 $$ AA^T $$ 的特征值和特征向量：</p>
+<ul>
+<li>$$ A^T A $$ 的特征向量构成矩阵 $$ V $$ 的列向量。</li>
+<li>$$ AA^T $$ 的特征向量构成矩阵 $$ U $$ 的列向量。</li>
+</ul>
+</li>
+<li>
+<p>计算奇异值：</p>
+<ul>
+<li>奇异值是 $$ A^T A $$ 或 $$ AA^T $$ 的特征值的平方根。</li>
+</ul>
+</li>
+<li>
+<p>构造奇异值矩阵 $$ \Sigma $$，将奇异值填入对角线。</p>
+</li>
+</ol>
+<hr>
+<h2 id="5-利用奇异值分解求矩阵伪逆">5. 利用奇异值分解求矩阵伪逆
+</h2><p>矩阵伪逆（Moore-Penrose Pseudo-Inverse）可以通过 SVD 计算。假设矩阵 $$ A $$ 的奇异值分解为：
+</p>
+$$
+A = U \Sigma V^T
+$$<ol>
+<li>
+<p>构造伪逆的奇异值矩阵 $$ \Sigma^+ $$：</p>
+<ul>
+<li>如果奇异值为 $$ \sigma_i \neq 0 $$，则 $$ \Sigma^+ $$ 的对应对角线元素为 $$ 1 / \sigma_i $$。</li>
+<li>如果奇异值为 0，则对应的对角线元素也为 0。</li>
+</ul>
+</li>
+<li>
+<p>计算伪逆矩阵 $$ A^+ $$：
+</p>
+$$
+   A^+ = V \Sigma^+ U^T
+   $$</li>
+</ol>
+<hr>
+<h2 id="6-示例">6. 示例
+</h2><p>假设矩阵：
+</p>
+$$
+A = 
+\begin{bmatrix}
+1 & 2 \\
+3 & 4 \\
+5 & 6
+\end{bmatrix}
+$$<p>通过 SVD 分解：
+</p>
+$$
+A = U \Sigma V^T
+$$<ul>
+<li>$$ U $$：</li>
+</ul>
+$$
+U =
+\begin{bmatrix}
+-0.2298 &  0.8835 &  0.4082 \\
+-0.5247 &  0.2408 & -0.8165 \\
+-0.8196 & -0.4019 &  0.4082
+\end{bmatrix}
+$$<ul>
+<li>$$ \Sigma $$：</li>
+</ul>
+$$
+\Sigma =
+\begin{bmatrix}
+9.5255 & 0 \\
+0 & 0.5143 \\
+0 & 0
+\end{bmatrix}
+$$<ul>
+<li>$$ V^T $$：</li>
+</ul>
+$$
+V^T =
+\begin{bmatrix}
+-0.6196 & -0.7849 \\
+-0.7849 &  0.6196
+\end{bmatrix}
+$$<p><strong>利用 SVD 求伪逆</strong>：</p>
+<ol>
+<li>
+<p>构造 $$ \Sigma^+ $$：
+</p>
+$$
+   \Sigma^+ =
+   \begin{bmatrix}
+   1/9.5255 & 0 \\
+   0 & 1/0.5143 \\
+   0 & 0
+   \end{bmatrix}
+   $$</li>
+<li>
+<p>计算 $$ A^+ $$：
+</p>
+$$
+   A^+ = V \Sigma^+ U^T
+   $$</li>
+</ol>
+<hr>
+<h2 id="7-svd-的应用">7. SVD 的应用
+</h2><ol>
+<li>
+<p><strong>数据降维（主成分分析，PCA）</strong>：</p>
+<ul>
+<li>通过保留前 $$ k $$ 个最大的奇异值实现降维。</li>
+</ul>
+</li>
+<li>
+<p><strong>矩阵近似</strong>：</p>
+<ul>
+<li>保留前 $$ k $$ 个奇异值构造低秩近似矩阵。</li>
+</ul>
+</li>
+<li>
+<p><strong>信息检索与文本分析</strong>：</p>
+<ul>
+<li>在潜在语义分析（LSA）中提取文档的语义结构。</li>
+</ul>
+</li>
+<li>
+<p><strong>图像压缩</strong>：</p>
+<ul>
+<li>仅保留最大的几个奇异值可以显著降低存储空间。</li>
+</ul>
+</li>
+<li>
+<p><strong>最小二乘拟合</strong>：</p>
+<ul>
+<li>通过伪逆矩阵解决超定方程组问题。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="8-总结">8. 总结
+</h2><ul>
+<li>奇异值分解是一种强大的工具，可以将任意矩阵分解为三个特殊矩阵的乘积。</li>
+<li>它广泛应用于数据降维、矩阵近似、图像处理和机器学习中。</li>
+<li>利用奇异值分解可以轻松求解矩阵的伪逆，为复杂线性代数问题提供了简单优雅的解决方案。</li>
+</ul>
 
 </section>
 
@@ -524,7 +780,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.cd76aa272fba173b2f464f406f017da86c41ef720de6e50607ddcf590ac18f8d.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
