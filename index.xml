@@ -7,7 +7,405 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Hu Yang</copyright>
-        <lastBuildDate>Fri, 09 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://114514yangyi.github.io/huyang/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 18 May 2025 22:36:53 +0800</lastBuildDate><atom:link href="https://114514yangyi.github.io/huyang/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>协方差矩阵</title>
+        <link>https://114514yangyi.github.io/huyang/p/%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5/</link>
+        <pubDate>Sun, 18 May 2025 22:36:53 +0800</pubDate>
+        
+        <guid>https://114514yangyi.github.io/huyang/p/%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5/</guid>
+        <description>&lt;p&gt;对于一组有关联的随机变量，方差和协方差之间的关系可以通过联合分布或多变量的角度来理解。设有 nn 个随机变量 X1,X2,…,XnX_1, X_2, \dots, X_n，它们的协方差矩阵和方差之间的关系如下。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/Screenshot_20241220-204205.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Screenshot_20241220-204205&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;1-协方差矩阵&#34;&gt;1. 协方差矩阵
+&lt;/h3&gt;&lt;p&gt;对于多个随机变量 X1,X2,…,XnX_1, X_2, \dots, X_n，我们可以构造一个&lt;strong&gt;协方差矩阵&lt;/strong&gt; Σ\Sigma，这个矩阵描述了各个变量之间的协方差。协方差矩阵是一个对称矩阵，其中对角线上的元素是每个变量的方差，非对角线上的元素是变量之间的协方差。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;协方差矩阵的定义&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;Σ=(Var(X1)Cov(X1,X2)…Cov(X1,Xn)Cov(X2,X1)Var(X2)…Cov(X2,Xn)⋮⋮⋱⋮Cov(Xn,X1)Cov(Xn,X2)…Var(Xn))\Sigma = \begin{pmatrix} Var(X_1) &amp;amp; Cov(X_1, X_2) &amp;amp; \dots &amp;amp; Cov(X_1, X_n) \ Cov(X_2, X_1) &amp;amp; Var(X_2) &amp;amp; \dots &amp;amp; Cov(X_2, X_n) \ \vdots &amp;amp; \vdots &amp;amp; \ddots &amp;amp; \vdots \ Cov(X_n, X_1) &amp;amp; Cov(X_n, X_2) &amp;amp; \dots &amp;amp; Var(X_n) \end{pmatrix}&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对角线元素 Var(Xi)Var(X_i) 是各个随机变量的方差。&lt;/li&gt;
+&lt;li&gt;非对角线元素 Cov(Xi,Xj)Cov(X_i, X_j) 是不同随机变量之间的协方差。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-方差与协方差的关系&#34;&gt;2. 方差与协方差的关系
+&lt;/h3&gt;&lt;p&gt;对于一组随机变量，方差与协方差的关系可以通过以下几种方式来理解：&lt;/p&gt;
+&lt;h4 id=&#34;1-线性组合的方差&#34;&gt;(1) 线性组合的方差
+&lt;/h4&gt;&lt;p&gt;如果你对这些随机变量进行线性组合，方差和协方差之间的关系可以通过线性组合的方差公式来描述。&lt;/p&gt;
+&lt;p&gt;设 Y=a1X1+a2X2+⋯+anXnY = a_1 X_1 + a_2 X_2 + \dots + a_n X_n，其中 a1,a2,…,ana_1, a_2, \dots, a_n 是常数系数。那么，YY 的方差是：&lt;/p&gt;
+&lt;p&gt;Var(Y)=Var(a1X1+a2X2+⋯+anXn)Var(Y) = Var(a_1 X_1 + a_2 X_2 + \dots + a_n X_n)&lt;/p&gt;
+&lt;p&gt;根据方差的线性性质，这可以展开为：&lt;/p&gt;
+&lt;p&gt;Var(Y)=∑i=1nai2Var(Xi)+2∑1≤i&amp;lt;j≤naiajCov(Xi,Xj)Var(Y) = \sum_{i=1}^{n} a_i^2 Var(X_i) + 2 \sum_{1 \leq i &amp;lt; j \leq n} a_i a_j Cov(X_i, X_j)&lt;/p&gt;
+&lt;p&gt;这意味着，线性组合的方差不仅与每个变量的方差相关，还与变量之间的协方差相关。&lt;/p&gt;
+&lt;h4 id=&#34;2-协方差矩阵的性质&#34;&gt;(2) 协方差矩阵的性质
+&lt;/h4&gt;&lt;p&gt;在多维随机变量的情况下，协方差矩阵提供了更加全面的信息。例如，考虑 X=(X1,X2,…,Xn)T\mathbf{X} = (X_1, X_2, \dots, X_n)^T 作为一个随机向量，其协方差矩阵 Σ\Sigma 中的每个元素 Σij=Cov(Xi,Xj)\Sigma_{ij} = Cov(X_i, X_j) 描述了不同随机变量之间的关系。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对角线元素 Σii=Var(Xi)\Sigma_{ii} = Var(X_i) 给出了每个随机变量的方差。&lt;/li&gt;
+&lt;li&gt;非对角线元素 Σij=Cov(Xi,Xj)\Sigma_{ij} = Cov(X_i, X_j) 给出了不同随机变量之间的协方差。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;3-方差与协方差的几何解释&#34;&gt;3. 方差与协方差的几何解释
+&lt;/h3&gt;&lt;p&gt;协方差矩阵不仅在数值计算上有用，它还具有几何意义。考虑二维情况，随机向量 X=(X1,X2)\mathbf{X} = (X_1, X_2) 的协方差矩阵可以用来描述数据点的分布形状和方向。矩阵的特征值和特征向量可以告诉我们数据的主要变化方向（主成分分析 PCA 中就是利用这一点）。&lt;/p&gt;
+&lt;h3 id=&#34;4-相关性与协方差的标准化&#34;&gt;4. 相关性与协方差的标准化
+&lt;/h3&gt;&lt;p&gt;协方差矩阵不仅反映了各个随机变量之间的关系，还能通过标准化得到&lt;strong&gt;相关矩阵&lt;/strong&gt;，它提供了一个标准化的视角，消除了不同单位和量纲的影响。相关矩阵的每个元素是协方差除以标准差的乘积：&lt;/p&gt;
+&lt;p&gt;ρij=Cov(Xi,Xj)Var(Xi)Var(Xj)\rho_{ij} = \frac{Cov(X_i, X_j)}{\sqrt{Var(X_i)} \sqrt{Var(X_j)}}&lt;/p&gt;
+&lt;p&gt;这里 ρij\rho_{ij} 是 XiX_i 和 XjX_j 的&lt;strong&gt;相关系数&lt;/strong&gt;。相关系数的值范围在 [−1,1][-1, 1] 之间，反映了两个变量之间的线性相关程度。&lt;/p&gt;
+&lt;h3 id=&#34;总结&#34;&gt;总结
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;方差&lt;/strong&gt;描述的是单一随机变量的离散程度。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;协方差&lt;/strong&gt;描述的是两个随机变量之间的关系，具体来说是它们的线性关系。&lt;/li&gt;
+&lt;li&gt;对于一组随机变量，它们的方差和协方差通过协方差矩阵来综合反映，方差是协方差矩阵的对角线元素，协方差是矩阵的非对角线元素。&lt;/li&gt;
+&lt;li&gt;方差和协方差之间的关系也通过线性组合的方差公式体现，协方差是不同变量间关系的度量，而方差是单一变量的离散程度。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这使得方差和协方差成为理解和描述多变量随机过程中的重要工具。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>概率论知识点</title>
+        <link>https://114514yangyi.github.io/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/</link>
+        <pubDate>Sun, 18 May 2025 22:36:06 +0800</pubDate>
+        
+        <guid>https://114514yangyi.github.io/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/</guid>
+        <description>&lt;h1 id=&#34;概率论知识点&#34;&gt;概率论知识点
+&lt;/h1&gt;&lt;h2 id=&#34;为什么二项分布的方差是-npq&#34;&gt;为什么二项分布的方差是 npq
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250426160001477.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250426160001477&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250426160014000.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250426160014000&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250426160023270.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250426160023270&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;方差计算公式&#34;&gt;方差计算公式
+&lt;/h2&gt;&lt;p&gt;好的，没问题！概率论是研究随机现象规律的数学分支。下面为您梳理一些概率论中最基础、最重要的概念和公式，尽量用简单的方式来解释。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. 基本概念&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;试验 (Experiment):&lt;/strong&gt; 一个可以重复进行的过程，其结果具有不确定性（例如：掷骰子、抛硬币）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;样本空间 (Sample Space, S):&lt;/strong&gt; 一个试验所有可能的基本结果组成的集合（例如：掷一次骰子的样本空间 S={1,2,3,4,5,6}）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;事件 (Event, A, B, &amp;hellip;):&lt;/strong&gt; 样本空间的一个子集，即我们关心的某一个或某一些结果（例如：掷骰子得到偶数，事件 A={2,4,6}）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;概率 (Probability, P(A)):&lt;/strong&gt; 衡量一个事件 A 发生的可能性大小的数值，通常在 0 到 1 之间。P(A)=0 表示事件不可能发生，P(A)=1 表示事件必然发生。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;2. 概率的基本计算&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;古典概率 (Classical Probability):&lt;/strong&gt; 如果一个试验的所有基本结果是有限的，并且每个基本结果发生的可能性&lt;strong&gt;相同&lt;/strong&gt;，那么事件 A 的概率为： P(A)=样本空间 S 中基本结果的总数包含在事件 A 中的基本结果数&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;例子：&lt;/em&gt; 掷一个均匀的骰子，得到偶数的概率 P(偶数)=∣{1,2,3,4,5,6}∣∣{2,4,6}∣=63=21。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;3. 概率的基本公理与性质 (Axioms and Properties)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;概率 P 必须满足以下三条公理：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;公理 1 (非负性):&lt;/strong&gt; 对于任何事件 A，P(A)≥0。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;公理 2 (规范性):&lt;/strong&gt; 整个样本空间 S（必然事件）的概率为 1，即 P(S)=1。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;公理 3 (可加性):&lt;/strong&gt; 如果事件 A1,A2,A3,&amp;hellip; 是两两互不相容的（即任何两个事件不能同时发生，它们的交集为空 ∅），那么它们并集的概率等于它们各自概率的和： P(A1∪A2∪A3∪&amp;hellip;)=P(A1)+P(A2)+P(A3)+&amp;hellip;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;注:&lt;/em&gt; ∪ 符号表示“并集”，意思是“或”。A∪B 表示事件 A 或事件 B 至少发生一个。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由公理可以推导出一些重要性质：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;补事件的概率 (Probability of Complement):&lt;/strong&gt; 事件 A 不发生的事件称为 A 的补事件，记作 Ac 或 A′。 P(Ac)=1−P(A)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;加法公式 (Addition Rule):&lt;/strong&gt; 对于任意两个事件 A 和 B： P(A∪B)=P(A)+P(B)−P(A∩B)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;注:&lt;/em&gt; ∩ 符号表示“交集”，意思是“与”。A∩B 表示事件 A 和事件 B 同时发生。减去 P(A∩B) 是因为 P(A) 和 P(B) 都包含了 A 和 B 同时发生的情况，需要减去一次重复计算的部分。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果 A 和 B 互不相容 (A∩B=∅, P(A∩B)=0)，则简化为 P(A∪B)=P(A)+P(B)。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;4. 条件概率 (Conditional Probability)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;定义:&lt;/strong&gt; 在事件 B 已经发生的条件下，事件 A 发生的概率，记作 P(A∣B)。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;公式:&lt;/strong&gt; P(A∣B)=P(B)P(A∩B)(假设 P(B)&amp;gt;0)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;理解：&lt;/em&gt; 我们把样本空间缩小到了事件 B 发生的范围内，看 A 在这个新样本空间中所占的比例。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;5. 乘法公式 (Multiplication Rule)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;由条件概率公式变形得到，用于计算两个事件同时发生的概率：&lt;/p&gt;
+&lt;p&gt;P(A∩B)=P(A∣B)P(B)或者P(A∩B)=P(B∣A)P(A)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;6. 事件的独立性 (Independence)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;定义:&lt;/strong&gt; 如果事件 B 的发生不影响事件 A 发生的概率（反之亦然），则称事件 A 和 B 是相互独立的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;判断条件:&lt;/strong&gt; A 和 B 独立，当且仅当满足以下任一条件（等价）：&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;P(A∣B)=P(A) (假设 P(B)&amp;gt;0)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;P(B∣A)=P(B) (假设 P(A)&amp;gt;0)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;P(A∩B)=P(A)P(B) (这是最常用的判断和计算形式)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;7. 全概率公式 (Law of Total Probability)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;用途:&lt;/strong&gt; 如果样本空间 S 可以被一组互不相容且其并集为 S 的事件 B1,B2,&amp;hellip;,Bn（称为一个划分）所覆盖，那么计算事件 A 的概率可以通过考虑 A 在每个 Bi 发生的条件下来进行。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;公式:&lt;/strong&gt; P(A)=P(A∣B1)P(B1)+P(A∣B2)P(B2)+&amp;hellip;+P(A∣Bn)P(Bn) P(A)=i=1∑nP(A∣Bi)P(Bi)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;8. 贝叶斯定理 (Bayes&amp;rsquo; Theorem)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;用途:&lt;/strong&gt; 在已知某些条件概率 P(B∣A) 和先验概率 P(A),P(B) 的情况下，用来计算“逆向”的条件概率 P(A∣B)。常用于根据新的证据更新判断。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;公式:&lt;/strong&gt; P(A∣B)=P(B)P(B∣A)P(A) 通常分母 P(B) 使用全概率公式来计算： P(A∣B)=P(B∣A)P(A)+P(B∣Ac)P(Ac)P(B∣A)P(A) （这里假设样本空间仅划分为 A 和 Ac）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;9. 随机变量 (Random Variable)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;概念:&lt;/strong&gt; 将随机试验的结果映射到一个数值的变量。例如，掷两次硬币，正面朝上的次数 X 就是一个随机变量，它可以取值 0, 1, 2。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;类型:&lt;/strong&gt; 分为离散型（取有限个或可数个值）和连续型（取某个区间内的任意值）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;10. 期望 (Expected Value / Mean)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;概念:&lt;/strong&gt; 随机变量取值的加权平均值，权重是对应值的概率。表示随机变量的“长期平均”或“中心趋势”。记作 E[X] 或 μ。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;公式 (离散型):&lt;/strong&gt; E[X]=i∑xiP(X=xi) (所有可能取值 xi 乘以其对应的概率 P(X=xi) 再求和)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;公式 (连续型):&lt;/strong&gt; 需要用到积分 E[X]=∫−∞∞xf(x)dx，其中 f(x) 是概率密度函数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;11. 方差 (Variance)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;概念:&lt;/strong&gt; 衡量随机变量取值与其期望（均值）的偏离程度，即数据的“离散程度”或“波动大小”。记作 Var(X) 或 σ2。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;公式 (定义):&lt;/strong&gt; Var(X)=E[(X−E[X])2]=E[(X−μ)2] (随机变量与均值之差的平方的期望)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;公式 (计算常用):&lt;/strong&gt; Var(X)=E[X2]−(E[X])2=E[X2]−μ2 (X 平方的期望减去期望的平方)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;标准差 (Standard Deviation):&lt;/strong&gt; 方差的平方根，记作 σ=Var(X)。量纲与随机变量本身相同。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;切利雪夫不等式和马尔科夫不等式&#34;&gt;切利雪夫不等式和马尔科夫不等式
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250426160536115.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250426160536115&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250426160546904.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250426160546904&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250426160557531.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250426160557531&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250426160609256.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250426160609256&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250426160617148.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250426160617148&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;期望可加性&#34;&gt;期望可加性
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250426212433888.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>二乘法</title>
+        <link>https://114514yangyi.github.io/huyang/p/%E4%BA%8C%E4%B9%98%E6%B3%95/</link>
+        <pubDate>Sun, 18 May 2025 22:29:58 +0800</pubDate>
+        
+        <guid>https://114514yangyi.github.io/huyang/p/%E4%BA%8C%E4%B9%98%E6%B3%95/</guid>
+        <description>&lt;h3 id=&#34;最小二乘法的基本思想&#34;&gt;最小二乘法的基本思想
+&lt;/h3&gt;&lt;p&gt;给定一组观测数据点 $(x_1, y_1), (x_2, y_2), &amp;hellip;, (x_n, y_n)$，假设这些数据可以用一个线性模型来拟合：
+&lt;/p&gt;
+\[
+$$y = ax + b$$
+\]&lt;p&gt;
+其中 $a$ 是斜率，$b$ 是截距。&lt;/p&gt;
+&lt;p&gt;为了找到最佳的线性模型参数 $a$ 和 $b$，我们希望找到一条直线，使得所有数据点 $(x_i, y_i)$ 与拟合直线 $y = ax + b$ 之间的垂直距离尽可能小。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;误差函数：&lt;/strong&gt; 每个数据点与直线之间的误差可以定义为实际观测值 $y_i$ 与预测值 $y_i&amp;rsquo;$ 的差值，即：
+&lt;/p&gt;
+\[
+$$e_i = y_i - (a x_i + b)$$
+\]&lt;p&gt;
+最小二乘法的目标是最小化所有误差平方和，即：
+&lt;/p&gt;
+\[
+$$S(a, b) = \sum_{i=1}^n \left( y_i - (a x_i + b) \right)^2$$
+\]&lt;p&gt;
+其中 $S(a, b)$ 是关于 $a$ 和 $b$ 的函数，也称为&lt;strong&gt;目标函数&lt;/strong&gt;或&lt;strong&gt;损失函数&lt;/strong&gt;。通过对 $S(a, b)$ 进行最小化，我们可以得到最佳拟合参数 $a$ 和 $b$。&lt;/p&gt;
+&lt;h3 id=&#34;求解过程&#34;&gt;求解过程
+&lt;/h3&gt;&lt;p&gt;为了找到使得 $S(a, b)$ 最小的 $a$ 和 $b$，我们对 $S(a, b)$ 分别对 $a$ 和 $b$ 求导，并令导数等于 0。这个过程可以通过下面的步骤进行：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;对 $a$ 求导：&lt;/strong&gt;
+\[
+    $$ \frac{\partial S(a, b)}{\partial a} = -2 \sum_{i=1}^n x_i \left( y_i - (a x_i + b) \right) = 0$$
+   \]&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;对 $b$ 求导：&lt;/strong&gt;
+\[
+    $$ \frac{\partial S(a, b)}{\partial b} = -2 \sum_{i=1}^n \left( y_i - (a x_i + b) \right) = 0$$
+   \]&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;通过这两个方程，我们可以解出 $a$ 和 $b$ 的值。具体来说，通过代数运算，可以得到：
+&lt;/p&gt;
+\[
+$$a = \frac{n \sum x_i y_i - \sum x_i \sum y_i}{n \sum x_i^2 - (\sum x_i)^2}$$
+\]&lt;p&gt;
+&lt;/p&gt;
+\[
+$$b = \frac{\sum y_i - a \sum x_i}{n}$$
+\]&lt;p&gt;
+这就是最小二乘法求解线性回归中 $a$ 和 $b$ 的表达式。&lt;/p&gt;
+&lt;h3 id=&#34;线性回归的几何解释&#34;&gt;线性回归的几何解释
+&lt;/h3&gt;&lt;p&gt;线性回归可以看作是试图找到一条最优直线，使得所有数据点到直线的垂直距离平方和最小。通过最小二乘法，我们通过最小化误差平方和，从所有可能的直线中选出最优的一条。&lt;/p&gt;
+&lt;h3 id=&#34;使用案例简单线性回归&#34;&gt;使用案例：简单线性回归
+&lt;/h3&gt;&lt;p&gt;假设我们有一个数据集，描述了某商品的广告投入（自变量 $x$）与销售额（因变量 $y$）之间的关系：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;广告投入 (x)&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;销售额 (y)&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2.8&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;3.6&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;4.5&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;5&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;5.1&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;我们想要通过最小二乘法拟合出一条线性回归直线 $y = ax + b$，预测广告投入和销售额的关系。&lt;/p&gt;
+&lt;h4 id=&#34;1-数据整理&#34;&gt;1. 数据整理
+&lt;/h4&gt;&lt;p&gt;首先，我们需要计算相关的和：
+&lt;/p&gt;
+\[
+\sum x_i = 1 + 2 + 3 + 4 + 5 = 15
+\]&lt;p&gt;
+&lt;/p&gt;
+\[
+\sum y_i = 2 + 2.8 + 3.6 + 4.5 + 5.1 = 18
+\]&lt;p&gt;
+&lt;/p&gt;
+\[
+\sum x_i y_i = (1)(2) + (2)(2.8) + (3)(3.6) + (4)(4.5) + (5)(5.1) = 62.1
+\]&lt;p&gt;
+&lt;/p&gt;
+\[
+\sum x_i^2 = 1^2 + 2^2 + 3^2 + 4^2 + 5^2 = 55
+\]&lt;h4 id=&#34;2-计算斜率-a-和截距-b&#34;&gt;2. 计算斜率 $a$ 和截距 $b$
+&lt;/h4&gt;&lt;p&gt;利用公式：
+&lt;/p&gt;
+$$\[
+a = \frac{5 \cdot 62.1 - 15 \cdot 18}{5 \cdot 55 - 15^2} = \frac{310.5 - 270}{275 - 225} = \frac{40.5}{50} = 0.81
+\]
+\[
+b = \frac{18 - 0.81 \cdot 15}{5} = \frac{18 - 12.15}{5} = \frac{5.85}{5} = 1.17
+\]$$&lt;p&gt;因此，拟合的线性回归方程为：
+&lt;/p&gt;
+\[
+y = 0.81x + 1.17
+\]&lt;h4 id=&#34;3-预测与解释&#34;&gt;3. 预测与解释
+&lt;/h4&gt;&lt;p&gt;根据拟合方程，我们可以预测广告投入为 $6$ 时的销售额：
+&lt;/p&gt;
+\[
+$$y = 0.81 \cdot 6 + 1.17 = 4.86 + 1.17 = 6.03$$
+\]&lt;p&gt;
+因此，广告投入为 6 时，预计销售额为 6.03。&lt;/p&gt;
+&lt;h3 id=&#34;最小二乘法的扩展&#34;&gt;最小二乘法的扩展
+&lt;/h3&gt;&lt;p&gt;最小二乘法不仅用于简单线性回归，还可以推广到多元线性回归以及非线性回归。对于多元回归，目标函数类似，只不过参数变成了多个变量。非线性回归中，最小二乘法依然是常用的优化方法，通过数值方法来最小化非线性函数的误差平方和。&lt;/p&gt;
+&lt;h3 id=&#34;使用案例多元线性回归&#34;&gt;使用案例：多元线性回归
+&lt;/h3&gt;&lt;p&gt;假设我们有多个自变量（如广告投入、市场规模等）共同影响销售额，我们可以通过多元线性回归模型来拟合：
+&lt;/p&gt;
+\[
+$$y = a_1 x_1 + a_2 x_2 + b$$
+\]&lt;p&gt;
+在这种情况下，最小二乘法同样可以用于确定最佳的 $a_1$、$a_2$ 和 $b$。&lt;/p&gt;
+&lt;h3 id=&#34;总结&#34;&gt;总结
+&lt;/h3&gt;&lt;p&gt;最小二乘法是一种通过最小化误差平方和来拟合模型的方法，广泛应用于统计和机器学习中的回归分析。它能够找到自变量和因变量之间的最佳线性关系，帮助我们进行预测和解释。&lt;/p&gt;
+&lt;p&gt;现在公式已经用 $ 符号正确包裹，方便在渲染环境下正确显示。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Leetcode算法思考</title>
         <link>https://114514yangyi.github.io/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/</link>
         <pubDate>Sun, 18 May 2025 00:00:00 +0000</pubDate>
