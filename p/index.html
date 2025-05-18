@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head><script src="/huyang/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=huyang/livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 向量的点积,叉乘的数学意义和相应的表示: https://blog.csdn.net/dcrmg/article/details/52416832 奇异值分解: https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/ 线性代数知识汇总: https://blog.csdn.net/MyArrow/article/details/53365048 排列组合: https://blog.csdn.net/m0_50068884/article/details/122619734 正定矩阵: https://blog.csdn.net/asd136912/article/details/79146151 ">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" date = &lsquo;2025-05-18T22:36:53+08:00&rsquo; draft = false title = &lsquo;协方差矩阵&rsquo; categories: - 数学\n对于一组有关联的随机变量，方差和协方差之间的关系可以通过联合分布或多变量的角度来理解。设有 nn 个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，它们的协方差矩阵和方差之间的关系如下。\n1. 协方差矩阵 对于多个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，我们可以构造一个协方差矩阵 Σ\\Sigma，这个矩阵描述了各个变量之间的协方差。协方差矩阵是一个对称矩阵，其中对角线上的元素是每个变量的方差，非对角线上的元素是变量之间的协方差。\n协方差矩阵的定义：\nΣ=(Var(X1)Cov(X1,X2)…Cov(X1,Xn)Cov(X2,X1)Var(X2)…Cov(X2,Xn)⋮⋮⋱⋮Cov(Xn,X1)Cov(Xn,X2)…Var(Xn))\\Sigma = \\begin{pmatrix} Var(X_1) &amp; Cov(X_1, X_2) &amp; \\dots &amp; Cov(X_1, X_n) \\ Cov(X_2, X_1) &amp; Var(X_2) &amp; \\dots &amp; Cov(X_2, X_n) \\ \\vdots &amp; \\vdots &amp; \\ddots &amp; \\vdots \\ Cov(X_n, X_1) &amp; Cov(X_n, X_2) &amp; \\dots &amp; Var(X_n) \\end{pmatrix}\n">
 <title></title>
 
-<link rel='canonical' href='http://localhost:1313/huyang/p/'>
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/'>
 
 <link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="">
-<meta property='og:description' content=" 向量的点积,叉乘的数学意义和相应的表示: https://blog.csdn.net/dcrmg/article/details/52416832 奇异值分解: https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/ 线性代数知识汇总: https://blog.csdn.net/MyArrow/article/details/53365048 排列组合: https://blog.csdn.net/m0_50068884/article/details/122619734 正定矩阵: https://blog.csdn.net/asd136912/article/details/79146151 ">
-<meta property='og:url' content='http://localhost:1313/huyang/p/'>
+<meta property='og:description' content=" date = &lsquo;2025-05-18T22:36:53+08:00&rsquo; draft = false title = &lsquo;协方差矩阵&rsquo; categories: - 数学\n对于一组有关联的随机变量，方差和协方差之间的关系可以通过联合分布或多变量的角度来理解。设有 nn 个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，它们的协方差矩阵和方差之间的关系如下。\n1. 协方差矩阵 对于多个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，我们可以构造一个协方差矩阵 Σ\\Sigma，这个矩阵描述了各个变量之间的协方差。协方差矩阵是一个对称矩阵，其中对角线上的元素是每个变量的方差，非对角线上的元素是变量之间的协方差。\n协方差矩阵的定义：\nΣ=(Var(X1)Cov(X1,X2)…Cov(X1,Xn)Cov(X2,X1)Var(X2)…Cov(X2,Xn)⋮⋮⋱⋮Cov(Xn,X1)Cov(Xn,X2)…Var(Xn))\\Sigma = \\begin{pmatrix} Var(X_1) &amp; Cov(X_1, X_2) &amp; \\dots &amp; Cov(X_1, X_n) \\ Cov(X_2, X_1) &amp; Var(X_2) &amp; \\dots &amp; Cov(X_2, X_n) \\ \\vdots &amp; \\vdots &amp; \\ddots &amp; \\vdots \\ Cov(X_n, X_1) &amp; Cov(X_n, X_2) &amp; \\dots &amp; Var(X_n) \\end{pmatrix}\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T22:57:43&#43;08:00'/><meta property='article:modified_time' content='2025-05-18T22:57:43&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' />
 <meta name="twitter:title" content="">
-<meta name="twitter:description" content=" 向量的点积,叉乘的数学意义和相应的表示: https://blog.csdn.net/dcrmg/article/details/52416832 奇异值分解: https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/ 线性代数知识汇总: https://blog.csdn.net/MyArrow/article/details/53365048 排列组合: https://blog.csdn.net/m0_50068884/article/details/122619734 正定矩阵: https://blog.csdn.net/asd136912/article/details/79146151 ">
+<meta name="twitter:description" content=" date = &lsquo;2025-05-18T22:36:53+08:00&rsquo; draft = false title = &lsquo;协方差矩阵&rsquo; categories: - 数学\n对于一组有关联的随机变量，方差和协方差之间的关系可以通过联合分布或多变量的角度来理解。设有 nn 个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，它们的协方差矩阵和方差之间的关系如下。\n1. 协方差矩阵 对于多个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，我们可以构造一个协方差矩阵 Σ\\Sigma，这个矩阵描述了各个变量之间的协方差。协方差矩阵是一个对称矩阵，其中对角线上的元素是每个变量的方差，非对角线上的元素是变量之间的协方差。\n协方差矩阵的定义：\nΣ=(Var(X1)Cov(X1,X2)…Cov(X1,Xn)Cov(X2,X1)Var(X2)…Cov(X2,Xn)⋮⋮⋱⋮Cov(Xn,X1)Cov(Xn,X2)…Var(Xn))\\Sigma = \\begin{pmatrix} Var(X_1) &amp; Cov(X_1, X_2) &amp; \\dots &amp; Cov(X_1, X_n) \\ Cov(X_2, X_1) &amp; Var(X_2) &amp; \\dots &amp; Cov(X_2, X_n) \\ \\vdots &amp; \\vdots &amp; \\ddots &amp; \\vdots \\ Cov(X_n, X_1) &amp; Cov(X_n, X_2) &amp; \\dots &amp; Var(X_n) \\end{pmatrix}\n">
     </head>
     <body class="
     article-page
@@ -231,11 +231,11 @@
 
                             <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
                                 
-                                    <option value="http://localhost:1313/huyang/" selected>English</option>
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
                                 
-                                    <option value="http://localhost:1313/huyang/zh-cn/" >中文</option>
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
                                 
-                                    <option value="http://localhost:1313/huyang/ar/" >عربي</option>
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
                                 
                             </select>
                         </li>
@@ -268,7 +268,54 @@
     </ol>
 </aside>
 
-    
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#最小二乘法的基本思想">最小二乘法的基本思想</a></li>
+        <li><a href="#求解过程">求解过程</a></li>
+        <li><a href="#线性回归的几何解释">线性回归的几何解释</a></li>
+        <li><a href="#使用案例简单线性回归">使用案例：简单线性回归</a>
+          <ol>
+            <li><a href="#1-数据整理">1. 数据整理</a></li>
+            <li><a href="#2-计算斜率-a-和截距-b">2. 计算斜率 $a$ 和截距 $b$</a></li>
+            <li><a href="#3-预测与解释">3. 预测与解释</a></li>
+          </ol>
+        </li>
+        <li><a href="#最小二乘法的扩展">最小二乘法的扩展</a></li>
+        <li><a href="#使用案例多元线性回归">使用案例：多元线性回归</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
             <main class="main full-width">
     <article class="main-article">
@@ -290,19 +337,6 @@
     
     
     <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">May 18, 2025</time>
-            </div>
         
 
         
@@ -331,23 +365,137 @@
     <section class="article-content">
     
     
-    <ol>
-<li>向量的点积,叉乘的数学意义和相应的表示:
-<a class="link" href="https://blog.csdn.net/dcrmg/article/details/52416832"  target="_blank" rel="noopener"
-    >https://blog.csdn.net/dcrmg/article/details/52416832</a></li>
-<li>奇异值分解:
-<a class="link" href="https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/"  target="_blank" rel="noopener"
-    >https://shichaoxin.com/2020/11/24/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80-%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/</a></li>
-<li>线性代数知识汇总:
-<a class="link" href="https://blog.csdn.net/MyArrow/article/details/53365048"  target="_blank" rel="noopener"
-    >https://blog.csdn.net/MyArrow/article/details/53365048</a></li>
-<li>排列组合:
-<a class="link" href="https://blog.csdn.net/m0_50068884/article/details/122619734"  target="_blank" rel="noopener"
-    >https://blog.csdn.net/m0_50068884/article/details/122619734</a></li>
-<li>正定矩阵:
-<a class="link" href="https://blog.csdn.net/asd136912/article/details/79146151"  target="_blank" rel="noopener"
-    >https://blog.csdn.net/asd136912/article/details/79146151</a></li>
+    <hr>
+<p>date = &lsquo;2025-05-18T22:29:58+08:00&rsquo;
+draft = false
+title = &lsquo;二乘法&rsquo;
+categories:
+- 数学</p>
+<hr>
+<h3 id="最小二乘法的基本思想">最小二乘法的基本思想
+</h3><p>给定一组观测数据点 $(x_1, y_1), (x_2, y_2), &hellip;, (x_n, y_n)$，假设这些数据可以用一个线性模型来拟合：
+</p>
+\[
+$$y = ax + b$$
+\]<p>
+其中 $a$ 是斜率，$b$ 是截距。</p>
+<p>为了找到最佳的线性模型参数 $a$ 和 $b$，我们希望找到一条直线，使得所有数据点 $(x_i, y_i)$ 与拟合直线 $y = ax + b$ 之间的垂直距离尽可能小。</p>
+<p><strong>误差函数：</strong> 每个数据点与直线之间的误差可以定义为实际观测值 $y_i$ 与预测值 $y_i&rsquo;$ 的差值，即：
+</p>
+\[
+$$e_i = y_i - (a x_i + b)$$
+\]<p>
+最小二乘法的目标是最小化所有误差平方和，即：
+</p>
+\[
+$$S(a, b) = \sum_{i=1}^n \left( y_i - (a x_i + b) \right)^2$$
+\]<p>
+其中 $S(a, b)$ 是关于 $a$ 和 $b$ 的函数，也称为<strong>目标函数</strong>或<strong>损失函数</strong>。通过对 $S(a, b)$ 进行最小化，我们可以得到最佳拟合参数 $a$ 和 $b$。</p>
+<h3 id="求解过程">求解过程
+</h3><p>为了找到使得 $S(a, b)$ 最小的 $a$ 和 $b$，我们对 $S(a, b)$ 分别对 $a$ 和 $b$ 求导，并令导数等于 0。这个过程可以通过下面的步骤进行：</p>
+<ol>
+<li><strong>对 $a$ 求导：</strong>
+\[
+    $$ \frac{\partial S(a, b)}{\partial a} = -2 \sum_{i=1}^n x_i \left( y_i - (a x_i + b) \right) = 0$$
+   \]</li>
+<li><strong>对 $b$ 求导：</strong>
+\[
+    $$ \frac{\partial S(a, b)}{\partial b} = -2 \sum_{i=1}^n \left( y_i - (a x_i + b) \right) = 0$$
+   \]</li>
 </ol>
+<p>通过这两个方程，我们可以解出 $a$ 和 $b$ 的值。具体来说，通过代数运算，可以得到：
+</p>
+\[
+$$a = \frac{n \sum x_i y_i - \sum x_i \sum y_i}{n \sum x_i^2 - (\sum x_i)^2}$$
+\]<p>
+</p>
+\[
+$$b = \frac{\sum y_i - a \sum x_i}{n}$$
+\]<p>
+这就是最小二乘法求解线性回归中 $a$ 和 $b$ 的表达式。</p>
+<h3 id="线性回归的几何解释">线性回归的几何解释
+</h3><p>线性回归可以看作是试图找到一条最优直线，使得所有数据点到直线的垂直距离平方和最小。通过最小二乘法，我们通过最小化误差平方和，从所有可能的直线中选出最优的一条。</p>
+<h3 id="使用案例简单线性回归">使用案例：简单线性回归
+</h3><p>假设我们有一个数据集，描述了某商品的广告投入（自变量 $x$）与销售额（因变量 $y$）之间的关系：</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">广告投入 (x)</th>
+          <th style="text-align: center">销售额 (y)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">1</td>
+          <td style="text-align: center">2</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2</td>
+          <td style="text-align: center">2.8</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">3</td>
+          <td style="text-align: center">3.6</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">4</td>
+          <td style="text-align: center">4.5</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">5</td>
+          <td style="text-align: center">5.1</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>我们想要通过最小二乘法拟合出一条线性回归直线 $y = ax + b$，预测广告投入和销售额的关系。</p>
+<h4 id="1-数据整理">1. 数据整理
+</h4><p>首先，我们需要计算相关的和：
+</p>
+\[
+\sum x_i = 1 + 2 + 3 + 4 + 5 = 15
+\]<p>
+</p>
+\[
+\sum y_i = 2 + 2.8 + 3.6 + 4.5 + 5.1 = 18
+\]<p>
+</p>
+\[
+\sum x_i y_i = (1)(2) + (2)(2.8) + (3)(3.6) + (4)(4.5) + (5)(5.1) = 62.1
+\]<p>
+</p>
+\[
+\sum x_i^2 = 1^2 + 2^2 + 3^2 + 4^2 + 5^2 = 55
+\]<h4 id="2-计算斜率-a-和截距-b">2. 计算斜率 $a$ 和截距 $b$
+</h4><p>利用公式：
+</p>
+$$\[
+a = \frac{5 \cdot 62.1 - 15 \cdot 18}{5 \cdot 55 - 15^2} = \frac{310.5 - 270}{275 - 225} = \frac{40.5}{50} = 0.81
+\]
+\[
+b = \frac{18 - 0.81 \cdot 15}{5} = \frac{18 - 12.15}{5} = \frac{5.85}{5} = 1.17
+\]$$<p>因此，拟合的线性回归方程为：
+</p>
+\[
+y = 0.81x + 1.17
+\]<h4 id="3-预测与解释">3. 预测与解释
+</h4><p>根据拟合方程，我们可以预测广告投入为 $6$ 时的销售额：
+</p>
+\[
+$$y = 0.81 \cdot 6 + 1.17 = 4.86 + 1.17 = 6.03$$
+\]<p>
+因此，广告投入为 6 时，预计销售额为 6.03。</p>
+<h3 id="最小二乘法的扩展">最小二乘法的扩展
+</h3><p>最小二乘法不仅用于简单线性回归，还可以推广到多元线性回归以及非线性回归。对于多元回归，目标函数类似，只不过参数变成了多个变量。非线性回归中，最小二乘法依然是常用的优化方法，通过数值方法来最小化非线性函数的误差平方和。</p>
+<h3 id="使用案例多元线性回归">使用案例：多元线性回归
+</h3><p>假设我们有多个自变量（如广告投入、市场规模等）共同影响销售额，我们可以通过多元线性回归模型来拟合：
+</p>
+\[
+$$y = a_1 x_1 + a_2 x_2 + b$$
+\]<p>
+在这种情况下，最小二乘法同样可以用于确定最佳的 $a_1$、$a_2$ 和 $b$。</p>
+<h3 id="总结">总结
+</h3><p>最小二乘法是一种通过最小化误差平方和来拟合模型的方法，广泛应用于统计和机器学习中的回归分析。它能够找到自变量和因变量之间的最佳线性关系，帮助我们进行预测和解释。</p>
+<p>现在公式已经用 $ 符号正确包裹，方便在渲染环境下正确显示。</p>
 
 </section>
 
@@ -524,7 +672,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.cd76aa272fba173b2f464f406f017da86c41ef720de6e50607ddcf590ac18f8d.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

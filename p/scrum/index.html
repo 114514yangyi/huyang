@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Scrum 是一种敏捷开发框架，旨在帮助团队有效管理和开发复杂的产品。它通过一系列的角色、事件、工件和规则，创建一个灵活的环境，让团队能够快速响应变化、提高协作、并持续交付高质量的产品。下面是对 Scrum 主要组成部分的详细讲解：\n1. Scrum 的核心组成 角色： Product Owner（产品负责人）：负责管理和优化产品需求列表（Product Backlog）。他/她确保团队的工作对业务有最大价值，并为产品设定优先级。 Scrum Master（Scrum 教练）：负责确保 Scrum 流程得到正确实施，移除团队在开发过程中遇到的障碍，并帮助团队持续改进。 Developers（开发团队）：由具备跨职能技能的成员组成，负责交付产品增量（Increment）。 工件： Product Backlog（产品待办列表）：是一个不断变化的需求清单，列出了需要完成的功能、任务和修复，按优先级排列。 Sprint Backlog（冲刺待办列表）：是当前冲刺中要完成的任务清单，包括从产品待办列表中选取的项目和实现目标的具体计划。 Increment（增量）：每个 Sprint 结束时交付的产品增量，必须符合“完成的定义”（Definition of Done）。 事件： Sprint（冲刺）：一个固定周期的工作时间段，通常为 2-4 周。在这个期间，开发团队将完成一定数量的产品增量。 Sprint Planning（冲刺计划会议）：在每个 Sprint 开始时举行，团队确定 Sprint 目标和待办事项。 Daily Scrum（每日站会）：每天 15 分钟的会议，团队成员分享进展、遇到的障碍以及接下来的计划。 Sprint Review（冲刺评审会议）：在 Sprint 结束时举行，展示已完成的增量并与利益相关者一起回顾进展。 Sprint Retrospective（冲刺回顾会议）：团队总结 Sprint 中的得失，讨论如何改进流程和效能。 2. Scrum 的理论基础 Scrum 基于两个主要理论：\n经验主义（Empiricism）：强调通过观察和实验积累经验，基于现实情况作出决策。这也是为什么 Scrum 重视反馈和调整。 精益思维（Lean Thinking）：通过减少浪费并聚焦于最重要的工作来提高效率。 3. Scrum 的三大支柱 透明性：所有工作和进展对团队成员和利益相关者是可见的，确保团队的目标和挑战清晰明确。 检视：定期检查 Scrum 工件和工作进展，以便及时发现问题并做出调整。 适应：基于检视结果，团队可以对工作流程、目标和技术方案做出调整，以应对变化。 4. Scrum 的五个价值观 承诺（Commitment）：团队承诺达到 Sprint 目标，并为团队的成功共同努力。 专注（Focus）：团队专注于当前的 Sprint 目标，减少不必要的干扰。 开放（Openness）：团队成员之间、与利益相关者之间保持透明，积极分享信息。 尊重（Respect）：团队成员尊重彼此的意见和技能，相互支持。 勇气（Courage）：团队成员敢于面对挑战，提出问题并解决复杂问题。 5. Scrum 的应用 Scrum 是一种轻量级框架，适用于各种复杂的系统和产品开发。它特别适合快速变化和高不确定性的环境，如软件开发、产品创新等领域。它能帮助团队提高生产效率、确保高质量输出、并增强跨职能协作。\n">
+<title>Scrum</title>
+
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/scrum/'>
+
+<link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Scrum">
+<meta property='og:description' content="Scrum 是一种敏捷开发框架，旨在帮助团队有效管理和开发复杂的产品。它通过一系列的角色、事件、工件和规则，创建一个灵活的环境，让团队能够快速响应变化、提高协作、并持续交付高质量的产品。下面是对 Scrum 主要组成部分的详细讲解：\n1. Scrum 的核心组成 角色： Product Owner（产品负责人）：负责管理和优化产品需求列表（Product Backlog）。他/她确保团队的工作对业务有最大价值，并为产品设定优先级。 Scrum Master（Scrum 教练）：负责确保 Scrum 流程得到正确实施，移除团队在开发过程中遇到的障碍，并帮助团队持续改进。 Developers（开发团队）：由具备跨职能技能的成员组成，负责交付产品增量（Increment）。 工件： Product Backlog（产品待办列表）：是一个不断变化的需求清单，列出了需要完成的功能、任务和修复，按优先级排列。 Sprint Backlog（冲刺待办列表）：是当前冲刺中要完成的任务清单，包括从产品待办列表中选取的项目和实现目标的具体计划。 Increment（增量）：每个 Sprint 结束时交付的产品增量，必须符合“完成的定义”（Definition of Done）。 事件： Sprint（冲刺）：一个固定周期的工作时间段，通常为 2-4 周。在这个期间，开发团队将完成一定数量的产品增量。 Sprint Planning（冲刺计划会议）：在每个 Sprint 开始时举行，团队确定 Sprint 目标和待办事项。 Daily Scrum（每日站会）：每天 15 分钟的会议，团队成员分享进展、遇到的障碍以及接下来的计划。 Sprint Review（冲刺评审会议）：在 Sprint 结束时举行，展示已完成的增量并与利益相关者一起回顾进展。 Sprint Retrospective（冲刺回顾会议）：团队总结 Sprint 中的得失，讨论如何改进流程和效能。 2. Scrum 的理论基础 Scrum 基于两个主要理论：\n经验主义（Empiricism）：强调通过观察和实验积累经验，基于现实情况作出决策。这也是为什么 Scrum 重视反馈和调整。 精益思维（Lean Thinking）：通过减少浪费并聚焦于最重要的工作来提高效率。 3. Scrum 的三大支柱 透明性：所有工作和进展对团队成员和利益相关者是可见的，确保团队的目标和挑战清晰明确。 检视：定期检查 Scrum 工件和工作进展，以便及时发现问题并做出调整。 适应：基于检视结果，团队可以对工作流程、目标和技术方案做出调整，以应对变化。 4. Scrum 的五个价值观 承诺（Commitment）：团队承诺达到 Sprint 目标，并为团队的成功共同努力。 专注（Focus）：团队专注于当前的 Sprint 目标，减少不必要的干扰。 开放（Openness）：团队成员之间、与利益相关者之间保持透明，积极分享信息。 尊重（Respect）：团队成员尊重彼此的意见和技能，相互支持。 勇气（Courage）：团队成员敢于面对挑战，提出问题并解决复杂问题。 5. Scrum 的应用 Scrum 是一种轻量级框架，适用于各种复杂的系统和产品开发。它特别适合快速变化和高不确定性的环境，如软件开发、产品创新等领域。它能帮助团队提高生产效率、确保高质量输出、并增强跨职能协作。\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/scrum/'>
+<meta property='og:site_name' content='Hu Yang&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Scrum">
+<meta name="twitter:description" content="Scrum 是一种敏捷开发框架，旨在帮助团队有效管理和开发复杂的产品。它通过一系列的角色、事件、工件和规则，创建一个灵活的环境，让团队能够快速响应变化、提高协作、并持续交付高质量的产品。下面是对 Scrum 主要组成部分的详细讲解：\n1. Scrum 的核心组成 角色： Product Owner（产品负责人）：负责管理和优化产品需求列表（Product Backlog）。他/她确保团队的工作对业务有最大价值，并为产品设定优先级。 Scrum Master（Scrum 教练）：负责确保 Scrum 流程得到正确实施，移除团队在开发过程中遇到的障碍，并帮助团队持续改进。 Developers（开发团队）：由具备跨职能技能的成员组成，负责交付产品增量（Increment）。 工件： Product Backlog（产品待办列表）：是一个不断变化的需求清单，列出了需要完成的功能、任务和修复，按优先级排列。 Sprint Backlog（冲刺待办列表）：是当前冲刺中要完成的任务清单，包括从产品待办列表中选取的项目和实现目标的具体计划。 Increment（增量）：每个 Sprint 结束时交付的产品增量，必须符合“完成的定义”（Definition of Done）。 事件： Sprint（冲刺）：一个固定周期的工作时间段，通常为 2-4 周。在这个期间，开发团队将完成一定数量的产品增量。 Sprint Planning（冲刺计划会议）：在每个 Sprint 开始时举行，团队确定 Sprint 目标和待办事项。 Daily Scrum（每日站会）：每天 15 分钟的会议，团队成员分享进展、遇到的障碍以及接下来的计划。 Sprint Review（冲刺评审会议）：在 Sprint 结束时举行，展示已完成的增量并与利益相关者一起回顾进展。 Sprint Retrospective（冲刺回顾会议）：团队总结 Sprint 中的得失，讨论如何改进流程和效能。 2. Scrum 的理论基础 Scrum 基于两个主要理论：\n经验主义（Empiricism）：强调通过观察和实验积累经验，基于现实情况作出决策。这也是为什么 Scrum 重视反馈和调整。 精益思维（Lean Thinking）：通过减少浪费并聚焦于最重要的工作来提高效率。 3. Scrum 的三大支柱 透明性：所有工作和进展对团队成员和利益相关者是可见的，确保团队的目标和挑战清晰明确。 检视：定期检查 Scrum 工件和工作进展，以便及时发现问题并做出调整。 适应：基于检视结果，团队可以对工作流程、目标和技术方案做出调整，以应对变化。 4. Scrum 的五个价值观 承诺（Commitment）：团队承诺达到 Sprint 目标，并为团队的成功共同努力。 专注（Focus）：团队专注于当前的 Sprint 目标，减少不必要的干扰。 开放（Openness）：团队成员之间、与利益相关者之间保持透明，积极分享信息。 尊重（Respect）：团队成员尊重彼此的意见和技能，相互支持。 勇气（Courage）：团队成员敢于面对挑战，提出问题并解决复杂问题。 5. Scrum 的应用 Scrum 是一种轻量级框架，适用于各种复杂的系统和产品开发。它特别适合快速变化和高不确定性的环境，如软件开发、产品创新等领域。它能帮助团队提高生产效率、确保高质量输出、并增强跨职能协作。\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/huyang/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/huyang/img/logo-transparent_hu_2593eda3cf734d42.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/huyang">Hu Yang&#39;s Blog</a></h1>
+            <h2 class="site-description">Blog</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://114514yangyi.github.io/huyang/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='2416572689@qq.com'
+                        target="_blank"
+                        title="QQ"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/huyang/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#1-scrum-的核心组成">1. <strong>Scrum 的核心组成</strong></a>
+      <ol>
+        <li><a href="#角色">角色：</a></li>
+        <li><a href="#工件">工件：</a></li>
+        <li><a href="#事件">事件：</a></li>
+        <li><a href="#2-scrum-的理论基础">2. <strong>Scrum 的理论基础</strong></a></li>
+        <li><a href="#3-scrum-的三大支柱">3. <strong>Scrum 的三大支柱</strong></a></li>
+        <li><a href="#4-scrum-的五个价值观">4. <strong>Scrum 的五个价值观</strong></a></li>
+        <li><a href="#5-scrum-的应用">5. <strong>Scrum 的应用</strong></a></li>
+      </ol>
+    </li>
+    <li><a href="#33355">33355</a>
+      <ol>
+        <li><a href="#1-三大支柱3">1. <strong>三大支柱</strong>（3）</a></li>
+        <li><a href="#2-五个价值观5">2. <strong>五个价值观</strong>（5）</a></li>
+        <li><a href="#3-三个角色3">3. <strong>三个角色</strong>（3）</a></li>
+        <li><a href="#4-三个工件3">4. <strong>三个工件</strong>（3）</a></li>
+        <li><a href="#5-五个事件5">5. <strong>五个事件</strong>（5）</a></li>
+        <li><a href="#总结">总结：</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/huyang/p/scrum/">Scrum</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 18, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p><strong>Scrum</strong> 是一种敏捷开发框架，旨在帮助团队有效管理和开发复杂的产品。它通过一系列的角色、事件、工件和规则，创建一个灵活的环境，让团队能够快速响应变化、提高协作、并持续交付高质量的产品。下面是对 Scrum 主要组成部分的详细讲解：</p>
+<h2 id="1-scrum-的核心组成">1. <strong>Scrum 的核心组成</strong>
+</h2><h3 id="角色">角色：
+</h3><ul>
+<li><strong>Product Owner（产品负责人）</strong>：负责管理和优化产品需求列表（Product Backlog）。他/她确保团队的工作对业务有最大价值，并为产品设定优先级。</li>
+<li><strong>Scrum Master（Scrum 教练）</strong>：负责确保 Scrum 流程得到正确实施，移除团队在开发过程中遇到的障碍，并帮助团队持续改进。</li>
+<li><strong>Developers（开发团队）</strong>：由具备跨职能技能的成员组成，负责交付产品增量（Increment）。</li>
+</ul>
+<h3 id="工件">工件：
+</h3><ul>
+<li><strong>Product Backlog（产品待办列表）</strong>：是一个不断变化的需求清单，列出了需要完成的功能、任务和修复，按优先级排列。</li>
+<li><strong>Sprint Backlog（冲刺待办列表）</strong>：是当前冲刺中要完成的任务清单，包括从产品待办列表中选取的项目和实现目标的具体计划。</li>
+<li><strong>Increment（增量）</strong>：每个 Sprint 结束时交付的产品增量，必须符合“完成的定义”（Definition of Done）。</li>
+</ul>
+<h3 id="事件">事件：
+</h3><ul>
+<li><strong>Sprint（冲刺）</strong>：一个固定周期的工作时间段，通常为 2-4 周。在这个期间，开发团队将完成一定数量的产品增量。</li>
+<li><strong>Sprint Planning（冲刺计划会议）</strong>：在每个 Sprint 开始时举行，团队确定 Sprint 目标和待办事项。</li>
+<li><strong>Daily Scrum（每日站会）</strong>：每天 15 分钟的会议，团队成员分享进展、遇到的障碍以及接下来的计划。</li>
+<li><strong>Sprint Review（冲刺评审会议）</strong>：在 Sprint 结束时举行，展示已完成的增量并与利益相关者一起回顾进展。</li>
+<li><strong>Sprint Retrospective（冲刺回顾会议）</strong>：团队总结 Sprint 中的得失，讨论如何改进流程和效能。</li>
+</ul>
+<h3 id="2-scrum-的理论基础">2. <strong>Scrum 的理论基础</strong>
+</h3><p>Scrum 基于两个主要理论：</p>
+<ul>
+<li><strong>经验主义（Empiricism）</strong>：强调通过观察和实验积累经验，基于现实情况作出决策。这也是为什么 Scrum 重视反馈和调整。</li>
+<li><strong>精益思维（Lean Thinking）</strong>：通过减少浪费并聚焦于最重要的工作来提高效率。</li>
+</ul>
+<h3 id="3-scrum-的三大支柱">3. <strong>Scrum 的三大支柱</strong>
+</h3><ul>
+<li><strong>透明性</strong>：所有工作和进展对团队成员和利益相关者是可见的，确保团队的目标和挑战清晰明确。</li>
+<li><strong>检视</strong>：定期检查 Scrum 工件和工作进展，以便及时发现问题并做出调整。</li>
+<li><strong>适应</strong>：基于检视结果，团队可以对工作流程、目标和技术方案做出调整，以应对变化。</li>
+</ul>
+<h3 id="4-scrum-的五个价值观">4. <strong>Scrum 的五个价值观</strong>
+</h3><ul>
+<li><strong>承诺（Commitment）</strong>：团队承诺达到 Sprint 目标，并为团队的成功共同努力。</li>
+<li><strong>专注（Focus）</strong>：团队专注于当前的 Sprint 目标，减少不必要的干扰。</li>
+<li><strong>开放（Openness）</strong>：团队成员之间、与利益相关者之间保持透明，积极分享信息。</li>
+<li><strong>尊重（Respect）</strong>：团队成员尊重彼此的意见和技能，相互支持。</li>
+<li><strong>勇气（Courage）</strong>：团队成员敢于面对挑战，提出问题并解决复杂问题。</li>
+</ul>
+<h3 id="5-scrum-的应用">5. <strong>Scrum 的应用</strong>
+</h3><p>Scrum 是一种轻量级框架，适用于各种复杂的系统和产品开发。它特别适合快速变化和高不确定性的环境，如软件开发、产品创新等领域。它能帮助团队提高生产效率、确保高质量输出、并增强跨职能协作。</p>
+<p>通过不断的 Sprint 循环，Scrum 支持持续的反馈与改进，使得产品开发能够灵活应对不断变化的需求和市场环境。</p>
+<p>这个框架的优势在于它能最大化团队的生产力，保证产品的交付质量，并促进团队成员之间的沟通与协作。</p>
+<h2 id="33355">33355
+</h2><p>Scrum 33355 是对 Scrum 框架关键组成部分的总结，其中的每个数字代表了 Scrum 中的重要元素。我们可以通过这几个数字更清晰地理解 Scrum 的核心构成。</p>
+<h3 id="1-三大支柱3">1. <strong>三大支柱</strong>（3）
+</h3><p>Scrum 框架的运作基于三个支柱，它们确保了 Scrum 能够适应复杂的工作环境：</p>
+<ul>
+<li><strong>透明性（Transparency）</strong>： Scrum 强调所有团队成员和利益相关者对工作过程和工作成果的透明度。透明性是成功实施 Scrum 的基础，只有保持透明，团队才能有效地检视工作进展，进行及时的调整。</li>
+<li><strong>检视（Inspection）</strong>： Scrum 强调定期检查和回顾工作进展。团队需要定期审视工件（如产品待办列表、Sprint 待办列表和增量等），以及达成目标的进展。这帮助发现问题或偏差，并及时做出调整。</li>
+<li><strong>调整（Adaptation）</strong>： 在 Scrum 中，团队根据检视结果进行调整。如果某个方面的工作超出了可接受的范围，或者结果不符合预期，团队需要及时调整工作方式或目标，以减少偏差并提高效率。</li>
+</ul>
+<p>这三个支柱共同保证了 Scrum 的灵活性和有效性，能够让团队不断根据实际情况调整工作策略，从而应对不确定性和变化。</p>
+<h3 id="2-五个价值观5">2. <strong>五个价值观</strong>（5）
+</h3><p>Scrum 中的五个价值观是 Scrum 团队所需遵循的核心理念，它们有助于确保团队的高效协作和持久的生产力。</p>
+<ul>
+<li><strong>承诺（Commitment）</strong>：团队成员承诺达成 Sprint 目标，并为团队的成功全力以赴。每个团队成员都应为实现团队目标承担责任。</li>
+<li><strong>专注（Focus）</strong>：在 Sprint 内，团队需要聚焦于完成当前的工作，而不被外部的干扰或其他任务所影响。专注能提高工作效率，并确保任务顺利完成。</li>
+<li><strong>开放（Openness）</strong>：Scrum 强调团队成员之间的开放交流。成员们应当能够自由地表达自己的观点、意见和担忧，并且对工作中的问题保持透明。只有开放的沟通，才能有效解决问题。</li>
+<li><strong>尊重（Respect）</strong>：Scrum 团队成员彼此尊重，相互认可各自的技能和贡献。尊重是团队协作和成功的基础，可以帮助团队成员保持积极的合作态度和高效的工作状态。</li>
+<li><strong>勇气（Courage）</strong>：在 Scrum 中，团队成员需要有勇气面对复杂的挑战，提出问题，解决冲突，并在困难面前保持进取心。勇气是推动团队持续进步和不断改进的动力。</li>
+</ul>
+<h3 id="3-三个角色3">3. <strong>三个角色</strong>（3）
+</h3><p>Scrum 框架有三个关键角色，它们在团队中各司其职，确保工作能够有效地进行。</p>
+<ul>
+<li><strong>Scrum Master</strong>：负责帮助 Scrum 团队理解和应用 Scrum 理论和实践。Scrum Master 为团队提供支持，确保团队能够在 Scrum 框架下顺利工作，并帮助移除任何阻碍进展的障碍。</li>
+<li><strong>Product Owner（产品负责人）</strong>：负责确保团队工作的最终目标是最大化产品的价值。产品负责人管理和优先排序产品待办列表（Product Backlog），并确保团队专注于最重要的任务。</li>
+<li><strong>Developers（开发团队）</strong>：负责实现产品增量，并将其交付给客户。开发团队成员跨职能，具备完成任务所需的各种技能，并为项目的成功负有共同责任。</li>
+</ul>
+<h3 id="4-三个工件3">4. <strong>三个工件</strong>（3）
+</h3><p>Scrum 使用三个工件来帮助团队管理工作任务，确保工作能够有序进行。</p>
+<ul>
+<li><strong>Product Backlog（产品待办列表）</strong>：这是一个动态的需求清单，包含了所有要实现的功能、特性、修复以及优化点。产品待办列表是 Scrum 团队工作的唯一来源，所有工作项都会在这里列出，并按优先级排序。</li>
+<li><strong>Sprint Backlog（冲刺待办列表）</strong>：这是一个具体的任务清单，包含了团队在当前 Sprint 中要完成的工作。Sprint Backlog 是从产品待办列表中选取的任务，并由团队在 Sprint 计划会议中确认。</li>
+<li><strong>Increment（增量）</strong>：每个 Sprint 结束时，团队交付的工作成果。增量是已完成且符合“完成的定义”（Definition of Done）标准的产品功能或特性。</li>
+</ul>
+<h3 id="5-五个事件5">5. <strong>五个事件</strong>（5）
+</h3><p>Scrum 框架中有五个核心事件，每个事件都有明确的时间和目的，帮助团队有效地组织工作。</p>
+<ul>
+<li><strong>Sprint</strong>：一个固定周期的工作阶段，通常为 1 到 4 周。每个 Sprint 都有明确的目标，团队在 Sprint 内集中精力完成任务，并交付一个增量。</li>
+<li><strong>Sprint Planning（冲刺计划会议）</strong>：Sprint 开始时举行，团队会明确 Sprint 目标，并根据产品待办列表选择要在 Sprint 内完成的工作。</li>
+<li><strong>Daily Scrum（每日站会）</strong>：每天进行一次，团队成员分享前一天的工作进展、今天的计划以及遇到的障碍。每天站会时，团队也会更新工作进展，调整工作优先级。</li>
+<li><strong>Sprint Review（冲刺评审会议）</strong>：在 Sprint 结束时举行，团队展示已完成的增量并接受利益相关者的反馈。</li>
+<li><strong>Sprint Retrospective（冲刺回顾会议）</strong>：Sprint 结束后进行，团队讨论 Sprint 中的得失，确定如何在下一个 Sprint 中改进工作流程和团队协作。</li>
+</ul>
+<h3 id="总结">总结：
+</h3><p>Scrum 33355 的概念通过数字 3、5 和 3 的组合，帮助团队记住 Scrum 的关键元素，包括支柱、价值观、角色、工件和事件。这些构成了 Scrum 的基础，确保团队能够有效地协作、持续改进并交付高质量的产品。�高质量的产品。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>CC BY-NC-ND</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Hu Yang
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

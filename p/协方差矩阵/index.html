@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/huyang/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=huyang/livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="对于一组有关联的随机变量，方差和协方差之间的关系可以通过联合分布或多变量的角度来理解。设有 nn 个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，它们的协方差矩阵和方差之间的关系如下。\n1. 协方差矩阵 对于多个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，我们可以构造一个协方差矩阵 Σ\\Sigma，这个矩阵描述了各个变量之间的协方差。协方差矩阵是一个对称矩阵，其中对角线上的元素是每个变量的方差，非对角线上的元素是变量之间的协方差。\n协方差矩阵的定义：\nΣ=(Var(X1)Cov(X1,X2)…Cov(X1,Xn)Cov(X2,X1)Var(X2)…Cov(X2,Xn)⋮⋮⋱⋮Cov(Xn,X1)Cov(Xn,X2)…Var(Xn))\\Sigma = \\begin{pmatrix} Var(X_1) &amp; Cov(X_1, X_2) &amp; \\dots &amp; Cov(X_1, X_n) \\ Cov(X_2, X_1) &amp; Var(X_2) &amp; \\dots &amp; Cov(X_2, X_n) \\ \\vdots &amp; \\vdots &amp; \\ddots &amp; \\vdots \\ Cov(X_n, X_1) &amp; Cov(X_n, X_2) &amp; \\dots &amp; Var(X_n) \\end{pmatrix}\n对角线元素 Var(Xi)Var(X_i) 是各个随机变量的方差。 非对角线元素 Cov(Xi,Xj)Cov(X_i, X_j) 是不同随机变量之间的协方差。 2. 方差与协方差的关系 对于一组随机变量，方差与协方差的关系可以通过以下几种方式来理解：\n">
 <title>协方差矩阵</title>
 
-<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5/'>
+<link rel='canonical' href='http://localhost:1313/huyang/p/%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5/'>
 
 <link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="协方差矩阵">
 <meta property='og:description' content="对于一组有关联的随机变量，方差和协方差之间的关系可以通过联合分布或多变量的角度来理解。设有 nn 个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，它们的协方差矩阵和方差之间的关系如下。\n1. 协方差矩阵 对于多个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，我们可以构造一个协方差矩阵 Σ\\Sigma，这个矩阵描述了各个变量之间的协方差。协方差矩阵是一个对称矩阵，其中对角线上的元素是每个变量的方差，非对角线上的元素是变量之间的协方差。\n协方差矩阵的定义：\nΣ=(Var(X1)Cov(X1,X2)…Cov(X1,Xn)Cov(X2,X1)Var(X2)…Cov(X2,Xn)⋮⋮⋱⋮Cov(Xn,X1)Cov(Xn,X2)…Var(Xn))\\Sigma = \\begin{pmatrix} Var(X_1) &amp; Cov(X_1, X_2) &amp; \\dots &amp; Cov(X_1, X_n) \\ Cov(X_2, X_1) &amp; Var(X_2) &amp; \\dots &amp; Cov(X_2, X_n) \\ \\vdots &amp; \\vdots &amp; \\ddots &amp; \\vdots \\ Cov(X_n, X_1) &amp; Cov(X_n, X_2) &amp; \\dots &amp; Var(X_n) \\end{pmatrix}\n对角线元素 Var(Xi)Var(X_i) 是各个随机变量的方差。 非对角线元素 Cov(Xi,Xj)Cov(X_i, X_j) 是不同随机变量之间的协方差。 2. 方差与协方差的关系 对于一组随机变量，方差与协方差的关系可以通过以下几种方式来理解：\n">
-<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5/'>
+<meta property='og:url' content='http://localhost:1313/huyang/p/%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T22:36:53&#43;08:00'/><meta property='article:modified_time' content='2025-05-18T22:36:53&#43;08:00'/>
 <meta name="twitter:title" content="协方差矩阵">
@@ -231,11 +231,11 @@
 
                             <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
                                 
-                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                    <option value="http://localhost:1313/huyang/" selected>English</option>
                                 
-                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                    <option value="http://localhost:1313/huyang/zh-cn/" >中文</option>
                                 
-                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                    <option value="http://localhost:1313/huyang/ar/" >عربي</option>
                                 
                             </select>
                         </li>
@@ -603,7 +603,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.cd76aa272fba173b2f464f406f017da86c41ef720de6e50607ddcf590ac18f8d.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

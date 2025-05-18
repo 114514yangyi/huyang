@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="标准容器函数 Created by: Hu Yang Created time: September 13, 2023 7:51 PM Tags: Guides, 数据结构\n以下是常用的标准容器函数的使用方法示例：\nsize()：返回容器中元素的数量。 1 2 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; std==cout &lt;&lt; &#34;Size: &#34; &lt;&lt; vec.size() &lt;&lt; std==endl; // 输出：Size: 5 empty()：检查容器是否为空。 1 2 3 4 std::vector&lt;int&gt; vec; if (vec.empty()) { std==cout &lt;&lt; &#34;Vector is empty.&#34; &lt;&lt; std==endl; // 输出：Vector is empty. } clear()：清空容器中的所有元素。 1 2 3 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; vec.clear(); std==cout &lt;&lt; &#34;Size after clear: &#34; &lt;&lt; vec.size() &lt;&lt; std==endl; // 输出：Size after clear: 0 begin() 和 end()：返回指向容器的起始和末尾位置的迭代器。 1 2 3 4 5 6 7 8 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = vec.begin(); // 指向起始位置的迭代器 auto end = vec.end(); // 指向末尾位置的迭代器 for (; it != end; ++it) { std::cout &lt;&lt; *it &lt;&lt; &#34; &#34;; // 输出：1 2 3 4 5 } std==cout &lt;&lt; std==endl; front() 和 back()：返回容器的第一个和最后一个元素的引用。 1 2 3 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; std==cout &lt;&lt; &#34;First element: &#34; &lt;&lt; vec.front() &lt;&lt; std==endl; // 输出：First element: 1 std==cout &lt;&lt; &#34;Last element: &#34; &lt;&lt; vec.back() &lt;&lt; std==endl; // 输出：Last element: 5 push_back() 和 pop_back()：在容器末尾插入和删除元素。 1 2 3 4 5 6 7 8 9 10 11 std::vector&lt;int&gt; vec; vec.push_back(1); vec.push_back(2); vec.push_back(3); vec.pop_back(); // 删除末尾元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 } std==cout &lt;&lt; std==endl; insert()：在指定位置插入一个或多个元素。 1 2 3 4 5 6 7 8 9 10 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = vec.begin() + 2; // 在位置2插入元素 vec.insert(it, 10); vec.insert(it, 2, 20); // 在位置2插入两个元素20 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 20 20 3 4 5 } std==cout &lt;&lt; std==endl; erase()：删除指定位置或指定范围内的一个或多个元素。 1 2 3 4 5 6 7 8 9 10 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = vec.begin() + 2; // 删除位置2的元素 vec.erase(it); vec.erase(vec.begin(), vec.begin() + 2); // 删除前两个元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：3 4 5 } std==cout &lt;&lt; std==endl; swap()：交换两个容器的内容。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 std::vector&lt;int&gt; vec1 = {1, 2, 3}; std::vector&lt;int&gt; vec2 = {4, 5, 6}; vec1.swap(vec2); for (const auto&amp; element : vec1) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：4 5 6 } std==cout &lt;&lt; std==endl; for (const auto&amp; element : vec2) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 } std==cout &lt;&lt; std==endl; resize()：改变容器的大小。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 std::vector&lt;int&gt; vec = {1, 2, ```cpp std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; vec.resize(3); // 将容器大小调整为3 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 } std==cout &lt;&lt; std==endl; vec.resize(5, 10); // 将容器大小调整为5，并使用10填充新元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 10 10 } std==cout &lt;&lt; std==endl; assign()：用新的元素替换容器的内容。 1 2 3 4 5 6 7 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; vec.assign({10, 20, 30}); // 使用新的元素替换容器内容 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：10 20 30 } std==cout &lt;&lt; std==endl; find() 和 count()：用于在容器中搜索元素。 1 2 3 4 5 6 7 8 9 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = std::find(vec.begin(), vec.end(), 3); if (it != vec.end()) { std==cout &lt;&lt; &#34;Found element at index: &#34; &lt;&lt; std==distance(vec.begin(), it) &lt;&lt; std::endl; // 输出：Found element at index: 2 } int count = std::count(vec.begin(), vec.end(), 2); std==cout &lt;&lt; &#34;Count of 2: &#34; &lt;&lt; count &lt;&lt; std==endl; // 输出：Count of 2: 1 sort() 和 unique()：对容器进行排序和去重。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 std::vector&lt;int&gt; vec = {5, 3, 2, 4, 1}; std::sort(vec.begin(), vec.end()); // 对容器进行排序 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 4 5 } std==cout &lt;&lt; std==endl; vec.push_back(3); vec.push_back(4); vec.push_back(5); auto it = std::unique(vec.begin(), vec.end()); // 移除相邻的重复元素 vec.erase(it, vec.end()); // 删除重复元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 4 5 } std==cout &lt;&lt; std==endl; max_element() 和 min_element()：返回容器中的最大和最小元素的迭代器。 1 2 3 4 5 6 7 std::vector&lt;int&gt; vec = {5, 3, 2, 4, 1}; auto maxElement = std::max_element(vec.begin(), vec.end()); std==cout &lt;&lt; &#34;Max element: &#34; &lt;&lt; *maxElement &lt;&lt; std==endl; // 输出：Max element: 5 auto minElement = std::min_element(vec.begin(), vec.end()); std==cout &lt;&lt; &#34;Min element: &#34; &lt;&lt; *minElement &lt;&lt; std==endl; // 输出：Min element: 1 accumulate()：计算容器中元素的总和。 1 2 3 4 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; int sum = std::accumulate(vec.begin(), vec.end(), 0); std==cout &lt;&lt; &#34;Sum: &#34; &lt;&lt; sum &lt;&lt; std==endl; // 输出：Sum: 15 transform()：对容器中的元素进行变换，并将结果存储在另一个容器中。 std::transform 是一个算法函数，用于对容器中的元素进行变换，并将结果存储在另一个容器中。它接受四个参数：源容器的起始迭代器、源容器的结束迭代器、目标容器的起始位置迭代器，以及一个一元或二元函数对象（函数指针、函数对象或 Lambda 表达式）。\n">
+<title>标准容器函数</title>
+
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E6%A0%87%E5%87%86%E5%AE%B9%E5%99%A8%E5%87%BD%E6%95%B0/'>
+
+<link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="标准容器函数">
+<meta property='og:description' content="标准容器函数 Created by: Hu Yang Created time: September 13, 2023 7:51 PM Tags: Guides, 数据结构\n以下是常用的标准容器函数的使用方法示例：\nsize()：返回容器中元素的数量。 1 2 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; std==cout &lt;&lt; &#34;Size: &#34; &lt;&lt; vec.size() &lt;&lt; std==endl; // 输出：Size: 5 empty()：检查容器是否为空。 1 2 3 4 std::vector&lt;int&gt; vec; if (vec.empty()) { std==cout &lt;&lt; &#34;Vector is empty.&#34; &lt;&lt; std==endl; // 输出：Vector is empty. } clear()：清空容器中的所有元素。 1 2 3 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; vec.clear(); std==cout &lt;&lt; &#34;Size after clear: &#34; &lt;&lt; vec.size() &lt;&lt; std==endl; // 输出：Size after clear: 0 begin() 和 end()：返回指向容器的起始和末尾位置的迭代器。 1 2 3 4 5 6 7 8 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = vec.begin(); // 指向起始位置的迭代器 auto end = vec.end(); // 指向末尾位置的迭代器 for (; it != end; ++it) { std::cout &lt;&lt; *it &lt;&lt; &#34; &#34;; // 输出：1 2 3 4 5 } std==cout &lt;&lt; std==endl; front() 和 back()：返回容器的第一个和最后一个元素的引用。 1 2 3 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; std==cout &lt;&lt; &#34;First element: &#34; &lt;&lt; vec.front() &lt;&lt; std==endl; // 输出：First element: 1 std==cout &lt;&lt; &#34;Last element: &#34; &lt;&lt; vec.back() &lt;&lt; std==endl; // 输出：Last element: 5 push_back() 和 pop_back()：在容器末尾插入和删除元素。 1 2 3 4 5 6 7 8 9 10 11 std::vector&lt;int&gt; vec; vec.push_back(1); vec.push_back(2); vec.push_back(3); vec.pop_back(); // 删除末尾元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 } std==cout &lt;&lt; std==endl; insert()：在指定位置插入一个或多个元素。 1 2 3 4 5 6 7 8 9 10 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = vec.begin() + 2; // 在位置2插入元素 vec.insert(it, 10); vec.insert(it, 2, 20); // 在位置2插入两个元素20 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 20 20 3 4 5 } std==cout &lt;&lt; std==endl; erase()：删除指定位置或指定范围内的一个或多个元素。 1 2 3 4 5 6 7 8 9 10 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = vec.begin() + 2; // 删除位置2的元素 vec.erase(it); vec.erase(vec.begin(), vec.begin() + 2); // 删除前两个元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：3 4 5 } std==cout &lt;&lt; std==endl; swap()：交换两个容器的内容。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 std::vector&lt;int&gt; vec1 = {1, 2, 3}; std::vector&lt;int&gt; vec2 = {4, 5, 6}; vec1.swap(vec2); for (const auto&amp; element : vec1) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：4 5 6 } std==cout &lt;&lt; std==endl; for (const auto&amp; element : vec2) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 } std==cout &lt;&lt; std==endl; resize()：改变容器的大小。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 std::vector&lt;int&gt; vec = {1, 2, ```cpp std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; vec.resize(3); // 将容器大小调整为3 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 } std==cout &lt;&lt; std==endl; vec.resize(5, 10); // 将容器大小调整为5，并使用10填充新元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 10 10 } std==cout &lt;&lt; std==endl; assign()：用新的元素替换容器的内容。 1 2 3 4 5 6 7 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; vec.assign({10, 20, 30}); // 使用新的元素替换容器内容 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：10 20 30 } std==cout &lt;&lt; std==endl; find() 和 count()：用于在容器中搜索元素。 1 2 3 4 5 6 7 8 9 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = std::find(vec.begin(), vec.end(), 3); if (it != vec.end()) { std==cout &lt;&lt; &#34;Found element at index: &#34; &lt;&lt; std==distance(vec.begin(), it) &lt;&lt; std::endl; // 输出：Found element at index: 2 } int count = std::count(vec.begin(), vec.end(), 2); std==cout &lt;&lt; &#34;Count of 2: &#34; &lt;&lt; count &lt;&lt; std==endl; // 输出：Count of 2: 1 sort() 和 unique()：对容器进行排序和去重。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 std::vector&lt;int&gt; vec = {5, 3, 2, 4, 1}; std::sort(vec.begin(), vec.end()); // 对容器进行排序 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 4 5 } std==cout &lt;&lt; std==endl; vec.push_back(3); vec.push_back(4); vec.push_back(5); auto it = std::unique(vec.begin(), vec.end()); // 移除相邻的重复元素 vec.erase(it, vec.end()); // 删除重复元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 4 5 } std==cout &lt;&lt; std==endl; max_element() 和 min_element()：返回容器中的最大和最小元素的迭代器。 1 2 3 4 5 6 7 std::vector&lt;int&gt; vec = {5, 3, 2, 4, 1}; auto maxElement = std::max_element(vec.begin(), vec.end()); std==cout &lt;&lt; &#34;Max element: &#34; &lt;&lt; *maxElement &lt;&lt; std==endl; // 输出：Max element: 5 auto minElement = std::min_element(vec.begin(), vec.end()); std==cout &lt;&lt; &#34;Min element: &#34; &lt;&lt; *minElement &lt;&lt; std==endl; // 输出：Min element: 1 accumulate()：计算容器中元素的总和。 1 2 3 4 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; int sum = std::accumulate(vec.begin(), vec.end(), 0); std==cout &lt;&lt; &#34;Sum: &#34; &lt;&lt; sum &lt;&lt; std==endl; // 输出：Sum: 15 transform()：对容器中的元素进行变换，并将结果存储在另一个容器中。 std::transform 是一个算法函数，用于对容器中的元素进行变换，并将结果存储在另一个容器中。它接受四个参数：源容器的起始迭代器、源容器的结束迭代器、目标容器的起始位置迭代器，以及一个一元或二元函数对象（函数指针、函数对象或 Lambda 表达式）。\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E6%A0%87%E5%87%86%E5%AE%B9%E5%99%A8%E5%87%BD%E6%95%B0/'>
+<meta property='og:site_name' content='Hu Yang&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="标准容器函数">
+<meta name="twitter:description" content="标准容器函数 Created by: Hu Yang Created time: September 13, 2023 7:51 PM Tags: Guides, 数据结构\n以下是常用的标准容器函数的使用方法示例：\nsize()：返回容器中元素的数量。 1 2 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; std==cout &lt;&lt; &#34;Size: &#34; &lt;&lt; vec.size() &lt;&lt; std==endl; // 输出：Size: 5 empty()：检查容器是否为空。 1 2 3 4 std::vector&lt;int&gt; vec; if (vec.empty()) { std==cout &lt;&lt; &#34;Vector is empty.&#34; &lt;&lt; std==endl; // 输出：Vector is empty. } clear()：清空容器中的所有元素。 1 2 3 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; vec.clear(); std==cout &lt;&lt; &#34;Size after clear: &#34; &lt;&lt; vec.size() &lt;&lt; std==endl; // 输出：Size after clear: 0 begin() 和 end()：返回指向容器的起始和末尾位置的迭代器。 1 2 3 4 5 6 7 8 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = vec.begin(); // 指向起始位置的迭代器 auto end = vec.end(); // 指向末尾位置的迭代器 for (; it != end; ++it) { std::cout &lt;&lt; *it &lt;&lt; &#34; &#34;; // 输出：1 2 3 4 5 } std==cout &lt;&lt; std==endl; front() 和 back()：返回容器的第一个和最后一个元素的引用。 1 2 3 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; std==cout &lt;&lt; &#34;First element: &#34; &lt;&lt; vec.front() &lt;&lt; std==endl; // 输出：First element: 1 std==cout &lt;&lt; &#34;Last element: &#34; &lt;&lt; vec.back() &lt;&lt; std==endl; // 输出：Last element: 5 push_back() 和 pop_back()：在容器末尾插入和删除元素。 1 2 3 4 5 6 7 8 9 10 11 std::vector&lt;int&gt; vec; vec.push_back(1); vec.push_back(2); vec.push_back(3); vec.pop_back(); // 删除末尾元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 } std==cout &lt;&lt; std==endl; insert()：在指定位置插入一个或多个元素。 1 2 3 4 5 6 7 8 9 10 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = vec.begin() + 2; // 在位置2插入元素 vec.insert(it, 10); vec.insert(it, 2, 20); // 在位置2插入两个元素20 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 20 20 3 4 5 } std==cout &lt;&lt; std==endl; erase()：删除指定位置或指定范围内的一个或多个元素。 1 2 3 4 5 6 7 8 9 10 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = vec.begin() + 2; // 删除位置2的元素 vec.erase(it); vec.erase(vec.begin(), vec.begin() + 2); // 删除前两个元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：3 4 5 } std==cout &lt;&lt; std==endl; swap()：交换两个容器的内容。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 std::vector&lt;int&gt; vec1 = {1, 2, 3}; std::vector&lt;int&gt; vec2 = {4, 5, 6}; vec1.swap(vec2); for (const auto&amp; element : vec1) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：4 5 6 } std==cout &lt;&lt; std==endl; for (const auto&amp; element : vec2) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 } std==cout &lt;&lt; std==endl; resize()：改变容器的大小。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 std::vector&lt;int&gt; vec = {1, 2, ```cpp std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; vec.resize(3); // 将容器大小调整为3 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 } std==cout &lt;&lt; std==endl; vec.resize(5, 10); // 将容器大小调整为5，并使用10填充新元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 10 10 } std==cout &lt;&lt; std==endl; assign()：用新的元素替换容器的内容。 1 2 3 4 5 6 7 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; vec.assign({10, 20, 30}); // 使用新的元素替换容器内容 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：10 20 30 } std==cout &lt;&lt; std==endl; find() 和 count()：用于在容器中搜索元素。 1 2 3 4 5 6 7 8 9 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = std::find(vec.begin(), vec.end(), 3); if (it != vec.end()) { std==cout &lt;&lt; &#34;Found element at index: &#34; &lt;&lt; std==distance(vec.begin(), it) &lt;&lt; std::endl; // 输出：Found element at index: 2 } int count = std::count(vec.begin(), vec.end(), 2); std==cout &lt;&lt; &#34;Count of 2: &#34; &lt;&lt; count &lt;&lt; std==endl; // 输出：Count of 2: 1 sort() 和 unique()：对容器进行排序和去重。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 std::vector&lt;int&gt; vec = {5, 3, 2, 4, 1}; std::sort(vec.begin(), vec.end()); // 对容器进行排序 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 4 5 } std==cout &lt;&lt; std==endl; vec.push_back(3); vec.push_back(4); vec.push_back(5); auto it = std::unique(vec.begin(), vec.end()); // 移除相邻的重复元素 vec.erase(it, vec.end()); // 删除重复元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 4 5 } std==cout &lt;&lt; std==endl; max_element() 和 min_element()：返回容器中的最大和最小元素的迭代器。 1 2 3 4 5 6 7 std::vector&lt;int&gt; vec = {5, 3, 2, 4, 1}; auto maxElement = std::max_element(vec.begin(), vec.end()); std==cout &lt;&lt; &#34;Max element: &#34; &lt;&lt; *maxElement &lt;&lt; std==endl; // 输出：Max element: 5 auto minElement = std::min_element(vec.begin(), vec.end()); std==cout &lt;&lt; &#34;Min element: &#34; &lt;&lt; *minElement &lt;&lt; std==endl; // 输出：Min element: 1 accumulate()：计算容器中元素的总和。 1 2 3 4 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; int sum = std::accumulate(vec.begin(), vec.end(), 0); std==cout &lt;&lt; &#34;Sum: &#34; &lt;&lt; sum &lt;&lt; std==endl; // 输出：Sum: 15 transform()：对容器中的元素进行变换，并将结果存储在另一个容器中。 std::transform 是一个算法函数，用于对容器中的元素进行变换，并将结果存储在另一个容器中。它接受四个参数：源容器的起始迭代器、源容器的结束迭代器、目标容器的起始位置迭代器，以及一个一元或二元函数对象（函数指针、函数对象或 Lambda 表达式）。\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/huyang/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/huyang/img/logo-transparent_hu_2593eda3cf734d42.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/huyang">Hu Yang&#39;s Blog</a></h1>
+            <h2 class="site-description">Blog</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://114514yangyi.github.io/huyang/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='2416572689@qq.com'
+                        target="_blank"
+                        title="QQ"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/huyang/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/huyang/p/%E6%A0%87%E5%87%86%E5%AE%B9%E5%99%A8%E5%87%BD%E6%95%B0/">标准容器函数</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 18, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="标准容器函数">标准容器函数
+</h1><p>Created by: Hu Yang
+Created time: September 13, 2023 7:51 PM
+Tags: Guides, 数据结构</p>
+<p>以下是常用的标准容器函数的使用方法示例：</p>
+<ol>
+<li><code>size()</code>：返回容器中元素的数量。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Size: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">vec</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>  <span class="c1">// 输出：Size: 5
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>empty()</code>：检查容器是否为空。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Vector is empty.&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>  <span class="c1">// 输出：Vector is empty.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>clear()</code>：清空容器中的所有元素。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Size after clear: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">vec</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>  <span class="c1">// 输出：Size after clear: 0
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>begin()</code> 和 <code>end()</code>：返回指向容器的起始和末尾位置的迭代器。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>  <span class="c1">// 指向起始位置的迭代器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">end</span> <span class="o">=</span> <span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">();</span>   <span class="c1">// 指向末尾位置的迭代器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(;</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">end</span><span class="p">;</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">it</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span><span class="p">;</span>  <span class="c1">// 输出：1 2 3 4 5
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>front()</code> 和 <code>back()</code>：返回容器的第一个和最后一个元素的引用。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;First element: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">vec</span><span class="p">.</span><span class="n">front</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>  <span class="c1">// 输出：First element: 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Last element: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">vec</span><span class="p">.</span><span class="n">back</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>    <span class="c1">// 输出：Last element: 5
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>push_back()</code> 和 <code>pop_back()</code>：在容器末尾插入和删除元素。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>  <span class="c1">// 删除末尾元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">element</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span><span class="p">;</span>  <span class="c1">// 输出：1 2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>insert()</code>：在指定位置插入一个或多个元素。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>  <span class="c1">// 在位置2插入元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>  <span class="c1">// 在位置2插入两个元素20
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">element</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span><span class="p">;</span>  <span class="c1">// 输出：1 2 20 20 3 4 5
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>erase()</code>：删除指定位置或指定范围内的一个或多个元素。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>  <span class="c1">// 删除位置2的元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">it</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// 删除前两个元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">element</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span><span class="p">;</span>  <span class="c1">// 输出：3 4 5
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>swap()</code>：交换两个容器的内容。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">vec1</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="n">vec2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">vec1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">element</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span><span class="p">;</span>  <span class="c1">// 输出：4 5 6
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">vec2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">element</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span><span class="p">;</span>  <span class="c1">// 输出：1 2 3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>resize()</code>：改变容器的大小。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="err">```</span><span class="n">cpp</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>  <span class="c1">// 将容器大小调整为3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">element</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span><span class="p">;</span>  <span class="c1">// 输出：1 2 3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>  <span class="c1">// 将容器大小调整为5，并使用10填充新元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">element</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span><span class="p">;</span>  <span class="c1">// 输出：1 2 3 10 10
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>assign()</code>：用新的元素替换容器的内容。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">assign</span><span class="p">({</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">});</span>  <span class="c1">// 使用新的元素替换容器内容
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">element</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span><span class="p">;</span>  <span class="c1">// 输出：10 20 30
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>find()</code> 和 <code>count()</code>：用于在容器中搜索元素。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">it</span> <span class="o">!=</span> <span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Found element at index: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">distance</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">it</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>  <span class="c1">// 输出：Found element at index: 2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">count</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Count of 2: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">count</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>  <span class="c1">// 输出：Count of 2: 1
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>sort()</code> 和 <code>unique()</code>：对容器进行排序和去重。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">sort</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>  <span class="c1">// 对容器进行排序
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">element</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span><span class="p">;</span>  <span class="c1">// 输出：1 2 3 4 5
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">unique</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>  <span class="c1">// 移除相邻的重复元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">vec</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>  <span class="c1">// 删除重复元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">element</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span><span class="p">;</span>  <span class="c1">// 输出：1 2 3 4 5
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>max_element()</code> 和 <code>min_element()</code>：返回容器中的最大和最小元素的迭代器。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">maxElement</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max_element</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Max element: &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">maxElement</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>  <span class="c1">// 输出：Max element: 5
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">minElement</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">min_element</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Min element: &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">minElement</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>  <span class="c1">// 输出：Min element: 1
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>accumulate()</code>：计算容器中元素的总和。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">accumulate</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Sum: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">sum</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>  <span class="c1">// 输出：Sum: 15
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>transform()</code>：对容器中的元素进行变换，并将结果存储在另一个容器中。</li>
+</ol>
+<p><code>std::transform</code> 是一个算法函数，用于对容器中的元素进行变换，并将结果存储在另一个容器中。它接受四个参数：源容器的起始迭代器、源容器的结束迭代器、目标容器的起始位置迭代器，以及一个一元或二元函数对象（函数指针、函数对象或 Lambda 表达式）。</p>
+<p>函数对象定义了源容器元素到目标容器元素的变换规则，可以是一个接受一个参数的一元函数对象，也可以是一个接受两个参数的二元函数对象。</p>
+<p><code>std::transform</code> 遍历源容器中的元素，将每个元素传递给函数对象进行变换，并将结果存储在目标容器中相应位置的元素中。</p>
+<p>下面是 <code>std::transform</code> 的函数签名：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">InputIt</span><span class="p">,</span> <span class="k">class</span> <span class="nc">OutputIt</span><span class="p">,</span> <span class="k">class</span> <span class="nc">UnaryOperation</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">OutputIt</span> <span class="n">transform</span><span class="p">(</span><span class="n">InputIt</span> <span class="n">first1</span><span class="p">,</span> <span class="n">InputIt</span> <span class="n">last1</span><span class="p">,</span> <span class="n">OutputIt</span> <span class="n">d_first</span><span class="p">,</span> <span class="n">UnaryOperation</span> <span class="n">unary_op</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">InputIt1</span><span class="p">,</span> <span class="k">class</span> <span class="nc">InputIt2</span><span class="p">,</span> <span class="k">class</span> <span class="nc">OutputIt</span><span class="p">,</span> <span class="k">class</span> <span class="nc">BinaryOperation</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">OutputIt</span> <span class="n">transform</span><span class="p">(</span><span class="n">InputIt1</span> <span class="n">first1</span><span class="p">,</span> <span class="n">InputIt1</span> <span class="n">last1</span><span class="p">,</span> <span class="n">InputIt2</span> <span class="n">first2</span><span class="p">,</span> <span class="n">OutputIt</span> <span class="n">d_first</span><span class="p">,</span> <span class="n">BinaryOperation</span> <span class="n">binary_op</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中：</p>
+<ul>
+<li><code>first1</code> 和 <code>last1</code> 是源容器的迭代器，表示要进行变换的元素范围。</li>
+<li><code>d_first</code> 是目标容器的迭代器，表示存储变换结果的起始位置。</li>
+<li><code>unary_op</code> 是一个一元函数对象，接受一个参数，用于对源容器中的每个元素进行变换。</li>
+<li><code>binary_op</code> 是一个二元函数对象，接受两个参数，用于对两个源容器中对应位置的元素进行变换。</li>
+</ul>
+<p>以下是一些示例：</p>
+<ol>
+<li>使用一元函数对象对源容器中的每个元素进行平方，并将结果存储在目标容器中：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">source</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">target</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">transform</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">source</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">std</span><span class="o">==</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">target</span><span class="p">),</span> <span class="p">[](</span><span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// target 现在包含：1, 4, 9, 16, 25
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>使用二元函数对象对两个源容器中对应位置的元素进行相加，并将结果存储在目标容器中：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">source1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">source2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">target</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">transform</span><span class="p">(</span><span class="n">source1</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">source1</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">source2</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">std</span><span class="o">==</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">target</span><span class="p">),</span> <span class="p">[](</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// target 现在包含：11, 22, 33, 44, 55
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在上述示例中，<code>std::back_inserter</code> 是一个输出迭代器，用于将变换结果插入目标容器的末尾位置。</p>
+<p>注意：源容器和目标容器可以是同一个容器，这样就可以在原地对容器中的元素进行变换。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">transform</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">std</span><span class="o">==</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> <span class="p">[](</span><span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">element</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span><span class="p">;</span>  <span class="c1">// 输出：1 4 9 16 25
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">==</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">==</span><span class="n">endl</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>reverse()</code>：反转容器中的元素顺序。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>CC BY-NC-ND</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Hu Yang
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
