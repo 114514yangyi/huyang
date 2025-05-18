@@ -2,55 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/huyang/ar/categories/</loc>
+    <loc>https://114514yangyi.github.io/huyang/ar/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:1313/huyang/categories/"
+                href="https://114514yangyi.github.io/huyang/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/huyang/zh-cn/categories/"
+                href="https://114514yangyi.github.io/huyang/zh-cn/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ar"
-                href="http://localhost:1313/huyang/ar/categories/"
+                href="https://114514yangyi.github.io/huyang/ar/categories/"
                 />
   </url><url>
-    <loc>http://localhost:1313/huyang/ar/tags/</loc>
+    <loc>https://114514yangyi.github.io/huyang/ar/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:1313/huyang/tags/"
+                href="https://114514yangyi.github.io/huyang/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/huyang/zh-cn/tags/"
+                href="https://114514yangyi.github.io/huyang/zh-cn/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ar"
-                href="http://localhost:1313/huyang/ar/tags/"
+                href="https://114514yangyi.github.io/huyang/ar/tags/"
                 />
   </url><url>
-    <loc>http://localhost:1313/huyang/ar/</loc>
+    <loc>https://114514yangyi.github.io/huyang/ar/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:1313/huyang/"
+                href="https://114514yangyi.github.io/huyang/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/huyang/zh-cn/"
+                href="https://114514yangyi.github.io/huyang/zh-cn/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ar"
-                href="http://localhost:1313/huyang/ar/"
+                href="https://114514yangyi.github.io/huyang/ar/"
                 />
   </url>
 </urlset>

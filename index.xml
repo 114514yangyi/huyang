@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Hu Yang&#39;s Blog</title>
-        <link>http://localhost:1313/huyang/</link>
+        <link>https://114514yangyi.github.io/huyang/</link>
         <description>Recent content on Hu Yang&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Hu Yang</copyright>
-        <lastBuildDate>Fri, 09 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/huyang/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 09 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://114514yangyi.github.io/huyang/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Leetcode算法思考</title>
-        <link>http://localhost:1313/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/</link>
+        <link>https://114514yangyi.github.io/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/</link>
         <pubDate>Sun, 18 May 2025 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/</guid>
+        <guid>https://114514yangyi.github.io/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/</guid>
         <description>&lt;h1 id=&#34;算法&#34;&gt;算法
 &lt;/h1&gt;&lt;h2 id=&#34;树状数组&#34;&gt;树状数组:
 &lt;/h2&gt;&lt;p&gt;讲解:树状数组:&lt;/p&gt;
@@ -1427,7 +1427,7 @@
 &lt;/div&gt;&lt;p&gt;&lt;strong&gt;总结&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;并查集是一种非常高效的处理集合合并与查询问题的数据结构。其核心在于用树（森林）表示集合，并通过&lt;strong&gt;路径压缩&lt;/strong&gt;和&lt;strong&gt;按秩/大小合并&lt;/strong&gt;两种优化手段，使得基本操作的均摊时间复杂度接近常数。它在图论（如 Kruskal 算法求最小生成树、判断连通性）、算法竞赛以及其他需要动态维护元素分组关系的场景中应用广泛。上面提供的 C++ 模板是一个标准且高效的实现。&lt;/p&gt;
 &lt;h2 id=&#34;位运算&#34;&gt;位运算
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/image-20250424184205086.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250424184205086.png&#34;
 	
 	
 	
@@ -1438,7 +1438,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;数据结构&#34;&gt;数据结构
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/image-20250424191230113.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250424191230113.png&#34;
 	
 	
 	
@@ -1448,7 +1448,7 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/image-20250424191244136.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250424191244136.png&#34;
 	
 	
 	
@@ -1458,7 +1458,7 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/image-20250424191255776.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250424191255776.png&#34;
 	
 	
 	
@@ -1468,7 +1468,7 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/image-20250424191306194.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250424191306194.png&#34;
 	
 	
 	
@@ -1478,7 +1478,7 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/image-20250424191319448.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250424191319448.png&#34;
 	
 	
 	
@@ -3008,10 +3008,10 @@
         </item>
         <item>
         <title>Leetcode题目</title>
-        <link>http://localhost:1313/huyang/p/leetcode%E9%A2%98%E7%9B%AE/</link>
+        <link>https://114514yangyi.github.io/huyang/p/leetcode%E9%A2%98%E7%9B%AE/</link>
         <pubDate>Sun, 18 May 2025 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/huyang/p/leetcode%E9%A2%98%E7%9B%AE/</guid>
+        <guid>https://114514yangyi.github.io/huyang/p/leetcode%E9%A2%98%E7%9B%AE/</guid>
         <description>&lt;h1 id=&#34;leetcode题目思路总结&#34;&gt;LeetCode题目思路总结
 &lt;/h1&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/&lt;/a&gt;&lt;/p&gt;
@@ -3989,7 +3989,7 @@
 &lt;/ul&gt;
 &lt;p&gt;如果你可以将 &lt;code&gt;s&lt;/code&gt; 变为有效括号字符串，请你返回 &lt;code&gt;true&lt;/code&gt; ，否则返回 &lt;code&gt;false&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/eg1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/eg1.png&#34;
 	
 	
 	
@@ -4371,7 +4371,7 @@
 &lt;/ul&gt;
 &lt;p&gt;如果以最佳方式使用给定的梯子和砖块，返回你可以到达的最远建筑物的下标（下标 &lt;strong&gt;从 0 开始&lt;/strong&gt; ）。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/q4.gif&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/q4.gif&#34;
 	
 	
 	
@@ -5497,7 +5497,7 @@
 &lt;p&gt;你同一时间只能参加一个会议。如果你选择参加某个会议，那么你必须 &lt;strong&gt;完整&lt;/strong&gt; 地参加完这个会议。会议结束日期是包含在会议内的，也就是说你不能同时参加一个开始日期与另一个结束日期相同的两个会议。&lt;/p&gt;
 &lt;p&gt;请你返回能得到的会议价值 &lt;strong&gt;最大和&lt;/strong&gt; 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/screenshot-2021-01-11-at-60048-pm.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/screenshot-2021-01-11-at-60048-pm.png&#34;
 	
 	
 	
@@ -5520,7 +5520,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/screenshot-2021-01-11-at-60150-pm.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/screenshot-2021-01-11-at-60150-pm.png&#34;
 	
 	
 	
@@ -5545,7 +5545,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/screenshot-2021-01-11-at-60703-pm.png&#34;
+&lt;p&gt;&lt;strong&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/screenshot-2021-01-11-at-60703-pm.png&#34;
 	
 	
 	
@@ -8755,7 +8755,7 @@ suf[i][0]=suf[i+1][0]
 &lt;p&gt;[!NOTE]&lt;/p&gt;
 &lt;p&gt;这里使用的是状态机+动态规划.为什么要使用状态机呢?因为这里的变化比较多并且这种变化可以使用状态机来表示,所以可以这样子使用.&lt;/p&gt;
 &lt;p&gt;在下图中,s2 就可以用来表示在进过 sell 以后就会进入冰冻期,需要在下一轮中才能够继续进行buy 活动,而从 buy 阶段到 s1 阶段是不经历任何的消耗的,所以这里 buy和 s1 可以类似于等同.但是这里不同的是 buy 表明我想要在现在这个阶段进行购买并且前一阶段并未持有的含义,而 s1 表示在这一阶段持有但是不做任何操作的含义.,所以这里两种语义需要分开来表示.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/image-20250418222759793.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/image-20250418222759793.png&#34;
 	
 	
 	
@@ -13742,7 +13742,7 @@ suf[i][0]=suf[i+1][0]
 &lt;/ul&gt;
 &lt;p&gt;假定所有机票至少存在一种合理的行程。且所有的机票 必须都用一次 且 只能用一次。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/itinerary1-graph.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/itinerary1-graph.jpg&#34;
 	
 	
 	
@@ -13763,7 +13763,7 @@ suf[i][0]=suf[i+1][0]
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/itinerary2-graph.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/itinerary2-graph.jpg&#34;
 	
 	
 	
@@ -14522,7 +14522,7 @@ suf[i][0]=suf[i+1][0]
 &lt;p&gt;如果链表中有某个节点，可以通过连续跟踪 &lt;code&gt;next&lt;/code&gt; 指针再次到达，则链表中存在环。 为了表示给定链表中的环，评测系统内部使用整数 &lt;code&gt;pos&lt;/code&gt; 来表示链表尾连接到链表中的位置（&lt;strong&gt;索引从 0 开始&lt;/strong&gt;）。如果 &lt;code&gt;pos&lt;/code&gt; 是 &lt;code&gt;-1&lt;/code&gt;，则在该链表中没有环。&lt;strong&gt;注意：&lt;code&gt;pos&lt;/code&gt; 不作为参数进行传递&lt;/strong&gt;，仅仅是为了标识链表的实际情况。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;不允许修改&lt;/strong&gt; 链表。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/circularlinkedlist.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/circularlinkedlist.png&#34;
 	
 	
 	
@@ -14545,7 +14545,7 @@ suf[i][0]=suf[i+1][0]
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/circularlinkedlist_test2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/circularlinkedlist_test2.png&#34;
 	
 	
 	
@@ -14568,7 +14568,7 @@ suf[i][0]=suf[i+1][0]
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/circularlinkedlist_test3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/circularlinkedlist_test3.png&#34;
 	
 	
 	
@@ -14796,7 +14796,7 @@ suf[i][0]=suf[i+1][0]
 &lt;details style=&#34;color: rgb(205, 214, 244); font-family: -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe WPC&amp;quot;, &amp;quot;Segoe UI&amp;quot;, system-ui, Ubuntu, &amp;quot;Droid Sans&amp;quot;, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&#34;&gt;&lt;summary&gt;&lt;strong&gt;Companies&lt;/strong&gt;&lt;/summary&gt;&lt;/details&gt;
 &lt;p&gt;给定 &lt;code&gt;n&lt;/code&gt; 个非负整数表示每个宽度为 &lt;code&gt;1&lt;/code&gt; 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/rainwatertrap.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/rainwatertrap.png&#34;
 	
 	
 	
@@ -16439,7 +16439,7 @@ suf[i][0]=suf[i+1][0]
 &lt;p&gt;每一层所摆放的书的最大高度就是这一层书架的层高，书架整体的高度为各层高之和。&lt;/p&gt;
 &lt;p&gt;以这种方式布置书架，返回书架整体可能的最小高度。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/shelves.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/shelves.png&#34;
 	
 	
 	
@@ -19292,7 +19292,7 @@ suf[i][0]=suf[i+1][0]
 &lt;p&gt;&lt;strong&gt;天际线&lt;/strong&gt; 应该表示为由 “关键点” 组成的列表，格式 &lt;code&gt;[[x1,y1],[x2,y2],...]&lt;/code&gt; ，并按 &lt;strong&gt;x 坐标&lt;/strong&gt; 进行 &lt;strong&gt;排序&lt;/strong&gt; 。&lt;strong&gt;关键点是水平线段的左端点&lt;/strong&gt;。列表中最后一个点是最右侧建筑物的终点，&lt;code&gt;y&lt;/code&gt; 坐标始终为 &lt;code&gt;0&lt;/code&gt; ，仅用于标记天际线的终点。此外，任何两个相邻建筑物之间的地面都应被视为天际线轮廓的一部分。&lt;/p&gt;
 &lt;p&gt;**注意：**输出天际线中不得有连续的相同高度的水平线。例如 &lt;code&gt;[...[2 3], [4 5], [7 5], [11 5], [12 7]...]&lt;/code&gt; 是不正确的答案；三条高度为 5 的线应该在最终输出中合并为一个：&lt;code&gt;[...[2 3], [4 5], [12 7], ...]&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/huyang/assets/merged.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/assets/merged.jpg&#34;
 	
 	
 	
@@ -20791,10 +20791,10 @@ suf[i][0]=suf[i+1][0]
         </item>
         <item>
         <title>信息汇总</title>
-        <link>http://localhost:1313/huyang/p/%E4%BF%A1%E6%81%AF%E6%B1%87%E6%80%BB/</link>
+        <link>https://114514yangyi.github.io/huyang/p/%E4%BF%A1%E6%81%AF%E6%B1%87%E6%80%BB/</link>
         <pubDate>Sun, 18 May 2025 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/huyang/p/%E4%BF%A1%E6%81%AF%E6%B1%87%E6%80%BB/</guid>
+        <guid>https://114514yangyi.github.io/huyang/p/%E4%BF%A1%E6%81%AF%E6%B1%87%E6%80%BB/</guid>
         <description>&lt;h1 id=&#34;南京大学与学习资源链接汇总&#34;&gt;南京大学与学习资源链接汇总
 &lt;/h1&gt;&lt;h2 id=&#34;南京大学资源&#34;&gt;南京大学资源
 &lt;/h2&gt;&lt;ul&gt;
@@ -20897,18 +20897,18 @@ suf[i][0]=suf[i+1][0]
         </item>
         <item>
         <title>Archives</title>
-        <link>http://localhost:1313/huyang/archives/</link>
+        <link>https://114514yangyi.github.io/huyang/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/huyang/archives/</guid>
+        <guid>https://114514yangyi.github.io/huyang/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>About</title>
-        <link>http://localhost:1313/huyang/about/</link>
+        <link>https://114514yangyi.github.io/huyang/about/</link>
         <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/huyang/about/</guid>
+        <guid>https://114514yangyi.github.io/huyang/about/</guid>
         <description>&lt;h1 id=&#34;信息介绍&#34;&gt;信息介绍
 &lt;/h1&gt;&lt;h2 id=&#34;个人信息&#34;&gt;个人信息
 &lt;/h2&gt;&lt;ul&gt;
@@ -20960,10 +20960,10 @@ suf[i][0]=suf[i+1][0]
         </item>
         <item>
         <title>Links</title>
-        <link>http://localhost:1313/huyang/links/</link>
+        <link>https://114514yangyi.github.io/huyang/links/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/huyang/links/</guid>
+        <guid>https://114514yangyi.github.io/huyang/links/</guid>
         <description>&lt;p&gt;To use this feature, add &lt;code&gt;links&lt;/code&gt; section to frontmatter.&lt;/p&gt;
 &lt;p&gt;This page&amp;rsquo;s frontmatter:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -20995,10 +20995,10 @@ suf[i][0]=suf[i+1][0]
         </item>
         <item>
         <title>Search</title>
-        <link>http://localhost:1313/huyang/search/</link>
+        <link>https://114514yangyi.github.io/huyang/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/huyang/search/</guid>
+        <guid>https://114514yangyi.github.io/huyang/search/</guid>
         <description></description>
         </item>
         
