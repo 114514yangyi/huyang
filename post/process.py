@@ -1,13 +1,14 @@
 import os
 import sys
-from datetime import datetime
 import shutil
+from datetime import datetime
 
-def process_markdown_file(filepath):
+def process_markdown_file(filepath, article_type):
     """
     处理单个 Markdown 文件：创建文件夹，移动文件，添加 Front Matter，重命名为 index.md。
     Args:
         filepath (str): Markdown 文件的完整路径。
+        article_type (str): 文章类型，用于设置 categories。
     """
     directory = os.path.dirname(filepath)
     filename_without_ext = os.path.splitext(os.path.basename(filepath))[0]
@@ -32,14 +33,14 @@ def process_markdown_file(filepath):
         return
 
     # 3. 在移动后的文件中添加 Front Matter 并重命名为 index.md
-    title = filename_without_ext.replace('-', ' ').title()
-    date_str = datetime.now().strftime('%Y-%m-%d')
+    title = filename_without_ext.replace('-', ' ').title()  # 标题处理，更友好
 
     frontmatter = f"""---
-title: {title}
-date: '{date_str}'
-license: CC BY-NC-ND
-lastmod: '{datetime.now().strftime('%Y-%m-%d')}'
+date = '{datetime.now().strftime('%Y-%m-%dT%H:%M:%S%z')}'
+draft = false
+title = '{title}'
+categories:
+    - {article_type}
 ---
 """
 
@@ -55,25 +56,29 @@ lastmod: '{datetime.now().strftime('%Y-%m-%d')}'
     except Exception as e:
         print(f"处理文件 {new_filepath} 时发生错误: {e}")
 
-def process_directory(directory):
+def process_directory(directory, article_type):
     """
     遍历指定目录及其子目录下的所有 .md 文件并进行处理。
     Args:
-        directory (str): 要遍历的目录路径。
+        directory (str): 要遍历的根目录路径。
+        article_type (str): 文章类型，用于设置 categories。
     """
     for root, _, files in os.walk(directory):
         md_files_in_root = [os.path.join(root, file) for file in files if file.endswith(".md")]
         for filepath_to_process in md_files_in_root:
-            process_markdown_file(filepath_to_process)
+            process_markdown_file(filepath_to_process, article_type)
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 2:
         start_directory = sys.argv[1]
+        article_type = sys.argv[2]  # 获取文章类型
         if os.path.isdir(start_directory):
             print(f"开始遍历并处理文件夹 '{start_directory}' 及其子文件夹中的 .md 文件...")
-            process_directory(start_directory)
+            print(f"文章类型设置为: {article_type}")
+            process_directory(start_directory, article_type)
             print("处理完成。")
         else:
             print(f"错误: 指定的路径 '{start_directory}' 不是一个有效的文件夹。")
     else:
-        print("请在运行脚本时提供要遍历的文件夹路径作为参数。例如: python script_name.py /path/to/your/markdown/files")
+        print("请在运行脚本时提供根目录路径和文章类型作为参数。例如: python main.py /path/to/your/markdown/files 教程")
+

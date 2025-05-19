@@ -10,7 +10,7 @@
 <meta property='og:description' content="Socket编程 样例: 代理服务的样例\nSocket编程是一种用于在网络上进行通信的编程模型。它提供了一组用于创建网络连接、发送和接收数据的接口，使得程序能够通过网络与其他计算机进行通信。\nSocket编程通常涉及两个主要角色：客户端和服务器。客户端是发起连接的一方，而服务器则是接受连接并提供服务的一方。下面是Socket编程的一般步骤：\n创建Socket：在客户端和服务器端都需要创建一个Socket对象。Socket对象负责建立和管理网络连接。在Python中，可以使用socket模块来创建Socket对象。 绑定地址和端口（仅服务器端）：在服务器端，需要将Socket绑定到一个特定的地址和端口上，以便客户端可以连接到它。这可以通过调用Socket对象的bind()方法来完成。 监听连接请求（仅服务器端）：在服务器端，需要开始监听传入的连接请求。这可以通过调用Socket对象的listen()方法来完成。服务器端会在指定的端口上开始监听传入的连接请求。 接受连接（仅服务器端）：一旦服务器端开始监听连接请求，它可以通过调用Socket对象的accept()方法接受客户端的连接请求。这个方法将返回一个新的Socket对象，该对象用于与客户端进行通信。 连接到服务器（仅客户端）：在客户端，需要使用Socket对象的connect()方法连接到服务器。在该方法中，需要指定服务器的地址和端口。 发送和接收数据：一旦客户端和服务器端之间建立了连接，它们可以使用Socket对象的send()和recv()方法来发送和接收数据。客户端和服务器端可以通过这些方法在连接上进行双向通信。 关闭连接：当通信完成后，客户端和服务器端都可以通过调用Socket对象的close()方法来关闭连接。 这些步骤提供了Socket编程的基本框架，可以根据具体的需求和情况进行扩展和定制。Socket编程可以用于构建各种网络应用程序，如Web服务器、聊天程序、文件传输等。\n接口介绍: 当涉及到Socket编程时，具体的函数接口和使用案例会依赖于所使用的编程语言和相关的网络库。以下是Python中常用的socket模块的函数接口和一个简单的使用案例介绍：\n函数接口：\nsocket.socket(family=AF_INET, type=SOCK_STREAM, proto=0, fileno=None)\n创建一个新的Socket对象。\nfamily：指定地址家族，常用的是AF_INET（IPv4）或AF_INET6（IPv6）。 type：指定Socket类型，常用的是SOCK_STREAM（TCP）或SOCK_DGRAM（UDP）。 proto：指定协议，默认为0，根据地址家族和类型自动选择。 fileno：可选参数，与现有的文件描述符关联。 Socket.bind(address)\n将Socket绑定到指定的地址。\naddress：一个地址对，包含地址和端口号。 Socket.listen(backlog)\n开始监听传入的连接请求。\nbacklog：指定在拒绝连接之前可以挂起的最大连接数量。 Socket.accept()\n接受客户端的连接请求，返回一个新的Socket对象和客户端地址。\nSocket.connect(address)\n连接到指定的地址。\naddress：一个地址对，包含服务器的地址和端口号。 Socket.send(data)\n发送数据到连接的另一端。\ndata：要发送的数据，通常是字节类型。 Socket.recv(bufsize)\n接收来自连接的数据。\nbufsize：要接收的最大数据量。 Socket.close()\n关闭连接。\n使用案例：\n这是一个简单的使用案例，演示了一个基于TCP的客户端和服务器之间的通信。\n服务器端代码：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 import socket # 创建Socket对象 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # 绑定地址和端口 server_address = (&#39;localhost&#39;, 12345) server_socket.bind(server_address) # 开始监听连接请求 server_socket.listen(1) print(&#34;服务器已启动，等待连接...&#34;) # 接受客户端的连接请求 client_socket, client_address = server_socket.accept() print(&#34;客户端已连接：&#34;, client_address) # 接收数据 data = client_socket.recv(1024) print(&#34;接收到的数据：&#34;, data.decode()) # 发送响应 response = &#34;Hello, client!&#34; client_socket.send(response.encode()) # 关闭连接 client_socket.close() server_socket.close() 客户端代码：\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/socket%E7%BC%96%E7%A8%8B/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T22:57:43&#43;08:00'/><meta property='article:modified_time' content='2025-05-18T22:57:43&#43;08:00'/>
 <meta name="twitter:title" content="Socket编程">
 <meta name="twitter:description" content="Socket编程 样例: 代理服务的样例\nSocket编程是一种用于在网络上进行通信的编程模型。它提供了一组用于创建网络连接、发送和接收数据的接口，使得程序能够通过网络与其他计算机进行通信。\nSocket编程通常涉及两个主要角色：客户端和服务器。客户端是发起连接的一方，而服务器则是接受连接并提供服务的一方。下面是Socket编程的一般步骤：\n创建Socket：在客户端和服务器端都需要创建一个Socket对象。Socket对象负责建立和管理网络连接。在Python中，可以使用socket模块来创建Socket对象。 绑定地址和端口（仅服务器端）：在服务器端，需要将Socket绑定到一个特定的地址和端口上，以便客户端可以连接到它。这可以通过调用Socket对象的bind()方法来完成。 监听连接请求（仅服务器端）：在服务器端，需要开始监听传入的连接请求。这可以通过调用Socket对象的listen()方法来完成。服务器端会在指定的端口上开始监听传入的连接请求。 接受连接（仅服务器端）：一旦服务器端开始监听连接请求，它可以通过调用Socket对象的accept()方法接受客户端的连接请求。这个方法将返回一个新的Socket对象，该对象用于与客户端进行通信。 连接到服务器（仅客户端）：在客户端，需要使用Socket对象的connect()方法连接到服务器。在该方法中，需要指定服务器的地址和端口。 发送和接收数据：一旦客户端和服务器端之间建立了连接，它们可以使用Socket对象的send()和recv()方法来发送和接收数据。客户端和服务器端可以通过这些方法在连接上进行双向通信。 关闭连接：当通信完成后，客户端和服务器端都可以通过调用Socket对象的close()方法来关闭连接。 这些步骤提供了Socket编程的基本框架，可以根据具体的需求和情况进行扩展和定制。Socket编程可以用于构建各种网络应用程序，如Web服务器、聊天程序、文件传输等。\n接口介绍: 当涉及到Socket编程时，具体的函数接口和使用案例会依赖于所使用的编程语言和相关的网络库。以下是Python中常用的socket模块的函数接口和一个简单的使用案例介绍：\n函数接口：\nsocket.socket(family=AF_INET, type=SOCK_STREAM, proto=0, fileno=None)\n创建一个新的Socket对象。\nfamily：指定地址家族，常用的是AF_INET（IPv4）或AF_INET6（IPv6）。 type：指定Socket类型，常用的是SOCK_STREAM（TCP）或SOCK_DGRAM（UDP）。 proto：指定协议，默认为0，根据地址家族和类型自动选择。 fileno：可选参数，与现有的文件描述符关联。 Socket.bind(address)\n将Socket绑定到指定的地址。\naddress：一个地址对，包含地址和端口号。 Socket.listen(backlog)\n开始监听传入的连接请求。\nbacklog：指定在拒绝连接之前可以挂起的最大连接数量。 Socket.accept()\n接受客户端的连接请求，返回一个新的Socket对象和客户端地址。\nSocket.connect(address)\n连接到指定的地址。\naddress：一个地址对，包含服务器的地址和端口号。 Socket.send(data)\n发送数据到连接的另一端。\ndata：要发送的数据，通常是字节类型。 Socket.recv(bufsize)\n接收来自连接的数据。\nbufsize：要接收的最大数据量。 Socket.close()\n关闭连接。\n使用案例：\n这是一个简单的使用案例，演示了一个基于TCP的客户端和服务器之间的通信。\n服务器端代码：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 import socket # 创建Socket对象 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # 绑定地址和端口 server_address = (&#39;localhost&#39;, 12345) server_socket.bind(server_address) # 开始监听连接请求 server_socket.listen(1) print(&#34;服务器已启动，等待连接...&#34;) # 接受客户端的连接请求 client_socket, client_address = server_socket.accept() print(&#34;客户端已连接：&#34;, client_address) # 接收数据 data = client_socket.recv(1024) print(&#34;接收到的数据：&#34;, data.decode()) # 发送响应 response = &#34;Hello, client!&#34; client_socket.send(response.encode()) # 关闭连接 client_socket.close() server_socket.close() 客户端代码：\n">
     </head>
@@ -275,6 +275,14 @@
     <header class="article-header">
 
     <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/huyang/categories/%E7%BC%96%E7%A8%8B/" >
+                编程
+            </a>
+        
+    </header>
     
 
     <div class="article-title-wrapper">
@@ -681,7 +689,7 @@
 
 
 
-        <span>CC BY-NC-ND</span>
+        <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
     </footer>
 
@@ -692,6 +700,80 @@
     
 
     
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/huyang/p/database/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Database</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/fastapi-more/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Fastapi More</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/html/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Html</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/quickstart/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Quickstart</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/shell/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Shell</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
 
      
     

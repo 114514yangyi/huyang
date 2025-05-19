@@ -10,7 +10,7 @@
 <meta property='og:description' content="Database 关于数据库关系运算 当涉及数据库课程中的操作关系时，以下是一些操作的定义和具体例子：\n运算的类型： 1.集合运算：\n交，并，差，笛卡尔积 2.关系运算：\n投影，选择 连接 除 基本的关系运算： 交，差，笛卡尔积，投影，选择 扩充运算： $$R\\cap S=R-(R-S)$$ $$R\\Join _{A\\theta B}S=\\sigma_{R.A=S.B}(R\\times B)$$ $$R\\div S=\\Pi_{a1}(R)-\\Pi_{a1}((\\Pi_{a1}(R)\\times S)-R)$$ 一些特殊的常用意义表示: 1 2 3 $$\\begin{flalign} &amp;A(a1,a2)\\div B(a1):means 选择a1中那些拥有B(a1)中所有值的元组，返回C(a2) \\end{flalign}$$ $$\\sigma _{condition1,condition2} (A(a1,a2)\\times B(b1,b2)) 对于任意的AB中的组合进行筛选$$ $$A(a1)\\Join B(b1,b2,b3,a1) 选择在B中满足其a1属性在A中的元组$$ $$\\Pi_{id}(A)-\\Pi_{A.id}(\\sigma_{A.val $$对于所有关系的语句来说，可以考虑从反面即不满足条件的语句出发$$ $$对于满足有关系的语句来说，可以考虑使用连接来表示$$ $$顾客 C(cid, cn, city, dis)\\\\ 供应商 A(aid, an, city, per)\\\\ 商品 P(pid, pn, city, qua, pri)\\\\ 订单 O(ordno, orddate, cid, aid, pid, qty, dol)\\\\ ⑦ 没有购买过商品\\\\ \\Pi_{cid}(C)-\\Pi{cid}(O)\\\\ ⑧ 只购买过一次商品\\\\ \\Pi_{cid}(O)-\\Pi_{cid}(\\sigma_{A.cid=B.cid,A.ordno\\neq B.ordno}(A\\times B)),whileA=B=O\\\\ ⑨ 只购买过同一种商品\\\\ \\Pi_{cid}(O)-\\Pi_{cid}(\\sigma_{A.cid=b.cid,A.pid\\neq B.pid}(A\\times B))\\\\$$ 除运算和笛卡尔积的关系： $$if~R=T\\times S,then T=R\\div S ,S=R\\div T\\\\ if~T=R\\div S,then~T\\times S\\subseteq R$$交（Intersection） 交运算符用于获取两个关系之间的共同元组。\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/database/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T22:57:43&#43;08:00'/><meta property='article:modified_time' content='2025-05-18T22:57:43&#43;08:00'/>
 <meta name="twitter:title" content="Database">
 <meta name="twitter:description" content="Database 关于数据库关系运算 当涉及数据库课程中的操作关系时，以下是一些操作的定义和具体例子：\n运算的类型： 1.集合运算：\n交，并，差，笛卡尔积 2.关系运算：\n投影，选择 连接 除 基本的关系运算： 交，差，笛卡尔积，投影，选择 扩充运算： $$R\\cap S=R-(R-S)$$ $$R\\Join _{A\\theta B}S=\\sigma_{R.A=S.B}(R\\times B)$$ $$R\\div S=\\Pi_{a1}(R)-\\Pi_{a1}((\\Pi_{a1}(R)\\times S)-R)$$ 一些特殊的常用意义表示: 1 2 3 $$\\begin{flalign} &amp;A(a1,a2)\\div B(a1):means 选择a1中那些拥有B(a1)中所有值的元组，返回C(a2) \\end{flalign}$$ $$\\sigma _{condition1,condition2} (A(a1,a2)\\times B(b1,b2)) 对于任意的AB中的组合进行筛选$$ $$A(a1)\\Join B(b1,b2,b3,a1) 选择在B中满足其a1属性在A中的元组$$ $$\\Pi_{id}(A)-\\Pi_{A.id}(\\sigma_{A.val $$对于所有关系的语句来说，可以考虑从反面即不满足条件的语句出发$$ $$对于满足有关系的语句来说，可以考虑使用连接来表示$$ $$顾客 C(cid, cn, city, dis)\\\\ 供应商 A(aid, an, city, per)\\\\ 商品 P(pid, pn, city, qua, pri)\\\\ 订单 O(ordno, orddate, cid, aid, pid, qty, dol)\\\\ ⑦ 没有购买过商品\\\\ \\Pi_{cid}(C)-\\Pi{cid}(O)\\\\ ⑧ 只购买过一次商品\\\\ \\Pi_{cid}(O)-\\Pi_{cid}(\\sigma_{A.cid=B.cid,A.ordno\\neq B.ordno}(A\\times B)),whileA=B=O\\\\ ⑨ 只购买过同一种商品\\\\ \\Pi_{cid}(O)-\\Pi_{cid}(\\sigma_{A.cid=b.cid,A.pid\\neq B.pid}(A\\times B))\\\\$$ 除运算和笛卡尔积的关系： $$if~R=T\\times S,then T=R\\div S ,S=R\\div T\\\\ if~T=R\\div S,then~T\\times S\\subseteq R$$交（Intersection） 交运算符用于获取两个关系之间的共同元组。\n">
     </head>
@@ -318,6 +318,14 @@
     <header class="article-header">
 
     <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/huyang/categories/%E7%BC%96%E7%A8%8B/" >
+                编程
+            </a>
+        
+    </header>
     
 
     <div class="article-title-wrapper">
@@ -998,7 +1006,7 @@ if~T=R\div S,then~T\times S\subseteq R$$<h2 id="交intersection"><strong>交（I
 
 
 
-        <span>CC BY-NC-ND</span>
+        <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
     </footer>
 
@@ -1009,6 +1017,80 @@ if~T=R\div S,then~T\times S\subseteq R$$<h2 id="交intersection"><strong>交（I
     
 
     
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/huyang/p/fastapi-more/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Fastapi More</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/html/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Html</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/quickstart/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Quickstart</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/shell/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Shell</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/socket/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Socket</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
 
      
     

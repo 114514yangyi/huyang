@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" date = &lsquo;2025-05-18T22:36:53+08:00&rsquo; draft = false title = &lsquo;协方差矩阵&rsquo; categories: - 数学\n对于一组有关联的随机变量，方差和协方差之间的关系可以通过联合分布或多变量的角度来理解。设有 nn 个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，它们的协方差矩阵和方差之间的关系如下。\n1. 协方差矩阵 对于多个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，我们可以构造一个协方差矩阵 Σ\\Sigma，这个矩阵描述了各个变量之间的协方差。协方差矩阵是一个对称矩阵，其中对角线上的元素是每个变量的方差，非对角线上的元素是变量之间的协方差。\n协方差矩阵的定义：\nΣ=(Var(X1)Cov(X1,X2)…Cov(X1,Xn)Cov(X2,X1)Var(X2)…Cov(X2,Xn)⋮⋮⋱⋮Cov(Xn,X1)Cov(Xn,X2)…Var(Xn))\\Sigma = \\begin{pmatrix} Var(X_1) &amp; Cov(X_1, X_2) &amp; \\dots &amp; Cov(X_1, X_n) \\ Cov(X_2, X_1) &amp; Var(X_2) &amp; \\dots &amp; Cov(X_2, X_n) \\ \\vdots &amp; \\vdots &amp; \\ddots &amp; \\vdots \\ Cov(X_n, X_1) &amp; Cov(X_n, X_2) &amp; \\dots &amp; Var(X_n) \\end{pmatrix}\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" date: &lsquo;2025-05-18T22:36:53+08:00&rsquo; draft: false title: &lsquo;协方差矩阵&rsquo; categories: - 数学\n对于一组有关联的随机变量，方差和协方差之间的关系可以通过联合分布或多变量的角度来理解。设有 nn 个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，它们的协方差矩阵和方差之间的关系如下。\n1. 协方差矩阵 对于多个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，我们可以构造一个协方差矩阵 Σ\\Sigma，这个矩阵描述了各个变量之间的协方差。协方差矩阵是一个对称矩阵，其中对角线上的元素是每个变量的方差，非对角线上的元素是变量之间的协方差。\n协方差矩阵的定义：\nΣ=(Var(X1)Cov(X1,X2)…Cov(X1,Xn)Cov(X2,X1)Var(X2)…Cov(X2,Xn)⋮⋮⋱⋮Cov(Xn,X1)Cov(Xn,X2)…Var(Xn))\\Sigma = \\begin{pmatrix} Var(X_1) &amp; Cov(X_1, X_2) &amp; \\dots &amp; Cov(X_1, X_n) \\ Cov(X_2, X_1) &amp; Var(X_2) &amp; \\dots &amp; Cov(X_2, X_n) \\ \\vdots &amp; \\vdots &amp; \\ddots &amp; \\vdots \\ Cov(X_n, X_1) &amp; Cov(X_n, X_2) &amp; \\dots &amp; Var(X_n) \\end{pmatrix}\n">
 <title></title>
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/'>
 
 <link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="">
-<meta property='og:description' content=" date = &lsquo;2025-05-18T22:36:53+08:00&rsquo; draft = false title = &lsquo;协方差矩阵&rsquo; categories: - 数学\n对于一组有关联的随机变量，方差和协方差之间的关系可以通过联合分布或多变量的角度来理解。设有 nn 个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，它们的协方差矩阵和方差之间的关系如下。\n1. 协方差矩阵 对于多个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，我们可以构造一个协方差矩阵 Σ\\Sigma，这个矩阵描述了各个变量之间的协方差。协方差矩阵是一个对称矩阵，其中对角线上的元素是每个变量的方差，非对角线上的元素是变量之间的协方差。\n协方差矩阵的定义：\nΣ=(Var(X1)Cov(X1,X2)…Cov(X1,Xn)Cov(X2,X1)Var(X2)…Cov(X2,Xn)⋮⋮⋱⋮Cov(Xn,X1)Cov(Xn,X2)…Var(Xn))\\Sigma = \\begin{pmatrix} Var(X_1) &amp; Cov(X_1, X_2) &amp; \\dots &amp; Cov(X_1, X_n) \\ Cov(X_2, X_1) &amp; Var(X_2) &amp; \\dots &amp; Cov(X_2, X_n) \\ \\vdots &amp; \\vdots &amp; \\ddots &amp; \\vdots \\ Cov(X_n, X_1) &amp; Cov(X_n, X_2) &amp; \\dots &amp; Var(X_n) \\end{pmatrix}\n">
+<meta property='og:description' content=" date: &lsquo;2025-05-18T22:36:53+08:00&rsquo; draft: false title: &lsquo;协方差矩阵&rsquo; categories: - 数学\n对于一组有关联的随机变量，方差和协方差之间的关系可以通过联合分布或多变量的角度来理解。设有 nn 个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，它们的协方差矩阵和方差之间的关系如下。\n1. 协方差矩阵 对于多个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，我们可以构造一个协方差矩阵 Σ\\Sigma，这个矩阵描述了各个变量之间的协方差。协方差矩阵是一个对称矩阵，其中对角线上的元素是每个变量的方差，非对角线上的元素是变量之间的协方差。\n协方差矩阵的定义：\nΣ=(Var(X1)Cov(X1,X2)…Cov(X1,Xn)Cov(X2,X1)Var(X2)…Cov(X2,Xn)⋮⋮⋱⋮Cov(Xn,X1)Cov(Xn,X2)…Var(Xn))\\Sigma = \\begin{pmatrix} Var(X_1) &amp; Cov(X_1, X_2) &amp; \\dots &amp; Cov(X_1, X_n) \\ Cov(X_2, X_1) &amp; Var(X_2) &amp; \\dots &amp; Cov(X_2, X_n) \\ \\vdots &amp; \\vdots &amp; \\ddots &amp; \\vdots \\ Cov(X_n, X_1) &amp; Cov(X_n, X_2) &amp; \\dots &amp; Var(X_n) \\end{pmatrix}\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' />
 <meta name="twitter:title" content="">
-<meta name="twitter:description" content=" date = &lsquo;2025-05-18T22:36:53+08:00&rsquo; draft = false title = &lsquo;协方差矩阵&rsquo; categories: - 数学\n对于一组有关联的随机变量，方差和协方差之间的关系可以通过联合分布或多变量的角度来理解。设有 nn 个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，它们的协方差矩阵和方差之间的关系如下。\n1. 协方差矩阵 对于多个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，我们可以构造一个协方差矩阵 Σ\\Sigma，这个矩阵描述了各个变量之间的协方差。协方差矩阵是一个对称矩阵，其中对角线上的元素是每个变量的方差，非对角线上的元素是变量之间的协方差。\n协方差矩阵的定义：\nΣ=(Var(X1)Cov(X1,X2)…Cov(X1,Xn)Cov(X2,X1)Var(X2)…Cov(X2,Xn)⋮⋮⋱⋮Cov(Xn,X1)Cov(Xn,X2)…Var(Xn))\\Sigma = \\begin{pmatrix} Var(X_1) &amp; Cov(X_1, X_2) &amp; \\dots &amp; Cov(X_1, X_n) \\ Cov(X_2, X_1) &amp; Var(X_2) &amp; \\dots &amp; Cov(X_2, X_n) \\ \\vdots &amp; \\vdots &amp; \\ddots &amp; \\vdots \\ Cov(X_n, X_1) &amp; Cov(X_n, X_2) &amp; \\dots &amp; Var(X_n) \\end{pmatrix}\n">
+<meta name="twitter:description" content=" date: &lsquo;2025-05-18T22:36:53+08:00&rsquo; draft: false title: &lsquo;协方差矩阵&rsquo; categories: - 数学\n对于一组有关联的随机变量，方差和协方差之间的关系可以通过联合分布或多变量的角度来理解。设有 nn 个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，它们的协方差矩阵和方差之间的关系如下。\n1. 协方差矩阵 对于多个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，我们可以构造一个协方差矩阵 Σ\\Sigma，这个矩阵描述了各个变量之间的协方差。协方差矩阵是一个对称矩阵，其中对角线上的元素是每个变量的方差，非对角线上的元素是变量之间的协方差。\n协方差矩阵的定义：\nΣ=(Var(X1)Cov(X1,X2)…Cov(X1,Xn)Cov(X2,X1)Var(X2)…Cov(X2,Xn)⋮⋮⋱⋮Cov(Xn,X1)Cov(Xn,X2)…Var(Xn))\\Sigma = \\begin{pmatrix} Var(X_1) &amp; Cov(X_1, X_2) &amp; \\dots &amp; Cov(X_1, X_n) \\ Cov(X_2, X_1) &amp; Var(X_2) &amp; \\dots &amp; Cov(X_2, X_n) \\ \\vdots &amp; \\vdots &amp; \\ddots &amp; \\vdots \\ Cov(X_n, X_1) &amp; Cov(X_n, X_2) &amp; \\dots &amp; Var(X_n) \\end{pmatrix}\n">
     </head>
     <body class="
     article-page
@@ -366,9 +366,9 @@
     
     
     <hr>
-<p>date = &lsquo;2025-05-18T22:29:58+08:00&rsquo;
-draft = false
-title = &lsquo;二乘法&rsquo;
+<p>date: &lsquo;2025-05-18T22:29:58+08:00&rsquo;
+draft: false
+title: &lsquo;二乘法&rsquo;
 categories:
 - 数学</p>
 <hr>
