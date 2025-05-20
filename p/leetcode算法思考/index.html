@@ -324,7 +324,29 @@
       </ol>
     </li>
     <li><a href="#区间融合">区间融合</a></li>
-    <li><a href="#查分数组性质对于子数组数组的连续加减可以转换成对于两个元素的加减">查分数组性质（对于子数组数组的连续加减可以转换成对于两个元素的加减）</a></li>
+    <li><a href="#查分数组性质">查分数组性质</a></li>
+    <li><a href="#从环染色到递推思想">从环染色到递推思想</a></li>
+  </ol>
+
+  <ol>
+    <li><a href="#1-问题定义与符号约定">1. 问题定义与符号约定</a></li>
+    <li><a href="#2-辅助状态定义-路径染色">2. 辅助状态定义 (路径染色)</a></li>
+    <li><a href="#3-递推关系的建立">3. 递推关系的建立</a>
+      <ol>
+        <li><a href="#31-b_i-的递推关系">3.1. $B_i$ 的递推关系</a></li>
+        <li><a href="#32-c_i-的递推关系">3.2. $C_i$ 的递推关系</a></li>
+      </ol>
+    </li>
+    <li><a href="#4-环染色方案数-s_n-的表达式">4. 环染色方案数 $S_n$ 的表达式</a></li>
+    <li><a href="#5-s_n-与-c_n-的关系">5. $S_n$ 与 $C_n$ 的关系</a></li>
+    <li><a href="#6-最终递推公式">6. 最终递推公式</a></li>
+    <li><a href="#7-初始条件">7. 初始条件</a>
+      <ol>
+        <li><a href="#1传球问题">（1）传球问题</a></li>
+        <li><a href="#2">(2)</a></li>
+        <li><a href="#3全错位排列问题">(3)<a href="https://zhida.zhihu.com/search?content_id=192498207&amp;content_type=Article&amp;match_order=1&amp;q=%E5%85%A8%E9%94%99%E4%BD%8D%E6%8E%92%E5%88%97&amp;zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3NDc4ODM5ODQsInEiOiLlhajplJnkvY3mjpLliJciLCJ6aGlkYV9zb3VyY2UiOiJlbnRpdHkiLCJjb250ZW50X2lkIjoxOTI0OTgyMDcsImNvbnRlbnRfdHlwZSI6IkFydGljbGUiLCJtYXRjaF9vcmRlciI6MSwiemRfdG9rZW4iOm51bGx9.2I5z29BbhABKOFn9Kqf57yny_XRf1mQ9gVbyxHjtwg0&amp;zhida_source=entity">全错位排列</a>问题</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -393,7 +415,7 @@
 
 
                 <time class="article-time--reading">
-                    33 minute read
+                    36 minute read
                 </time>
             </div>
         
@@ -3399,8 +3421,11 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="查分数组性质对于子数组数组的连续加减可以转换成对于两个元素的加减">查分数组性质（对于子数组数组的连续加减可以转换成对于两个元素的加减）
-</h2><p><img src="/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/image-20250520110627670.png"
+</div><h2 id="查分数组性质">查分数组性质
+</h2><blockquote>
+<p>[!NOTE]</p>
+<p>（对于子数组数组的连续加减可以转换成对于两个元素的加减）</p></blockquote>
+<p><img src="/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/image-20250520110627670.png"
 	width="1368"
 	height="668"
 	srcset="/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/image-20250520110627670_hu_59fb5bfd73d49519.png 480w, /huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/image-20250520110627670_hu_a6f0608d2c848ff8.png 1024w"
@@ -3428,6 +3453,214 @@
 		data-flex-basis="333px"
 	
 ></p>
+<p>适用于的题目：3355.</p>
+<h2 id="从环染色到递推思想">从环染色到递推思想
+</h2><p>下面的内容取之于原贴：https://zhuanlan.zhihu.com/p/469651849?share_code=1kwOskN7LMwwq&amp;utm_psn=1908119624903534021</p>
+<p>用m种颜色给n边形的n条边染色，要求邻边不同色，求方法数。（m,n≥3）</p>
+<p><img src="/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/v2-86c5c782afd6a1c32962795e8719fb63_1440w.jpg"
+	width="504"
+	height="422"
+	srcset="/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/v2-86c5c782afd6a1c32962795e8719fb63_1440w_hu_2d7786579c6ebf10.jpg 480w, /huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/v2-86c5c782afd6a1c32962795e8719fb63_1440w_hu_a5089d7acd443bc3.jpg 1024w"
+	loading="lazy"
+	
+		alt="img"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="119"
+		data-flex-basis="286px"
+	
+></p>
+<p><img src="/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/image-20250520112247847.png"
+	width="1360"
+	height="1516"
+	srcset="/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/image-20250520112247847_hu_31ab0d240babef7d.png 480w, /huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/image-20250520112247847_hu_bbc2e8dba4f5e280.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250520112247847"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="89"
+		data-flex-basis="215px"
+	
+></p>
+<p><img src="/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/image-20250520112315443.png"
+	width="1350"
+	height="358"
+	srcset="/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/image-20250520112315443_hu_3d83a714daf9eb26.png 480w, /huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/image-20250520112315443_hu_bc51b1b1058e07ec.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250520112315443"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="377"
+		data-flex-basis="905px"
+	
+></p>
+<p>对于上面的式子，我们可以使用乘法的快速幂方法来做。</p>
+<blockquote>
+<p>[!NOTE]</p>
+<p>思考上面的过程是一种什么样子的过程：</p>
+<p>从A1到An的求解过程中我们发现其中限制最多的位置是最后一个位置，也就是说我们在求解除了An位置以外，对于其他的位置总共的可能情况都是m-1中方式。而对于最后一个An的判定方法，我们需要分情况讨论An前后位置是否为同一个颜色。对于这种情况我们能够入手的地方是：</p>
+<ul>
+<li>从后往前推导：分情况讨论假如An-1是和A1同色的情况，假如An-1和A1不同色的情况，但是很快我们发现我们在分情况讨论An-1的颜色的时候就会牵扯到An-2的情况，这样分情况讨论就会陷入循环中。</li>
+<li>从前往后推到：从n=1开始先试一试n=2，3，4.。。的情况，尝试在其中发现规律。</li>
+</ul>
+<p>但是我们发现在上面方法中提到思路并不是这两种方法，所以这里就有第三种思路：</p>
+<p>最简单化，看看在取消了最后一个限制的情况下（也就是将染色问题从环变成直线）会有什么结果，然后我们呢就可以发现分为两种结果：</p>
+<ol>
+<li>An和A1同色，对于这种情况我们可以直接将An和A1首位相连，因为这两个同色，所以我们可以将他看作是将将A1和An融合起来，这样子的结果和融合前后没有任何变化，但是我们惊奇地发现此时A1到An-1的可能性数量就是Sn-1，因为A1一定和An-1颜色不同。</li>
+<li>假如An和A1不同色，那么显然可能性的数量就是Sn。</li>
+</ol>
+<p>综上就能够发现递推关系。</p>
+<p>但是我们现在来看一看从后往前求解思路的可能性，因为这种将A1和An同色融合的trick有点困难。</p>
+<p>设置k为颜色的数量：</p>
+<p>我们不妨将An-1和A1颜色相同的可能性数量设置为Bn-1，颜色相同的可能性设置为Cn-1，那么显然Sn=Bn-1*(k-1)+Cn-1*(k-2).</p>
+<p>Bn=Cn-1,Cn=Cn-1*(k-2)+Bn-1*(k-1),由此也可以求出来递推公式。</p>
+<p>下面是GPT的回答：</p>
+<h1 id="环染色问题的递推关系证明思路">环染色问题的递推关系证明思路
+</h1><h2 id="1-问题定义与符号约定">1. 问题定义与符号约定
+</h2><p>我们要计算用 $k$ 种颜色给一个由 $n$ 个块组成的环 ($A_1, A_2, \ldots, A_n$) 进行染色，要求相邻的块颜色不同的方案数。设最终的方案数为 $S_n$。</p>
+<h2 id="2-辅助状态定义-路径染色">2. 辅助状态定义 (路径染色)
+</h2><p>为了从后往前（或者说，通过构建的方式）推导，我们定义以下两种状态，用于描述对一个<strong>线性路径</strong> $A_1, A_2, \ldots, A_i$ 进行染色，且满足相邻元素颜色不同的方案数：</p>
+<ul>
+<li>$B_i$: 路径 $A_1, \ldots, A_i$ 的染色方案数，其中首元素 $A_1$ 和尾元素 $A_i$ 的颜色<strong>相同</strong>。</li>
+<li>$C_i$: 路径 $A_1, \ldots, A_i$ 的染色方案数，其中首元素 $A_1$ 和尾元素 $A_i$ 的颜色<strong>不同</strong>。</li>
+</ul>
+<h2 id="3-递推关系的建立">3. 递推关系的建立
+</h2><h3 id="31-b_i-的递推关系">3.1. $B_i$ 的递推关系
+</h3><p>要使路径 $A_1, \ldots, A_i$ 的首尾颜色相同 ($A_i$ 与 $A_1$ 同色)，且 $A_i$ 与 $A_{i-1}$ 颜色不同：</p>
+<ul>
+<li>$A_i$ 的颜色必须与 $A_1$ 的颜色一致 (1 种选择)。</li>
+<li>$A_{i-1}$ 的颜色必须与 $A_i$ 的颜色不同，也就是说 $A_{i-1}$ 的颜色必须与 $A_1$ 的颜色不同。</li>
+<li>因此，对路径 $A_1, \ldots, A_{i-1}$ 进行染色，要求 $A_{i-1}$ 与 $A_1$ 颜色不同，这样的方案数是 $C_{i-1}$。</li>
+</ul>
+<p>所以，
+</p>
+$$ B_i = C_{i-1} $$<h3 id="32-c_i-的递推关系">3.2. $C_i$ 的递推关系
+</h3><p>要使路径 $A_1, \ldots, A_i$ 的首尾颜色不同 ($A_i$ 与 $A_1$ 不同色)，且 $A_i$ 与 $A_{i-1}$ 颜色不同：</p>
+<ul>
+<li>
+<p><strong>情况一</strong>: 路径 $A_1, \ldots, A_{i-1}$ 中，$A_{i-1}$ 与 $A_1$ 的颜色<strong>相同</strong>。</p>
+<ul>
+<li>这种染色方案有 $B_{i-1}$ 种。</li>
+<li>此时，$A_i$ 的颜色只需与 $A_{i-1}$ (也就是 $A_1$) 不同即可。有 $k-1$ 种选择。</li>
+<li>这些选择都将使得 $A_i$ 与 $A_1$ 不同色。</li>
+<li>贡献: $B_{i-1} \times (k-1)$。</li>
+</ul>
+</li>
+<li>
+<p><strong>情况二</strong>: 路径 $A_1, \ldots, A_{i-1}$ 中，$A_{i-1}$ 与 $A_1$ 的颜色<strong>不同</strong>。</p>
+<ul>
+<li>这种染色方案有 $C_{i-1}$ 种。</li>
+<li>此时，$A_i$ 的颜色既要与 $A_{i-1}$ 不同，也要与 $A_1$ 不同。由于 $A_{i-1}$ 和 $A_1$ 的颜色已经不同，所以 $A_i$ 有 $k-2$ 种选择。</li>
+<li>贡献: $C_{i-1} \times (k-2)$。</li>
+</ul>
+</li>
+</ul>
+<p>所以，
+</p>
+$$ C_i = (k-1)B_{i-1} + (k-2)C_{i-1} $$<h2 id="4-环染色方案数-s_n-的表达式">4. 环染色方案数 $S_n$ 的表达式
+</h2><p>现在考虑对环 $A_1, \ldots, A_n$ 进行染色。我们可以先对路径 $A_1, \ldots, A_{n-1}$ 进行染色，然后确定 $A_n$ 的颜色。$A_n$ 必须与 $A_{n-1}$ 和 $A_1$ 的颜色都不同。</p>
+<ul>
+<li>
+<p><strong>如果 $A_{n-1}$ 与 $A_1$ 同色</strong> (方案数为 $B_{n-1}$):</p>
+<ul>
+<li>$A_n$ 只需与 $A_{n-1}$ (也就是 $A_1$) 不同色即可。有 $k-1$ 种选择。</li>
+<li>贡献: $B_{n-1} \times (k-1)$。</li>
+</ul>
+</li>
+<li>
+<p><strong>如果 $A_{n-1}$ 与 $A_1$ 不同色</strong> (方案数为 $C_{n-1}$):</p>
+<ul>
+<li>$A_n$ 必须与 $A_{n-1}$ 不同色，且与 $A_1$ 不同色。由于 $A_{n-1}$ 和 $A_1$ 的颜色已不同， $A_n$ 有 $k-2$ 种选择。</li>
+<li>贡献: $C_{n-1} \times (k-2)$。</li>
+</ul>
+</li>
+</ul>
+<p>因此，环染色的总方案数 $S_n$ 为：
+</p>
+$$ S_n = (k-1)B_{n-1} + (k-2)C_{n-1} $$<h2 id="5-s_n-与-c_n-的关系">5. $S_n$ 与 $C_n$ 的关系
+</h2><p>比较 $S_n$ 的表达式和 $C_i$ 的递推公式，我们发现：
+</p>
+$$ S_n = (k-1)B_{n-1} + (k-2)C_{n-1} $$<p>
+</p>
+$$ C_n = (k-1)B_{n-1} + (k-2)C_{n-1} $$<p>
+由此可见，$S_n = C_n$。
+这符合直觉：对一个 $n$ 块的环进行染色，等价于对一个 $n$ 块的路径进行染色，并要求路径的首尾两块颜色不同。</p>
+<h2 id="6-最终递推公式">6. 最终递推公式
+</h2><p>将 $B_{i-1} = C_{i-2}$ 代入 $C_i$ (或 $S_i$) 的表达式中：
+</p>
+$$ C_i = (k-2)C_{i-1} + (k-1)B_{i-1} $$<p>
+</p>
+$$ C_i = (k-2)C_{i-1} + (k-1)C_{i-2} $$<p>
+所以，环染色方案数 $S_n (=C_n)$ 的递推公式为：
+</p>
+$$ S_n = (k-2)S_{n-1} + (k-1)S_{n-2} \quad (\text{对于 } n \ge 3) $$<h2 id="7-初始条件">7. 初始条件
+</h2><ul>
+<li>
+<p><strong>$S_1 (=C_1)$</strong>:</p>
+<ul>
+<li>对于 $C_1$ (路径 $A_1$，要求 $A_1 \ne A_1$)：$C_1 = 0$。</li>
+<li>对于 $S_1$ (单个块的环)：没有相邻块，可以染任意 $k$ 种颜色。$S_1 = k$。</li>
+<li><em>注意</em>: 这里的 $S_n$ 和 $C_n$ 的关系在 $n=1$ 时需要小心。通常，递推公式从 $n \ge 3$ 开始， $S_1, S_2$ 单独计算。如果严格使用 $S_n=C_n$，则 $S_1=0$，这与单个块的环有 $k$ 种染色的直观理解不同。经典环染色公式 $(k-1)^n + (-1)^n(k-1)$ 在 $n=1$ 时也给出 $0$。如果题目定义 $n=1$ 时为 $k$ 种，则 $S_1=k$ 是特殊情况。</li>
+</ul>
+</li>
+<li>
+<p><strong>$S_2 (=C_2)$</strong>:</p>
+<ul>
+<li>$B_1 = k$ (路径 $A_1$，$A_1$ 与 $A_1$ 同色，有 $k$ 种方案)。</li>
+<li>$C_2 = (k-1)B_1 + (k-2)C_1 = (k-1)k + (k-2) \cdot 0 = k(k-1)$。</li>
+<li>$S_2 = k(k-1)$。 (环 $A_1,A_2$: $A_1$ 有 $k$ 种选择，$A_2$ 有 $k-1$ 种选择)。</li>
+</ul>
+</li>
+<li>
+<p><strong>$S_3 (=C_3)$</strong>:</p>
+<ul>
+<li>$C_3 = (k-2)C_2 + (k-1)C_1 = (k-2)k(k-1) + (k-1) \cdot 0 = k(k-1)(k-2)$。</li>
+<li>$S_3 = k(k-1)(k-2)$。</li>
+</ul>
+</li>
+</ul>
+<p>这个递推公式与已知的环染色问题的结果是一致的。</p></blockquote>
+<h3 id="1传球问题">（1）传球问题
+</h3><p><em><strong>Q.</strong> m个人进行篮球传球游戏，规则为每个人接球后再传给别人。规定由甲第一次传球，若第n次传球后，球又回到甲的手中，求所有的传球方法数。</em></p>
+<p>相信读者或多或少接触过这种题，笔者将从递推的角度给出此类题的通解。</p>
+<p>受此前的启发，我们不妨反过来考虑。暂且不管第 次传给了谁，注意到第 次传球后拿到球的人把球传给甲就行了，因此总方法数为 次传球的方法数即 。但是如果第 次传球给了甲，由于他不能传给自己，因此这种情况是不成立的，减去即可。设第 次传球后回到甲手中的方法数为 ，我们得到递推式 ，整理得</p>
+<p>边界条件 （甲第一次只能传给别人）。这个递推式的处理方法和多边形染色的是一模一样的，因此这里不加证明地给出结果</p>
+<h3 id="2">(2)
+</h3><p>***Q.*<em>某人计划给8块牌子涂色，每块牌子可选用红、蓝中的一种颜色喷涂。若要求相邻两块牌子不都为红色，试求所有的染色方案数。</em></p>
+<p>“相邻不都为红色”用正难则反也很难处理，我们先从规模较小的情况找找灵感。</p>
+<p>设有n块牌子时涂色方案数有 种</p>
+<p>若有2块牌子:</p>
+<p>1.第一块涂蓝色，则第二块可以是红色或者蓝色，有两种</p>
+<p>2.第一块涂红色，则第二块只能是蓝色，有一种</p>
+<p>若有3块牌子：</p>
+<p>若第一块涂蓝色</p>
+<p>等等我们发现了什么！</p>
+<p>第一块涂蓝色的时候，第二块可以涂红色或者蓝色。我们注意到，如果某一块涂了蓝色，那么下一块的涂色没有任何限制（红蓝都可以涂），相当于可以扔掉前面那些已经涂好的牌子，从下一块重新开始规划这个问题！</p>
+<p>因此，如果第1块涂蓝色，则之后的 块牌子有 种涂色方法数</p>
+<p>这太让人振奋了。可问题还没有结束，根据分类加法原理，我们只需要再看看第一块涂红色的情形</p>
+<p>若第一块涂红色</p>
+<p>如果第一块涂红，那么第二块必须涂蓝。！！这是不是又回到了第一种情况？这种情况下，剩下的 块有 种涂色方法数</p>
+<p>因此我们得到递推关系</p>
+<p>边界 。由递推关系得到答案</p>
+<p>（此题没有必要求出通项公式）</p>
+<h3 id="3全错位排列问题">(3)<a class="link" href="https://zhida.zhihu.com/search?content_id=192498207&amp;content_type=Article&amp;match_order=1&amp;q=%e5%85%a8%e9%94%99%e4%bd%8d%e6%8e%92%e5%88%97&amp;zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3NDc4ODM5ODQsInEiOiLlhajplJnkvY3mjpLliJciLCJ6aGlkYV9zb3VyY2UiOiJlbnRpdHkiLCJjb250ZW50X2lkIjoxOTI0OTgyMDcsImNvbnRlbnRfdHlwZSI6IkFydGljbGUiLCJtYXRjaF9vcmRlciI6MSwiemRfdG9rZW4iOm51bGx9.2I5z29BbhABKOFn9Kqf57yny_XRf1mQ9gVbyxHjtwg0&amp;zhida_source=entity"  target="_blank" rel="noopener"
+    >全错位排列</a>问题
+</h3><p>***Q.*<em>一个人写了n封不同的信及相应的n个不同的信封，他把这n封信都装错了信封，问有多少种方法？</em></p>
+<p>我们假设正确对应关系为第 个信封分别应该装第 封信， 封信全部错位放的方法有 种</p>
+<p>考虑其中一封信 ，显然 不能放到第 个信封，总共有 种错位放法</p>
+<p>记 错装到第 个位置，考虑被挤占的 怎么放</p>
+<p>1.如果 放到第 个位置，也就是说和 调换顺序，那它俩都错放了满足题意，只需要考虑剩下 封信怎么错位排，有 种方法</p>
+<p>2.如果 放到第 个位置之外的位置，那么只需要考虑包含 在内剩下 封信怎么错位排，有 种方法</p>
+<p>由分类加法原理和分步乘法原理可知</p>
+<p>P.S*.*</p>
+<p><em>1.给出一个数学归纳得到的便于计算的递推公式</em></p>
+<p><em>2.给出通项公式 （计算不如上面的递推方便）</em></p>
+<p><em>3.对于<strong>问题的推广</strong>，若 封信中恰有 封信装错，则方法数 。很简单，只需要先把n封信全部装对，然后选出m封需要装错的，再将m封信全错位排列，根据乘法原理便能得到上面的结果。</em></p>
 
 </section>
 
