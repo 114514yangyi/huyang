@@ -332,6 +332,7 @@
         <li><a href="#买卖股票的最佳时机含冷冻期"><a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/">买卖股票的最佳时机含冷冻期</a></a></li>
         <li><a href="#分割字符频率相等的最少子字符串"><a href="https://leetcode.cn/problems/minimum-substring-partition-of-equal-character-frequency/description/">分割字符频率相等的最少子字符串</a></a></li>
         <li><a href="#摆动序列"><a href="https://leetcode.cn/problems/wiggle-subsequence/description/">摆动序列</a></a></li>
+        <li><a href="#字符串连接删减字母"><a href="https://leetcode.cn/problems/decremental-string-concatenation/description/">字符串连接删减字母</a></a></li>
       </ol>
     </li>
     <li><a href="#bfs-广度优先">BFS-广度优先</a>
@@ -427,7 +428,11 @@
         <li><a href="#回文子串"><a href="https://leetcode.cn/problems/palindromic-substrings/description/">回文子串</a></a></li>
       </ol>
     </li>
-    <li><a href="#差分数组">差分数组</a></li>
+    <li><a href="#差分数组">差分数组</a>
+      <ol>
+        <li><a href="#零数组变换-iii"><a href="https://leetcode.cn/problems/zero-array-transformation-iii/description/">零数组变换 III</a></a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -496,7 +501,7 @@
 
 
                 <time class="article-time--reading">
-                    120 minute read
+                    123 minute read
                 </time>
             </div>
         
@@ -6802,7 +6807,335 @@ suf[i][0]=suf[i+1][0]
 </div><blockquote>
 <p>[!NOTE]</p>
 <p>这里我们通过观察可以发现这里是选不选的方法，使用动态规划的方法。这不过这里在使用选和不选的两个数组以后，发现选的时候的情况不好计算，因为我不知上一个选的时候他的趋势是上升还是下降，就算我使用一个数组记录，那么在只有一个元素的时候是即是上升也是下降。所以这里使用的数组是以idx结尾的序列上升数组和下降数组，这样子就能够保存这种关系。</p></blockquote>
-<h2 id="bfs-广度优先">BFS-广度优先
+<h3 id="字符串连接删减字母"><a class="link" href="https://leetcode.cn/problems/decremental-string-concatenation/description/"  target="_blank" rel="noopener"
+    >字符串连接删减字母</a>
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">Category</th>
+          <th style="text-align: center">Difficulty</th>
+          <th style="text-align: center">Likes</th>
+          <th style="text-align: center">Dislikes</th>
+          <th style="text-align: center">ContestSlug</th>
+          <th style="text-align: center">ProblemIndex</th>
+          <th style="text-align: center">Score</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">algorithms</td>
+          <td style="text-align: center">Medium (40.23%)</td>
+          <td style="text-align: center">17</td>
+          <td style="text-align: center">0</td>
+          <td style="text-align: center">biweekly-contest-107</td>
+          <td style="text-align: center">Q3</td>
+          <td style="text-align: center">2126</td>
+      </tr>
+  </tbody>
+</table></div>
+<details style="color: rgb(255, 255, 255); font-family: -apple-system, &quot;system-ui&quot;, &quot;Segoe WPC&quot;, &quot;Segoe UI&quot;, system-ui, Ubuntu, &quot;Droid Sans&quot;, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;"><summary><strong>Tags</strong></summary><p style="margin-top: 0px; margin-bottom: 16px;"><a href="https://leetcode.com/tag/%E6%95%B0%E7%BB%84" title="https://leetcode.com/tag/%E6%95%B0%E7%BB%84" style="color: var(--vscode-textLink-foreground); text-decoration: var(--text-link-decoration);"><code style="font-family: var(--vscode-editor-font-family, &quot;SF Mono&quot;, Monaco, Menlo, Consolas, &quot;Ubuntu Mono&quot;, &quot;Liberation Mono&quot;, &quot;DejaVu Sans Mono&quot;, &quot;Courier New&quot;, monospace); color: var(--vscode-textLink-foreground); background-color: var(--vscode-textPreformat-background); padding: 1px 3px; border-radius: 4px; font-size: 1em; line-height: 1.357em; white-space: pre-wrap;"></code></a><a href="https://leetcode.com/tag/%E5%AD%97%E7%AC%A6%E4%B8%B2" title="https://leetcode.com/tag/%E5%AD%97%E7%AC%A6%E4%B8%B2" style="color: var(--vscode-textLink-foreground); text-decoration: var(--text-link-decoration);"><code style="font-family: var(--vscode-editor-font-family, &quot;SF Mono&quot;, Monaco, Menlo, Consolas, &quot;Ubuntu Mono&quot;, &quot;Liberation Mono&quot;, &quot;DejaVu Sans Mono&quot;, &quot;Courier New&quot;, monospace); color: var(--vscode-textLink-foreground); background-color: var(--vscode-textPreformat-background); padding: 1px 3px; border-radius: 4px; font-size: 1em; line-height: 1.357em; white-space: pre-wrap;"></code></a><a href="https://leetcode.com/tag/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92" title="https://leetcode.com/tag/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92" style="color: var(--vscode-textLink-foreground); text-decoration: var(--text-link-decoration);"><code style="font-family: var(--vscode-editor-font-family, &quot;SF Mono&quot;, Monaco, Menlo, Consolas, &quot;Ubuntu Mono&quot;, &quot;Liberation Mono&quot;, &quot;DejaVu Sans Mono&quot;, &quot;Courier New&quot;, monospace); color: var(--vscode-textLink-foreground); background-color: var(--vscode-textPreformat-background); padding: 1px 3px; border-radius: 4px; font-size: 1em; line-height: 1.357em; white-space: pre-wrap;"></code></a></p></details>
+<details style="color: rgb(255, 255, 255); font-family: -apple-system, &quot;system-ui&quot;, &quot;Segoe WPC&quot;, &quot;Segoe UI&quot;, system-ui, Ubuntu, &quot;Droid Sans&quot;, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;"><summary><strong>Companies</strong></summary></details>
+<p>给你一个下标从 <strong>0</strong> 开始的数组 <code>words</code> ，它包含 <code>n</code> 个字符串。</p>
+<p>定义 <strong>连接</strong> 操作 <code>join(x, y)</code> 表示将字符串 <code>x</code> 和 <code>y</code> 连在一起，得到 <code>xy</code> 。如果 <code>x</code> 的最后一个字符与 <code>y</code> 的第一个字符相等，连接后两个字符中的一个会被 <strong>删除</strong> 。</p>
+<p>比方说 <code>join(&quot;ab&quot;, &quot;ba&quot;) = &quot;aba&quot;</code> ， <code>join(&quot;ab&quot;, &quot;cde&quot;) = &quot;abcde&quot;</code> 。</p>
+<p>你需要执行 <code>n - 1</code> 次 <strong>连接</strong> 操作。令 <code>str0 = words[0]</code> ，从 <code>i = 1</code> 直到 <code>i = n - 1</code> ，对于第 <code>i</code> 个操作，你可以执行以下操作之一：</p>
+<ul>
+<li>令 <code>stri = join(stri - 1, words[i])</code></li>
+<li>令 <code>stri = join(words[i], stri - 1)</code></li>
+</ul>
+<p>你的任务是使 <code>strn - 1</code> 的长度 <strong>最小</strong> 。</p>
+<p>请你返回一个整数，表示 <code>strn - 1</code> 的最小长度。</p>
+<p><strong>示例 1：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">输入：words = [&#34;aa&#34;,&#34;ab&#34;,&#34;bc&#34;]
+</span></span><span class="line"><span class="cl">输出：4
+</span></span><span class="line"><span class="cl">解释：这个例子中，我们按以下顺序执行连接操作，得到 str2 的最小长度：
+</span></span><span class="line"><span class="cl">str0 = &#34;aa&#34;
+</span></span><span class="line"><span class="cl">str1 = join(str0, &#34;ab&#34;) = &#34;aab&#34;
+</span></span><span class="line"><span class="cl">str2 = join(str1, &#34;bc&#34;) = &#34;aabc&#34; 
+</span></span><span class="line"><span class="cl">str2 的最小长度为 4 。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>示例 2：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">输入：words = [&#34;ab&#34;,&#34;b&#34;]
+</span></span><span class="line"><span class="cl">输出：2
+</span></span><span class="line"><span class="cl">解释：这个例子中，str0 = &#34;ab&#34;，可以得到两个不同的 str1：
+</span></span><span class="line"><span class="cl">join(str0, &#34;b&#34;) = &#34;ab&#34; 或者 join(&#34;b&#34;, str0) = &#34;bab&#34; 。
+</span></span><span class="line"><span class="cl">第一个字符串 &#34;ab&#34; 的长度最短，所以答案为 2 。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>示例 3：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">输入：words = [&#34;aaa&#34;,&#34;c&#34;,&#34;aba&#34;]
+</span></span><span class="line"><span class="cl">输出：6
+</span></span><span class="line"><span class="cl">解释：这个例子中，我们按以下顺序执行连接操作，得到 str2 的最小长度：
+</span></span><span class="line"><span class="cl">str0 = &#34;aaa&#34;
+</span></span><span class="line"><span class="cl">str1 = join(str0, &#34;c&#34;) = &#34;aaac&#34;
+</span></span><span class="line"><span class="cl">str2 = join(&#34;aba&#34;, str1) = &#34;abaaac&#34;
+</span></span><span class="line"><span class="cl">str2 的最小长度为 6 。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= words.length &lt;= 1000</code></li>
+<li><code>1 &lt;= words[i].length &lt;= 50</code></li>
+<li><code>words[i]</code> 中只包含小写英文字母。</li>
+</ul>
+<hr>
+<p><a class="link" href="https://leetcode.cn/problems/decremental-string-concatenation/comments/"  target="_blank" rel="noopener"
+    >Discussion</a> | <a class="link" href="https://leetcode.cn/problems/decremental-string-concatenation/solution/"  target="_blank" rel="noopener"
+    >Solution</a></p>
+<p>Code Now</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @lc app=leetcode.cn id=2746 lang=cpp
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @lcpr version=30204
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * [2746] 字符串连接删减字母
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// @lcpr-template-start
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;array&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;bitset&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;climits&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;deque&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;functional&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;list&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;queue&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stack&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;tuple&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unordered_set&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;numeric&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1">// @lcpr-template-end
+</span></span></span><span class="line"><span class="cl"><span class="c1">// @lc code=start
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">Task</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">del</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Task</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">a</span> <span class="o">=</span> <span class="sc">&#39;a&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">b</span> <span class="o">=</span> <span class="sc">&#39;b&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">del</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">Task</span><span class="p">(</span><span class="kt">char</span> <span class="n">a_</span><span class="p">,</span> <span class="kt">char</span> <span class="n">b_</span><span class="p">,</span> <span class="kt">int</span> <span class="n">del_</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">a</span> <span class="o">=</span> <span class="n">a_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">b</span> <span class="o">=</span> <span class="n">b_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">del</span> <span class="o">=</span> <span class="n">del_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">minimizeConcatenatedLength</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">words</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>   
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">n</span><span class="o">=</span><span class="n">words</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">long</span> <span class="kt">long</span><span class="o">&gt;&gt;&gt;</span> <span class="n">dp</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">long</span> <span class="kt">long</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="mi">26</span><span class="p">,</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">long</span> <span class="kt">long</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">26</span><span class="p">,</span><span class="n">INT_MAX</span><span class="p">)));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">cti</span><span class="p">(</span><span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])][</span><span class="n">cti</span><span class="p">(</span><span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">back</span><span class="p">())]</span><span class="o">=</span><span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">string</span> <span class="n">s</span><span class="o">=</span><span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">a_</span><span class="o">=</span><span class="n">cti</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">b_</span><span class="o">=</span><span class="n">cti</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">back</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">len</span><span class="o">=</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">a</span><span class="o">&lt;</span><span class="mi">26</span><span class="p">;</span><span class="n">a</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">b</span><span class="o">&lt;</span><span class="mi">26</span><span class="p">;</span><span class="n">b</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">a</span><span class="p">][</span><span class="n">b_</span><span class="p">]</span><span class="o">=</span><span class="n">min</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">a</span><span class="p">][</span><span class="n">b_</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">a</span><span class="p">][</span><span class="n">b</span><span class="p">]</span><span class="o">+</span><span class="n">len</span><span class="o">+</span><span class="p">(</span><span class="n">a_</span><span class="o">==</span><span class="n">b</span><span class="o">?-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">a_</span><span class="p">][</span><span class="n">b</span><span class="p">]</span><span class="o">=</span><span class="n">min</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">a_</span><span class="p">][</span><span class="n">b</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">a</span><span class="p">][</span><span class="n">b</span><span class="p">]</span><span class="o">+</span><span class="n">len</span><span class="o">+</span><span class="p">(</span><span class="n">b_</span><span class="o">==</span><span class="n">a</span><span class="o">?-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kt">long</span> <span class="kt">long</span>  <span class="n">minNum</span><span class="o">=</span><span class="n">INT_MAX</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">a</span><span class="o">&lt;</span><span class="mi">26</span><span class="p">;</span><span class="n">a</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">b</span><span class="o">&lt;</span><span class="mi">26</span><span class="p">;</span><span class="n">b</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">minNum</span><span class="o">=</span><span class="n">min</span><span class="p">((</span><span class="kt">long</span> <span class="kt">long</span><span class="p">)</span><span class="n">minNum</span><span class="p">,</span><span class="n">dp</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">a</span><span class="p">][</span><span class="n">b</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">minNum</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="nf">cti</span><span class="p">(</span><span class="kt">char</span> <span class="n">a</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">a</span><span class="o">-</span><span class="sc">&#39;a&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// @lc code=end
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">// @lcpr case=start
+</span></span></span><span class="line"><span class="cl"><span class="cm">// [&#34;aa&#34;,&#34;ab&#34;,&#34;bc&#34;]\n
+</span></span></span><span class="line"><span class="cl"><span class="cm">// @lcpr case=end
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">// @lcpr case=start
+</span></span></span><span class="line"><span class="cl"><span class="cm">// [&#34;ab&#34;,&#34;b&#34;]\n
+</span></span></span><span class="line"><span class="cl"><span class="cm">// @lcpr case=end
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">// @lcpr case=start
+</span></span></span><span class="line"><span class="cl"><span class="cm">// [&#34;aaa&#34;,&#34;c&#34;,&#34;aba&#34;]\n
+</span></span></span><span class="line"><span class="cl"><span class="cm">// @lcpr case=end
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="bfs-广度优先">BFS-广度优先
 </h2><h3 id="最少翻转操作数"><a class="link" href="https://leetcode.cn/problems/minimum-reverse-operations/description/"  target="_blank" rel="noopener"
     >最少翻转操作数</a>
 </h3><div class="table-wrapper"><table>
@@ -18287,9 +18620,9 @@ suf[i][0]=suf[i+1][0]
 <p>这里使用的方法是遍历回文字符串中心然后扩展中心。</p>
 <p>这种往两边扩充的方法是统计字符串回文的一种方法。</p></blockquote>
 <h2 id="差分数组">差分数组
-</h2><h1 id="零数组变换-iii"><a class="link" href="https://leetcode.cn/problems/zero-array-transformation-iii/description/"  target="_blank" rel="noopener"
+</h2><h3 id="零数组变换-iii"><a class="link" href="https://leetcode.cn/problems/zero-array-transformation-iii/description/"  target="_blank" rel="noopener"
     >零数组变换 III</a>
-</h1><div class="table-wrapper"><table>
+</h3><div class="table-wrapper"><table>
   <thead>
       <tr>
           <th style="text-align: center">Category</th>
