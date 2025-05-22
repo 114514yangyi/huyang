@@ -347,6 +347,15 @@
         <li><a href="#3全错位排列问题">(3)<a href="https://zhida.zhihu.com/search?content_id=192498207&amp;content_type=Article&amp;match_order=1&amp;q=%E5%85%A8%E9%94%99%E4%BD%8D%E6%8E%92%E5%88%97&amp;zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3NDc4ODM5ODQsInEiOiLlhajplJnkvY3mjpLliJciLCJ6aGlkYV9zb3VyY2UiOiJlbnRpdHkiLCJjb250ZW50X2lkIjoxOTI0OTgyMDcsImNvbnRlbnRfdHlwZSI6IkFydGljbGUiLCJtYXRjaF9vcmRlciI6MSwiemRfdG9rZW4iOm51bGx9.2I5z29BbhABKOFn9Kqf57yny_XRf1mQ9gVbyxHjtwg0&amp;zhida_source=entity">全错位排列</a>问题</a></li>
       </ol>
     </li>
+    <li><a href="#二分查找在满足单调性条件的函数中寻找特定边界值">二分查找在满足单调性条件的函数中寻找特定边界值</a></li>
+    <li><a href="#如何识别与解决贪心算法问题-">如何识别与解决贪心算法问题 🧐</a>
+      <ol>
+        <li><a href="#1-识别贪心问题"><strong>1. 识别贪心问题</strong></a></li>
+        <li><a href="#2-构建贪心策略"><strong>2. 构建贪心策略</strong></a></li>
+        <li><a href="#3-贪心算法配合堆的通用模板类似你的题目"><strong>3. 贪心算法配合堆的通用模板（类似你的题目）</strong></a></li>
+        <li><a href="#为什么使用差分数组"><strong>为什么使用差分数组？🤔</strong></a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -415,7 +424,7 @@
 
 
                 <time class="article-time--reading">
-                    36 minute read
+                    37 minute read
                 </time>
             </div>
         
@@ -3661,6 +3670,163 @@ $$ S_n = (k-2)S_{n-1} + (k-1)S_{n-2} \quad (\text{对于 } n \ge 3) $$<h2 id="7-
 <p><em>1.给出一个数学归纳得到的便于计算的递推公式</em></p>
 <p><em>2.给出通项公式 （计算不如上面的递推方便）</em></p>
 <p><em>3.对于<strong>问题的推广</strong>，若 封信中恰有 封信装错，则方法数 。很简单，只需要先把n封信全部装对，然后选出m封需要装错的，再将m封信全错位排列，根据乘法原理便能得到上面的结果。</em></p>
+<h2 id="二分查找在满足单调性条件的函数中寻找特定边界值">二分查找在满足单调性条件的函数中寻找特定边界值
+</h2><p><img src="/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/image-20250521111940337.png"
+	width="1806"
+	height="504"
+	srcset="/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/image-20250521111940337_hu_a8abab3cb648bc5e.png 480w, /huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/image-20250521111940337_hu_381308a0cd285228.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250521111940337"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="358"
+		data-flex-basis="860px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="n">min_val</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">max_val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="c1">// 或者一个不可能的值，用于存储最终结果
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="p">(</span><span class="n">left</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 或者 left &lt; right, 根据具体边界处理
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">left</span> <span class="o">+</span> <span class="p">(</span><span class="n">right</span> <span class="o">-</span> <span class="n">left</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">check</span><span class="p">(</span><span class="n">mid</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// mid 满足条件，尝试更小的 mid
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">result</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span> <span class="c1">// 记录当前满足条件的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 继续向左搜索
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// mid 不满足条件，需要更大的 mid
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 向右搜索
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="如何识别与解决贪心算法问题-">如何识别与解决贪心算法问题 🧐
+</h2><h3 id="1-识别贪心问题"><strong>1. 识别贪心问题</strong>
+</h3><ul>
+<li><strong>目标是最优化 + 满足约束：</strong> 题目通常要求在满足特定约束条件的前提下，求解某个指标的<strong>最小值</strong>或<strong>最大值</strong>。
+<ul>
+<li>你准确地指出了“使用最少的query数组”是贪心算法的一个重要信号。</li>
+</ul>
+</li>
+<li><strong>与动态规划 (DP) 的区别：</strong>
+<ul>
+<li><strong>DP</strong>：通过将问题分解为子问题，并从子问题的最优解逐步构建整体最优解。DP 通常会探索多种可能性，状态转移和依赖关系是核心。</li>
+<li><strong>贪心算法</strong>：在每一步都做出<strong>当前看起来最优</strong>的选择，并期望通过一系列局部最优选择达到全局最优。一旦做出选择，通常不会“反悔”或重新评估。决策是即时且针对当前步骤的。</li>
+</ul>
+</li>
+<li><strong>“最少代价/工具”或“最大即时收益”：</strong> 像“用最少的物品”，“在这一步获得最大价值”，或者“用当前最佳选项满足当前需求”这类描述，常常暗示了贪心策略。你提到的“在满足某个条件下面使用最少的Utility优化问题”与此非常吻合。</li>
+</ul>
+<hr>
+<h3 id="2-构建贪心策略"><strong>2. 构建贪心策略</strong>
+</h3><p>一旦怀疑是贪心问题，下一步的关键就是确定“如何贪心”。</p>
+<ul>
+<li><strong>明确“贪心选择”是什么：</strong> 在问题的每一步，你能做出什么样的决策，使得当前情况看起来是最佳的？这个选择需要基于某种启发式规则或标准。</li>
+<li><strong>排序作为预处理步骤：</strong>
+<ul>
+<li>许多贪心问题的第一步是对输入的“工具”（例如，区间、任务、物品）按照某个特定标准进行排序。排序有助于结构化决策过程。</li>
+<li>正如你所说：“一般来说贪心是将我们所有的Util按照某一种条件排序，然后根据这个排序对于我们要解决的Staff进行解决。”</li>
+<li><strong>静态排序：</strong> 如果一个固定的、全局的排序标准能够让你顺序遍历元素并做出决策，那么简单的 <code>sort()</code> 通常就足够了（例如，按区间起始点或结束点排序）。</li>
+</ul>
+</li>
+<li><strong>使用堆（优先队列）进行动态优先级排序：</strong>
+<ul>
+<li>有时，“最佳”选择并不仅仅由一个固定的全局排序决定。可用的“工具”集合或者选择的优先级可能会随着你处理主问题（“Staff”）的进度而动态变化。</li>
+<li>你准确地指出了：“对于条件复杂的题目，我们需要使用最大堆或者最小堆来进行排序……这种判断条件不是一种静态条件，而是一种动态更新的条件，或者说是在迭代数组中，对于堆进行更新的。”</li>
+<li><strong>何时使用堆：</strong> 当你在迭代过程中（例如，遍历 <code>nums</code> 数组到索引 <code>i</code>），需要在每个步骤 <code>i</code> 从一个动态变化的当前<em>活跃</em>或<em>可用</em>“工具”集合中，根据某个优先级选出最优的那个。堆能够高效地管理这个活跃集合，并快速获取最高（或最低）优先级的元素。</li>
+</ul>
+</li>
+<li><strong>定义堆的排序标准（贪心核心）：</strong>
+<ul>
+<li>这通常是最具挑战性的一步。你问到：“怎么来说我们才能够贪心选择覆盖掉位置i的区间使得Utility最大化？（也就是堆的判断条件）”。</li>
+<li>你的洞察——“那就是这个覆盖了位置i的query要尽可能的覆盖掉未来的位置，所以堆排序的条件应该是最大的区间右端点”——是区间问题中一个经典且往往有效的贪心启发式规则。这种策略旨在让每一个被选择的区间尽可能地对后续的需求产生“价值”。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="3-贪心算法配合堆的通用模板类似你的题目"><strong>3. 贪心算法配合堆的通用模板（类似你的题目）</strong>
+</h3><p>你的思考过程导向了这类问题的一个常见解决模式：</p>
+<ol>
+<li>
+<p><strong>预处理（可选但常见）：</strong></p>
+<ul>
+<li>如果按特定顺序处理“工具”（例如 <code>queries</code>）有助于后续决策，则先对其进行排序（例如，按起始点 <code>q[0]</code> 排序）。</li>
+</ul>
+</li>
+<li>
+<p><strong>迭代与状态管理：</strong></p>
+<ul>
+<li>遍历主问题的元素（例如，<code>nums</code> 数组，从 <code>i = 0</code> 到 <code>n-1</code>）。</li>
+<li>维护当前已做选择的“状态”或“效果”（例如，你的 <code>sum</code> 代表当前的覆盖程度，对于区间问题，通常使用<strong>差分数组</strong>来管理）。</li>
+</ul>
+</li>
+<li>
+<p><strong>动态更新候选池（堆）：</strong></p>
+<ul>
+<li>当你处理到 <code>nums[i]</code> 时，将所有新近可用的“工具”加入堆中。对于区间问题，这通常是那些起始点 <code>q[0]</code> 现在 <code>&lt;= i</code> 的区间。</li>
+</ul>
+</li>
+<li>
+<p><strong>做出贪心选择：</strong></p>
+<ul>
+<li>如果当前状态不满足在 <code>i</code> 点的需求（例如，<code>sum &lt; nums[i]</code>）：
+<ul>
+<li>检查堆中是否有有效的候选者（例如，<code>!pq.empty()</code> 并且堆顶的区间确实覆盖了 <code>i</code>，如 <code>pq.top().b &gt;= i</code>）。</li>
+<li>如果有，根据你的贪心标准从堆中选择“最佳”的一个（例如，弹出具有最大右端点 <code>b</code> 的区间）。</li>
+<li>根据这个选择更新你的状态（例如，<code>sum++</code>，并更新差分数组以反映所选区间的效果：<code>diff_nums[pq.top().b + 1]--</code>）。</li>
+<li>重复此过程，直到在 <code>i</code> 点的需求得到满足，或者堆中没有更多有效的候选者。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>检查可行性：</strong></p>
+<ul>
+<li>在尝试做出贪心选择后，如果在 <code>i</code> 点的需求仍然未被满足，那么就无法满足所有条件，此时可能返回 <code>-1</code> 或其他相应的失败指示。</li>
+</ul>
+</li>
+<li>
+<p><strong>最终结果：</strong></p>
+<ul>
+<li>结果可能是已做选择的计数、堆的最终状态（在你的例子中是 <code>pq.size()</code>，代表了那些可用但未被使用的物品），或根据具体问题定义的其他值。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="为什么使用差分数组"><strong>为什么使用差分数组？🤔</strong>
+</h3><p>你提到：“在我们选择了某一个query的时候，怎么对于未来位置的i+1，i+2，，，起到作用的。这里我们使用的是差分数组。这里的思路比较复杂，所以我们直接看题解。”</p>
+<ul>
+<li><strong>差分数组</strong>是一种能够高效处理区间更新的技术。当你选择一个区间 <code>[start, end]</code> 来施加某种效果（比如覆盖度增加1）时，你不需要遍历从 <code>start</code> 到 <code>end</code> 的所有点来更新一个直接记录覆盖度的数组，而是可以：
+<ul>
+<li>使 <code>diff[start]</code> 增加 1。</li>
+<li>使 <code>diff[end + 1]</code> 减少 1。</li>
+</ul>
+</li>
+<li>然后，任何点 <code>i</code> 的实际覆盖度可以通过计算差分数组 <code>diff</code> 到 <code>i</code> 为止的前缀和来得到（这正是你的 <code>sum += diff_nums[i]</code> 步骤所做的事情）。</li>
+<li>当涉及到大量区间更新时，这种方法至关重要，因为每次选择区间只需要对差分数组进行两次更新，而不是对一个直接的覆盖数组进行可能很多次的更新，从而大大提高了效率。</li>
+</ul>
+<hr>
+<p>这个源于你自身洞察的结构化方法，为你解决类似的贪心优化问题（尤其是涉及区间和动态选择的问题）提供了一个坚实的框架。关键始终在于清晰地定义局部最优选择（贪心选择）以及如何进行这种选择（通过排序或堆的优先级）。</p>
 
 </section>
 
