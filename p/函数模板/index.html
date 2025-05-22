@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="函数模板">
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="函数模板">
 <meta property='og:description' content="函数模板 Created by: Hu Yang Created time: September 12, 2023 7:41 PM Tags: Learning\n函数模板（Function Template）是一种C++特性，用于定义通用的函数。函数模板可以针对不同的数据类型进行多次重用，从而提高代码的灵活性和可重用性。\n函数模板的语法如下：\n1 2 3 4 5 template &lt;typename T&gt; 返回类型 函数名(参数列表) { // 函数体 } 其中，template &lt;typename T&gt; 表示这是一个函数模板，并且使用了一个名为 T 的类型参数。T 可以是任意合法的C++类型，例如int、float、std::string等。typename 关键字可以用 class 替代。\n函数模板可以在函数定义中使用类型参数 T，使其成为函数的参数类型、返回类型或局部变量类型。在调用函数模板时，编译器会根据实际参数的类型自动推导出 T 的具体类型，并生成对应的函数实例。\n下面是一个简单的函数模板示例，用于交换两个值：\n1 2 3 4 5 6 7 template &lt;typename T&gt; void swap(T&amp; a, T&amp; b) { T temp = a; a = b; b = temp; } 在使用函数模板时，可以显式指定类型参数，也可以通过实参的类型进行类型推导。例如：\n1 2 3 4 5 6 7 int main() { int x = 5, y = 10; swap&lt;int&gt;(x, y); // 显式指定类型参数 // 等同于 swap(x, y); return 0; } 函数模板还可以有多个类型参数，并且支持默认参数、非类型模板参数等高级特性，从而更加灵活地适应不同的使用场景。\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -569,6 +569,13 @@ Tags: Learning</p>
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
         Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
 </footer>
 
 
@@ -668,6 +675,135 @@ Tags: Learning</p>
         document.head.appendChild(customFont);
     }());
 </script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
 
     </body>
 </html>

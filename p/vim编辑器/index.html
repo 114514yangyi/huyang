@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/vim%E7%BC%96%E8%BE%91%E5%99%A8/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Vim编辑器">
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="Vim编辑器">
 <meta property='og:description' content="vim编辑器 当提到 Vim 的通用指令时，以下是一些常见的命令，按照功能进行分类并以列表形式呈现：\n1.文本末尾 G\n2.文本开头 gg\n3.行首 shift+0\n4.行尾 $\n5.输入模式 i\n6.删除行 dd\n7.复制行 yy\n8.粘贴 p\n编辑与插入文本:\ni：在当前光标位置前插入文本。 a：在当前光标位置后插入文本。 o：在当前行下方插入新的一行并进入插入模式。 O：在当前行上方插入新的一行并进入插入模式。 cc：删除当前行并进入插入模式。 yy：复制当前行。 dd：剪切当前行。 p：粘贴剪贴板内容。 光标移动与定位:\nh：向左移动一个字符。 j：向下移动一行。 k：向上移动一行。 l：向右移动一个字符。 w：向后移动一个词。 b：向前移动一个词。 gg：跳转到文件的第一行。 G：跳转到文件的最后一行。 :n：跳转到文件的第 n 行（例如 :10 跳转到第 10 行）。 保存与退出:\n:w：保存文件。 :q：退出 Vim。 :wq：保存文件并退出 Vim。 撤销与重做:\nu：撤销上一次操作。 Ctrl + r：重做上一次撤销的操作。 查找与替换:\n/pattern：向前查找指定模式的文本。 ?pattern：向后查找指定模式的文本。 n：查找下一个匹配项。 N：查找上一个匹配项。 :s/old/new：将当前行第一个匹配项替换为新的文本。 :s/old/new/g：将当前行所有匹配项替换为新的文本。 :%s/old/new/g：在整个文件中替换所有匹配项。 剪切、复制与粘贴:\nx：剪切当前字符。 X：剪切前一个字符。 yy：复制当前行。 dd：剪切当前行。 p：粘贴剪贴板内容。 这只是 Vim 的一小部分指令，但它们涵盖了基本的编辑、导航和保存操作。Vim 是一个功能强大且高度可定制的编辑器，还有很多其他的指令和功能等待你去探索。\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/vim%E7%BC%96%E8%BE%91%E5%99%A8/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -565,6 +565,13 @@
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
         Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
 </footer>
 
 
@@ -664,6 +671,135 @@
         document.head.appendChild(customFont);
     }());
 </script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
 
     </body>
 </html>

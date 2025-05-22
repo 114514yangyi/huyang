@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E6%A0%87%E5%87%86%E5%AE%B9%E5%99%A8%E5%87%BD%E6%95%B0/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="标准容器函数">
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="标准容器函数">
 <meta property='og:description' content="标准容器函数 Created by: Hu Yang Created time: September 13, 2023 7:51 PM Tags: Guides, 数据结构\n以下是常用的标准容器函数的使用方法示例：\nsize()：返回容器中元素的数量。 1 2 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; std==cout &lt;&lt; &#34;Size: &#34; &lt;&lt; vec.size() &lt;&lt; std==endl; // 输出：Size: 5 empty()：检查容器是否为空。 1 2 3 4 std::vector&lt;int&gt; vec; if (vec.empty()) { std==cout &lt;&lt; &#34;Vector is empty.&#34; &lt;&lt; std==endl; // 输出：Vector is empty. } clear()：清空容器中的所有元素。 1 2 3 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; vec.clear(); std==cout &lt;&lt; &#34;Size after clear: &#34; &lt;&lt; vec.size() &lt;&lt; std==endl; // 输出：Size after clear: 0 begin() 和 end()：返回指向容器的起始和末尾位置的迭代器。 1 2 3 4 5 6 7 8 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = vec.begin(); // 指向起始位置的迭代器 auto end = vec.end(); // 指向末尾位置的迭代器 for (; it != end; ++it) { std::cout &lt;&lt; *it &lt;&lt; &#34; &#34;; // 输出：1 2 3 4 5 } std==cout &lt;&lt; std==endl; front() 和 back()：返回容器的第一个和最后一个元素的引用。 1 2 3 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; std==cout &lt;&lt; &#34;First element: &#34; &lt;&lt; vec.front() &lt;&lt; std==endl; // 输出：First element: 1 std==cout &lt;&lt; &#34;Last element: &#34; &lt;&lt; vec.back() &lt;&lt; std==endl; // 输出：Last element: 5 push_back() 和 pop_back()：在容器末尾插入和删除元素。 1 2 3 4 5 6 7 8 9 10 11 std::vector&lt;int&gt; vec; vec.push_back(1); vec.push_back(2); vec.push_back(3); vec.pop_back(); // 删除末尾元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 } std==cout &lt;&lt; std==endl; insert()：在指定位置插入一个或多个元素。 1 2 3 4 5 6 7 8 9 10 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = vec.begin() + 2; // 在位置2插入元素 vec.insert(it, 10); vec.insert(it, 2, 20); // 在位置2插入两个元素20 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 20 20 3 4 5 } std==cout &lt;&lt; std==endl; erase()：删除指定位置或指定范围内的一个或多个元素。 1 2 3 4 5 6 7 8 9 10 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = vec.begin() + 2; // 删除位置2的元素 vec.erase(it); vec.erase(vec.begin(), vec.begin() + 2); // 删除前两个元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：3 4 5 } std==cout &lt;&lt; std==endl; swap()：交换两个容器的内容。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 std::vector&lt;int&gt; vec1 = {1, 2, 3}; std::vector&lt;int&gt; vec2 = {4, 5, 6}; vec1.swap(vec2); for (const auto&amp; element : vec1) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：4 5 6 } std==cout &lt;&lt; std==endl; for (const auto&amp; element : vec2) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 } std==cout &lt;&lt; std==endl; resize()：改变容器的大小。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 std::vector&lt;int&gt; vec = {1, 2, ```cpp std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; vec.resize(3); // 将容器大小调整为3 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 } std==cout &lt;&lt; std==endl; vec.resize(5, 10); // 将容器大小调整为5，并使用10填充新元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 10 10 } std==cout &lt;&lt; std==endl; assign()：用新的元素替换容器的内容。 1 2 3 4 5 6 7 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; vec.assign({10, 20, 30}); // 使用新的元素替换容器内容 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：10 20 30 } std==cout &lt;&lt; std==endl; find() 和 count()：用于在容器中搜索元素。 1 2 3 4 5 6 7 8 9 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; auto it = std::find(vec.begin(), vec.end(), 3); if (it != vec.end()) { std==cout &lt;&lt; &#34;Found element at index: &#34; &lt;&lt; std==distance(vec.begin(), it) &lt;&lt; std::endl; // 输出：Found element at index: 2 } int count = std::count(vec.begin(), vec.end(), 2); std==cout &lt;&lt; &#34;Count of 2: &#34; &lt;&lt; count &lt;&lt; std==endl; // 输出：Count of 2: 1 sort() 和 unique()：对容器进行排序和去重。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 std::vector&lt;int&gt; vec = {5, 3, 2, 4, 1}; std::sort(vec.begin(), vec.end()); // 对容器进行排序 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 4 5 } std==cout &lt;&lt; std==endl; vec.push_back(3); vec.push_back(4); vec.push_back(5); auto it = std::unique(vec.begin(), vec.end()); // 移除相邻的重复元素 vec.erase(it, vec.end()); // 删除重复元素 for (const auto&amp; element : vec) { std::cout &lt;&lt; element &lt;&lt; &#34; &#34;; // 输出：1 2 3 4 5 } std==cout &lt;&lt; std==endl; max_element() 和 min_element()：返回容器中的最大和最小元素的迭代器。 1 2 3 4 5 6 7 std::vector&lt;int&gt; vec = {5, 3, 2, 4, 1}; auto maxElement = std::max_element(vec.begin(), vec.end()); std==cout &lt;&lt; &#34;Max element: &#34; &lt;&lt; *maxElement &lt;&lt; std==endl; // 输出：Max element: 5 auto minElement = std::min_element(vec.begin(), vec.end()); std==cout &lt;&lt; &#34;Min element: &#34; &lt;&lt; *minElement &lt;&lt; std==endl; // 输出：Min element: 1 accumulate()：计算容器中元素的总和。 1 2 3 4 std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5}; int sum = std::accumulate(vec.begin(), vec.end(), 0); std==cout &lt;&lt; &#34;Sum: &#34; &lt;&lt; sum &lt;&lt; std==endl; // 输出：Sum: 15 transform()：对容器中的元素进行变换，并将结果存储在另一个容器中。 std::transform 是一个算法函数，用于对容器中的元素进行变换，并将结果存储在另一个容器中。它接受四个参数：源容器的起始迭代器、源容器的结束迭代器、目标容器的起始位置迭代器，以及一个一元或二元函数对象（函数指针、函数对象或 Lambda 表达式）。\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E6%A0%87%E5%87%86%E5%AE%B9%E5%99%A8%E5%87%BD%E6%95%B0/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -1024,6 +1024,13 @@ Tags: Guides, 数据结构</p>
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
         Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
 </footer>
 
 
@@ -1123,6 +1130,135 @@ Tags: Guides, 数据结构</p>
         document.head.appendChild(customFont);
     }());
 </script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
 
     </body>
 </html>

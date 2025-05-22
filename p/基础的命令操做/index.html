@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E5%9F%BA%E7%A1%80%E7%9A%84%E5%91%BD%E4%BB%A4%E6%93%8D%E5%81%9A/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="基础的命令操做">
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="基础的命令操做">
 <meta property='og:description' content="基础的命令操做 ls 命令（列出目录内容）: 使用方法: ls [选项] [文件/目录] 常用选项: l: 以长格式显示文件和目录的详细信息 a: 显示所有文件和目录，包括隐藏文件 h: 以人类可读的格式显示文件大小 r: 反向排序，按降序显示文件和目录 t: 按修改时间排序，最新的文件或目录显示在前面 cp 命令（复制文件和目录）: 使用方法: cp [选项] 源文件 目标文件/目录 常用选项: r: 递归地复制整个目录 i: 覆盖已存在的目标文件前进行确认 v: 显示复制的详细信息 cd 命令（更改当前工作目录）: 使用方法: cd [目录] 无常用选项 mv 命令（移动/重命名文件和目录）: 使用方法: mv [选项] 源文件/目录 目标文件/目录 常用选项: i: 覆盖已存在的目标文件前进行确认 v: 显示移动/重命名的详细信息 pwd 命令（显示当前工作目录）: 使用方法: pwd 无常用选项 mkdir 命令（创建目录）: 使用方法: mkdir [选项] 目录名 常用选项: p: 递归地创建目录，如果父目录不存在也会创建 v: 显示创建的目录的详细信息 touch 命令（创建空文件或修改文件时间戳）: 使用方法: touch [选项] 文件名 常用选项: a: 仅修改访问时间 m: 仅修改修改时间 c: 仅在文件不存在时创建文件 r: 使用指定文件的时间戳更新文件 cat 命令（连接文件并打印到标准输出）: 使用方法: cat [选项] 文件... 常用选项: n: 显示行号 b: 显示非空行号 s: 合并多个空行为一个空行 more 命令（逐页显示文件内容）: 使用方法: more [选项] 文件 常用选项: 空格键: 显示下一页 Enter键: 显示下一行 q: 退出显示 rm 命令（删除文件和目录）: 使用方法: rm [选项] 文件/目录 常用选项: r: 递归地删除目录及其内容 f: 强制删除，不提示确认 i: 删除前进行确认 which 命令（显示命令的完整路径）: 使用方法: which [选项] 命令 无常用选项 find 命令（在指定目录下查找文件）: 使用方法: find [路径] [选项] [表达式] 常用选项: name: 按文件名查找 type: 按文件类型查找 mtime: 按修改时间查找 size: 按文件大小查找 grep 命令（在文件中搜索匹配的文本）: 使用方法: grep [选项] 模式 [文件...] 常用选项: i: 忽略大小写 r: 递归地在目录中搜索文件 n: 显示匹配行的行号 v: 反转匹配，显示不匹配的行 wc 命令（统计文件中的字节数、字数和行数）: 使用方法: wc [选项] 文件... 常用选项: l: 统计行数 w: 统计字数 c: 统计字节数 echo 命令（打印文本）: 使用方法: echo [选项] [字符串] 常用选项: e: 解释转义字符 n: 不打印换行符 tail 命令（显示文件末尾的内容）: 使用方法: tail [选项] 文件 常用选项: n: 显示最后几行的内容 f: 跟踪文件的变化，实时显示新增内容 4.sudo pacman -Syuu\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E5%9F%BA%E7%A1%80%E7%9A%84%E5%91%BD%E4%BB%A4%E6%93%8D%E5%81%9A/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -691,6 +691,13 @@
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
         Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
 </footer>
 
 
@@ -790,6 +797,135 @@
         document.head.appendChild(customFont);
     }());
 </script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
 
     </body>
 </html>

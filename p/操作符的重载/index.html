@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E9%87%8D%E8%BD%BD/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="操作符的重载">
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="操作符的重载">
 <meta property='og:description' content="操作符的重载 1.操作符重载的方式：#通过一个类的非静态的成员函数（除了new和delete） #一个全局友元函数。\n2.当函数的第一个参数不是一个自定义类型的对象的时候只能使用全局函数来实现操作符重载。\n4.前置加加是将对象本身进行自增，并返回对象本身，可以进行后续的操作；后置加加是将对象自增并返回一个对象的常拷贝，不能进行修改，只能进行使用值。\n5.特殊的操作符重载： #对于“=”的重载，用于对于对象赋值，通常在定义了拷贝函数的类中也需要自定义赋值函数；\n#“[]”的重载，使用在具有线性关系的成员变量。\n#对于“→“重载可以实现智能指针，但是注意在重载操作符的时候，不需要额外的参数，返回值应该是一个指针，用于替代在原先“→”之前位置的变量。例如：\n#“（）”的重载是将类的对象看做一个函数进行使用\n#new 和 delete 的重载：\n对于这两个操作符的重载是只会重载他们对于动态对象的空间分配方式，而并不会去影响他们对于对象类的构造函数和析构函数 的调用。\n在new中除了要传size参数，还可提供其他的参数用于其中：\ndelete的定义：\n在重载操作符：new[] 和delete[]时：\n注意：当类（或基类和成员对象类）中有析构函数时，传给函数new[]的参数size的实际值会比对象数组需要的空间多4个字节，用于存储元素个数！会根据存储的元素个数调用每个元素的析构函数\n#转义操作符：\n将其他类型转换为当前类型需要当前类有对应的其他类型的构造函数；从当前类型转换为其他类型需要重载诸如：int(),float()等操作符\n但是当两者转换方式同时存在会存在歧义，不知道应该去调用哪一个类型转换函数，所以在两者同时定义的时候要进行显式类型转换，或者使用explicit修饰符说明此转换方式不能适用于隐式转换方式。\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E9%87%8D%E8%BD%BD/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -593,6 +593,13 @@
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
         Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
 </footer>
 
 
@@ -692,6 +699,135 @@
         document.head.appendChild(customFont);
     }());
 </script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
 
     </body>
 </html>

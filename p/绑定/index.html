@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E7%BB%91%E5%AE%9A/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="绑定">
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="绑定">
 <meta property='og:description' content="绑定 Created by: Hu Yang Created time: September 18, 2023 3:25 PM Tags: Guides\n绑定（Binding）是指将一个名称（如变量或函数名）与一个实体（如变量的值或函数的实现）关联起来的过程。在编程语言中，绑定可以分为两种类型：静态绑定（Static Binding）和动态绑定（Dynamic Binding）。\n静态绑定（Static Binding）： 静态绑定发生在编译时，由编译器根据变量声明或函数调用的静态类型（声明时的类型）来确定与之关联的实体。 在静态绑定中，绑定关系在编译阶段就已经确定，不会在运行时发生改变。 静态绑定适用于静态类型语言，如C、C++等。在这些语言中，多态性通常通过函数重载（函数名相同，但参数列表不同）来实现。 动态绑定（Dynamic Binding）： 动态绑定发生在运行时，根据变量的实际类型或对象的实际类来确定与之关联的实体。 在动态绑定中，绑定关系在运行时根据对象的类型或类的继承关系来确定，可以在运行时根据具体情况进行调整。 动态绑定适用于面向对象语言，如Java、C#、Python等。在这些语言中，多态性通常通过继承和方法重写（override）来实现。 动态绑定使得程序能够在运行时根据对象的实际类型来确定调用哪个实体，从而实现多态性。这样就可以通过基类的引用或指针来处理不同类型的对象，而不需要关心具体的子类类型，提高了代码的灵活性和可扩展性。\n1 2 3 4 5 6 7 8 9 10 11 12 当涉及到绑定时，下面是一个具体的C++代码示例，展示了静态绑定和动态绑定的区别： include &lt;iostream&gt; class Animal {public: virtual void speak() { std==cout &lt;&lt; &#34;动物正在发出声音！&#34; &lt;&lt; std==endl; }}; class Dog : public Animal {public: void speak() override { std==cout &lt;&lt; &#34;汪汪汪！&#34; &lt;&lt; std==endl; }}; int main() { Animal animal; Dog dog; Animal* animalPtr1 = &amp;animal; // 使用基类指针指向基类对象 Animal* animalPtr2 = &amp;dog; // 使用基类指针指向子类对象 // 静态绑定：编译时确定调用的方法 animal.speak(); // 输出：动物正在发出声音！ dog.speak(); // 输出：汪汪汪！ // 动态绑定：运行时确定调用的方法 animalPtr1-&gt;speak(); // 输出：动物正在发出声音！（静态类型和动态类型一致） animalPtr2-&gt;speak(); // 输出：汪汪汪！（静态类型是基类，动态类型是子类） return 0;}``` 在上面的代码中，Animal是一个基类，Dog是Animal的子类。Animal类中的speak()方法被声明为虚函数（virtual），以实现动态绑定。 在静态绑定的情况下，编译器根据变量的静态类型（声明时的类型）来确定调用的方法。在动态绑定的情况下，基类指针指向子类对象，根据实际对象的类型（动态类型）来确定调用的方法。 在输出结果中，可以看到静态绑定时调用的方法由变量的静态类型决定，而动态绑定时调用的方法由变量的动态类型决定。这展示了动态绑定在运行时根据对象的实际类型来确定调用的方法，实现了多态性。 ">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E7%BB%91%E5%AE%9A/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -554,6 +554,13 @@ Tags: Guides</p>
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
         Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
 </footer>
 
 
@@ -653,6 +660,135 @@ Tags: Guides</p>
         document.head.appendChild(customFont);
     }());
 </script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
 
     </body>
 </html>

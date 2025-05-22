@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E6%97%A0%E5%90%91%E5%9B%BE%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E6%9C%89%E7%8E%AF/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="无向图判断是否有环">
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="无向图判断是否有环">
 <meta property='og:description' content="无向图判断是否有环 Tags: 算法 Created by: Hu Yang Created time: November 20, 2023 9:37 PM\n生成的代码块如下所示：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 #include &lt;bits/stdc++.h&gt; using namespace std; //判断在一张无向图中是否存在环 //无向图邻接表 class Graph { private: int numVertexes; //顶点编号数0-numVertexes list&lt;int&gt; *adj; //指向一个邻接链表数组的指针 bool isCyclicUtilDFS(int v, bool visited[], int parent); public: Graph(int numVertexes); //传入顶点数 ~Graph(); //析构函数 void addEdge(int v, int w); //加入边到图中 bool isCyclicDFS(); //如果有环返回true }; Graph::Graph(int numVertexes) { this-&gt;numVertexes = numVertexes; adj = new list&lt;int&gt;[numVertexes]; } Graph::~Graph() { delete [] adj; } void Graph::addEdge(int v, int w) { if (v == w) return; //不允许自环 adj[v].push_back(w); adj[w].push_back(v); } //递归算法,使用visited[]和parent判断 //顶点v可达的子图(连通分量)中是否存在环 bool Graph::isCyclicUtilDFS(int v, bool visited[], int parent) { visited[v] = true; //标记当前结点访问过 //对当前顶点的所有邻接点进行迭代 list&lt;int&gt;::iterator i; for (i = adj[v].begin(); i != adj[v].end(); ++i) { //如果一个邻接点没有被访问过,递归访问 if (!visited[*i]) { if (isCyclicUtilDFS(*i, visited, v)) //发现存在环,返回true return true; //及时退出 } //这一邻接点不是DFS树上i的父结点,且已经被访问过,则存在环 else if (*i != parent) return true; //返回true } return false; } //如果无向图中含有环,返回true,否则返回false bool Graph::isCyclicDFS() { //标记所有顶点为未访问 bool visited[numVertexes]; for (int i = 0; i &lt; numVertexes; ++i) visited[i] = false; //对每个未访问过的顶点,调用isCyclicUtil判断环是否存在 for (int u = 0; u &lt; numVertexes; ++u) { if (!visited[u]) { //不对已经访问过的顶点进行递归 if (isCyclicUtilDFS(u, visited, -1)) return true; } } return false; } int main() { Graph g(5); //5个顶点 g.addEdge(0, 1); g.addEdge(0, 2); g.addEdge(1, 2); g.addEdge(0, 3); g.addEdge(3, 4); g.isCyclicDFS() ? cout &lt;&lt; &#34;Contains Cycle!\\\\n&#34; : cout &lt;&lt; &#34;Doesn&#39;t Contain Cycle!\\\\n&#34;; Graph g2(3); g2.addEdge(0, 1); g2.addEdge(1, 2); g2.isCyclicDFS() ? cout &lt;&lt; &#34;Contains Cycle!\\\\n&#34; : cout &lt;&lt; &#34;Doesn&#39;t Contain Cycle!\\\\n&#34;; return 0; } 这段代码定义了一个Graph类来表示无向图，并实现了判断图中是否存在环的功能。在main函数中，创建了两个图对象g和g2，并添加了边。然后，分别调用isCyclicDFS函数来判断是否存在环，并输出结果。\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E6%97%A0%E5%90%91%E5%9B%BE%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E6%9C%89%E7%8E%AF/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -678,6 +678,13 @@ Created time: November 20, 2023 9:37 PM</p>
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
         Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
 </footer>
 
 
@@ -777,6 +784,135 @@ Created time: November 20, 2023 9:37 PM</p>
         document.head.appendChild(customFont);
     }());
 </script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
 
     </body>
 </html>

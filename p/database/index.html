@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/database/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Database">
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="Database">
 <meta property='og:description' content="Database 关于数据库关系运算 当涉及数据库课程中的操作关系时，以下是一些操作的定义和具体例子：\n运算的类型： 1.集合运算：\n交，并，差，笛卡尔积 2.关系运算：\n投影，选择 连接 除 基本的关系运算： 交，差，笛卡尔积，投影，选择 扩充运算： $$R\\cap S=R-(R-S)$$ $$R\\Join _{A\\theta B}S=\\sigma_{R.A=S.B}(R\\times B)$$ $$R\\div S=\\Pi_{a1}(R)-\\Pi_{a1}((\\Pi_{a1}(R)\\times S)-R)$$ 一些特殊的常用意义表示: 1 2 3 $$\\begin{flalign} &amp;A(a1,a2)\\div B(a1):means 选择a1中那些拥有B(a1)中所有值的元组，返回C(a2) \\end{flalign}$$ $$\\sigma _{condition1,condition2} (A(a1,a2)\\times B(b1,b2)) 对于任意的AB中的组合进行筛选$$ $$A(a1)\\Join B(b1,b2,b3,a1) 选择在B中满足其a1属性在A中的元组$$ $$\\Pi_{id}(A)-\\Pi_{A.id}(\\sigma_{A.val $$对于所有关系的语句来说，可以考虑从反面即不满足条件的语句出发$$ $$对于满足有关系的语句来说，可以考虑使用连接来表示$$ $$顾客 C(cid, cn, city, dis)\\\\ 供应商 A(aid, an, city, per)\\\\ 商品 P(pid, pn, city, qua, pri)\\\\ 订单 O(ordno, orddate, cid, aid, pid, qty, dol)\\\\ ⑦ 没有购买过商品\\\\ \\Pi_{cid}(C)-\\Pi{cid}(O)\\\\ ⑧ 只购买过一次商品\\\\ \\Pi_{cid}(O)-\\Pi_{cid}(\\sigma_{A.cid=B.cid,A.ordno\\neq B.ordno}(A\\times B)),whileA=B=O\\\\ ⑨ 只购买过同一种商品\\\\ \\Pi_{cid}(O)-\\Pi_{cid}(\\sigma_{A.cid=b.cid,A.pid\\neq B.pid}(A\\times B))\\\\$$ 除运算和笛卡尔积的关系： $$if~R=T\\times S,then T=R\\div S ,S=R\\div T\\\\ if~T=R\\div S,then~T\\times S\\subseteq R$$交（Intersection） 交运算符用于获取两个关系之间的共同元组。\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/database/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -1152,6 +1152,13 @@ if~T=R\div S,then~T\times S\subseteq R$$<h2 id="交intersection"><strong>交（I
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
         Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
 </footer>
 
 
@@ -1251,6 +1258,135 @@ if~T=R\div S,then~T\times S\subseteq R$$<h2 id="交intersection"><strong>交（I
         document.head.appendChild(customFont);
     }());
 </script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
 
     </body>
 </html>
