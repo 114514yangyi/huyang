@@ -333,6 +333,7 @@
         <li><a href="#分割字符频率相等的最少子字符串"><a href="https://leetcode.cn/problems/minimum-substring-partition-of-equal-character-frequency/description/">分割字符频率相等的最少子字符串</a></a></li>
         <li><a href="#摆动序列"><a href="https://leetcode.cn/problems/wiggle-subsequence/description/">摆动序列</a></a></li>
         <li><a href="#字符串连接删减字母"><a href="https://leetcode.cn/problems/decremental-string-concatenation/description/">字符串连接删减字母</a></a></li>
+        <li><a href="#最大节点价值之和"><a href="https://leetcode.cn/problems/find-the-maximum-sum-of-node-values/description/">最大节点价值之和</a></a></li>
       </ol>
     </li>
     <li><a href="#bfs-广度优先">BFS-广度优先</a>
@@ -501,7 +502,7 @@
 
 
                 <time class="article-time--reading">
-                    123 minute read
+                    124 minute read
                 </time>
             </div>
         
@@ -7135,7 +7136,170 @@ suf[i][0]=suf[i+1][0]
 </span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="bfs-广度优先">BFS-广度优先
+</div><h3 id="最大节点价值之和"><a class="link" href="https://leetcode.cn/problems/find-the-maximum-sum-of-node-values/description/"  target="_blank" rel="noopener"
+    >最大节点价值之和</a>
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">Category</th>
+          <th style="text-align: center">Difficulty</th>
+          <th style="text-align: center">Likes</th>
+          <th style="text-align: center">Dislikes</th>
+          <th style="text-align: center">ContestSlug</th>
+          <th style="text-align: center">ProblemIndex</th>
+          <th style="text-align: center">Score</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">algorithms</td>
+          <td style="text-align: center">Hard (46.68%)</td>
+          <td style="text-align: center">37</td>
+          <td style="text-align: center">0</td>
+          <td style="text-align: center">biweekly-contest-125</td>
+          <td style="text-align: center">Q4</td>
+          <td style="text-align: center">2267</td>
+      </tr>
+  </tbody>
+</table></div>
+<details style="color: rgb(255, 255, 255); font-family: -apple-system, &quot;system-ui&quot;, &quot;Segoe WPC&quot;, &quot;Segoe UI&quot;, system-ui, Ubuntu, &quot;Droid Sans&quot;, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;"><summary><strong>Tags</strong></summary></details>
+<details style="color: rgb(255, 255, 255); font-family: -apple-system, &quot;system-ui&quot;, &quot;Segoe WPC&quot;, &quot;Segoe UI&quot;, system-ui, Ubuntu, &quot;Droid Sans&quot;, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;"><summary><strong>Companies</strong></summary></details>
+<p>给你一棵 <code>n</code> 个节点的 <strong>无向</strong> 树，节点从 <code>0</code> 到 <code>n - 1</code> 编号。树以长度为 <code>n - 1</code> 下标从 <strong>0</strong> 开始的二维整数数组 <code>edges</code> 的形式给你，其中 <code>edges[i] = [ui, vi]</code> 表示树中节点 <code>ui</code> 和 <code>vi</code> 之间有一条边。同时给你一个 <strong>正</strong> 整数 <code>k</code> 和一个长度为 <code>n</code> 下标从 <strong>0</strong> 开始的 <strong>非负</strong> 整数数组 <code>nums</code> ，其中 <code>nums[i]</code> 表示节点 <code>i</code> 的 <strong>价值</strong> 。</p>
+<p>Alice 想 <strong>最大化</strong> 树中所有节点价值之和。为了实现这一目标，Alice 可以执行以下操作 <strong>任意</strong> 次（<strong>包括</strong> <strong>0 次</strong>）：</p>
+<ul>
+<li>
+<p>选择连接节点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">u
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>和</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">v
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>的边</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[u, v]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>，并将它们的值更新为：</p>
+<ul>
+<li><code>nums[u] = nums[u] XOR k</code></li>
+<li><code>nums[v] = nums[v] XOR k</code></li>
+</ul>
+</li>
+</ul>
+<p>请你返回 Alice 通过执行以上操作 <strong>任意次</strong> 后，可以得到所有节点 <strong>价值之和</strong> 的 <strong>最大值</strong> 。</p>
+<p><strong>示例 1：</strong></p>
+<p><img src="/huyang/screenshot-2023-11-10-012513.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">输入：nums = [1,2,1], k = 3, edges = [[0,1],[0,2]]
+</span></span><span class="line"><span class="cl">输出：6
+</span></span><span class="line"><span class="cl">解释：Alice 可以通过一次操作得到最大价值和 6 ：
+</span></span><span class="line"><span class="cl">- 选择边 [0,2] 。nums[0] 和 nums[2] 都变为：1 XOR 3 = 2 ，数组 nums 变为：[1,2,1] -&gt; [2,2,2] 。
+</span></span><span class="line"><span class="cl">所有节点价值之和为 2 + 2 + 2 = 6 。
+</span></span><span class="line"><span class="cl">6 是可以得到最大的价值之和。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>示例 2：</strong></p>
+<p><img src="/huyang/screenshot-2024-01-09-220017.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">输入：nums = [2,3], k = 7, edges = [[0,1]]
+</span></span><span class="line"><span class="cl">输出：9
+</span></span><span class="line"><span class="cl">解释：Alice 可以通过一次操作得到最大和 9 ：
+</span></span><span class="line"><span class="cl">- 选择边 [0,1] 。nums[0] 变为：2 XOR 7 = 5 ，nums[1] 变为：3 XOR 7 = 4 ，数组 nums 变为：[2,3] -&gt; [5,4] 。
+</span></span><span class="line"><span class="cl">所有节点价值之和为 5 + 4 = 9 。
+</span></span><span class="line"><span class="cl">9 是可以得到最大的价值之和。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>示例 3：</strong></p>
+<p><img src="/huyang/screenshot-2023-11-10-012641.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">输入：nums = [7,7,7,7,7,7], k = 3, edges = [[0,1],[0,2],[0,3],[0,4],[0,5]]
+</span></span><span class="line"><span class="cl">输出：42
+</span></span><span class="line"><span class="cl">解释：Alice 不需要执行任何操作，就可以得到最大价值之和 42 。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>提示：</strong></p>
+<ul>
+<li><code>2 &lt;= n == nums.length &lt;= 2 * 104</code></li>
+<li><code>1 &lt;= k &lt;= 109</code></li>
+<li><code>0 &lt;= nums[i] &lt;= 109</code></li>
+<li><code>edges.length == n - 1</code></li>
+<li><code>edges[i].length == 2</code></li>
+<li><code>0 &lt;= edges[i][0], edges[i][1] &lt;= n - 1</code></li>
+<li>输入保证 <code>edges</code> 构成一棵合法的树。</li>
+</ul>
+<hr>
+<p><a class="link" href="https://leetcode.cn/problems/find-the-maximum-sum-of-node-values/comments/"  target="_blank" rel="noopener"
+    >Discussion</a> | <a class="link" href="https://leetcode.cn/problems/find-the-maximum-sum-of-node-values/solution/"  target="_blank" rel="noopener"
+    >Solution</a></p>
+<p>Code Now</p>
+<h2 id="bfs-广度优先">BFS-广度优先
 </h2><h3 id="最少翻转操作数"><a class="link" href="https://leetcode.cn/problems/minimum-reverse-operations/description/"  target="_blank" rel="noopener"
     >最少翻转操作数</a>
 </h3><div class="table-wrapper"><table>

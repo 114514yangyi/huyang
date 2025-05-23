@@ -320,7 +320,26 @@
         <li><a href="#3-多维通常二维dp-数组-bottom-up-dp">3. 多维（通常二维）DP 数组 (Bottom-Up DP)</a></li>
         <li><a href="#4-dp-数组降维-空间优化">4. DP 数组降维 (空间优化)</a></li>
         <li><a href="#5-状态转移矩阵--矩阵快速幂">5. 状态转移矩阵 + 矩阵快速幂</a></li>
-        <li><a href="#状态dp">状态DP</a></li>
+      </ol>
+    </li>
+    <li><a href="#dp变种">DP变种</a>
+      <ol>
+        <li><a href="#状态集dp">状态集DP</a></li>
+        <li><a href="#状态机振荡dp">状态机（振荡）DP</a></li>
+        <li><a href="#字符集动态规划-character-set-dp-方法与思路总结">字符集动态规划 (Character Set DP) 方法与思路总结</a>
+          <ol>
+            <li><a href="#1-核心思想">1. 核心思想</a></li>
+            <li><a href="#2-通用方法步骤">2. 通用方法步骤</a></li>
+            <li><a href="#3-适用场景">3. 适用场景</a></li>
+          </ol>
+        </li>
+        <li><a href="#树形动态规划-tree-dp-方法与思路总结">树形动态规划 (Tree DP) 方法与思路总结</a>
+          <ol>
+            <li><a href="#1-核心思想-1">1. 核心思想</a></li>
+            <li><a href="#2-通用方法步骤-1">2. 通用方法步骤</a></li>
+            <li><a href="#3-适用场景-1">3. 适用场景</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
     <li><a href="#区间融合">区间融合</a></li>
@@ -3359,12 +3378,138 @@
 </ul>
 </li>
 </ul>
-<h3 id="状态dp">状态DP
-</h3><p>状态dp指的是在dp数组中存储的并不是单个的结果数字，而是前一个dp的所有状态。</p>
+<h2 id="dp变种">DP变种
+</h2><h3 id="状态集dp">状态集DP
+</h3><p>题目来源于：涂色问题。</p>
+<p>状态dp指的是在dp数组中存储的并不是单个的结果数字，而是前一个dp的所有状态。</p>
 <p>一般来说dp方法中求解当前dp的方法是依赖于当前的环境和历史的dp数组值，而这种方法他需要的条件是当前的dp只是依赖于历史的dp数值，但是对于那些在求解当前的dp时候，需要依赖于历史dp的具体状态，对于每一种不同状态的历史dp都会有不同的（✖️或➕）的方式。</p>
 <p>状态dp中存储的是当前dp的所有状态，而这种状态可能因为状态数量过多而需要将一种状态压缩到一个int。</p>
 <p>在求解当前dp状态的时候，对于多维dp，可能会产生状态不一致的情况（例如对于二维dp，dp[i] [j]需要依赖于上一个i-1和j-1的状态，只不过这两种i-1的状态和j-1的状态也是相互关联依赖的，所以对于这种情况需要进行dp降维，也就是说对于dp【i】表示行i只依赖于i-1行。</p>
 <p>状态dp一般是只依赖于上一个状态，而不依赖于历史状态。对于那些状态依赖转换时，是进行线性求解的，可以使用矩阵快速幂的方法求解。</p>
+<h3 id="状态机振荡dp">状态机（振荡）DP
+</h3><blockquote>
+<p>[!NOTE]</p>
+<p>多种状态和情况</p></blockquote>
+<p>状态机动态规划的核心在于将复杂问题分解为一系列基于<strong>有限且明确定义的状态</strong>的子问题。其解题思路可以概括为：首先，你需要在问题中抽取出若干个<strong>关键的、相互排斥的“模式”或“阶段”</strong>，并将它们定义为你的“状态”，这些状态必须能够完整描述在处理当前输入时所处的情境或已积累的信息。接着，针对序列中的每一个元素，你需要识别出所有<strong>合法的“动作”或“选择”</strong>，这些选择将决定系统从当前状态如何<strong>转移</strong>到下一个状态（或保持当前状态）。然后，通过<strong>构建状态转移方程</strong>，明确每个状态的值如何从前一个或多个状态以及当前元素的值推导而来，通常这涉及到在多种转移路径中选取<strong>最优值</strong>。在递推计算之前，务必<strong>设定好初始状态</strong>的边界条件，为整个DP过程提供一个正确的起点。最后，根据问题的具体目标，从所有计算出的最终状态中挑选出符合要求的那个作为最终答案。这种方法特别适用于那些序列处理问题，即当你对序列中的每个元素做出决策时，该决策不仅取决于元素本身，还会受到此前累积的某种“情况”或“属性”的影响，并且这些“情况”或“属性”是有限且可被清晰分类的场景，旨在求取某种最优值（如最大/最小和、最长/最短序列等）。</p>
+<p>对于状态机DP有可能下面的状态转移方法：</p>
+<ol>
+<li>奇偶DP相互转换：<a class="link" href="https://leetcode.cn/problems/find-the-maximum-sum-of-node-values/description/"  target="_blank" rel="noopener"
+    >最大节点价值之和</a></li>
+<li>上升下降序列的DP相互转换：<a class="link" href="https://leetcode.cn/problems/wiggle-subsequence/description/"  target="_blank" rel="noopener"
+    >摆动序列</a></li>
+</ol>
+<p>总结的DP形式：<code>vector&lt;vector&lt;int&gt;&gt; dp(n,vector&lt;int&gt;(state_num,0))</code></p>
+<h3 id="字符集动态规划-character-set-dp-方法与思路总结">字符集动态规划 (Character Set DP) 方法与思路总结
+</h3><blockquote>
+<p>[!NOTE]</p>
+<p>一般出现的预告：在string中只会出现小写字母</p>
+<p>涉及的题目：<a class="link" href="https://leetcode.cn/problems/decremental-string-concatenation/description/"  target="_blank" rel="noopener"
+    >字符串连接删减字母</a></p>
+<p>特征：dp【字符集】【序列】</p></blockquote>
+<p>字符集DP的核心在于，当处理序列问题时，若每一步决策的优化目标仅依赖于<strong>当前形成的中间结果的某些关键属性（例如字符串的首尾字符），且这些属性的数量有限且可枚举</strong>，我们便可将其作为DP状态的维度，从而高效地解决问题。</p>
+<hr>
+<h4 id="1-核心思想">1. 核心思想
+</h4><p>这种方法利用了这样一个观察：在某些序列连接或构建问题中，虽然中间结果可能很长，但<strong>决定未来连接方式和成本的关键信息仅仅是其头部和尾部的字符</strong>（或其它少量、有限的属性）。通过将这些关键字符编码到DP状态中，我们避免了存储和传递整个字符串，极大地降低了状态空间复杂度。</p>
+<hr>
+<h4 id="2-通用方法步骤">2. 通用方法步骤
+</h4><ol>
+<li>
+<p><strong>定义DP状态：</strong></p>
+<ul>
+<li>确定DP数组的维度，其中一维通常表示<strong>当前处理到的序列元素索引</strong>（例如 <code>dp[i]</code> 表示处理到 <code>words[i]</code>）。</li>
+<li>将影响后续决策的<strong>关键属性作为DP状态的额外维度</strong>。在本题中，就是当前字符串的<strong>首字符</strong>和<strong>尾字符</strong>。由于字符集有限（如26个小写字母），这两个字符可以映射为0-25的整数索引，从而形成 <code>dp[i][first_char_idx][last_char_idx]</code> 这样的状态定义。此状态表示处理完前 <code>i</code> 个元素，且最终形成的字符串以 <code>first_char_idx</code> 开头、以 <code>last_char_idx</code> 结尾时的最优值（例如最小总长度）。</li>
+</ul>
+</li>
+<li>
+<p><strong>初始化DP状态：</strong></p>
+<ul>
+<li>对于求最小值的DP问题，通常将不可达的状态初始化为无穷大。</li>
+<li>设定初始元素（例如 <code>words[0]</code>）对应的状态值。它的首尾字符是确定的，此时的总长度就是其自身长度。</li>
+</ul>
+</li>
+<li>
+<p><strong>推导状态转移方程：</strong></p>
+<ul>
+<li>遍历输入序列中的每个元素。对于当前元素 <code>current_word</code>，你需要考虑它与之前所有可能的中间结果如何连接。</li>
+<li><strong>分析所有可能的连接方式及其对长度的影响</strong>。例如，将 <code>current_word</code> 连接到之前字符串的<strong>前面</strong>或<strong>后面</strong>。</li>
+<li>根据连接规则（如本题中首尾字符相同时长度减1），计算新的总长度，并更新相应的新状态 <code>dp[i][new_first_char_idx][new_last_char_idx]</code> 的最优值。这个过程会涉及从 <code>dp[i-1][prev_first][prev_last]</code> 转移到新的 <code>dp[i][new_first][new_last]</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>确定最终结果：</strong></p>
+<ul>
+<li>在处理完所有序列元素后，最终答案即为所有 <code>dp[n-1][first_char_idx][last_char_idx]</code> （遍历所有可能的首尾字符组合）中的最优值（例如最小值）。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="3-适用场景">3. 适用场景
+</h4><p>字符集DP特别适用于以下问题类型：</p>
+<ul>
+<li><strong>序列处理问题：</strong> 当问题涉及对序列（如字符串数组、字符序列）进行操作，且每次操作会形成一个新的中间结果。</li>
+<li><strong>关键属性有限：</strong> 只有中间结果的少数几个关键属性（如字符串的首尾字符、字符计数、固定长度子串的哈希值等）对后续决策至关重要，并且这些属性的数量是<strong>有限且可枚举</strong>的常数。</li>
+<li><strong>最优性问题：</strong> 目标是求取某个值（如最小/最大长度、成本、路径等）的最优解。</li>
+<li><strong>重叠子问题与最优子结构：</strong> 大问题的解决依赖于小问题的最优解，且存在重复计算的子问题。</li>
+</ul>
+<p>通过这种方式，字符集DP有效地将看似复杂的字符串操作问题转化为一个状态空间可控的动态规划问题，从而实现高效求解。</p>
+<h3 id="树形动态规划-tree-dp-方法与思路总结">树形动态规划 (Tree DP) 方法与思路总结
+</h3><p>树形动态规划（Tree DP）是一种强大的DP范式，专门用于解决<strong>树结构上的优化问题</strong>。它的核心在于巧妙利用树的<strong>递归结构和子树的独立性</strong>，通过自底向上或自顶向下的方式，计算每个节点子树的DP值，并将其合并以解决更大子树乃至整个树的问题。</p>
+<blockquote>
+<p>[!NOTE]</p>
+<p>特征：使用dfs计算从根遍历+dp【节点】【状态】</p></blockquote>
+<hr>
+<h4 id="1-核心思想-1">1. 核心思想
+</h4><p>Tree DP 的本质是<strong>将树分解为子树，并定义状态来概括每个子树的最优信息</strong>。在计算父节点的状态时，我们依赖于其所有子节点已计算出的最优状态，并通过特定规则进行合并或转换。这种方法确保了在计算任何节点时，其所有依赖的子问题都已解决，从而遵循了动态规划的<strong>最优子结构和无后效性</strong>原则。</p>
+<hr>
+<h4 id="2-通用方法步骤-1">2. 通用方法步骤
+</h4><ol>
+<li>
+<p><strong>树的转化与根的选择（DFS 遍历）：</strong></p>
+<ul>
+<li>尽管输入通常是无向树，但为了构建DP的计算顺序，我们通常会<strong>选择一个任意节点作为根</strong>（例如节点 0）。</li>
+<li>接着进行一次<strong>深度优先搜索 (DFS)</strong> 遍历，建立明确的父子关系。这个DFS过程通常是<strong>后序遍历（post-order traversal）</strong>，即先递归处理所有子节点，再处理当前节点。这种自底向上的计算顺序是Tree DP最常见的模式，确保了在计算父节点时，其所有子节点的DP值都已准备就绪。</li>
+</ul>
+</li>
+<li>
+<p><strong>定义DP状态：</strong></p>
+<ul>
+<li>这是Tree DP最关键的一步。你需要为树中的每个节点 <code>u</code> 定义一个或多个DP状态 <code>dp[u][...]</code>。这些状态必须能够：
+<ul>
+<li><strong>充分概括以 <code>u</code> 为根的子树的最优信息</strong>，或者与 <code>u</code> 相关的局部关键属性。</li>
+<li><strong>为 <code>u</code> 的父节点或兄弟节点的计算提供足够的信息</strong>。</li>
+</ul>
+</li>
+<li>状态的维度通常与问题的决策或需要跟踪的属性相关。例如，在本题中，<code>f[x][0]</code> 和 <code>f[x][1]</code> 就分别表示节点 <code>x</code> 被操作偶数次和奇数次时，其子树（不包含 <code>x</code> 本身，因为它将在最后与父节点合并时处理）的最大价值和。</li>
+</ul>
+</li>
+<li>
+<p><strong>推导状态转移方程：</strong></p>
+<ul>
+<li>对于每个节点 <code>u</code>，其DP值通常通过<strong>聚合其所有子节点 <code>v</code> 的DP值</strong>，并结合 <code>u</code> 自身的价值和当前决策来计算。</li>
+<li><strong>决策点</strong>通常发生在节点与子节点之间的<strong>边上</strong>，或者<strong>节点自身的操作</strong>。</li>
+<li>转移方程描述了如何从子节点的状态推导出父节点的状态。这可能涉及对子节点状态的求和、取最大/最小值，或者根据特定操作对子节点状态进行变换。</li>
+<li><strong>以本题为例：</strong> 在处理节点 <code>x</code> 的子节点 <code>y</code> 时，会考虑两种情况：不操作边 <code>[x, y]</code> 和操作边 <code>[x, y]</code>。这两种情况导致 <code>y</code> 的最终状态（被操作奇数次还是偶数次）以及 <code>x</code> 的状态（被操作奇数次还是偶数次）发生变化，并根据这些变化来累加价值，最终取最大值来更新 <code>f[x][0]</code> 和 <code>f[x][1]</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>确定初始状态与最终答案：</strong></p>
+<ul>
+<li><strong>叶子节点：</strong> 作为DP递推的终点，叶子节点的DP值通常可以直接根据它们的自身属性（不考虑子树）来初始化。</li>
+<li><strong>最终答案：</strong> 经过整个DFS过程，根节点的特定DP状态（例如 <code>dp[root][0]</code> 或所有根状态中的最优值，取决于问题要求）即为整个树的最终解。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="3-适用场景-1">3. 适用场景
+</h4><p>Tree DP 适用于以下类型的优化问题：</p>
+<ul>
+<li><strong>树上的最大/最小化问题：</strong> 目标是在给定树结构上寻找某种属性的最大或最小值（如最大价值和、最小代价路径、最少删除边等）。</li>
+<li><strong>决策与子树状态相关：</strong> 当对一个节点做出的决策会影响其整个子树的属性，并且这种影响可以被子树的DP状态精确概括时。</li>
+<li><strong>局部决策影响全局最优：</strong> 整体问题的最优解可以通过合并局部子树的最优解来获得（满足最优子结构）。</li>
+<li><strong>信息聚合：</strong> 某个节点的DP值需要综合其所有子节点的DP信息来计算。</li>
+<li><strong>无后效性：</strong> 一旦某个节点的DP值被计算出来，它就成为了一个固定的信息块，不会再被后续的子问题计算所修改，其对其他部分的影射也完全体现在其DP状态中。</li>
+</ul>
+<p>通过精确定义状态、巧妙设计转移方程和利用DFS的递归结构，Tree DP 能够高效地解决各种复杂的树上优化问题。</p>
 <h2 id="区间融合">区间融合
 </h2><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">

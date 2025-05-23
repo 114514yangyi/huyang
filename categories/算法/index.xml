@@ -3367,12 +3367,138 @@ Created time: November 8, 2023 3:06 PM&lt;/p&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;状态dp&#34;&gt;状态DP
-&lt;/h3&gt;&lt;p&gt;状态dp指的是在dp数组中存储的并不是单个的结果数字，而是前一个dp的所有状态。&lt;/p&gt;
+&lt;h2 id=&#34;dp变种&#34;&gt;DP变种
+&lt;/h2&gt;&lt;h3 id=&#34;状态集dp&#34;&gt;状态集DP
+&lt;/h3&gt;&lt;p&gt;题目来源于：涂色问题。&lt;/p&gt;
+&lt;p&gt;状态dp指的是在dp数组中存储的并不是单个的结果数字，而是前一个dp的所有状态。&lt;/p&gt;
 &lt;p&gt;一般来说dp方法中求解当前dp的方法是依赖于当前的环境和历史的dp数组值，而这种方法他需要的条件是当前的dp只是依赖于历史的dp数值，但是对于那些在求解当前的dp时候，需要依赖于历史dp的具体状态，对于每一种不同状态的历史dp都会有不同的（✖️或➕）的方式。&lt;/p&gt;
 &lt;p&gt;状态dp中存储的是当前dp的所有状态，而这种状态可能因为状态数量过多而需要将一种状态压缩到一个int。&lt;/p&gt;
 &lt;p&gt;在求解当前dp状态的时候，对于多维dp，可能会产生状态不一致的情况（例如对于二维dp，dp[i] [j]需要依赖于上一个i-1和j-1的状态，只不过这两种i-1的状态和j-1的状态也是相互关联依赖的，所以对于这种情况需要进行dp降维，也就是说对于dp【i】表示行i只依赖于i-1行。&lt;/p&gt;
 &lt;p&gt;状态dp一般是只依赖于上一个状态，而不依赖于历史状态。对于那些状态依赖转换时，是进行线性求解的，可以使用矩阵快速幂的方法求解。&lt;/p&gt;
+&lt;h3 id=&#34;状态机振荡dp&#34;&gt;状态机（振荡）DP
+&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;[!NOTE]&lt;/p&gt;
+&lt;p&gt;多种状态和情况&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;状态机动态规划的核心在于将复杂问题分解为一系列基于&lt;strong&gt;有限且明确定义的状态&lt;/strong&gt;的子问题。其解题思路可以概括为：首先，你需要在问题中抽取出若干个&lt;strong&gt;关键的、相互排斥的“模式”或“阶段”&lt;/strong&gt;，并将它们定义为你的“状态”，这些状态必须能够完整描述在处理当前输入时所处的情境或已积累的信息。接着，针对序列中的每一个元素，你需要识别出所有&lt;strong&gt;合法的“动作”或“选择”&lt;/strong&gt;，这些选择将决定系统从当前状态如何&lt;strong&gt;转移&lt;/strong&gt;到下一个状态（或保持当前状态）。然后，通过&lt;strong&gt;构建状态转移方程&lt;/strong&gt;，明确每个状态的值如何从前一个或多个状态以及当前元素的值推导而来，通常这涉及到在多种转移路径中选取&lt;strong&gt;最优值&lt;/strong&gt;。在递推计算之前，务必&lt;strong&gt;设定好初始状态&lt;/strong&gt;的边界条件，为整个DP过程提供一个正确的起点。最后，根据问题的具体目标，从所有计算出的最终状态中挑选出符合要求的那个作为最终答案。这种方法特别适用于那些序列处理问题，即当你对序列中的每个元素做出决策时，该决策不仅取决于元素本身，还会受到此前累积的某种“情况”或“属性”的影响，并且这些“情况”或“属性”是有限且可被清晰分类的场景，旨在求取某种最优值（如最大/最小和、最长/最短序列等）。&lt;/p&gt;
+&lt;p&gt;对于状态机DP有可能下面的状态转移方法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;奇偶DP相互转换：&lt;a class=&#34;link&#34; href=&#34;https://leetcode.cn/problems/find-the-maximum-sum-of-node-values/description/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;最大节点价值之和&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;上升下降序列的DP相互转换：&lt;a class=&#34;link&#34; href=&#34;https://leetcode.cn/problems/wiggle-subsequence/description/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;摆动序列&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;总结的DP形式：&lt;code&gt;vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(n,vector&amp;lt;int&amp;gt;(state_num,0))&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;字符集动态规划-character-set-dp-方法与思路总结&#34;&gt;字符集动态规划 (Character Set DP) 方法与思路总结
+&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;[!NOTE]&lt;/p&gt;
+&lt;p&gt;一般出现的预告：在string中只会出现小写字母&lt;/p&gt;
+&lt;p&gt;涉及的题目：&lt;a class=&#34;link&#34; href=&#34;https://leetcode.cn/problems/decremental-string-concatenation/description/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;字符串连接删减字母&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;特征：dp【字符集】【序列】&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;字符集DP的核心在于，当处理序列问题时，若每一步决策的优化目标仅依赖于&lt;strong&gt;当前形成的中间结果的某些关键属性（例如字符串的首尾字符），且这些属性的数量有限且可枚举&lt;/strong&gt;，我们便可将其作为DP状态的维度，从而高效地解决问题。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;1-核心思想&#34;&gt;1. 核心思想
+&lt;/h4&gt;&lt;p&gt;这种方法利用了这样一个观察：在某些序列连接或构建问题中，虽然中间结果可能很长，但&lt;strong&gt;决定未来连接方式和成本的关键信息仅仅是其头部和尾部的字符&lt;/strong&gt;（或其它少量、有限的属性）。通过将这些关键字符编码到DP状态中，我们避免了存储和传递整个字符串，极大地降低了状态空间复杂度。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;2-通用方法步骤&#34;&gt;2. 通用方法步骤
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;定义DP状态：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;确定DP数组的维度，其中一维通常表示&lt;strong&gt;当前处理到的序列元素索引&lt;/strong&gt;（例如 &lt;code&gt;dp[i]&lt;/code&gt; 表示处理到 &lt;code&gt;words[i]&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;将影响后续决策的&lt;strong&gt;关键属性作为DP状态的额外维度&lt;/strong&gt;。在本题中，就是当前字符串的&lt;strong&gt;首字符&lt;/strong&gt;和&lt;strong&gt;尾字符&lt;/strong&gt;。由于字符集有限（如26个小写字母），这两个字符可以映射为0-25的整数索引，从而形成 &lt;code&gt;dp[i][first_char_idx][last_char_idx]&lt;/code&gt; 这样的状态定义。此状态表示处理完前 &lt;code&gt;i&lt;/code&gt; 个元素，且最终形成的字符串以 &lt;code&gt;first_char_idx&lt;/code&gt; 开头、以 &lt;code&gt;last_char_idx&lt;/code&gt; 结尾时的最优值（例如最小总长度）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;初始化DP状态：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对于求最小值的DP问题，通常将不可达的状态初始化为无穷大。&lt;/li&gt;
+&lt;li&gt;设定初始元素（例如 &lt;code&gt;words[0]&lt;/code&gt;）对应的状态值。它的首尾字符是确定的，此时的总长度就是其自身长度。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;推导状态转移方程：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;遍历输入序列中的每个元素。对于当前元素 &lt;code&gt;current_word&lt;/code&gt;，你需要考虑它与之前所有可能的中间结果如何连接。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;分析所有可能的连接方式及其对长度的影响&lt;/strong&gt;。例如，将 &lt;code&gt;current_word&lt;/code&gt; 连接到之前字符串的&lt;strong&gt;前面&lt;/strong&gt;或&lt;strong&gt;后面&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;根据连接规则（如本题中首尾字符相同时长度减1），计算新的总长度，并更新相应的新状态 &lt;code&gt;dp[i][new_first_char_idx][new_last_char_idx]&lt;/code&gt; 的最优值。这个过程会涉及从 &lt;code&gt;dp[i-1][prev_first][prev_last]&lt;/code&gt; 转移到新的 &lt;code&gt;dp[i][new_first][new_last]&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;确定最终结果：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在处理完所有序列元素后，最终答案即为所有 &lt;code&gt;dp[n-1][first_char_idx][last_char_idx]&lt;/code&gt; （遍历所有可能的首尾字符组合）中的最优值（例如最小值）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;3-适用场景&#34;&gt;3. 适用场景
+&lt;/h4&gt;&lt;p&gt;字符集DP特别适用于以下问题类型：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;序列处理问题：&lt;/strong&gt; 当问题涉及对序列（如字符串数组、字符序列）进行操作，且每次操作会形成一个新的中间结果。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;关键属性有限：&lt;/strong&gt; 只有中间结果的少数几个关键属性（如字符串的首尾字符、字符计数、固定长度子串的哈希值等）对后续决策至关重要，并且这些属性的数量是&lt;strong&gt;有限且可枚举&lt;/strong&gt;的常数。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最优性问题：&lt;/strong&gt; 目标是求取某个值（如最小/最大长度、成本、路径等）的最优解。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;重叠子问题与最优子结构：&lt;/strong&gt; 大问题的解决依赖于小问题的最优解，且存在重复计算的子问题。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通过这种方式，字符集DP有效地将看似复杂的字符串操作问题转化为一个状态空间可控的动态规划问题，从而实现高效求解。&lt;/p&gt;
+&lt;h3 id=&#34;树形动态规划-tree-dp-方法与思路总结&#34;&gt;树形动态规划 (Tree DP) 方法与思路总结
+&lt;/h3&gt;&lt;p&gt;树形动态规划（Tree DP）是一种强大的DP范式，专门用于解决&lt;strong&gt;树结构上的优化问题&lt;/strong&gt;。它的核心在于巧妙利用树的&lt;strong&gt;递归结构和子树的独立性&lt;/strong&gt;，通过自底向上或自顶向下的方式，计算每个节点子树的DP值，并将其合并以解决更大子树乃至整个树的问题。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!NOTE]&lt;/p&gt;
+&lt;p&gt;特征：使用dfs计算从根遍历+dp【节点】【状态】&lt;/p&gt;&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;1-核心思想-1&#34;&gt;1. 核心思想
+&lt;/h4&gt;&lt;p&gt;Tree DP 的本质是&lt;strong&gt;将树分解为子树，并定义状态来概括每个子树的最优信息&lt;/strong&gt;。在计算父节点的状态时，我们依赖于其所有子节点已计算出的最优状态，并通过特定规则进行合并或转换。这种方法确保了在计算任何节点时，其所有依赖的子问题都已解决，从而遵循了动态规划的&lt;strong&gt;最优子结构和无后效性&lt;/strong&gt;原则。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;2-通用方法步骤-1&#34;&gt;2. 通用方法步骤
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;树的转化与根的选择（DFS 遍历）：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;尽管输入通常是无向树，但为了构建DP的计算顺序，我们通常会&lt;strong&gt;选择一个任意节点作为根&lt;/strong&gt;（例如节点 0）。&lt;/li&gt;
+&lt;li&gt;接着进行一次&lt;strong&gt;深度优先搜索 (DFS)&lt;/strong&gt; 遍历，建立明确的父子关系。这个DFS过程通常是&lt;strong&gt;后序遍历（post-order traversal）&lt;/strong&gt;，即先递归处理所有子节点，再处理当前节点。这种自底向上的计算顺序是Tree DP最常见的模式，确保了在计算父节点时，其所有子节点的DP值都已准备就绪。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;定义DP状态：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;这是Tree DP最关键的一步。你需要为树中的每个节点 &lt;code&gt;u&lt;/code&gt; 定义一个或多个DP状态 &lt;code&gt;dp[u][...]&lt;/code&gt;。这些状态必须能够：
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;充分概括以 &lt;code&gt;u&lt;/code&gt; 为根的子树的最优信息&lt;/strong&gt;，或者与 &lt;code&gt;u&lt;/code&gt; 相关的局部关键属性。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;为 &lt;code&gt;u&lt;/code&gt; 的父节点或兄弟节点的计算提供足够的信息&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;状态的维度通常与问题的决策或需要跟踪的属性相关。例如，在本题中，&lt;code&gt;f[x][0]&lt;/code&gt; 和 &lt;code&gt;f[x][1]&lt;/code&gt; 就分别表示节点 &lt;code&gt;x&lt;/code&gt; 被操作偶数次和奇数次时，其子树（不包含 &lt;code&gt;x&lt;/code&gt; 本身，因为它将在最后与父节点合并时处理）的最大价值和。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;推导状态转移方程：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对于每个节点 &lt;code&gt;u&lt;/code&gt;，其DP值通常通过&lt;strong&gt;聚合其所有子节点 &lt;code&gt;v&lt;/code&gt; 的DP值&lt;/strong&gt;，并结合 &lt;code&gt;u&lt;/code&gt; 自身的价值和当前决策来计算。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;决策点&lt;/strong&gt;通常发生在节点与子节点之间的&lt;strong&gt;边上&lt;/strong&gt;，或者&lt;strong&gt;节点自身的操作&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;转移方程描述了如何从子节点的状态推导出父节点的状态。这可能涉及对子节点状态的求和、取最大/最小值，或者根据特定操作对子节点状态进行变换。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;以本题为例：&lt;/strong&gt; 在处理节点 &lt;code&gt;x&lt;/code&gt; 的子节点 &lt;code&gt;y&lt;/code&gt; 时，会考虑两种情况：不操作边 &lt;code&gt;[x, y]&lt;/code&gt; 和操作边 &lt;code&gt;[x, y]&lt;/code&gt;。这两种情况导致 &lt;code&gt;y&lt;/code&gt; 的最终状态（被操作奇数次还是偶数次）以及 &lt;code&gt;x&lt;/code&gt; 的状态（被操作奇数次还是偶数次）发生变化，并根据这些变化来累加价值，最终取最大值来更新 &lt;code&gt;f[x][0]&lt;/code&gt; 和 &lt;code&gt;f[x][1]&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;确定初始状态与最终答案：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;叶子节点：&lt;/strong&gt; 作为DP递推的终点，叶子节点的DP值通常可以直接根据它们的自身属性（不考虑子树）来初始化。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最终答案：&lt;/strong&gt; 经过整个DFS过程，根节点的特定DP状态（例如 &lt;code&gt;dp[root][0]&lt;/code&gt; 或所有根状态中的最优值，取决于问题要求）即为整个树的最终解。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;3-适用场景-1&#34;&gt;3. 适用场景
+&lt;/h4&gt;&lt;p&gt;Tree DP 适用于以下类型的优化问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;树上的最大/最小化问题：&lt;/strong&gt; 目标是在给定树结构上寻找某种属性的最大或最小值（如最大价值和、最小代价路径、最少删除边等）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;决策与子树状态相关：&lt;/strong&gt; 当对一个节点做出的决策会影响其整个子树的属性，并且这种影响可以被子树的DP状态精确概括时。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;局部决策影响全局最优：&lt;/strong&gt; 整体问题的最优解可以通过合并局部子树的最优解来获得（满足最优子结构）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;信息聚合：&lt;/strong&gt; 某个节点的DP值需要综合其所有子节点的DP信息来计算。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;无后效性：&lt;/strong&gt; 一旦某个节点的DP值被计算出来，它就成为了一个固定的信息块，不会再被后续的子问题计算所修改，其对其他部分的影射也完全体现在其DP状态中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通过精确定义状态、巧妙设计转移方程和利用DFS的递归结构，Tree DP 能够高效地解决各种复杂的树上优化问题。&lt;/p&gt;
 &lt;h2 id=&#34;区间融合&#34;&gt;区间融合
 &lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -10462,7 +10588,170 @@ suf[i][0]=suf[i+1][0]
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt; */&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;bfs-广度优先&#34;&gt;BFS-广度优先
+&lt;/div&gt;&lt;h3 id=&#34;最大节点价值之和&#34;&gt;&lt;a class=&#34;link&#34; href=&#34;https://leetcode.cn/problems/find-the-maximum-sum-of-node-values/description/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;最大节点价值之和&lt;/a&gt;
+&lt;/h3&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;Category&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;Difficulty&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;Likes&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;Dislikes&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;ContestSlug&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;ProblemIndex&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;Score&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;algorithms&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;Hard (46.68%)&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;37&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;biweekly-contest-125&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;Q4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2267&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;details style=&#34;color: rgb(255, 255, 255); font-family: -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe WPC&amp;quot;, &amp;quot;Segoe UI&amp;quot;, system-ui, Ubuntu, &amp;quot;Droid Sans&amp;quot;, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&#34;&gt;&lt;summary&gt;&lt;strong&gt;Tags&lt;/strong&gt;&lt;/summary&gt;&lt;/details&gt;
+&lt;details style=&#34;color: rgb(255, 255, 255); font-family: -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe WPC&amp;quot;, &amp;quot;Segoe UI&amp;quot;, system-ui, Ubuntu, &amp;quot;Droid Sans&amp;quot;, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&#34;&gt;&lt;summary&gt;&lt;strong&gt;Companies&lt;/strong&gt;&lt;/summary&gt;&lt;/details&gt;
+&lt;p&gt;给你一棵 &lt;code&gt;n&lt;/code&gt; 个节点的 &lt;strong&gt;无向&lt;/strong&gt; 树，节点从 &lt;code&gt;0&lt;/code&gt; 到 &lt;code&gt;n - 1&lt;/code&gt; 编号。树以长度为 &lt;code&gt;n - 1&lt;/code&gt; 下标从 &lt;strong&gt;0&lt;/strong&gt; 开始的二维整数数组 &lt;code&gt;edges&lt;/code&gt; 的形式给你，其中 &lt;code&gt;edges[i] = [ui, vi]&lt;/code&gt; 表示树中节点 &lt;code&gt;ui&lt;/code&gt; 和 &lt;code&gt;vi&lt;/code&gt; 之间有一条边。同时给你一个 &lt;strong&gt;正&lt;/strong&gt; 整数 &lt;code&gt;k&lt;/code&gt; 和一个长度为 &lt;code&gt;n&lt;/code&gt; 下标从 &lt;strong&gt;0&lt;/strong&gt; 开始的 &lt;strong&gt;非负&lt;/strong&gt; 整数数组 &lt;code&gt;nums&lt;/code&gt; ，其中 &lt;code&gt;nums[i]&lt;/code&gt; 表示节点 &lt;code&gt;i&lt;/code&gt; 的 &lt;strong&gt;价值&lt;/strong&gt; 。&lt;/p&gt;
+&lt;p&gt;Alice 想 &lt;strong&gt;最大化&lt;/strong&gt; 树中所有节点价值之和。为了实现这一目标，Alice 可以执行以下操作 &lt;strong&gt;任意&lt;/strong&gt; 次（&lt;strong&gt;包括&lt;/strong&gt; &lt;strong&gt;0 次&lt;/strong&gt;）：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;选择连接节点&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;u
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;和&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;v
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;的边&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[u, v]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;，并将它们的值更新为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;nums[u] = nums[u] XOR k&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;nums[v] = nums[v] XOR k&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;请你返回 Alice 通过执行以上操作 &lt;strong&gt;任意次&lt;/strong&gt; 后，可以得到所有节点 &lt;strong&gt;价值之和&lt;/strong&gt; 的 &lt;strong&gt;最大值&lt;/strong&gt; 。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/screenshot-2023-11-10-012513.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输入：nums = [1,2,1], k = 3, edges = [[0,1],[0,2]]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输出：6
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;解释：Alice 可以通过一次操作得到最大价值和 6 ：
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- 选择边 [0,2] 。nums[0] 和 nums[2] 都变为：1 XOR 3 = 2 ，数组 nums 变为：[1,2,1] -&amp;gt; [2,2,2] 。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;所有节点价值之和为 2 + 2 + 2 = 6 。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;6 是可以得到最大的价值之和。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/screenshot-2024-01-09-220017.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输入：nums = [2,3], k = 7, edges = [[0,1]]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输出：9
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;解释：Alice 可以通过一次操作得到最大和 9 ：
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- 选择边 [0,1] 。nums[0] 变为：2 XOR 7 = 5 ，nums[1] 变为：3 XOR 7 = 4 ，数组 nums 变为：[2,3] -&amp;gt; [5,4] 。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;所有节点价值之和为 5 + 4 = 9 。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;9 是可以得到最大的价值之和。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/screenshot-2023-11-10-012641.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输入：nums = [7,7,7,7,7,7], k = 3, edges = [[0,1],[0,2],[0,3],[0,4],[0,5]]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输出：42
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;解释：Alice 不需要执行任何操作，就可以得到最大价值之和 42 。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;提示：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;2 &amp;lt;= n == nums.length &amp;lt;= 2 * 104&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;1 &amp;lt;= k &amp;lt;= 109&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;0 &amp;lt;= nums[i] &amp;lt;= 109&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;edges.length == n - 1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;edges[i].length == 2&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;0 &amp;lt;= edges[i][0], edges[i][1] &amp;lt;= n - 1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;输入保证 &lt;code&gt;edges&lt;/code&gt; 构成一棵合法的树。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://leetcode.cn/problems/find-the-maximum-sum-of-node-values/comments/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Discussion&lt;/a&gt; | &lt;a class=&#34;link&#34; href=&#34;https://leetcode.cn/problems/find-the-maximum-sum-of-node-values/solution/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Solution&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Code Now&lt;/p&gt;
+&lt;h2 id=&#34;bfs-广度优先&#34;&gt;BFS-广度优先
 &lt;/h2&gt;&lt;h3 id=&#34;最少翻转操作数&#34;&gt;&lt;a class=&#34;link&#34; href=&#34;https://leetcode.cn/problems/minimum-reverse-operations/description/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;最少翻转操作数&lt;/a&gt;
 &lt;/h3&gt;&lt;table&gt;
