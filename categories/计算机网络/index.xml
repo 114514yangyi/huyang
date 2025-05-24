@@ -567,6 +567,52 @@
 个连接暂时不用传输数据时可以少分时间片或者不分，即其&lt;code&gt;时隙的分配时“按需分&lt;/code&gt;
 &lt;code&gt;配”&lt;/code&gt;，这样就让出了相应的传输时间给其他连接。&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h2 id=&#34;交换技术时延计算核心公式-&#34;&gt;交换技术时延计算核心公式 ⏱️
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;[!NOTE]&lt;/p&gt;
+&lt;p&gt;发送延时在每一个路由器上都要记一次，一次的发送延时是发送一次分组的时间。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h3 id=&#34;1-电路交换-circuit-switching-&#34;&gt;1. 电路交换 (Circuit Switching) 📞
+&lt;/h3&gt;&lt;p&gt;通信前先建立专用物理路径。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;总时延 ($T_{circuit}$)&lt;/strong&gt; $\approx$ &lt;strong&gt;连接建立时延&lt;/strong&gt; + &lt;strong&gt;数据传输时延&lt;/strong&gt; + &lt;strong&gt;传播时延&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;连接建立时延 ($T_{setup}$):&lt;/strong&gt; 建立完整连接所需时间。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;数据传输时延 ($T_{data}$):&lt;/strong&gt; $\frac{\text{报文总长度 (bits)}}{\text{数据传输速率 (bps)}}$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;传播时延 ($T_{prop}$):&lt;/strong&gt; 信号在物理介质中传播所需时间。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;特点:&lt;/strong&gt; 一旦连接，时延固定，无排队。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;2-报文交换-message-switching-&#34;&gt;2. 报文交换 (Message Switching) 📦
+&lt;/h3&gt;&lt;p&gt;整个报文作为单个单元进行“存储-转发”。整个包是一个分组！&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;总时延 ($T_{message}$)&lt;/strong&gt; $\approx$ &lt;strong&gt;H × (报文发送时延 + 报文传播时延)&lt;/strong&gt; + &lt;strong&gt;(H-1) × (处理时延 + 排队时延)&lt;/strong&gt;
+(其中 H 为跳数/链路段数)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;报文发送时延:&lt;/strong&gt; $\frac{\text{报文总长度 (bits)}}{\text{链路速率 (bps)}}$ (每段链路都发生)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;报文传播时延:&lt;/strong&gt; 信号在每段链路上传播的时间。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;处理时延:&lt;/strong&gt; 节点处理报文的时间。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;排队时延:&lt;/strong&gt; 报文在节点等待转发的时间 (高度可变)。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;特点:&lt;/strong&gt; 完整报文存储转发，有显著排队时延。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;3-分组交换-packet-switching-&#34;&gt;3. 分组交换 (Packet Switching) ✉️
+&lt;/h3&gt;&lt;p&gt;报文被分割成小数据包（分组），每个分组独立进行“存储-转发”。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;总时延 ($T_{packet}$)&lt;/strong&gt; $\approx$ &lt;strong&gt;(P + H - 1) × 分组发送时延&lt;/strong&gt; + &lt;strong&gt;总传播时延&lt;/strong&gt; + &lt;strong&gt;总处理与排队时延&lt;/strong&gt;
+(P 为分组数，H 为跳数/链路段数)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;分组发送时延:&lt;/strong&gt; $\frac{\text{单个分组长度 (bits)}}{\text{链路速率 (bps)}}$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;总传播时延:&lt;/strong&gt; 所有链路段传播时延之和。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;总处理与排队时延:&lt;/strong&gt; 所有中间节点处理和排队时延之和 (高度可变)。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;关键在于流水线效应：&lt;/strong&gt; 第一个分组到达后，后续分组相继到达，减少了等待。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;特点:&lt;/strong&gt; 分组流水线传输，比报文交换高效，但仍有排队时延。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;通用时延组成部分：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;发送/传输时延 ($T_{tx}$):&lt;/strong&gt; 数据量 / 带宽&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;传播时延 ($T_{prop}$):&lt;/strong&gt; 距离 / 传播速率&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;处理时延 ($T_{proc}$):&lt;/strong&gt; 节点处理数据所需时间 (通常较小)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;排队时延 ($T_{queue}$):&lt;/strong&gt; 等待网络资源所花费的时间 (受网络拥塞影响，最难预测)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;注意:&lt;/strong&gt; 上述公式为简化模型。实际网络中，排队时延非常复杂，通常用排队论模型分析。&lt;/p&gt;
 &lt;h2 id=&#34;统计多路复用&#34;&gt;统计多路复用
 &lt;/h2&gt;&lt;p&gt;Link bandwidth shared on demand (按需共享)&lt;/p&gt;
 &lt;p&gt;就是根据计算每一个用户使用网络的流量概率来计算出在平时会有多大的几率出现拥塞的情况&lt;/p&gt;
