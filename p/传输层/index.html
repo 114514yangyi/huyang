@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="TCP的基础简介 套接字和端口 端口-&gt;是在报文段中用于指示OS中的具体的套接字\n套接字-&gt;是运行在OS中的\n套接字(Socket): 套接字是一种软件抽象,它允许应用进程与操作系统的传输层(transport layer)进行网络消息交换。套接字提供了一种标准的编程接口,使得应用程序可以独立于底层网络协议进行通信。\n传输层地址: 套接字由两部分组成:&lt;主机IP, 端口号&gt;。这个地址组合被称为套接字。\n端口: 16位数字用于区分应用程序:\n网络数据包的传输头部中包含源端口号和目的端口号。 这些数字有助于路由器和其他网络设备识别和区分不同的应用程序。 多路复用和反多路复用 UDP协议 是无连接的协议,只根据目的IP和目的端口来将报文段分配给相应的套接字 与TCP相比，UDP是一种更轻量级的传输协议。UDP通常被用于实时应用或对延迟要求较高的情况，因为它不提供像TCP那样的顺序传送和重传机制。通过使用UDP，可以避免TCP中对包序号、重传和流控制等方面带来的开销和延迟. 是一种尽力而为的协议 有DNS,流媒体应用来使用 头信息 占用8字节\nlength:应用报文+头的长度 checksum:校验和 checksum: 将每16bits作为一个加数相加(包括应用报文和头),进位是将1加到个位,最终得到一个16bits的相加和以后,将取反码,得到最终的校验和\nTCP协议 是有连接的,以连接为导向的协议,根据源IP地址,源端口,目的地址,目的端口来分配套接字 提供可靠的,顺序的字节流服务,流量控制 头信息 占用20字节\n序列号（Sequence Number）：对于sender有用,是当前发送的数据包的首位的字节序列号,我要发的数据的SQ是对方上次发送的ack序列号 确认号（Acknowledgment Number）：对于receiver有用,对于接受的数据包的确认,,我要发送的ack序列号是上次接收到的序列号+报文的长度 HdrLen:表明头部的长度 控制位（Flags）： URG（紧急指针有效）：表示紧急指针字段是否有效。 ACK（确认序号有效）：表示确认序号字段是否有效。 PSH（立即传输）：表示接收方应用程序应该尽快从接收缓冲区读取数据。 RST（连接复位）：用于重置连接。 SYN（同步序号）：用于建立连接。 FIN（连接终止）：用于释放连接。 窗口大小（Window Size）：占用16个比特，指示发送方期望接收的字节数量，用来控制流量和流量控制。 校验和（Checksum）：占用16个比特，用于校验TCP头部和数据段完整性，以检测可能的错误。 紧急指针（Urgent Pointer）：占用16个比特，在URG标志位设置的情况下表明紧急数据的末尾。 注意这里面的序列号都是按照Byte的顺序去划分的,即发送的数据包的开头是总共发送的数据包的第几个字节.\nTCP的建立和关闭 TCP三次握手,四次挥手 简单理解TCP三次握手四次挥手（看一遍你就懂）-CSDN博客\n3次握手: 第一次握手（SYN）： 客户端（Client）首先向服务器（Server）发送一个特殊的TCP包，其中包含一个SYN标志（Syn请求连接）。这个包也包含客户端初始化的序列号，用来启动连接。发送该包后，客户端进入SYN_SENT状态，等待服务器的确认。 发送(SYN,Sequence=ISN_A,ACK=NA) 第二次握手（SYN + ACK）： 服务器收到客户端的SYN包之后，会回复一个包，其中第二次握手中同时包含了SYN标志和ACK标志（即确认号ACK加上SYN标志）。这个包表示服务器已接收到客户端的请求，并且对客户端的序列号进行了确认。此时，服务器会生成自己的序列号。发送完这个包后，服务器进入SYN_RECV状态。 发送(SYN+ACK,Sequence=ISN_B,ACK=ISN+length) 第三次握手（ACK）： 最后，客户端收到服务器的确认包后，也会回复一个包作为第三次握手的确认。这个包中只有ACK标志，确认服务器的序列号。在这一步完成后，客户端和服务器之间的连接建立成功，双方都可以开始传输数据。此时，客户端和服务器都进入ESTABLISHED状态。 发送(ACK,Sequence=ISN_A,ACK=ISN_B+length) ">
+<title>传输层</title>
+
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/'>
+
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="传输层">
+<meta property='og:description' content="TCP的基础简介 套接字和端口 端口-&gt;是在报文段中用于指示OS中的具体的套接字\n套接字-&gt;是运行在OS中的\n套接字(Socket): 套接字是一种软件抽象,它允许应用进程与操作系统的传输层(transport layer)进行网络消息交换。套接字提供了一种标准的编程接口,使得应用程序可以独立于底层网络协议进行通信。\n传输层地址: 套接字由两部分组成:&lt;主机IP, 端口号&gt;。这个地址组合被称为套接字。\n端口: 16位数字用于区分应用程序:\n网络数据包的传输头部中包含源端口号和目的端口号。 这些数字有助于路由器和其他网络设备识别和区分不同的应用程序。 多路复用和反多路复用 UDP协议 是无连接的协议,只根据目的IP和目的端口来将报文段分配给相应的套接字 与TCP相比，UDP是一种更轻量级的传输协议。UDP通常被用于实时应用或对延迟要求较高的情况，因为它不提供像TCP那样的顺序传送和重传机制。通过使用UDP，可以避免TCP中对包序号、重传和流控制等方面带来的开销和延迟. 是一种尽力而为的协议 有DNS,流媒体应用来使用 头信息 占用8字节\nlength:应用报文+头的长度 checksum:校验和 checksum: 将每16bits作为一个加数相加(包括应用报文和头),进位是将1加到个位,最终得到一个16bits的相加和以后,将取反码,得到最终的校验和\nTCP协议 是有连接的,以连接为导向的协议,根据源IP地址,源端口,目的地址,目的端口来分配套接字 提供可靠的,顺序的字节流服务,流量控制 头信息 占用20字节\n序列号（Sequence Number）：对于sender有用,是当前发送的数据包的首位的字节序列号,我要发的数据的SQ是对方上次发送的ack序列号 确认号（Acknowledgment Number）：对于receiver有用,对于接受的数据包的确认,,我要发送的ack序列号是上次接收到的序列号+报文的长度 HdrLen:表明头部的长度 控制位（Flags）： URG（紧急指针有效）：表示紧急指针字段是否有效。 ACK（确认序号有效）：表示确认序号字段是否有效。 PSH（立即传输）：表示接收方应用程序应该尽快从接收缓冲区读取数据。 RST（连接复位）：用于重置连接。 SYN（同步序号）：用于建立连接。 FIN（连接终止）：用于释放连接。 窗口大小（Window Size）：占用16个比特，指示发送方期望接收的字节数量，用来控制流量和流量控制。 校验和（Checksum）：占用16个比特，用于校验TCP头部和数据段完整性，以检测可能的错误。 紧急指针（Urgent Pointer）：占用16个比特，在URG标志位设置的情况下表明紧急数据的末尾。 注意这里面的序列号都是按照Byte的顺序去划分的,即发送的数据包的开头是总共发送的数据包的第几个字节.\nTCP的建立和关闭 TCP三次握手,四次挥手 简单理解TCP三次握手四次挥手（看一遍你就懂）-CSDN博客\n3次握手: 第一次握手（SYN）： 客户端（Client）首先向服务器（Server）发送一个特殊的TCP包，其中包含一个SYN标志（Syn请求连接）。这个包也包含客户端初始化的序列号，用来启动连接。发送该包后，客户端进入SYN_SENT状态，等待服务器的确认。 发送(SYN,Sequence=ISN_A,ACK=NA) 第二次握手（SYN + ACK）： 服务器收到客户端的SYN包之后，会回复一个包，其中第二次握手中同时包含了SYN标志和ACK标志（即确认号ACK加上SYN标志）。这个包表示服务器已接收到客户端的请求，并且对客户端的序列号进行了确认。此时，服务器会生成自己的序列号。发送完这个包后，服务器进入SYN_RECV状态。 发送(SYN+ACK,Sequence=ISN_B,ACK=ISN+length) 第三次握手（ACK）： 最后，客户端收到服务器的确认包后，也会回复一个包作为第三次握手的确认。这个包中只有ACK标志，确认服务器的序列号。在这一步完成后，客户端和服务器之间的连接建立成功，双方都可以开始传输数据。此时，客户端和服务器都进入ESTABLISHED状态。 发送(ACK,Sequence=ISN_A,ACK=ISN_B+length) ">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/'>
+<meta property='og:site_name' content='Hu Yang&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/>
+<meta name="twitter:title" content="传输层">
+<meta name="twitter:description" content="TCP的基础简介 套接字和端口 端口-&gt;是在报文段中用于指示OS中的具体的套接字\n套接字-&gt;是运行在OS中的\n套接字(Socket): 套接字是一种软件抽象,它允许应用进程与操作系统的传输层(transport layer)进行网络消息交换。套接字提供了一种标准的编程接口,使得应用程序可以独立于底层网络协议进行通信。\n传输层地址: 套接字由两部分组成:&lt;主机IP, 端口号&gt;。这个地址组合被称为套接字。\n端口: 16位数字用于区分应用程序:\n网络数据包的传输头部中包含源端口号和目的端口号。 这些数字有助于路由器和其他网络设备识别和区分不同的应用程序。 多路复用和反多路复用 UDP协议 是无连接的协议,只根据目的IP和目的端口来将报文段分配给相应的套接字 与TCP相比，UDP是一种更轻量级的传输协议。UDP通常被用于实时应用或对延迟要求较高的情况，因为它不提供像TCP那样的顺序传送和重传机制。通过使用UDP，可以避免TCP中对包序号、重传和流控制等方面带来的开销和延迟. 是一种尽力而为的协议 有DNS,流媒体应用来使用 头信息 占用8字节\nlength:应用报文+头的长度 checksum:校验和 checksum: 将每16bits作为一个加数相加(包括应用报文和头),进位是将1加到个位,最终得到一个16bits的相加和以后,将取反码,得到最终的校验和\nTCP协议 是有连接的,以连接为导向的协议,根据源IP地址,源端口,目的地址,目的端口来分配套接字 提供可靠的,顺序的字节流服务,流量控制 头信息 占用20字节\n序列号（Sequence Number）：对于sender有用,是当前发送的数据包的首位的字节序列号,我要发的数据的SQ是对方上次发送的ack序列号 确认号（Acknowledgment Number）：对于receiver有用,对于接受的数据包的确认,,我要发送的ack序列号是上次接收到的序列号+报文的长度 HdrLen:表明头部的长度 控制位（Flags）： URG（紧急指针有效）：表示紧急指针字段是否有效。 ACK（确认序号有效）：表示确认序号字段是否有效。 PSH（立即传输）：表示接收方应用程序应该尽快从接收缓冲区读取数据。 RST（连接复位）：用于重置连接。 SYN（同步序号）：用于建立连接。 FIN（连接终止）：用于释放连接。 窗口大小（Window Size）：占用16个比特，指示发送方期望接收的字节数量，用来控制流量和流量控制。 校验和（Checksum）：占用16个比特，用于校验TCP头部和数据段完整性，以检测可能的错误。 紧急指针（Urgent Pointer）：占用16个比特，在URG标志位设置的情况下表明紧急数据的末尾。 注意这里面的序列号都是按照Byte的顺序去划分的,即发送的数据包的开头是总共发送的数据包的第几个字节.\nTCP的建立和关闭 TCP三次握手,四次挥手 简单理解TCP三次握手四次挥手（看一遍你就懂）-CSDN博客\n3次握手: 第一次握手（SYN）： 客户端（Client）首先向服务器（Server）发送一个特殊的TCP包，其中包含一个SYN标志（Syn请求连接）。这个包也包含客户端初始化的序列号，用来启动连接。发送该包后，客户端进入SYN_SENT状态，等待服务器的确认。 发送(SYN,Sequence=ISN_A,ACK=NA) 第二次握手（SYN + ACK）： 服务器收到客户端的SYN包之后，会回复一个包，其中第二次握手中同时包含了SYN标志和ACK标志（即确认号ACK加上SYN标志）。这个包表示服务器已接收到客户端的请求，并且对客户端的序列号进行了确认。此时，服务器会生成自己的序列号。发送完这个包后，服务器进入SYN_RECV状态。 发送(SYN+ACK,Sequence=ISN_B,ACK=ISN+length) 第三次握手（ACK）： 最后，客户端收到服务器的确认包后，也会回复一个包作为第三次握手的确认。这个包中只有ACK标志，确认服务器的序列号。在这一步完成后，客户端和服务器之间的连接建立成功，双方都可以开始传输数据。此时，客户端和服务器都进入ESTABLISHED状态。 发送(ACK,Sequence=ISN_A,ACK=ISN_B+length) ">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/huyang/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/huyang/img/logo-transparent_hu_2593eda3cf734d42.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/huyang">Hu Yang&#39;s Blog</a></h1>
+            <h2 class="site-description">Blog</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://114514yangyi.github.io/huyang/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='2416572689@qq.com'
+                        target="_blank"
+                        title="QQ"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/huyang/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#套接字和端口">套接字和端口</a>
+      <ol>
+        <li><a href="#套接字socket"><strong>套接字(Socket)</strong>:</a></li>
+        <li><a href="#端口">端口:</a></li>
+      </ol>
+    </li>
+    <li><a href="#多路复用和反多路复用">多路复用和反多路复用</a>
+      <ol>
+        <li><a href="#udp协议">UDP协议</a>
+          <ol>
+            <li><a href="#头信息">头信息</a></li>
+            <li><a href="#checksum">checksum:</a></li>
+          </ol>
+        </li>
+        <li><a href="#tcp协议">TCP协议</a>
+          <ol>
+            <li><a href="#头信息-1">头信息</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+
+  <ol>
+    <li><a href="#tcp三次握手四次挥手">TCP三次握手,四次挥手</a>
+      <ol>
+        <li><a href="#3次握手">3次握手:</a></li>
+        <li><a href="#四次挥手">四次挥手</a></li>
+        <li><a href="#生命周期">生命周期</a>
+          <ol>
+            <li><a href="#客户端">客户端</a></li>
+            <li><a href="#服务端">服务端</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+
+  <ol>
+    <li><a href="#可靠传输">可靠传输</a>
+      <ol>
+        <li><a href="#可能发生的错误">可能发生的错误</a></li>
+        <li><a href="#传输方式接收ack">传输方式(接收ACK)</a>
+          <ol>
+            <li><a href="#stop-and-wait">Stop and Wait</a></li>
+            <li><a href="#流水线传输">流水线传输</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#gbn协议与sr协议">GBN协议与SR协议</a>
+      <ol>
+        <li><a href="#gbn">GBN</a>
+          <ol>
+            <li><a href="#对于发送端的重传方式是gbn">对于发送端的重传方式是GBN:</a></li>
+            <li><a href="#对于接受端是accumulate-ack">对于接受端是Accumulate ACK</a></li>
+          </ol>
+        </li>
+        <li><a href="#sr">SR</a>
+          <ol>
+            <li><a href="#发送方的发送方式是sr">发送方的发送方式是SR</a></li>
+            <li><a href="#接收方的接受方式是selective-ack">接收方的接受方式是Selective ACK</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#tcp的快速重传机制"><strong>TCP的快速重传机制</strong></a></li>
+    <li><a href="#如何确立timeout"><strong>如何确立timeout</strong></a></li>
+    <li><a href="#tcp流量控制拥塞控制">TCP流量控制,拥塞控制:</a>
+      <ol>
+        <li><a href="#流量控制接收端要考虑的事情">流量控制:(接收端要考虑的事情)</a>
+          <ol>
+            <li><a href="#接收端">接收端:</a></li>
+            <li><a href="#发送端">发送端</a></li>
+          </ol>
+        </li>
+        <li><a href="#拥塞控制发送端要考虑的事情">拥塞控制:(发送端要考虑的事情)</a></li>
+        <li><a href="#快速恢复">快速恢复</a></li>
+        <li><a href="#其他的tcp拥塞控制协议">其他的TCP拥塞控制协议:</a></li>
+      </ol>
+    </li>
+    <li><a href="#可靠数据传输协议-rdt">可靠数据传输协议 rdt</a>
+      <ol>
+        <li><a href="#完全可信的信道">完全可信的信道</a></li>
+        <li><a href="#具有比特差错的信道">具有比特差错的信道</a></li>
+        <li><a href="#具有比特差错的丢包信道">具有比特差错的丢包信道</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/huyang/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="background-color: #2a9d8f; color: #fff;">
+                计算机网络
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/">传输层</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 20, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="tcp的基础简介">TCP的基础简介
+</h1><h2 id="套接字和端口">套接字和端口
+</h2><p>端口-&gt;是在报文段中用于指示OS中的具体的套接字</p>
+<p>套接字-&gt;是运行在OS中的</p>
+<h3 id="套接字socket"><strong>套接字(Socket)</strong>:
+</h3><p>套接字是一种软件抽象,它允许应用进程与操作系统的传输层(transport layer)进行网络消息交换。套接字提供了一种标准的编程接口,使得应用程序可以独立于底层网络协议进行通信。</p>
+<p><strong>传输层地址</strong>:
+套接字由两部分组成:&lt;主机IP, 端口号&gt;。这个地址组合被称为套接字。</p>
+<h3 id="端口">端口:
+</h3><p>16位数字用于区分应用程序:</p>
+<ul>
+<li>网络数据包的传输头部中包含源端口号和目的端口号。</li>
+<li>这些数字有助于路由器和其他网络设备识别和区分不同的应用程序。</li>
+</ul>
+<h2 id="多路复用和反多路复用">多路复用和反多路复用
+</h2><h3 id="udp协议">UDP协议
+</h3><ol>
+<li>是<code>无连接</code>的协议,只根据目的IP和目的端口来将报文段分配给相应的套接字</li>
+<li>与TCP相比，UDP是一种更轻量级的传输协议。UDP通常被用于实时应用或对延迟要求较高的情况，因为它不提供像TCP那样的顺序传送和重传机制。通过使用UDP，可以避免TCP中对包序号、重传和流控制等方面带来的开销和延迟.</li>
+<li>是一种尽力而为的协议</li>
+<li>有DNS,流媒体应用来使用</li>
+</ol>
+<h4 id="头信息">头信息
+</h4><p>占用8字节</p>
+<p><img src="/huyang/image-20240610102114637-8078080.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240610102114637"
+	
+	
+></p>
+<ul>
+<li>length:应用报文+头的长度</li>
+<li>checksum:校验和</li>
+</ul>
+<h4 id="checksum">checksum:
+</h4><p>将每16bits作为一个加数相加(包括应用报文和头),进位是将1加到个位,最终得到一个16bits的相加和以后,将取反码,得到最终的校验和</p>
+<h3 id="tcp协议">TCP协议
+</h3><ol>
+<li>是有连接的,以连接为导向的协议,根据源IP地址,源端口,目的地址,目的端口来分配套接字</li>
+<li>提供可靠的,顺序的字节流服务,流量控制</li>
+</ol>
+<h4 id="头信息-1">头信息
+</h4><p>占用20字节</p>
+<p><img src="/huyang/image-20240610102733023-8078080.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240610102733023"
+	
+	
+></p>
+<ul>
+<li><strong>序列号（Sequence Number）</strong>：对于sender有用,是当前发送的数据包的首位的字节序列号,我要发的数据的SQ是对方上次发送的ack序列号</li>
+<li><strong>确认号（Acknowledgment Number）</strong>：对于receiver有用,对于接受的数据包的确认,,我要发送的ack序列号是上次接收到的序列号+报文的长度</li>
+<li><strong>HdrLen</strong>:表明头部的长度</li>
+<li><strong>控制位（Flags）</strong>：
+<ul>
+<li><strong>URG</strong>（紧急指针有效）：表示紧急指针字段是否有效。</li>
+<li><strong>ACK</strong>（确认序号有效）：<code>表示确认序号字段是否有效。</code></li>
+<li><strong>PSH</strong>（立即传输）：表示接收方应用程序应该尽快从接收缓冲区读取数据。</li>
+<li><strong>RST</strong>（连接复位）：用于重置连接。</li>
+<li><strong>SYN</strong>（同步序号）：<code>用于建立连接。</code></li>
+<li><strong>FIN</strong>（连接终止）：<code>用于释放连接。</code></li>
+</ul>
+</li>
+<li><strong>窗口大小（Window Size）</strong>：占用16个比特，指示发送方期望接收的字节数量，用来控制流量和流量控制。</li>
+<li><strong>校验和（Checksum）</strong>：占用16个比特，用于校验TCP头部和数据段完整性，以检测可能的错误。</li>
+<li><strong>紧急指针（Urgent Pointer）</strong>：占用16个比特，在URG标志位设置的情况下表明紧急数据的末尾。</li>
+</ul>
+<p><strong>注意这里面的序列号都是按照Byte的顺序去划分的,即发送的数据包的开头是总共发送的数据包的第几个字节.</strong></p>
+<h1 id="tcp的建立和关闭">TCP的建立和关闭
+</h1><h2 id="tcp三次握手四次挥手">TCP三次握手,四次挥手
+</h2><p><a class="link" href="https://blog.csdn.net/m0_56649557/article/details/119492899"  target="_blank" rel="noopener"
+    >简单理解TCP三次握手四次挥手（看一遍你就懂）-CSDN博客</a></p>
+<h3 id="3次握手">3次握手:
+</h3><ol>
+<li><strong>第一次握手（SYN）</strong>：
+<ul>
+<li>客户端（Client）首先向服务器（Server）发送一个特殊的TCP包，其中包含一个SYN标志（Syn请求连接）。这个包也包含客户端初始化的序列号，用来启动连接。发送该包后，客户端进入SYN_SENT状态，等待服务器的确认。</li>
+<li>发送(SYN,Sequence=ISN_A,ACK=NA)</li>
+</ul>
+</li>
+<li><strong>第二次握手（SYN + ACK）</strong>：
+<ul>
+<li>服务器收到客户端的SYN包之后，会回复一个包，其中第二次握手中同时包含了SYN标志和ACK标志（即确认号ACK加上SYN标志）。这个包表示服务器已接收到客户端的请求，并且对客户端的序列号进行了确认。此时，服务器会生成自己的序列号。发送完这个包后，服务器进入SYN_RECV状态。</li>
+<li>发送(SYN+ACK,Sequence=ISN_B,ACK=ISN+length)</li>
+</ul>
+</li>
+<li><strong>第三次握手（ACK）</strong>：
+<ul>
+<li>最后，客户端收到服务器的确认包后，也会回复一个包作为第三次握手的确认。这个包中只有ACK标志，确认服务器的序列号。在这一步完成后，客户端和服务器之间的连接建立成功，双方都可以开始传输数据。此时，客户端和服务器都进入ESTABLISHED状态。</li>
+<li>发送(ACK,Sequence=ISN_A,ACK=ISN_B+length)</li>
+</ul>
+</li>
+</ol>
+<p><img src="/huyang/image-20240610111432241-8078080.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240610111432241"
+	
+	
+></p>
+<h3 id="四次挥手">四次挥手
+</h3><ol>
+<li><strong>第一次挥手（FIN）</strong>：
+<ul>
+<li>结束方（通常是客户端或服务器一方）首先向对方发送一个FIN（Finish）消息，表示它不再有数据要发送给对方。发送这个包后，结束方进入FIN_WAIT_1状态，等待对方的确认。</li>
+</ul>
+</li>
+<li><strong>第二次挥手（ACK）</strong>：
+<ul>
+<li>接收方收到结束方发送的FIN消息后，会发送一个确认消息（ACK）作为第二次挥手的响应。此时，接收方进入CLOSE_WAIT状态,结束方进入FIN_WAIT_2阶段.</li>
+</ul>
+</li>
+<li><strong>第三次挥手（FIN）</strong>：
+<ul>
+<li>接收方发送完最后的数据后，也会向结束方发送一个FIN消息，表示它同意关闭连接。发送这个FIN消息后，接收方进入LAST_ACK状态.</li>
+</ul>
+</li>
+<li><strong>第四次挥手（ACK）</strong>：
+<ul>
+<li>最后，结束方收到接收方发送的FIN消息后，会发送一个确认消息（ACK），作为最后的确认。一旦双方都发送了ACK，连接就会完全关闭。在此时，结束方进入TIME_WAIT状态，等待一段时间后才会进入CLOSED状态，连接正式关闭。</li>
+</ul>
+</li>
+</ol>
+<p><img src="/huyang/image-20240610112313249-8078080.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240610112313249"
+	
+	
+></p>
+<h3 id="生命周期">生命周期
+</h3><h4 id="客户端">客户端
+</h4><p><img src="/huyang/image-20240610112404419-8078080.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240610112404419"
+	
+	
+></p>
+<h4 id="服务端">服务端
+</h4><p><img src="/huyang/image-20240610112450437-8078080.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240610112450437"
+	
+	
+></p>
+<h1 id="tcp协议传输">TCP协议传输
+</h1><h2 id="可靠传输">可靠传输
+</h2><h3 id="可能发生的错误">可能发生的错误
+</h3><ol>
+<li>数据包损坏(bit errors):
+<ul>
+<li>TCP 使用校验和(checksum)机制来检测数据包在传输过程中是否发生了错误。</li>
+<li>如果发现数据包已被损坏,TCP 会自动重传该数据包。</li>
+</ul>
+</li>
+<li>数据包丢失(why?):
+<ul>
+<li>TCP 使用序列号和确认机制来检测和重传丢失的数据包。</li>
+<li>当发送端没有收到预期的确认,就会重传数据包。</li>
+<li>超时会自动重传</li>
+</ul>
+</li>
+<li>数据包延迟(why?):
+<ul>
+<li>TCP 使用重传机制和拥塞控制算法来应对网络拥塞导致的延迟问题。</li>
+<li>发送端会跟踪网络状况,并动态调整发送速率,以避免缓存溢出和网络拥塞。</li>
+</ul>
+</li>
+<li>数据包乱序(why?):
+<ul>
+<li>TCP 使用序列号来重新排序接收到的数据包。</li>
+<li>接收端会缓存乱序到达的数据包,并根据序列号将它们重新排序。</li>
+</ul>
+</li>
+<li>数据包重复(why?):
+<ul>
+<li>TCP 使用序列号和确认机制来检测和丢弃重复的数据包。</li>
+<li>如果发送端收到重复的确认,就不会重传数据包</li>
+</ul>
+</li>
+</ol>
+<h3 id="传输方式接收ack">传输方式(接收ACK)
+</h3><h4 id="stop-and-wait">Stop and Wait
+</h4><p>每次发送一个请求然后等待ACK,超时重传,相当于发送的窗口为1,接受的窗口为1</p>
+<p><img src="/huyang/image-20240609214612545-8078080.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240609214612545"
+	
+	
+></p>
+<p><img src="/huyang/image-20240609214624490-8078080.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240609214624490"
+	
+	
+></p>
+<h4 id="流水线传输">流水线传输
+</h4><p>接连着发送m个数据包,等待这m个ack.</p>
+<p>使用滑动窗口技术</p>
+<p>滑动窗口的工作原理如下:</p>
+<ol>
+<li>
+<p>发送端维护一个发送窗口,表示可以发送但未被确认的数据包集合。</p>
+</li>
+<li>
+<p>接收端维护一个接收窗口,表示可以接收的数据包范围。</p>
+</li>
+<li>
+<p>当接收端确认窗口内的数据包时,发送端就可以将这些数据包从发送窗口中移除,并滑动窗口。</p>
+<p>只有当最左边的数据包被ack以后才能够移动窗口</p>
+</li>
+<li>
+<p>通过动态调整窗口大小,TCP 可以实现流量控制和拥塞控制,提高传输效率和可靠性。</p>
+</li>
+</ol>
+<p>两种接收的方式:</p>
+<ul>
+<li>GBN</li>
+<li>SR</li>
+</ul>
+<h2 id="gbn协议与sr协议">GBN协议与SR协议
+</h2><p><a class="link" href="https://blog.csdn.net/qq_35812205/article/details/108693965"  target="_blank" rel="noopener"
+    >GBN协议复习_确认分组和确认号-CSDN博客</a></p>
+<h3 id="gbn">GBN
+</h3><h4 id="对于发送端的重传方式是gbn">对于发送端的重传方式是GBN:
+</h4><p>相当于发送方的滑动窗口为n,接收方的滑动窗口为1.</p>
+<p>为整个的发送的窗口建立一个时钟,当最左边的数据包接收到ACK以后,就重置窗口时钟.当超时的时候就将所有窗口中已经发送过的数据包全部重传.</p>
+<h4 id="对于接受端是accumulate-ack">对于接受端是Accumulate ACK
+</h4><p>接收端的滑动窗口只有一个,就是只能够接收一个特定的数据包,当返回ACK(n)的时候,说明该数据帧和之前的所有数据帧都是已经接收.此时发送端应该要发送Sq(n+1).</p>
+<h3 id="sr">SR
+</h3><h4 id="发送方的发送方式是sr">发送方的发送方式是SR
+</h4><p>相当于发送方的滑动窗口为n,接收方的滑动窗口为n</p>
+<p>对于每一个发送的数据包设置一个时钟,当发生超时的时候只重传这单个的数据包;当接收到NACK的时候,也只是重传这个数据包.</p>
+<h4 id="接收方的接受方式是selective-ack">接收方的接受方式是Selective ACK
+</h4><p>接收方的滑动窗口是n.</p>
+<p>对接收到的每一个数据包都发送一个ACK,假如在接收方对于未正确接受的帧发送NACK</p>
+<h2 id="tcp的快速重传机制"><strong>TCP的快速重传机制</strong>
+</h2><p><a class="link" href="https://blog.csdn.net/whgtheone/article/details/80983882"  target="_blank" rel="noopener"
+    >TCP的快速重传机制_快重传包括第一个-CSDN博客</a></p>
+<p>因为想要唤醒重传的机制,需要等待数据包在sender端超时,所以可以使用冗余的3个ack在receiver端提醒sender端进行快速重传.</p>
+<p>条件:3个冗余的ack-&gt;<code>即顺序地接受到4个ack(一个ack是正常的)</code></p>
+<p>情况:</p>
+<ol>
+<li>在receiver端,维护一个长度为n的滑动窗口,使用类GBN的协议.(也就是在接收到其他的非ACK但是在滑动窗口中的数据包的时候,会将这个数据包进行缓存)</li>
+<li>发送端还是继续发送滑动窗口中的数据</li>
+</ol>
+<h2 id="如何确立timeout"><strong>如何确立timeout</strong>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="nx">EstimatedRTT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span> <span class="nx">a</span><span class="p">)</span><span class="o">*</span><span class="nx">EstimatedRTT</span> <span class="o">+</span> <span class="nx">a</span><span class="o">*</span><span class="nx">SampleRTT</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="C:/Users/24165/Downloads/Untitled.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Untitled"
+	
+	
+></p>
+<ul>
+<li>Deviation= | SampleRTT–EstimatedRTT|</li>
+<li>DevRTT: exponential average of Deviation</li>
+<li>RTO = EstimatedRTT+ 4 x DevRTT</li>
+</ul>
+<h2 id="tcp流量控制拥塞控制">TCP流量控制,拥塞控制:
+</h2><p><a class="link" href="https://blog.csdn.net/qq_42214953/article/details/105832303"  target="_blank" rel="noopener"
+    >浅谈TCP拥塞控制：慢启动和拥塞避免、快速重传和快速恢复_tcp慢启动-CSDN博客</a></p>
+<h3 id="流量控制接收端要考虑的事情">流量控制:(接收端要考虑的事情)
+</h3><p><a class="link" href="https://blog.csdn.net/qq_46631497/article/details/137252874"  target="_blank" rel="noopener"
+    >什么是TCP流量控制？（解释说明+过程+示例）_计算机网络 流量控制-CSDN博客</a></p>
+<p>#流量控制是由receiver来控制的,因为可能sender发送的数据过多导致超过了receiver的buffer所以需要控制sender的发送速率.</p>
+<p>→AWND</p>
+<h4 id="接收端">接收端:
+</h4><p>每一次接受者返回ACK的时候都会发送一个Advertised Window的值(RWND),这个值应该是receiver的buffer(Window)的边界距离最后一个接受的数据比特的长度</p>
+<p><img src="/huyang/image-20240610144923197-8078080.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240610144923197"
+	
+	
+></p>
+<h4 id="发送端">发送端
+</h4><p>发送端能够发送的数据包只能是RWND的范围,即从发送但是没有ACK的第一个字节到加上RWND的范围.</p>
+<p><img src="/huyang/image-20240610145157084-8078080.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240610145157084"
+	
+	
+></p>
+<h3 id="拥塞控制发送端要考虑的事情">拥塞控制:(发送端要考虑的事情)
+</h3><ol>
+<li>决定怎么去分配在链路上的不同的终端的流量</li>
+<li>动态分配流量</li>
+</ol>
+<p>#根据丢包的数量来决定网络的拥塞状况</p>
+<p>→CWND</p>
+<ol>
+<li>
+<p>slow start :</p>
+<p><code>每一个RTT都将CWND进行double,相当于队每一个ACK都加上1; 直到CWND超过了”slow start threshold”→ssthresh</code></p>
+</li>
+<li>
+<p>“Additive Increase Multiplicative Decrease” (AIMD):</p>
+<p><code>对于每一个RTT都将CWND加一,对于每一个ACK都将CWDN加</code>$\frac{1}{CWND}$​;</p>
+<p>丢包:</p>
+<ul>
+<li>三次冗余的ACK-&gt;$$ssthresh=\frac{CWND}{2};CWND=ssthresh$$</li>
+<li>超时-&gt;$ssthresh =\frac{CWND}{2};CWND=1$;initial slow start ;</li>
+</ul>
+</li>
+</ol>
+<p><strong>能够很好地解决效率和公平性的问题</strong></p>
+<h3 id="快速恢复">快速恢复
+</h3><p><code>一般和快速重传一起使用</code></p>
+<ol>
+<li>当发送端收到第三个重复确认的报文时，会更新ssthresh的值为$\frac{CWND}{2}$，然后立即重传丢失的报文段，并且设置：cwnd = ssthresh+3*SMSS，进入拥塞避免阶段。</li>
+<li>拥塞避免阶段:当收到一个重复确认的报文时，设置cwnd = cwnd +SMSS。此时发送端可以发送新的TCP报文（如果新的cwnd允许）(发送接下来上次发送的序列号)</li>
+<li>当收到新数据的确认时，设置cwnd=ssthresh。进入拥塞避免阶段,此时的$ssthresh=cwnd=\frac{(旧)cwnd}{2}$;</li>
+</ol>
+<h3 id="其他的tcp拥塞控制协议">其他的TCP拥塞控制协议:
+</h3><p>基本的情况:three dupACK and timeout-&gt;ssthresh=$\frac{CWND}{2}$</p>
+<p>• TCP-Tahoe<br>
+CWND =1 on 3 dupACKs</p>
+<p>并且只有快速重传,没有快速回复</p>
+<p>• TCP-Reno
+CWND =1 on timeout
+CWND = CWND/2 on 3 dupACKs</p>
+<p>有快速恢复机制</p>
+<p>• TCP-newReno
+TCP-Reno + improved fast recovery Our default  assumption</p>
+<p>• TCP-SACK
+Incorporates selective acknowledgements</p>
+<h2 id="可靠数据传输协议-rdt">可靠数据传输协议 rdt
+</h2><h3 id="完全可信的信道">完全可信的信道
+</h3><p>信道:没有差错,速率恒定,按照顺序接受</p>
+<p>使用rdt1.0传输,即</p>
+<ol>
+<li>发送方:经过调用就直接传输数据</li>
+<li>接收方:直接接受数据,并且返回给上层</li>
+</ol>
+<h3 id="具有比特差错的信道">具有比特差错的信道
+</h3><p>信道:有比特差错,按照顺序接受</p>
+<p>使用rdt2.0,接收方具有比特差错检验:校验和</p>
+<ol>
+<li>发送端:等待上层调用发送数据后,等待ACK或者NACK;加入收到ACK就直接继续等待上层调用,收到NACK,就重新发送并且继续等待.</li>
+<li>接受端:接受数据包,进行比特差错检验,假如正确就直接返回给上层,并且返回ACK;否则就发送NACK,并且丢弃数据包.</li>
+</ol>
+<h3 id="具有比特差错的丢包信道">具有比特差错的丢包信道
+</h3><p>信道:具有比特差错,并且会丢包,非顺序接受</p>
+<p>使用rdt3.0,也叫做<code>比特交替协议</code></p>
+<p>就是sender端交替发送包序列号为1,0的包;</p>
+<p>receiver端交替接受1,0包并发送ack给sender端</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网安全</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%A6%81%E7%82%B9/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网要点</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网计算简洁</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E5%BA%94%E7%94%A8%E5%B1%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">应用层</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">无线网络与移动网络</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Hu Yang
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
+
+    </body>
+</html>

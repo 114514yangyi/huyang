@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="互联网计算简介 接入互联网 网络设备:\n网络边沿:\n运行程序,访问互联网的主机\n服务器,电脑,笔记本电脑,手机,智能家具\n接入互联网:\n接入互联网的物理设备(介质)\n双绞线,无线路由器,同轴电缆,光纤\n网络核心:\n链路层交换机,路由器\n交换机制 电路交换 当双方想要通信的时候建立一条交换机之间的电路,预留了恒定的传输速度,这种事端到端的连接(P2P)\n好处: 可以预测的行为 足够简单 坏处: 电路的建立和关闭是复杂的 当电路没有使用者的时候是空闲的,效率低下 电路的建立需要消耗时间 当建立电路的交换机故障时,通信就故障 分组交换 将数据分割成一个个的报文进行根据IP传输,但是会有传输时延,传播时延,排队时延,还有丢包的可能性\n好处: 足够效率高 实现更加简单 鲁棒性 坏处: 行为不可预测 需要buffer的管理和拥塞控制 虚电路交换 电路交换+分组交换-&gt;\n选择一条建立的电路,使用报文的形式传输\n电路交换相较于分组交换的优点 电路交换：由于电路交换在通信之前要在通信双方之间建立一条被双方独占的物理通 路（由通信双方之间的交换设备和链路逐段连接而成）。因而有以下优点： （1）由于通信线路为通信双方用户专用，数据直达，所以传输数据的时延非常小 （2）通信双方之间的物理通路一旦建立，双方可以随时通信，实时性强。 （3）双方通信时按发送顺序传送数据，不存在失序问题。 （4）电路交换既适用于传输模拟信号，也适用于传输数字信号。 （5）电路交换设备控制均较简单。\nTMD相较于FMD的优点 TDM比FDM的优点如下：\n当发生拥塞等网络问题时，TDM中的数据丢失可能只会是一部分，而FDM中就可能 是大部分或全部。 TDM适合数字信号传输，而FDM适合模拟信号传输，因为现在通信网络多是传输数 字信号，所以TDM比FDM好。 因为频分复用连接建立后，当中途没有数据传输时，他所占有的频段带宽不能被其 他连接使用，故可能存在空置，而在时分复用的统计时分模式下，连接建立后，当某 个连接暂时不用传输数据时可以少分时间片或者不分，即其时隙的分配时“按需分 配”，这样就让出了相应的传输时间给其他连接。 统计多路复用 Link bandwidth shared on demand (按需共享)\n就是根据计算每一个用户使用网络的流量概率来计算出在平时会有多大的几率出现拥塞的情况\n">
+<title>互联网计算简洁</title>
+
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/'>
+
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="互联网计算简洁">
+<meta property='og:description' content="互联网计算简介 接入互联网 网络设备:\n网络边沿:\n运行程序,访问互联网的主机\n服务器,电脑,笔记本电脑,手机,智能家具\n接入互联网:\n接入互联网的物理设备(介质)\n双绞线,无线路由器,同轴电缆,光纤\n网络核心:\n链路层交换机,路由器\n交换机制 电路交换 当双方想要通信的时候建立一条交换机之间的电路,预留了恒定的传输速度,这种事端到端的连接(P2P)\n好处: 可以预测的行为 足够简单 坏处: 电路的建立和关闭是复杂的 当电路没有使用者的时候是空闲的,效率低下 电路的建立需要消耗时间 当建立电路的交换机故障时,通信就故障 分组交换 将数据分割成一个个的报文进行根据IP传输,但是会有传输时延,传播时延,排队时延,还有丢包的可能性\n好处: 足够效率高 实现更加简单 鲁棒性 坏处: 行为不可预测 需要buffer的管理和拥塞控制 虚电路交换 电路交换+分组交换-&gt;\n选择一条建立的电路,使用报文的形式传输\n电路交换相较于分组交换的优点 电路交换：由于电路交换在通信之前要在通信双方之间建立一条被双方独占的物理通 路（由通信双方之间的交换设备和链路逐段连接而成）。因而有以下优点： （1）由于通信线路为通信双方用户专用，数据直达，所以传输数据的时延非常小 （2）通信双方之间的物理通路一旦建立，双方可以随时通信，实时性强。 （3）双方通信时按发送顺序传送数据，不存在失序问题。 （4）电路交换既适用于传输模拟信号，也适用于传输数字信号。 （5）电路交换设备控制均较简单。\nTMD相较于FMD的优点 TDM比FDM的优点如下：\n当发生拥塞等网络问题时，TDM中的数据丢失可能只会是一部分，而FDM中就可能 是大部分或全部。 TDM适合数字信号传输，而FDM适合模拟信号传输，因为现在通信网络多是传输数 字信号，所以TDM比FDM好。 因为频分复用连接建立后，当中途没有数据传输时，他所占有的频段带宽不能被其 他连接使用，故可能存在空置，而在时分复用的统计时分模式下，连接建立后，当某 个连接暂时不用传输数据时可以少分时间片或者不分，即其时隙的分配时“按需分 配”，这样就让出了相应的传输时间给其他连接。 统计多路复用 Link bandwidth shared on demand (按需共享)\n就是根据计算每一个用户使用网络的流量概率来计算出在平时会有多大的几率出现拥塞的情况\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/'>
+<meta property='og:site_name' content='Hu Yang&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/>
+<meta name="twitter:title" content="互联网计算简洁">
+<meta name="twitter:description" content="互联网计算简介 接入互联网 网络设备:\n网络边沿:\n运行程序,访问互联网的主机\n服务器,电脑,笔记本电脑,手机,智能家具\n接入互联网:\n接入互联网的物理设备(介质)\n双绞线,无线路由器,同轴电缆,光纤\n网络核心:\n链路层交换机,路由器\n交换机制 电路交换 当双方想要通信的时候建立一条交换机之间的电路,预留了恒定的传输速度,这种事端到端的连接(P2P)\n好处: 可以预测的行为 足够简单 坏处: 电路的建立和关闭是复杂的 当电路没有使用者的时候是空闲的,效率低下 电路的建立需要消耗时间 当建立电路的交换机故障时,通信就故障 分组交换 将数据分割成一个个的报文进行根据IP传输,但是会有传输时延,传播时延,排队时延,还有丢包的可能性\n好处: 足够效率高 实现更加简单 鲁棒性 坏处: 行为不可预测 需要buffer的管理和拥塞控制 虚电路交换 电路交换+分组交换-&gt;\n选择一条建立的电路,使用报文的形式传输\n电路交换相较于分组交换的优点 电路交换：由于电路交换在通信之前要在通信双方之间建立一条被双方独占的物理通 路（由通信双方之间的交换设备和链路逐段连接而成）。因而有以下优点： （1）由于通信线路为通信双方用户专用，数据直达，所以传输数据的时延非常小 （2）通信双方之间的物理通路一旦建立，双方可以随时通信，实时性强。 （3）双方通信时按发送顺序传送数据，不存在失序问题。 （4）电路交换既适用于传输模拟信号，也适用于传输数字信号。 （5）电路交换设备控制均较简单。\nTMD相较于FMD的优点 TDM比FDM的优点如下：\n当发生拥塞等网络问题时，TDM中的数据丢失可能只会是一部分，而FDM中就可能 是大部分或全部。 TDM适合数字信号传输，而FDM适合模拟信号传输，因为现在通信网络多是传输数 字信号，所以TDM比FDM好。 因为频分复用连接建立后，当中途没有数据传输时，他所占有的频段带宽不能被其 他连接使用，故可能存在空置，而在时分复用的统计时分模式下，连接建立后，当某 个连接暂时不用传输数据时可以少分时间片或者不分，即其时隙的分配时“按需分 配”，这样就让出了相应的传输时间给其他连接。 统计多路复用 Link bandwidth shared on demand (按需共享)\n就是根据计算每一个用户使用网络的流量概率来计算出在平时会有多大的几率出现拥塞的情况\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/huyang/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/huyang/img/logo-transparent_hu_2593eda3cf734d42.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/huyang">Hu Yang&#39;s Blog</a></h1>
+            <h2 class="site-description">Blog</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://114514yangyi.github.io/huyang/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='2416572689@qq.com'
+                        target="_blank"
+                        title="QQ"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/huyang/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#接入互联网">接入互联网</a></li>
+    <li><a href="#交换机制">交换机制</a>
+      <ol>
+        <li><a href="#电路交换">电路交换</a>
+          <ol>
+            <li><a href="#好处">好处:</a></li>
+            <li><a href="#坏处">坏处:</a></li>
+          </ol>
+        </li>
+        <li><a href="#分组交换">分组交换</a>
+          <ol>
+            <li><a href="#好处-1">好处:</a></li>
+            <li><a href="#坏处-1">坏处:</a></li>
+          </ol>
+        </li>
+        <li><a href="#虚电路交换">虚电路交换</a></li>
+        <li><a href="#电路交换相较于分组交换的优点">电路交换相较于分组交换的优点</a></li>
+        <li><a href="#tmd相较于fmd的优点">TMD相较于FMD的优点</a></li>
+      </ol>
+    </li>
+    <li><a href="#统计多路复用">统计多路复用</a></li>
+    <li><a href="#iso-osi模型">ISO-OSI模型</a>
+      <ol>
+        <li><a href="#传统的osi模型">传统的OSI模型</a></li>
+        <li><a href="#osi模型的七个层次">OSI模型的七个层次：</a></li>
+      </ol>
+    </li>
+    <li><a href="#网络评估">网络评估</a>
+      <ol>
+        <li><a href="#延迟">延迟</a></li>
+        <li><a href="#吞吐量">吞吐量</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/huyang/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="background-color: #2a9d8f; color: #fff;">
+                计算机网络
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/">互联网计算简洁</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 20, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="互联网计算简介">互联网计算简介
+</h1><h2 id="接入互联网">接入互联网
+</h2><p>网络设备:</p>
+<ol>
+<li>
+<p>网络边沿:</p>
+<p>运行程序,访问互联网的主机</p>
+<p>服务器,电脑,笔记本电脑,手机,智能家具</p>
+</li>
+<li>
+<p>接入互联网:</p>
+<p>接入互联网的物理设备(介质)</p>
+<p>双绞线,无线路由器,同轴电缆,光纤</p>
+</li>
+<li>
+<p>网络核心:</p>
+<p>链路层交换机,路由器</p>
+</li>
+</ol>
+<h2 id="交换机制">交换机制
+</h2><h3 id="电路交换">电路交换
+</h3><p>当双方想要通信的时候建立一条交换机之间的电路,预留了恒定的传输速度,这种事端到端的连接(P2P)</p>
+<h4 id="好处">好处:
+</h4><ul>
+<li>可以预测的行为</li>
+<li>足够简单</li>
+</ul>
+<h4 id="坏处">坏处:
+</h4><ul>
+<li>电路的建立和关闭是复杂的</li>
+<li>当电路没有使用者的时候是空闲的,效率低下</li>
+<li>电路的建立需要消耗时间</li>
+<li>当建立电路的交换机故障时,通信就故障</li>
+</ul>
+<h3 id="分组交换">分组交换
+</h3><p>将数据分割成一个个的报文进行根据IP传输,但是会有传输时延,传播时延,排队时延,还有丢包的可能性</p>
+<h4 id="好处-1">好处:
+</h4><ul>
+<li>足够效率高</li>
+<li>实现更加简单</li>
+<li>鲁棒性</li>
+</ul>
+<h4 id="坏处-1">坏处:
+</h4><ul>
+<li>行为不可预测</li>
+<li>需要buffer的管理和拥塞控制</li>
+</ul>
+<h3 id="虚电路交换">虚电路交换
+</h3><p>电路交换+分组交换-&gt;</p>
+<p>选择一条建立的电路,使用报文的形式传输</p>
+<p><img src="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/image-20240609165136349.png"
+	width="1638"
+	height="744"
+	srcset="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/image-20240609165136349_hu_a618dc7b85e4c6d1.png 480w, /huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/image-20240609165136349_hu_f9e4e902c27712f1.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240609165136349"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="220"
+		data-flex-basis="528px"
+	
+></p>
+<h3 id="电路交换相较于分组交换的优点">电路交换相较于分组交换的优点
+</h3><p>电路交换：由于电路交换在通信之前要在通信双方之间建立一条被双方独占的物理通
+路（由通信双方之间的交换设备和链路逐段连接而成）。因而有以下优点：
+（1）由于通信线路为通信双方用户专用，数据直达，所以<code>传输数据的时延非常小</code>
+（2）通信双方之间的物理通路一旦建立，双方可以随时通信，<code>实时性强。</code>
+（3）双方通信时按发送顺序传送数据，<code>不存在失序问题。</code>
+（4）电路交换既适用于<code>传输模拟信号</code>，也适用于<code>传输数字信号。</code>
+（5）电路交换设备控制均<code>较简单</code>。</p>
+<h3 id="tmd相较于fmd的优点">TMD相较于FMD的优点
+</h3><p>TDM比FDM的优点如下：</p>
+<ol>
+<li>当发生拥塞等网络问题时，<code>TDM中的数据丢失可能只会是一部分，而FDM中就可能</code>
+<code>是大部分或全部。</code></li>
+<li><code>TDM适合数字信号传输</code>，而FDM适合模拟信号传输，因为现在通信网络多是传输数
+字信号，所以TDM比FDM好。</li>
+<li>因为频分复用连接建立后，当中途没有数据传输时，他所占有的频段带宽不能被其
+他连接使用，故可能存在空置，而在时分复用的统计时分模式下，连接建立后，当某
+个连接暂时不用传输数据时可以少分时间片或者不分，即其<code>时隙的分配时“按需分</code>
+<code>配”</code>，这样就让出了相应的传输时间给其他连接。</li>
+</ol>
+<h2 id="统计多路复用">统计多路复用
+</h2><p>Link bandwidth shared on demand (按需共享)</p>
+<p>就是根据计算每一个用户使用网络的流量概率来计算出在平时会有多大的几率出现拥塞的情况</p>
+<h2 id="iso-osi模型">ISO-OSI模型
+</h2><p>每一层都要依靠下一层去实现自己的功能</p>
+<p>每一层都向上一层去提供功能</p>
+<h3 id="传统的osi模型">传统的OSI模型
+</h3><p>ISO-OSI模型（International Standards Organization Open Systems Interconnection model，国际标准化组织开放系统互联模型）是一个概念模型，用于标准化网络通信，确保不同系统和网络设备之间可以互相通信。OSI模型将复杂的网络通信任务分为七个独立的层次，每一层都有特定的功能和职责。这个模型为理解和设计网络体系结构提供了一个直观的框架。</p>
+<h3 id="osi模型的七个层次">OSI模型的七个层次：
+</h3><ol>
+<li>
+<p><strong>物理层（Physical Layer）</strong>-&gt;比特流</p>
+<ul>
+<li><strong>功能：</strong> 物理层在实际媒介负责传输原始的比特流，并定义设备和传输介质之间的电气、机械和功能特性。它涉及的内容包括连接器类型、电缆标准、信号电压和脉冲等。</li>
+<li><strong>操作内容：</strong> 比特流传输、物理连接的建立和终止、信号调制和脉冲编码等。</li>
+</ul>
+</li>
+<li>
+<p><strong>数据链路层（Data Link Layer）</strong>-&gt;帧</p>
+<p><code>链路层帧是链路层协议在实际传输介质上传输数据时所使用的单位。</code></p>
+<ul>
+<li><strong>功能：</strong> <code>数据链路层负责提供节点到节点的数据传输</code>，确保传输的可靠性。它处理帧的创建、发送、接收和确认，并检测和纠正传输错误。</li>
+<li><strong>操作内容：</strong> 帧同步、流量控制、错误检测和校正、媒体访问控制（MAC）等。</li>
+</ul>
+</li>
+<li>
+<p><strong>网络层（Network Layer）</strong>-&gt;数据报</p>
+<p><code>网络层数据报是IP协议在进行路由转发时所使用的数据单位。</code></p>
+<ul>
+<li><strong>功能：</strong> <code>网络层负责选择最佳路径将数据包从源送到目标，逻辑选址，路由选择</code>（如IP地址），并管理网络拥塞。</li>
+<li><strong>操作内容：</strong> 路由选择、逻辑地址管理、路径优化、流量控制和分组转发等。</li>
+</ul>
+</li>
+<li>
+<p><strong>传输层（Transport Layer）</strong>-&gt;报文段</p>
+<p><code>运输层报文段是TCP或UDP在传输数据时所使用的数据单位。</code></p>
+<ul>
+<li><strong>功能：</strong> <code>传输层确保可靠的端到端通信</code>，数据包的顺序性可靠交付，实现流量控制和拥塞控制。主要协议包括TCP和UDP。</li>
+<li><strong>操作内容：</strong> 传输连接的建立和终止、分段和重组、流量控制、错误检测和恢复等。</li>
+</ul>
+</li>
+<li>
+<p><strong>应用层（Application Layer）</strong>-&gt;报文</p>
+<p><code>应用层报文是应用层协议用于交换数据的基本单位,</code></p>
+<ul>
+<li><strong>功能：</strong> <code>应用层提供用户直接与网络交互的接口</code>，支持应用服务。它定义了应用程序如何与网络通信，并为常见网络服务提供支持，如邮件、文件传输和远程登录等。</li>
+<li><strong>操作内容：</strong> 提供网络服务接口、支持不同的网络应用（如HTTP、FTP、SMTP、Telnet等）。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>路由器处理网络层、链路层、物理层协议。</li>
+<li>链路层交换机处理链路层、物理层协议。</li>
+<li>主机处理应用层、运输层、网络层、链路层、物理层协议</li>
+</ul>
+<h2 id="网络评估">网络评估
+</h2><h3 id="延迟">延迟
+</h3><ol>
+<li>
+<p>传输延迟:</p>
+<p>$T_{delay}=\frac{L}{R}$</p>
+</li>
+<li>
+<p>传播延迟:</p>
+<p>$P_{delay}=\frac{Distance}{V_{light}}$</p>
+</li>
+<li>
+<p>排队延迟:</p>
+<p>$L&lt;length\ of \ the\ queue&gt;=A&lt;average\ speed\ the \ packet\ arrive&gt;\times W&lt;average\ time\ the \ packet \ waitting \ in \ queue&gt;$</p>
+</li>
+<li>
+<p>处理延迟</p>
+</li>
+</ol>
+<h3 id="吞吐量">吞吐量
+</h3><p>$Throughput=\frac{L}{T_{delay}+P_{delay}}$</p>
+<p>$Throughput=\frac{L}{T_{delay}+P_{delay}}$</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网安全</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%A6%81%E7%82%B9/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网要点</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">传输层</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E5%BA%94%E7%94%A8%E5%B1%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">应用层</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">无线网络与移动网络</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Hu Yang
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
+
+    </body>
+</html>

@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="链路层协议 节点:运行链路层协议的任何设备 链路:连接两个节点的通信信道 链路层提供的服务 成帧 链路接入 可靠交付 比特差错检验和纠正 链路层在何处实现 是在网络适配器的芯片上实现的,结合了软件硬件\n唯一标识每一个接口:MAC地址\n链路层协议包括比特错误的检测和纠正,流量控制\n半双工通道:可以支持端点相互传输数据,但是同时只能够有一个端点在传送消息 全双工通道:能够有两端同时向对方传输信息 错误检查和纠正 使用奇偶校验: 一维的奇偶校验,只能够检测出一位的错误,但是不能纠正错误,需要1bit冗余 二维的奇偶校验,可以检测一位的错误,可以纠正一位的错误,需要2n bit的冗余 使用校验和: 将每16位相加最终结果取反 使用循环冗余校验法: 先决定R位的冗余位,再确定生成的G(R+1位)生成码,使用数据$D\\times 2^R$来异或除G,最终得到R位的异或余数,为最终的冗余位. 多路访问链路(Multiple access links) 类型:\n端到端 广播 解释:多个端同时地发送数据,可能会相互干扰而导致碰撞\n是否会产生碰撞主要看节点在传输帧的时候,会不会接收到其他节点传输的帧\n即:$d_{prop}&lt;\\frac{L}{R}$\n方式:\n按照频率和时间片来划分 TDMA:时分复用 将时间划分为同等长度的时隙,每次每一个时隙都划分给一个端,每一个时隙都可以传输一个帧 FDMA:频分复用 将频率划分为不同的部分,给端使用 TDM比FDM的优点如下：\n当发生拥塞等网络问题时，TDM中的数据丢失可能只会是一部分，而FDM中就可能 是大部分或全部。 TDM适合数字信号传输，而FDM适合模拟信号传输，因为现在通信网络多是传输数 字信号，所以TDM比FDM好。 因为频分复用连接建立后，当中途没有数据传输时，他所占有的频段带宽不能被其 他连接使用，故可能存在空置，而在时分复用的统计时分模式下，连接建立后，当某 个连接暂时不用传输数据时可以少分时间片或者不分，即其时隙的分配时“按需分 配”，这样就让出了相应的传输时间给其他连接。 随机发送协议 Slotted ALOHA 每一个端想要传输信息就直接传输,使用两种协议来处理碰撞,同样将每一个时间段都划分成ALOHA时隙,假如传输没有碰撞则当前节点继续在下一个时隙传输,否则就在下面的每一个时隙中以概率p传输.-&gt;最大的传输效率是$\\frac{1}{e}$\u200b\nCSMA CSMA:carrier sense multiple access \u200b\t在发送之前先听信道中是否空闲,加入空闲则传输,否则就抑制传输,直到信道空闲\nCSMA/CD:碰撞检测-&gt;在Ethernet中使用 假如当前的信道空闲则监听96bit时间后发送信息 否则一直抑制传输,直到信道空闲 在传输中监听到了碰撞,则立刻停止传输,并且持续发送48bit时间的干扰信号(jamming Signal).发送完以后就开始选取随机的退避时间(指数回退),在第m次的碰撞中,从{$0,1,2,3,,,,2^{m}-1$}中随机选择一个k,则回避512bit$\\times$k的比特时间,重新开始监听信道并且准备重新发送帧. CSMA/CA:碰撞避免-&gt;在802.11中使用 轮流方式 中心的服务器让每一个主机都轮流地发送帧 缺点:轮询的消耗,延迟,单点错误 分布式:每一个拿到票的主机可以发送帧,当发送完以后可以交给下一个主机. 使用:\n">
+<title>链路层</title>
+
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/'>
+
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="链路层">
+<meta property='og:description' content="链路层协议 节点:运行链路层协议的任何设备 链路:连接两个节点的通信信道 链路层提供的服务 成帧 链路接入 可靠交付 比特差错检验和纠正 链路层在何处实现 是在网络适配器的芯片上实现的,结合了软件硬件\n唯一标识每一个接口:MAC地址\n链路层协议包括比特错误的检测和纠正,流量控制\n半双工通道:可以支持端点相互传输数据,但是同时只能够有一个端点在传送消息 全双工通道:能够有两端同时向对方传输信息 错误检查和纠正 使用奇偶校验: 一维的奇偶校验,只能够检测出一位的错误,但是不能纠正错误,需要1bit冗余 二维的奇偶校验,可以检测一位的错误,可以纠正一位的错误,需要2n bit的冗余 使用校验和: 将每16位相加最终结果取反 使用循环冗余校验法: 先决定R位的冗余位,再确定生成的G(R+1位)生成码,使用数据$D\\times 2^R$来异或除G,最终得到R位的异或余数,为最终的冗余位. 多路访问链路(Multiple access links) 类型:\n端到端 广播 解释:多个端同时地发送数据,可能会相互干扰而导致碰撞\n是否会产生碰撞主要看节点在传输帧的时候,会不会接收到其他节点传输的帧\n即:$d_{prop}&lt;\\frac{L}{R}$\n方式:\n按照频率和时间片来划分 TDMA:时分复用 将时间划分为同等长度的时隙,每次每一个时隙都划分给一个端,每一个时隙都可以传输一个帧 FDMA:频分复用 将频率划分为不同的部分,给端使用 TDM比FDM的优点如下：\n当发生拥塞等网络问题时，TDM中的数据丢失可能只会是一部分，而FDM中就可能 是大部分或全部。 TDM适合数字信号传输，而FDM适合模拟信号传输，因为现在通信网络多是传输数 字信号，所以TDM比FDM好。 因为频分复用连接建立后，当中途没有数据传输时，他所占有的频段带宽不能被其 他连接使用，故可能存在空置，而在时分复用的统计时分模式下，连接建立后，当某 个连接暂时不用传输数据时可以少分时间片或者不分，即其时隙的分配时“按需分 配”，这样就让出了相应的传输时间给其他连接。 随机发送协议 Slotted ALOHA 每一个端想要传输信息就直接传输,使用两种协议来处理碰撞,同样将每一个时间段都划分成ALOHA时隙,假如传输没有碰撞则当前节点继续在下一个时隙传输,否则就在下面的每一个时隙中以概率p传输.-&gt;最大的传输效率是$\\frac{1}{e}$\u200b\nCSMA CSMA:carrier sense multiple access \u200b\t在发送之前先听信道中是否空闲,加入空闲则传输,否则就抑制传输,直到信道空闲\nCSMA/CD:碰撞检测-&gt;在Ethernet中使用 假如当前的信道空闲则监听96bit时间后发送信息 否则一直抑制传输,直到信道空闲 在传输中监听到了碰撞,则立刻停止传输,并且持续发送48bit时间的干扰信号(jamming Signal).发送完以后就开始选取随机的退避时间(指数回退),在第m次的碰撞中,从{$0,1,2,3,,,,2^{m}-1$}中随机选择一个k,则回避512bit$\\times$k的比特时间,重新开始监听信道并且准备重新发送帧. CSMA/CA:碰撞避免-&gt;在802.11中使用 轮流方式 中心的服务器让每一个主机都轮流地发送帧 缺点:轮询的消耗,延迟,单点错误 分布式:每一个拿到票的主机可以发送帧,当发送完以后可以交给下一个主机. 使用:\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/'>
+<meta property='og:site_name' content='Hu Yang&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/>
+<meta name="twitter:title" content="链路层">
+<meta name="twitter:description" content="链路层协议 节点:运行链路层协议的任何设备 链路:连接两个节点的通信信道 链路层提供的服务 成帧 链路接入 可靠交付 比特差错检验和纠正 链路层在何处实现 是在网络适配器的芯片上实现的,结合了软件硬件\n唯一标识每一个接口:MAC地址\n链路层协议包括比特错误的检测和纠正,流量控制\n半双工通道:可以支持端点相互传输数据,但是同时只能够有一个端点在传送消息 全双工通道:能够有两端同时向对方传输信息 错误检查和纠正 使用奇偶校验: 一维的奇偶校验,只能够检测出一位的错误,但是不能纠正错误,需要1bit冗余 二维的奇偶校验,可以检测一位的错误,可以纠正一位的错误,需要2n bit的冗余 使用校验和: 将每16位相加最终结果取反 使用循环冗余校验法: 先决定R位的冗余位,再确定生成的G(R+1位)生成码,使用数据$D\\times 2^R$来异或除G,最终得到R位的异或余数,为最终的冗余位. 多路访问链路(Multiple access links) 类型:\n端到端 广播 解释:多个端同时地发送数据,可能会相互干扰而导致碰撞\n是否会产生碰撞主要看节点在传输帧的时候,会不会接收到其他节点传输的帧\n即:$d_{prop}&lt;\\frac{L}{R}$\n方式:\n按照频率和时间片来划分 TDMA:时分复用 将时间划分为同等长度的时隙,每次每一个时隙都划分给一个端,每一个时隙都可以传输一个帧 FDMA:频分复用 将频率划分为不同的部分,给端使用 TDM比FDM的优点如下：\n当发生拥塞等网络问题时，TDM中的数据丢失可能只会是一部分，而FDM中就可能 是大部分或全部。 TDM适合数字信号传输，而FDM适合模拟信号传输，因为现在通信网络多是传输数 字信号，所以TDM比FDM好。 因为频分复用连接建立后，当中途没有数据传输时，他所占有的频段带宽不能被其 他连接使用，故可能存在空置，而在时分复用的统计时分模式下，连接建立后，当某 个连接暂时不用传输数据时可以少分时间片或者不分，即其时隙的分配时“按需分 配”，这样就让出了相应的传输时间给其他连接。 随机发送协议 Slotted ALOHA 每一个端想要传输信息就直接传输,使用两种协议来处理碰撞,同样将每一个时间段都划分成ALOHA时隙,假如传输没有碰撞则当前节点继续在下一个时隙传输,否则就在下面的每一个时隙中以概率p传输.-&gt;最大的传输效率是$\\frac{1}{e}$\u200b\nCSMA CSMA:carrier sense multiple access \u200b\t在发送之前先听信道中是否空闲,加入空闲则传输,否则就抑制传输,直到信道空闲\nCSMA/CD:碰撞检测-&gt;在Ethernet中使用 假如当前的信道空闲则监听96bit时间后发送信息 否则一直抑制传输,直到信道空闲 在传输中监听到了碰撞,则立刻停止传输,并且持续发送48bit时间的干扰信号(jamming Signal).发送完以后就开始选取随机的退避时间(指数回退),在第m次的碰撞中,从{$0,1,2,3,,,,2^{m}-1$}中随机选择一个k,则回避512bit$\\times$k的比特时间,重新开始监听信道并且准备重新发送帧. CSMA/CA:碰撞避免-&gt;在802.11中使用 轮流方式 中心的服务器让每一个主机都轮流地发送帧 缺点:轮询的消耗,延迟,单点错误 分布式:每一个拿到票的主机可以发送帧,当发送完以后可以交给下一个主机. 使用:\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/huyang/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/huyang/img/logo-transparent_hu_2593eda3cf734d42.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/huyang">Hu Yang&#39;s Blog</a></h1>
+            <h2 class="site-description">Blog</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://114514yangyi.github.io/huyang/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='2416572689@qq.com'
+                        target="_blank"
+                        title="QQ"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/huyang/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#链路层提供的服务">链路层提供的服务</a></li>
+    <li><a href="#链路层在何处实现">链路层在何处实现</a></li>
+    <li><a href="#错误检查和纠正">错误检查和纠正</a></li>
+    <li><a href="#多路访问链路multiple-access-links">多路访问链路(Multiple access links)</a>
+      <ol>
+        <li>
+          <ol>
+            <li><a href="#按照频率和时间片来划分"><strong>按照频率和时间片来划分</strong></a></li>
+            <li><a href="#随机发送协议"><strong>随机发送协议</strong></a></li>
+            <li><a href="#轮流方式"><strong>轮流方式</strong></a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#局域网lans">局域网(LANs)</a>
+      <ol>
+        <li>
+          <ol>
+            <li><a href="#mac地址">MAC地址:</a></li>
+            <li><a href="#arp包">ARP包:</a></li>
+            <li><a href="#lan的物理结构">LAN的物理结构:</a></li>
+            <li><a href="#以太网的帧形式8021">以太网的帧形式:802.1</a></li>
+          </ol>
+        </li>
+        <li><a href="#注意事项">注意事项：</a>
+          <ol>
+            <li><a href="#交换机">交换机:</a></li>
+            <li><a href="#vlan虚拟局域网">VLAN:虚拟局域网:</a></li>
+            <li><a href="#mpls-multiprotocol-label-switch">MPLS :Multiprotocol Label Switch</a></li>
+            <li><a href="#dcn--data-center-network">DCN : Data Center Network:</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/huyang/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="background-color: #2a9d8f; color: #fff;">
+                计算机网络
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/">链路层</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 20, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="链路层协议">链路层协议
+</h1><ol>
+<li><strong>节点</strong>:运行链路层协议的任何设备</li>
+<li><strong>链路</strong>:连接两个节点的通信信道</li>
+</ol>
+<h2 id="链路层提供的服务">链路层提供的服务
+</h2><ol>
+<li>成帧</li>
+<li>链路接入</li>
+<li>可靠交付</li>
+<li>比特差错检验和纠正</li>
+</ol>
+<h2 id="链路层在何处实现">链路层在何处实现
+</h2><p><code>是在网络适配器的芯片上实现的,结合了软件硬件</code></p>
+<p>唯一标识每一个接口:MAC地址</p>
+<p><code>链路层协议包括比特错误的检测和纠正,流量控制</code></p>
+<ul>
+<li>半双工通道:可以支持端点相互传输数据,但是同时只能够有一个端点在传送消息</li>
+<li>全双工通道:能够有两端同时向对方传输信息</li>
+</ul>
+<h2 id="错误检查和纠正">错误检查和纠正
+</h2><ul>
+<li>使用奇偶校验:
+一维的奇偶校验,只能够检测出一位的错误,但是不能纠正错误,需要1bit冗余
+二维的奇偶校验,可以检测一位的错误,可以纠正一位的错误,需要2n bit的冗余</li>
+<li>使用校验和:
+将每16位相加最终结果取反</li>
+<li>使用循环冗余校验法:
+先决定R位的冗余位,再确定生成的G(R+1位)生成码,使用数据$D\times 2^R$来异或除G,最终得到R位的异或余数,为最终的冗余位.</li>
+</ul>
+<h2 id="多路访问链路multiple-access-links">多路访问链路(Multiple access links)
+</h2><p>类型:</p>
+<ul>
+<li>端到端</li>
+<li>广播</li>
+</ul>
+<p>解释:多个端同时地发送数据,可能会相互干扰而导致碰撞</p>
+<p><code>是否会产生碰撞主要看节点在传输帧的时候,会不会接收到其他节点传输的帧</code></p>
+<p>即:$d_{prop}&lt;\frac{L}{R}$</p>
+<p>方式:</p>
+<h4 id="按照频率和时间片来划分"><strong>按照频率和时间片来划分</strong>
+</h4><ul>
+<li>TDMA:时分复用
+将时间划分为同等长度的时隙,每次每一个时隙都划分给一个端,每一个时隙都可以传输一个帧</li>
+<li>FDMA:频分复用
+将频率划分为不同的部分,给端使用</li>
+</ul>
+<p>TDM比FDM的优点如下：</p>
+<ol>
+<li>当发生拥塞等网络问题时，<code>TDM中的数据丢失可能只会是一部分，而FDM中就可能</code>
+<code>是大部分或全部。</code></li>
+<li><code>TDM适合数字信号传输</code>，而FDM适合模拟信号传输，因为现在通信网络多是传输数
+字信号，所以TDM比FDM好。</li>
+<li>因为频分复用连接建立后，当中途没有数据传输时，他所占有的频段带宽不能被其
+他连接使用，故可能存在空置，而在时分复用的统计时分模式下，连接建立后，当某
+个连接暂时不用传输数据时可以少分时间片或者不分，即其<code>时隙的分配时“按需分</code>
+<code>配”</code>，这样就让出了相应的传输时间给其他连接。</li>
+</ol>
+<h4 id="随机发送协议"><strong>随机发送协议</strong>
+</h4><h5 id="slotted-aloha">Slotted ALOHA
+</h5><p>每一个端想要传输信息就直接传输,使用两种协议来处理碰撞,同样将每一个时间段都划分成ALOHA时隙,假如传输没有碰撞则当前节点继续在下一个时隙传输,否则就在下面的每一个时隙中以概率p传输.-&gt;最大的传输效率是$\frac{1}{e}$​</p>
+<h5 id="csma">CSMA
+</h5><p>CSMA:carrier sense multiple access
+​			在发送之前先听信道中是否空闲,加入空闲则传输,否则就抑制传输,直到信道空闲</p>
+<ul>
+<li>CSMA/CD:碰撞检测-&gt;在Ethernet中使用
+<ul>
+<li>假如当前的信道空闲则监听96bit时间后发送信息
+否则一直抑制传输,直到信道空闲</li>
+<li>在传输中监听到了碰撞,则立刻停止传输,并且持续发送48bit时间的干扰信号(jamming Signal).发送完以后就开始选取随机的退避时间(指数回退),在第m次的碰撞中,从{$0,1,2,3,,,,2^{m}-1$}中随机选择一个k,则回避512bit$\times$k的比特时间,重新开始监听信道并且准备重新发送帧.</li>
+</ul>
+</li>
+<li>CSMA/CA:碰撞避免-&gt;在802.11中使用</li>
+</ul>
+<h4 id="轮流方式"><strong>轮流方式</strong>
+</h4><ul>
+<li>中心的服务器让每一个主机都轮流地发送帧
+缺点:轮询的消耗,延迟,单点错误</li>
+<li>分布式:每一个拿到票的主机可以发送帧,当发送完以后可以交给下一个主机.</li>
+</ul>
+<p><strong>使用</strong>:</p>
+<p>上行流量使用随机访问,有的使用时分复用;下行流量使用频分复用</p>
+<h2 id="局域网lans">局域网(LANs)
+</h2><h4 id="mac地址">MAC地址:
+</h4><p>​	48-bits的地址,用于唯一标识每一个接口-&gt;主机和路由器都有MAC地址,但是交换机没有</p>
+<h4 id="arp包">ARP包:
+</h4><p>​	ARP table是将IP映射到相应的MAC地址,结构为&lt;IP,MAC,ttl&gt;</p>
+<p>过程:</p>
+<ul>
+<li>询问的主机发送一个ARP包,里面的destIP和srcIP是自己的和查询对方的,srcMAC是自己接口的,而destMAC是广播地址</li>
+<li>等到接受主机接收到了ARP包以后发现destIP是自己的,所以会将自己接口的MAC地址填入到srcMAC中,构造reply-MAC的ARP包发送给查询主机</li>
+<li>查询主机收到了返回的ARP包以后会将条目添加进ARP table中.</li>
+</ul>
+<h4 id="lan的物理结构">LAN的物理结构:
+</h4><ul>
+<li>使用总线</li>
+<li>使用交换机</li>
+</ul>
+<h4 id="以太网的帧形式8021">以太网的帧形式:802.1
+</h4><img src="image-20240530093040451.png" alt="image-20240530093040451" style="zoom:50%;" />
+<ol>
+<li><strong>Preamble（前导码）</strong>：
+<ul>
+<li>长度为7个字节，由连续交替的1和0组成，用于在接收端同步时钟，并标识帧的开始。</li>
+</ul>
+</li>
+<li><strong>Start Frame Delimiter（帧起始符）</strong>：
+<ul>
+<li>一个字节的特殊字段，标志着帧的开始。</li>
+</ul>
+</li>
+<li><strong>Destination MAC Address（目的MAC地址）</strong>：
+<ul>
+<li>长度为6个字节，指定了帧要送达的目标设备的MAC地址。</li>
+</ul>
+</li>
+<li><strong>Source MAC Address（源MAC地址）</strong>：
+<ul>
+<li>长度为6个字节，指示发送该帧的设备的MAC地址。</li>
+</ul>
+</li>
+<li><strong>Type / Length（类型/长度字段）</strong>：
+<ul>
+<li>通常占两个字节，用于表示数据帧中数据部分的类型（如IP、ARP等）或者指定数据字段的长度。</li>
+</ul>
+</li>
+<li><strong>Payload（有效载荷）</strong>：
+<ul>
+<li>包含了实际的数据内容，可以是上层协议的数据部分，如IP数据报。</li>
+</ul>
+</li>
+<li><strong>FCS（Frame Check Sequence，帧校验序列）</strong>：
+<ul>
+<li>长度为4个字节，用于检测前面字段（包括目的MAC地址、源MAC地址、类型/长度字段和有效载荷）是否在传输中发生了错误。</li>
+</ul>
+</li>
+</ol>
+<h3 id="注意事项">注意事项：
+</h3><ul>
+<li>
+<p>以太网头部信息的总长度为至少14个字节。</p>
+</li>
+<li>
+<p>目的MAC地址和源MAC地址是唯一标识网络设备的物理地址。</p>
+</li>
+<li>
+<p>以太网帧头部信息的结构在不同的以太网标准（如Ethernet II、IEEE 802.3等）中可能略有不同，但通常遵循以上基本的字段结构。</p>
+</li>
+<li>
+<p>无状态的,无连接的</p>
+</li>
+<li>
+<p>没有ACK等可靠机制</p>
+</li>
+<li>
+<p>使用CSMA机制</p>
+</li>
+</ul>
+<h4 id="交换机">交换机:
+</h4><ul>
+<li>对于其他的主机是透明的</li>
+<li>即插即用,使用自学习</li>
+<li>传输的时候是全双工,无碰撞的</li>
+</ul>
+<p>方式:</p>
+<ul>
+<li>把每一个相应的srcMAC和srcport记录在转发表中;</li>
+<li>假如转发表中有destMAC,则按照转发表进行转发;否则就泛洪到其他的所有端口.</li>
+</ul>
+<p>与路由器的异同点:</p>
+<ol>
+<li><strong>功能差异：</strong> 路由器连接多个网络，负责在不同网络之间传输数据包，而交换机连接局域网内的设备，实现设备之间的数据交换。</li>
+<li><strong>工作层级：</strong> 路由器工作在网络层（第三层），根据 IP 地址进行路由和转发；交换机工作在数据链路层（第二层），通过 MAC 地址进行数据交换。</li>
+<li><strong>数据处理方式：</strong> 路由器是基于 IP 地址进行数据转发的，可以跨网段传输数据；交换机是通过 MAC 地址进行数据帧转发，只能在局域网内传输数据。</li>
+<li><strong>安全功能：</strong> 路由器通常具有防火墙功能，可以过滤网络流量，提供一定程度的网络安全保护；交换机对网络安全方面的功能相对较弱。</li>
+</ol>
+<h4 id="vlan虚拟局域网">VLAN:虚拟局域网:
+</h4><p>LAN的问题:规模问题,安全隐私问题;管理问题;</p>
+<ul>
+<li>port-based VLANs:
+在一个交换机中按照不同的端口划分为不同的局域网,互不干涉
+流量隔离;动态的成员划分;在不同的虚拟局域网中使用路由器转发</li>
+<li>在多个交换机中建立多个虚拟局域网:
+使用干线端口:使用两个端口将两个交换机相连成为一个交换机,而在Etnernet头中添加一个关于VLAN ID的值,标识每一个VLAN<code>,在802.1中不能这样做,因为没有VLAN ID,但是在802.1q中添加了关于VLAN ID的信息.</code></li>
+</ul>
+<p>EVPNs:Ethernet VPNs:
+跨路由器的将两个交换机的干线端口相连,是将Ethernet包裹在IPHeader中,使用隧道技术.</p>
+<h4 id="mpls-multiprotocol-label-switch">MPLS :Multiprotocol Label Switch
+</h4><p>在Ethernet Header和IP Header 之间添加一个MPLS Header 用于使用一个定长的标签,使支持MLPS的路由器可以只根据Label的值来进行转发.这个协议是路由转发数据报的协议,用于路由器中.</p>
+<p>可以实现负载均衡,数据包的任意的转发配置.</p>
+<p><img src="/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20240611104200433.png"
+	width="1139"
+	height="799"
+	srcset="/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20240611104200433_hu_ee766c9bd4af7454.png 480w, /huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20240611104200433_hu_3c12def0b0444354.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240611104200433"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+></p>
+<ul>
+<li>IP router:只关心终点的IP地址</li>
+<li>MPLS router:关心起点和终点的IP地址</li>
+</ul>
+<p>MPLSrouter使用转发表的结构:&lt;in label, out label, dest, out interface&gt;,一个router知道了A,可以将A的存在广播给自己的邻居,使用RSVP-TE协议,同时设置in label ,out label.</p>
+<h4 id="dcn--data-center-network">DCN : Data Center Network:
+</h4><p>等级拓扑:</p>
+<ol>
+<li>边界路由器</li>
+<li>接入路由器</li>
+<li>负载均衡器</li>
+<li>第一层交换机</li>
+<li>第二层交换机</li>
+<li>TOR交换机</li>
+<li>服务器架构</li>
+</ol>
+<p><strong><img src="/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20240611110350092.png"
+	width="1750"
+	height="754"
+	srcset="/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20240611110350092_hu_74d9e857b3e9b1c6.png 480w, /huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20240611110350092_hu_f77cc94d2840d081.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240611110350092"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="232"
+		data-flex-basis="557px"
+	
+></strong></p>
+<ol start="6">
+<li>TOR交换机</li>
+<li>服务器架构</li>
+</ol>
+<p><strong><img src="/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20240611110350092.png"
+	width="1750"
+	height="754"
+	srcset="/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20240611110350092_hu_74d9e857b3e9b1c6.png 480w, /huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20240611110350092_hu_f77cc94d2840d081.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240611110350092"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="232"
+		data-flex-basis="557px"
+	
+></strong></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网安全</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%A6%81%E7%82%B9/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网要点</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网计算简洁</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">传输层</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E5%BA%94%E7%94%A8%E5%B1%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">应用层</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Hu Yang
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
+
+    </body>
+</html>

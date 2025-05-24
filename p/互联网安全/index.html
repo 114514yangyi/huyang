@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="互联网安全 主要是\n鉴别 机密性 完整性 运行安全性 秘钥 对称秘钥 接收方和发送者使用同一份秘钥进行加密和解密\n加密算法:\n凯撒密码\n循环的加密模式\nDES加密算法:\n使用56位对称密钥，64位明文输入\n有3DES:使用3个不同的秘钥进行加密\nAES:\n使用128/192/256bits的秘钥加密128bits的数据块\n非对称秘钥 所有人都知道接受者的公钥,只有接受者有私钥;发送者使用公钥加密,接受者使用私钥解密;\nRSA算法:\n密钥生成： 选择两个大素数 p 和 q。 计算 n = p * q，n 称为模数。 计算欧拉函数 φ(n) = (p-1) * (q-1)。 选择一个指数 e，使得 e 与 φ(n) 互质，通常选择一个小素数，常见的选择是65537。 计算私钥指数 d，满足 (d * e) mod φ(n) = 1。 加密： 将明文 M 转换为整数 m，要求 0 &lt;= m &lt; n。 加密计算：C = M^e mod n，得到密文 C。 解密： 解密计算：M = C^d mod n，得到原始明文 M。 私钥:$K^{-}{B}=(n,d)$;公钥:$K^{+}{B}=(n,e)$.\n">
+<title>互联网安全</title>
+
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/'>
+
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="互联网安全">
+<meta property='og:description' content="互联网安全 主要是\n鉴别 机密性 完整性 运行安全性 秘钥 对称秘钥 接收方和发送者使用同一份秘钥进行加密和解密\n加密算法:\n凯撒密码\n循环的加密模式\nDES加密算法:\n使用56位对称密钥，64位明文输入\n有3DES:使用3个不同的秘钥进行加密\nAES:\n使用128/192/256bits的秘钥加密128bits的数据块\n非对称秘钥 所有人都知道接受者的公钥,只有接受者有私钥;发送者使用公钥加密,接受者使用私钥解密;\nRSA算法:\n密钥生成： 选择两个大素数 p 和 q。 计算 n = p * q，n 称为模数。 计算欧拉函数 φ(n) = (p-1) * (q-1)。 选择一个指数 e，使得 e 与 φ(n) 互质，通常选择一个小素数，常见的选择是65537。 计算私钥指数 d，满足 (d * e) mod φ(n) = 1。 加密： 将明文 M 转换为整数 m，要求 0 &lt;= m &lt; n。 加密计算：C = M^e mod n，得到密文 C。 解密： 解密计算：M = C^d mod n，得到原始明文 M。 私钥:$K^{-}{B}=(n,d)$;公钥:$K^{+}{B}=(n,e)$.\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/'>
+<meta property='og:site_name' content='Hu Yang&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/>
+<meta name="twitter:title" content="互联网安全">
+<meta name="twitter:description" content="互联网安全 主要是\n鉴别 机密性 完整性 运行安全性 秘钥 对称秘钥 接收方和发送者使用同一份秘钥进行加密和解密\n加密算法:\n凯撒密码\n循环的加密模式\nDES加密算法:\n使用56位对称密钥，64位明文输入\n有3DES:使用3个不同的秘钥进行加密\nAES:\n使用128/192/256bits的秘钥加密128bits的数据块\n非对称秘钥 所有人都知道接受者的公钥,只有接受者有私钥;发送者使用公钥加密,接受者使用私钥解密;\nRSA算法:\n密钥生成： 选择两个大素数 p 和 q。 计算 n = p * q，n 称为模数。 计算欧拉函数 φ(n) = (p-1) * (q-1)。 选择一个指数 e，使得 e 与 φ(n) 互质，通常选择一个小素数，常见的选择是65537。 计算私钥指数 d，满足 (d * e) mod φ(n) = 1。 加密： 将明文 M 转换为整数 m，要求 0 &lt;= m &lt; n。 加密计算：C = M^e mod n，得到密文 C。 解密： 解密计算：M = C^d mod n，得到原始明文 M。 私钥:$K^{-}{B}=(n,d)$;公钥:$K^{+}{B}=(n,e)$.\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/huyang/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/huyang/img/logo-transparent_hu_2593eda3cf734d42.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/huyang">Hu Yang&#39;s Blog</a></h1>
+            <h2 class="site-description">Blog</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://114514yangyi.github.io/huyang/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='2416572689@qq.com'
+                        target="_blank"
+                        title="QQ"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/huyang/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#秘钥">秘钥</a>
+      <ol>
+        <li><a href="#对称秘钥">对称秘钥</a></li>
+        <li><a href="#非对称秘钥">非对称秘钥</a></li>
+      </ol>
+    </li>
+    <li><a href="#认证">认证</a>
+      <ol>
+        <li><a href="#数字签名">数字签名</a>
+          <ol>
+            <li><a href="#生成过程">生成过程:</a></li>
+            <li><a href="#颁布公钥的组织ca">颁布公钥的组织:CA</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#安全邮件">安全邮件</a>
+      <ol>
+        <li><a href="#可靠性机密性">可靠性(机密性)</a></li>
+        <li><a href="#完整性和认证">完整性和认证</a></li>
+        <li><a href="#可靠性完整性认证">可靠性+完整性+认证</a></li>
+      </ol>
+    </li>
+    <li><a href="#安全tcp连接传输层安全">安全TCP连接:传输层安全</a>
+      <ol>
+        <li>
+          <ol>
+            <li><a href="#过程">过程:</a></li>
+            <li><a href="#hmac">HMAC:</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#ipsec网络层安全">IPsec:网络层安全</a>
+      <ol>
+        <li><a href="#两种协议">两种协议:</a></li>
+        <li><a href="#sa--security-association-安全关联">SA : Security Association 安全关联</a></li>
+        <li><a href="#分组模式">分组模式</a></li>
+        <li><a href="#传输过程">传输过程</a></li>
+        <li><a href="#ip-sequence">IP Sequence</a></li>
+        <li><a href="#对于新的安全关联sasecurity-association">对于新的安全关联（SA，Security Association）</a>
+          <ol>
+            <li><a href="#spi">SPI</a></li>
+            <li><a href="#每次在sa上发送数据报时">每次在SA上发送数据报时</a></li>
+            <li><a href="#目标">目标</a></li>
+            <li><a href="#方法">方法</a></li>
+          </ol>
+        </li>
+        <li><a href="#数据库">数据库</a>
+          <ol>
+            <li><a href="#简单总结">简单总结：</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#ike">IKE</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/huyang/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="background-color: #2a9d8f; color: #fff;">
+                计算机网络
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/">互联网安全</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 20, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="互联网安全">互联网安全
+</h1><p>主要是</p>
+<ol>
+<li>鉴别</li>
+<li>机密性</li>
+<li>完整性</li>
+<li>运行安全性</li>
+</ol>
+<h2 id="秘钥">秘钥
+</h2><h3 id="对称秘钥">对称秘钥
+</h3><p>接收方和发送者使用同一份秘钥进行加密和解密</p>
+<p>加密算法:</p>
+<ol>
+<li>
+<p>凯撒密码</p>
+</li>
+<li>
+<p>循环的加密模式</p>
+</li>
+<li>
+<p>DES加密算法:</p>
+<p>使用56位对称密钥，64位明文输入</p>
+<p>有3DES:使用3个不同的秘钥进行加密</p>
+</li>
+<li>
+<p>AES:</p>
+<p>使用128/192/256bits的秘钥加密128bits的数据块</p>
+</li>
+</ol>
+<h3 id="非对称秘钥">非对称秘钥
+</h3><p>所有人都知道接受者的公钥,只有接受者有私钥;发送者使用公钥加密,接受者使用私钥解密;</p>
+<p>RSA算法:</p>
+<ol>
+<li><strong>密钥生成</strong>：
+<ul>
+<li>选择两个大素数 p 和 q。</li>
+<li>计算 n = p * q，n 称为模数。</li>
+<li>计算欧拉函数 φ(n) = (p-1) * (q-1)。</li>
+<li>选择一个指数 e，使得 e 与 φ(n) 互质，通常选择一个小素数，常见的选择是65537。</li>
+<li>计算私钥指数 d，满足 (d * e) mod φ(n) = 1。</li>
+</ul>
+</li>
+<li><strong>加密</strong>：
+<ul>
+<li>将明文 M 转换为整数 m，要求 0 &lt;= m &lt; n。</li>
+<li>加密计算：C = M^e mod n，得到密文 C。</li>
+</ul>
+</li>
+<li><strong>解密</strong>：
+<ul>
+<li>解密计算：M = C^d mod n，得到原始明文 M。</li>
+</ul>
+</li>
+</ol>
+<p>私钥:$K^{-}<em>{B}=(n,d)$;公钥:$K^{+}</em>{B}=(n,e)$.</p>
+<p>一般使用RSA算法来传递会话的对称秘钥,因为RSA虽然安全但是开销大</p>
+<h2 id="认证">认证
+</h2><p>不重数:在每一次的会话中都不会重复出现的数字,只会使用一次</p>
+<p>数字签名:使用私钥对证书进行加密签名</p>
+<p>哈希函数:将一长段的长度为M的信息映射到一个较短的长度为m的数字</p>
+<ul>
+<li>MD5</li>
+<li>SHA-1</li>
+</ul>
+<h3 id="数字签名">数字签名
+</h3><h4 id="生成过程">生成过程:
+</h4><p><img src="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611195128788.png"
+	width="1682"
+	height="815"
+	srcset="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611195128788_hu_4867fd924ca39347.png 480w, /huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611195128788_hu_113c7886abe956f0.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240611195128788"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="206"
+		data-flex-basis="495px"
+	
+></p>
+<ol>
+<li>发送者使用众所周知的哈希函数来生成证书的信息摘要,并用私钥对其进行签名,附加上证书的明文信息,发送给接受者</li>
+<li>接受者使用公钥将加密的摘要进行解密,再使用哈希函数对证书信息进行哈希处理,对照解密出来的摘要和生成的摘要是否相同.</li>
+</ol>
+<h4 id="颁布公钥的组织ca">颁布公钥的组织:CA
+</h4><p>在数字证书体系中的一些关键概念包括：</p>
+<ul>
+<li><strong>证书颁发机构 (Certification Authority, CA)</strong>：证书颁发机构是负责将公钥绑定到特定实体（Entity，E）的机构。</li>
+<li><strong>实体</strong>：实体可以是个人、网站、路由器等，通过向CA注册其公钥，并向CA提供身份证明来确保其身份。</li>
+<li><strong>注册流程</strong>：
+<ul>
+<li>实体通过身份验证程序向CA注册其公钥。</li>
+<li>CA生成一个证书，将实体的身份与其公钥绑定在一起。</li>
+<li>证书包含了实体的公钥，并由CA使用CA的私钥进行数字签名，证明“这是实体E的公钥”。</li>
+</ul>
+</li>
+<li><strong>数字签名</strong>：
+<ul>
+<li>CA数字签名证书，确认证书的真实性和可信度。</li>
+<li>数字签名可以确保证书在传输过程中不被篡改，并且可以被其他方验证。</li>
+</ul>
+</li>
+</ul>
+<p>因此当一个A想要获取B的公钥的时候,B就会发送给A,B的证书,A使用CA的公钥来解密证书,里面包含着B的公钥和B的信息.由于CA的公钥一定是对的,并且由CA颁发的证书也记录的一定是B的公钥.</p>
+<h2 id="安全邮件">安全邮件
+</h2><h3 id="可靠性机密性">可靠性(机密性)
+</h3><p>可靠性的实现应该使用会话秘钥来加密数据,并且使用对方的公钥来加密会话私钥</p>
+<p><img src="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611203548937.png"
+	width="1438"
+	height="425"
+	srcset="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611203548937_hu_5b8cf8a183084f4a.png 480w, /huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611203548937_hu_18b1b8a4ecbf5de3.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240611203548937"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="338"
+		data-flex-basis="812px"
+	
+></p>
+<h3 id="完整性和认证">完整性和认证
+</h3><p>完整性应该对数据形成一个哈希函数摘要,使用自己的私钥签名,来证明信息是自己发送的,并且和原信息一起发送,可以验证完整性</p>
+<p><img src="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611203532291.png"
+	width="1466"
+	height="401"
+	srcset="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611203532291_hu_d4fcd34691fc1e1b.png 480w, /huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611203532291_hu_fa799dccac82290e.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240611203532291"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="365"
+		data-flex-basis="877px"
+	
+></p>
+<h3 id="可靠性完整性认证">可靠性+完整性+认证
+</h3><p><img src="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611203723133.png"
+	width="1597"
+	height="570"
+	srcset="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611203723133_hu_f2ce8c318eae6806.png 480w, /huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611203723133_hu_6b760197137ff062.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240611203723133"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="280"
+		data-flex-basis="672px"
+	
+></p>
+<h2 id="安全tcp连接传输层安全">安全TCP连接:传输层安全
+</h2><p>使用TLS协议-&gt;https</p>
+<p><strong>MAC</strong>:message authentication code:消息认证码,用于消息的认证和完整性</p>
+<p>使用一个Master Key来生成四种不同的秘钥,使用秘钥生成函数KDF(key derivation function)</p>
+<ul>
+<li>使用四种密钥：
+<ul>
+<li><strong>Kc</strong>：用于客户端到服务器端发送数据的加密密钥。</li>
+<li><strong>Mc</strong>：用于客户端到服务器端发送数据的MAC密钥。</li>
+<li><strong>Ks</strong>：用于服务器端到客户端发送数据的加密密钥。</li>
+<li><strong>Ms</strong>：用于服务器端到客户端发送数据的MAC密钥。</li>
+</ul>
+</li>
+<li>密钥通过密钥派生函数（Key Derivation Function, KDF）派生：
+<ul>
+<li>KDF接受主密钥（master secret）和可能的一些额外随机数据，用于生成新的密钥。</li>
+</ul>
+</li>
+</ul>
+<h4 id="过程">过程:
+</h4><ol>
+<li>客户端发送协议版本号、加密算法列表和不重数A到服务器端。</li>
+<li>服务端返回自己的协议版本号、加密算法选择、证书和不重数B到客户端。</li>
+<li>客户端验证服务器端的证书，并生成一个前主秘钥。客户端使用服务端的公钥（从证书中获取）加密前主秘钥，并发送给服务器端。</li>
+<li>服务端收到客户端加密的前主秘钥后，使用自己的私钥解密，获取前主秘钥。</li>
+<li>客户端和服务端根据不重数和前主秘钥计算出主密钥，并通过KDF导出四个秘钥并开始加密通信</li>
+<li>客户端发送所有的握手报文的HMAC</li>
+<li>服务端发送所有握手报文的HMAC</li>
+</ol>
+<h4 id="hmac">HMAC:
+</h4><p>HMAC（Keyed-Hash Message Authentication Code）是一种在计算机安全领域中使用的消息认证码（MAC）算法。HMAC通过在哈希函数的基础上加入一个密钥，结合消息本身进行计算，可以验证消息的完整性和真实性，防止数据被篡改。以下是HMAC的基本原理和特点：</p>
+<ol>
+<li>
+<p>基本原理：HMAC算法使用一个密钥和一个消息作为输入，通过哈希函数对它们进行公式计算得到一个消息认证码（MAC）。发送方将这个MAC与消息一起发送给接收方，接收方再使用相同的密钥和消息，通过哈希函数计算MAC并与接收到的MAC比对，从而验证消息的完整性和真实性。</p>
+</li>
+<li>
+<p>s:对称秘钥;m:信息;</p>
+<p>MAC=H(s+m).</p>
+</li>
+<li>
+<p>特点：</p>
+<ul>
+<li>HMAC算法基于哈希函数，常用的哈希函数包括MD5、SHA-1、SHA-256等。</li>
+<li>HMAC使用了密钥进行计算，对消息进行哈希运算后再进行加密处理，保证了消息的机密性。</li>
+<li>HMAC可以防止常见的攻击（如中间人攻击、伪造消息攻击等），提供了更高的安全性保障</li>
+</ul>
+</li>
+</ol>
+<h2 id="ipsec网络层安全">IPsec:网络层安全
+</h2><h3 id="两种协议">两种协议:
+</h3><p>一、AH协议（Authentication Header）：</p>
+<p>AH协议是一种用于提供IP通信认证和完整性保护的协议。其主要功能包括：</p>
+<ol>
+<li>认证：AH协议提供了对IP数据包的来源进行认证的功能，确保接收到的数据包确实来自合法的发送方。</li>
+<li>数据完整性保护：AH协议可以检测IP数据包在传输过程中是否被篡改或损坏，确保数据的完整性。</li>
+</ol>
+<p>AH协议通过在IP数据包中添加一个认证头来实现上述功能，该头包含加密的哈希值和用于验证发送方的数字签名等信息。接收方可以通过验证哈希值和数字签名来确认数据包的来源和完整性。</p>
+<p>二、ESP协议（Encapsulating Security Payload）：</p>
+<p>ESP协议是一种提供更全面的IP通信安全保护的协议，它提供了加密、认证和完整性保护等功能。其主要特点包括：</p>
+<ol>
+<li>加密：ESP协议可以对IP数据包的内容进行加密，保护数据在传输过程中的隐私。</li>
+<li>认证：ESP协议也提供了对IP数据包的来源进行认证的功能，与AH协议类似。</li>
+<li>数据完整性保护：ESP协议可以检测IP数据包在传输过程中是否被篡改或损坏。</li>
+</ol>
+<p>ESP协议通过在IP数据包中添加一个加密的有效载荷来实现上述功能，该有效载荷包含加密的数据和认证信息。发送方使用加密密钥对有效载荷进行加密，接收方使用相同的密钥进行解密，并验证数字签名和哈希值以确保数据的完整性和来源。</p>
+<h3 id="sa--security-association-安全关联">SA : Security Association 安全关联
+</h3><p>SA安全关联是一种在通信双方之间建立的规则集合，用于定义网络通信的安全属性。这些规则包括加密算法、认证方式、密钥管理等方面的约定，以确保通信双方能够安全地交换数据。</p>
+<p>在发送数据之前，发送实体和接收实体之间会建立一个安全关联（SA）。这个SA是用于定义两个实体之间通信的安全属性和参数的。简单地说，它描述了如何安全地发送和接收数据。这种关联是单工的，即从<code>发送实体到接收实体只有一个方向传输,所以一般会同时建立两条SA</code>。这意味着，在发送实体想要向接收实体发送数据时，需要确保双方都同意并遵循相同的SA来确保数据的机密性和完整性。</p>
+<p><img src="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611215136377.png"
+	width="1675"
+	height="822"
+	srcset="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611215136377_hu_5261a04ed564c380.png 480w, /huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611215136377_hu_9c47a7d35f5ac59a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240611215136377"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="203"
+		data-flex-basis="489px"
+	
+></p>
+<h3 id="分组模式">分组模式
+</h3><p><img src="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611215147860.png"
+	width="1625"
+	height="808"
+	srcset="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611215147860_hu_a6929ef4e7585312.png 480w, /huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611215147860_hu_111348e355231841.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240611215147860"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="482px"
+	
+></p>
+<h3 id="传输过程">传输过程
+</h3><ol>
+<li><strong>R1阶段</strong>:
+<ul>
+<li><strong>附加ESP尾迹到原始数据报</strong>: ESP会对原始的IP数据报进行封装。这意味着原始的IP数据报（包括其头部字段）会被保留并附加一个ESP尾迹。</li>
+<li><strong>使用SA指定的算法和密钥进行加密</strong>: 安全关联（SA）定义了一系列参数，包括加密和认证算法以及相应的密钥。在这个阶段，使用这些参数对添加了ESP尾迹的数据报进行加密。</li>
+<li><strong>在加密数据前附加ESP头部</strong>: 在加密后的数据前，会添加一个ESP头部。这个头部包含了关于加密数据的元信息。</li>
+</ul>
+</li>
+<li><strong>创建认证MAC</strong>:
+<ul>
+<li>使用SA中指定的算法和密钥，对加密后的数据进行认证，创建一个消息认证码（MAC）。MAC的目的是确保数据的完整性和真实性，确保数据在传输过程中没有被篡改。</li>
+<li><strong>将MAC形成载荷附加到数据</strong>: MAC被添加到数据报中，形成一个新的载荷部分。这样接收方可以通过MAC验证数据的完整性和真实性。</li>
+</ul>
+</li>
+<li><strong>创建新的IP头部和地址</strong>:
+<ul>
+<li>由于这是一个封装过程（例如，用于VPN或隧道通信），所以需要创建一个新的IP头部和相关的字段。这些字段通常包括新的源和目标地址（这里是隧道的端点）。这个新的IP头部和数据一起发送，形成一个新的数据报，该数据报会在网络中传输</li>
+</ul>
+</li>
+</ol>
+<h3 id="ip-sequence">IP Sequence
+</h3><p>IPsec（Internet Protocol Security）中的<code>序列号</code>（sequence numbers）是用于确保IP通信安全的重要机制。以下是关于IPsec序列号的一些详细解释：</p>
+<h3 id="对于新的安全关联sasecurity-association">对于新的安全关联（SA，Security Association）
+</h3><p>当建立一个新的安全关联时，发送方将序列号初始化为0。</p>
+<h4 id="spi">SPI
+</h4><p>SPI全称为Security Parameter Index（<code>安全参数索引</code>），在网络通信中是一个用于标识和区分不同的安全服务或安全协议的标识符。在IPsec（Internet Protocol Security）中，SPI通常用于标识IPsec中的安全关联（Security Association，SA），以便在数据包中传递给接收方，并将其与正确的安全策略和密钥相关联。</p>
+<p>SPI的作用包括以下几点：</p>
+<ol>
+<li><strong>唯一标识符</strong>：SPI的主要作用是作为<code>用于识别不同的SA的唯一标识符</code>。每个SA都有自己的SPI，这样在收到数据包时就能够根据SPI来匹配对应的SA。</li>
+<li><strong>关联安全参数</strong>：SPI与SA相关联，其中包括加密算法、认证算法、密钥信息等安全参数。接收方使用SPI确定如何处理收到的数据包，以便正确地解密和验证数据。</li>
+<li><strong>在数据包中传递</strong>：SPI通常被包含在数据包的头部或者IPsec封装的部分中。接收方接收到数据包时会检查SPI，以确定如何处理数据包中的安全信息。</li>
+</ol>
+<p>总的来说，SPI是一个重要的标识符，用于在IPsec通信中唯一标识不同的安全关联，并帮助数据包正确地被解密和验证。通过SPI的使用，可以确保IPsec通信的安全性和完整性。</p>
+<h4 id="每次在sa上发送数据报时">每次在SA上发送数据报时
+</h4><ol>
+<li><strong>发送方</strong>：
+<ul>
+<li>增加序列号计数器。</li>
+<li>将新的序列号值放入序列号字段。</li>
+</ul>
+</li>
+<li><strong>目的方</strong>：
+<ul>
+<li>检查接收到的数据包是否是重复的。</li>
+</ul>
+</li>
+</ol>
+<h4 id="目标">目标
+</h4><p>IPsec序列号的主要目标是<code>防止攻击者嗅探（sniffing）</code>并重新发送数据包（replay attack）。如果一个数据包被捕获并重新发送，由于序列号的变化，接收方可以轻松地识别出这是一个重复的数据包，从而拒绝它或采取其他适当的措施。此外，接收重复的、经过身份验证的IP数据包可能会破坏服务或导致数据不一致。</p>
+<h4 id="方法">方法
+</h4><p>目的方不跟踪所有接收到的数据包，而是使用<code>一个窗口（window）机制</code>来高效地检测重复的数据包。这个窗口通常是一个时间序列范围，接收方会检查每个到达的数据包的序列号是否在这个窗口内。如果不在窗口内，那么该数据包可能是重复的或是旧的。这样，系统可以有效地识别并处理重复的数据包，而不必检查每一个单独的数据包。这种方法的效率较高，因为不需要跟踪所有接收到的数据包。</p>
+<h3 id="数据库">数据库
+</h3><p>IPsec是一套安全协议，用于保护IP网络上的通信数据的安全性和完整性。IPsec包含两个核心组件：Security Policy Database (SPD) 和 Security Association Database (SAD)。这两者在IPsec中发挥着不同的作用，并具有各自特定的功能和重要性。以下是关于它们的详细解释：</p>
+<p><strong>Security Policy Database (SPD)：安全策略数据库</strong></p>
+<ul>
+<li><strong>策略（Policy）</strong>: 对于给定的数据报，发送者需要知道是否应该使用IPsec。这意味着在发送数据之前，系统需要根据某些规则或条件决定是否应该对该数据进行加密或验证。这些规则或条件构成了安全策略。</li>
+<li><strong>存储位置</strong>: 安全策略存储在安全策略数据库中（SPD）。</li>
+<li><strong>内容</strong>: SPD中的策略可能包含源和目的IP地址、协议号等信息，用于确定哪些数据报需要使用IPsec加密或验证。</li>
+</ul>
+<p><strong>Security Association Database (SAD)：安全关联数据库</strong></p>
+<ul>
+<li><strong>状态持有</strong>: 端点在安全关联数据库（SAD）中持有安全关联状态。这些状态描述了与特定安全关联（SA）相关的信息。</li>
+<li><strong>发送过程</strong>: 当发送IPsec数据报时，如路由器R1，会访问SAD以确定如何处理该数据报。它根据SAD中的信息来确定应该使用的加密或验证方法。</li>
+<li><strong>接收过程</strong>: 当IPsec数据报到达路由器R2时，R2会检查数据报中的序列号（SPI），然后使用SPI索引SAD，并据此处理数据报。</li>
+</ul>
+<h4 id="简单总结">简单总结：
+</h4><ul>
+<li><strong>SPD</strong>: 告诉你“<strong>要做什么</strong>”（即哪些数据报需要使用IPsec，使用哪种加密或验证方法）。</li>
+<li><strong>SAD</strong>: 告诉你“<strong>如何做</strong>”（即具体如何加密或验证数据报，包括使用的密钥、算法等信息）。</li>
+</ul>
+<p>在实际应用中，SPD和SAD协同工作，确保IP网络上的通信数据安全、可靠。通过对这两者的管理和维护，可以实现高效的网络安全保障。</p>
+<h2 id="ike">IKE
+</h2><p>IKE（Internet Key Exchange）通常指的是Internet Key Exchange协议或者IKEv系列协议（IKEv协议的主要版本是IKEv1和IKEv2），是一种在网络通信中用于<code>密钥交换</code>的协议。IKE主要用于IPSec通信，为安全通信建立和维护虚拟私有网络（VPN）的安全关联。其原理包括以下几个步骤：</p>
+<ol>
+<li>建立初始联系和标识符交换：IKE启动时，两端的IKE对等体通过交换标识符（如IP地址或其他标识符）来识别对方。在这个阶段，还可能会进行某些安全策略的检查。</li>
+<li>身份验证和协商阶段：在这个阶段，IKE对等体会进行身份验证和协商。IKE协议支持多种身份验证方法，如基于预共享密钥的验证、基于证书的验证等。此外，还会协商密钥生成算法、加密算法等参数。</li>
+<li>创建安全的网络连接和建立加密参数：完成验证后，IKE会创建一个安全的网络连接并使用安全的认证方式进行数据的加密传输。它通过基于一系列参数建立一个共享的密钥集合来实现。</li>
+</ol>
+<p>综上所述，IKE的基本原理是通过一系列协议步骤来实现安全的密钥交换和虚拟网络的安全关联建立。它通过特定的身份验证机制和安全参数协商来确保网络通信的安全性和可靠性。</p>
+<p>钥交换和虚拟网络的安全关联建立。它通过特定的身份验证机制和安全参数协商来确保网络通信的安全性和可靠性。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%A6%81%E7%82%B9/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网要点</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网计算简洁</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">传输层</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E5%BA%94%E7%94%A8%E5%B1%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">应用层</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">无线网络与移动网络</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Hu Yang
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
+
+    </body>
+</html>
