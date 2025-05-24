@@ -36,9 +36,9 @@ def process_markdown_file(filepath, article_type):
     title = filename_without_ext.replace('-', ' ').title()  # 标题处理，更友好
 
     frontmatter = f"""---
-date = '{datetime.now().strftime('%Y-%m-%dT%H:%M:%S%z')}'
-draft = false
-title = '{title}'
+date : '{datetime.now().strftime('%Y-%m-%dT%H:%M:%S%z')}'
+draft : false
+title : '{title}'
 categories:
     - {article_type}
 ---

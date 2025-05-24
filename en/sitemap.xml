@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://114514yangyi.github.io/huyang/</loc>
-    <lastmod>2025-05-23T16:22:58+08:00</lastmod>
+    <lastmod>2025-05-24T17:10:21+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -19,6 +19,9 @@
                 hreflang="en"
                 href="https://114514yangyi.github.io/huyang/"
                 />
+  </url><url>
+    <loc>https://114514yangyi.github.io/huyang/post/</loc>
+    <lastmod>2025-05-24T17:10:21+00:00</lastmod>
   </url><url>
     <loc>https://114514yangyi.github.io/huyang/categories/</loc>
     <lastmod>2025-05-23T16:22:58+08:00</lastmod>
@@ -37,9 +40,6 @@
                 hreflang="en"
                 href="https://114514yangyi.github.io/huyang/categories/"
                 />
-  </url><url>
-    <loc>https://114514yangyi.github.io/huyang/post/</loc>
-    <lastmod>2025-05-23T16:22:58+08:00</lastmod>
   </url><url>
     <loc>https://114514yangyi.github.io/huyang/categories/%E5%89%8D%E7%AB%AF/</loc>
     <lastmod>2025-05-23T16:22:58+08:00</lastmod>
@@ -336,5 +336,7 @@
                 />
   </url><url>
     <loc>https://114514yangyi.github.io/huyang/categories/%E7%BC%96%E7%A8%8B%E5%AE%9E%E8%B7%B5/</loc>
+  </url><url>
+    <loc>https://114514yangyi.github.io/huyang/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
   </url>
 </urlset>
