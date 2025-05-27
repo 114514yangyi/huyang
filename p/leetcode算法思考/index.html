@@ -375,6 +375,12 @@
         <li><a href="#为什么使用差分数组"><strong>为什么使用差分数组？🤔</strong></a></li>
       </ol>
     </li>
+    <li><a href="#图的拓扑排序">图的拓扑排序</a>
+      <ol>
+        <li><a href="#dfs-拓扑排序算法">DFS 拓扑排序算法</a></li>
+        <li><a href="#kahn-算法-基于入度">Kahn 算法 (基于入度)</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -443,7 +449,7 @@
 
 
                 <time class="article-time--reading">
-                    37 minute read
+                    41 minute read
                 </time>
             </div>
         
@@ -3972,7 +3978,406 @@ $$ S_n = (k-2)S_{n-1} + (k-1)S_{n-2} \quad (\text{对于 } n \ge 3) $$<h2 id="7-
 </ul>
 <hr>
 <p>这个源于你自身洞察的结构化方法，为你解决类似的贪心优化问题（尤其是涉及区间和动态选择的问题）提供了一个坚实的框架。关键始终在于清晰地定义局部最优选择（贪心选择）以及如何进行这种选择（通过排序或堆的优先级）。</p>
-
+<h2 id="图的拓扑排序">图的拓扑排序
+</h2><p>在什么时候需要对于一个图进行拓扑排序：</p>
+<p>求解图的某一条路径，在求解每一个节点的时候需要先处理它的子节点，图不给根节点的时候，这个时候只要优先进行拓扑排序，就能够先处理好节点之间的依赖关系，并且能够从依赖最小的节点开始按照拓扑序来进行动态规划。</p>
+<h3 id="dfs-拓扑排序算法">DFS 拓扑排序算法
+</h3><p>DFS 拓扑排序算法通过深度优先遍历图，并在回溯时将节点添加到结果列表中。这种方法得到的拓扑序列是<strong>逆拓扑序</strong>，即如果存在从 A 到 B 的边，那么在结果中 B 会出现在 A 之前。</p>
+<p><strong>1. 核心思想</strong></p>
+<ul>
+<li>对图进行深度优先遍历。</li>
+<li>使用一个 <code>visited</code> 数组来标记节点的访问状态，同时用于检测环。</li>
+<li>当一个节点的所有邻接（子）节点都已访问完毕后，将其添加到拓扑排序的结果列表中。</li>
+</ul>
+<p><strong>2. 节点状态定义</strong></p>
+<ul>
+<li><code>visited[i] = 0</code>: 节点 <code>i</code> 未被访问。</li>
+<li><code>visited[i] = 1</code>: 节点 <code>i</code> 正在被访问（位于当前 DFS 递归栈中），用于检测环。</li>
+<li><code>visited[i] = 2</code>: 节点 <code>i</code> 已被完全访问（其所有后继节点都已处理完毕）。</li>
+</ul>
+<p><strong>3. 算法步骤</strong></p>
+<ol>
+<li>
+<p><strong>初始化：</strong></p>
+<ul>
+<li><code>adj</code>：图的邻接表。</li>
+<li><code>visited</code>：大小为 <code>N</code> 的数组，所有元素初始化为 <code>0</code>。</li>
+<li><code>topological_order</code>：空列表，用于存储拓扑排序结果。</li>
+<li><code>has_cycle</code>：布尔变量，初始化为 <code>false</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>主循环：</strong></p>
+<ul>
+<li>遍历图中的每一个节点 <code>i</code> 从 <code>0</code> 到 <code>N-1</code>。</li>
+<li>如果 <code>visited[i] == 0</code>（即节点未被访问）：
+<ul>
+<li>调用 <code>dfs(i, adj, visited, topological_order, has_cycle)</code>。</li>
+<li>如果 <code>has_cycle</code> 变为 <code>true</code>，则图包含环，拓扑排序失败（返回错误或空列表）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>DFS 函数 <code>dfs(node, adj, visited, topological_order, has_cycle)</code>：</strong></p>
+<ul>
+<li>将 <code>visited[node]</code> 设置为 <code>1</code>（访问中）。</li>
+<li><strong>遍历 <code>node</code> 的所有邻接（后继）节点 <code>neighbor</code>：</strong>
+<ul>
+<li>如果 <code>has_cycle</code> 已经为 <code>true</code>，直接返回（剪枝）。</li>
+<li>如果 <code>visited[neighbor] == 1</code>：
+<ul>
+<li>发现环！将 <code>has_cycle</code> 设置为 <code>true</code>，并返回。</li>
+</ul>
+</li>
+<li>如果 <code>visited[neighbor] == 0</code>：
+<ul>
+<li>递归调用 <code>dfs(neighbor, adj, visited, topological_order, has_cycle)</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>当 <code>node</code> 的所有邻接节点都处理完毕后：
+<ul>
+<li>将 <code>visited[node]</code> 设置为 <code>2</code>（已访问）。</li>
+<li>将 <code>node</code> 添加到 <code>topological_order</code> 列表的<strong>末尾</strong>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>4. 结果</strong></p>
+<ul>
+<li>如果 <code>has_cycle</code> 为 <code>true</code>，则图不是有向无环图（DAG），无法进行拓扑排序。</li>
+<li>否则，<code>topological_order</code> 列表包含图的逆拓扑排序。如果需要正拓扑序，将该列表反转即可。</li>
+</ul>
+<hr>
+<p><strong>C++ 代码示例</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"> </span><span class="c1">// For std::reverse
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// visited 数组状态：
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 0: 未访问
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 1: 访问中（正在当前 DFS 递归栈中）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 2: 已访问（DFS 已经从该节点及其所有子节点返回）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">void</span> <span class="n">dfs_toposort</span><span class="p">(</span><span class="kt">int</span> <span class="n">node</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                      <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">adj</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                      <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">visited</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                      <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">topological_order</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                      <span class="kt">bool</span><span class="o">&amp;</span> <span class="n">has_cycle</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1">// 如果已经检测到环，直接返回，不再进行后续遍历
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">has_cycle</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 标记当前节点为“访问中”
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">visited</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 遍历当前节点的所有邻接点（后继节点）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nl">neighbor</span> <span class="p">:</span> <span class="n">adj</span><span class="p">[</span><span class="n">node</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">visited</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 发现环：如果邻接点正在访问中，说明有环
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">has_cycle</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span><span class="p">;</span> <span class="c1">// 立即返回
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">visited</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 如果邻接点未访问，则递归调用 DFS
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">dfs_toposort</span><span class="p">(</span><span class="n">neighbor</span><span class="p">,</span> <span class="n">adj</span><span class="p">,</span> <span class="n">visited</span><span class="p">,</span> <span class="n">topological_order</span><span class="p">,</span> <span class="n">has_cycle</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="n">has_cycle</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 递归调用返回后，再次检查是否发现环
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="k">return</span><span class="p">;</span> <span class="c1">// 如果发现环，直接向上返回
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 当所有邻接点都处理完毕后，将当前节点标记为“已访问”
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">visited</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 将节点加入拓扑排序结果。由于是 DFS 回溯时加入，topological_order 将是逆拓扑序。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">topological_order</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 主函数，执行拓扑排序
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">getTopologicalOrder</span><span class="p">(</span><span class="kt">int</span> <span class="n">num_nodes</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">adj</span><span class="p">(</span><span class="n">num_nodes</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">edge</span> <span class="p">:</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">adj</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]].</span><span class="n">push_back</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">visited</span><span class="p">(</span><span class="n">num_nodes</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">topological_order</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">bool</span> <span class="n">has_cycle</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 对所有未访问的节点进行 DFS，构建拓扑排序序列并检测环
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_nodes</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">visited</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">dfs_toposort</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">adj</span><span class="p">,</span> <span class="n">visited</span><span class="p">,</span> <span class="n">topological_order</span><span class="p">,</span> <span class="n">has_cycle</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="n">has_cycle</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 如果在某个 DFS 路径中发现环，则返回空列表或抛出异常
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="k">return</span> <span class="p">{};</span> <span class="c1">// 表示存在环，无法进行拓扑排序
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 得到的 topological_order 是逆拓扑序，需要反转得到正拓扑序
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">std</span><span class="o">::</span><span class="n">reverse</span><span class="p">(</span><span class="n">topological_order</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">topological_order</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">topological_order</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="kahn-算法-基于入度">Kahn 算法 (基于入度)
+</h3><p>Kahn 算法是另一种实现拓扑排序的常用方法，它基于不断移除图中入度为 0 的节点。</p>
+<p><strong>1. 核心思想</strong></p>
+<ul>
+<li>找出图中所有入度为 0 的节点（即没有前置依赖的节点）。</li>
+<li>将这些节点加入到一个队列中。</li>
+<li>从队列中取出一个节点，将其添加到拓扑排序结果中，并“移除”它，同时更新其所有邻接节点的入度。</li>
+<li>重复上述过程，直到队列为空。</li>
+</ul>
+<p><strong>2. 算法步骤</strong></p>
+<ol>
+<li>
+<p><strong>初始化：</strong></p>
+<ul>
+<li><code>adj</code>：图的邻接表。</li>
+<li><code>indegree</code>：大小为 <code>N</code> 的数组，<code>indegree[i]</code> 存储节点 <code>i</code> 的入度。</li>
+<li><code>q</code>：一个队列。</li>
+<li><code>topological_order</code>：空列表，用于存储拓扑排序结果。</li>
+</ul>
+</li>
+<li>
+<p><strong>计算所有节点的入度：</strong></p>
+<ul>
+<li>遍历图中的所有边 <code>(u, v)</code>。</li>
+<li>对于每条边，将 <code>indegree[v]</code> 加 1。</li>
+</ul>
+</li>
+<li>
+<p><strong>初始化队列：</strong></p>
+<ul>
+<li>遍历所有节点 <code>i</code> 从 <code>0</code> 到 <code>N-1</code>。</li>
+<li>如果 <code>indegree[i] == 0</code>，将节点 <code>i</code> 加入队列 <code>q</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>主循环 (BFS 过程)：</strong></p>
+<ul>
+<li>当队列 <code>q</code> 不为空时：
+<ul>
+<li>从队列 <code>q</code> 中取出队头节点 <code>u</code>。</li>
+<li>将 <code>u</code> 添加到 <code>topological_order</code> 列表的<strong>末尾</strong>。</li>
+<li><strong>遍历 <code>u</code> 的所有邻接（后继）节点 <code>v</code>：</strong>
+<ul>
+<li>将 <code>indegree[v]</code> 减 1（表示移除了 <code>u</code> 对 <code>v</code> 的依赖）。</li>
+<li>如果 <code>indegree[v]</code> 变为 <code>0</code>，则将 <code>v</code> 加入队列 <code>q</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>5. 环检测</strong></p>
+<ul>
+<li>在算法结束后，检查 <code>topological_order</code> 列表的长度。</li>
+<li>如果 <code>topological_order.size()</code> 等于图中的总节点数 <code>N</code>，则表示成功构建了拓扑排序，图中无环。</li>
+<li>如果 <code>topological_order.size()</code> 小于 <code>N</code>，则表示图中存在环，无法对所有节点进行拓扑排序。</li>
+</ul>
+<hr>
+<p><strong>C++ 代码示例</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;queue&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"> </span><span class="c1">// Not strictly needed for Kahn, but common utilities
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 获取图的拓扑排序（Kahn 算法）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">getTopologicalOrder</span><span class="p">(</span><span class="kt">int</span> <span class="n">num_nodes</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 邻接表，存储图的边
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">adj</span><span class="p">(</span><span class="n">num_nodes</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 入度数组，存储每个节点的入度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">indegree</span><span class="p">(</span><span class="n">num_nodes</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 构建图和计算入度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">edge</span> <span class="p">:</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">u</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">indegree</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">++</span><span class="p">;</span> <span class="c1">// 节点 v 的入度增加 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 拓扑排序使用的队列
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">std</span><span class="o">::</span><span class="n">queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">q</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 存储拓扑排序结果
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">topological_order</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 将所有入度为 0 的节点加入队列
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_nodes</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">indegree</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// BFS 遍历过程
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">u</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">q</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">topological_order</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">u</span><span class="p">);</span> <span class="c1">// 将当前节点加入结果
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 遍历 u 的所有邻接点 v
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nl">v</span> <span class="p">:</span> <span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">indegree</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">--</span><span class="p">;</span> <span class="c1">// 移除 u 对 v 的依赖，v 的入度减 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="k">if</span> <span class="p">(</span><span class="n">indegree</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 如果 v 的入度变为 0，则加入队列
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 环检测：如果拓扑排序结果的节点数量不等于图的总节点数量，说明存在环
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">topological_order</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="n">num_nodes</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">{};</span> <span class="c1">// 返回空列表表示存在环，无法进行拓扑排序
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">topological_order</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
 </section>
 
 

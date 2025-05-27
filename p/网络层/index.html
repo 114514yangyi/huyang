@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="网络层协议 Internet的网络架构是best-effort的网络协议,不会做任何的保证,并且没有拥塞的通知.IPV4的头部的基础长度是20字节,而IPV6的长度是40字节.\nIP协议简介: 网络-IP协议详解（报文格式、分类、NAT、子网、CIDR、抓包分析）_nat报文-CSDN博客\n在IPV4或者IPV6都要有一个信息去指示包裹在IP中的数据报文的类型\nIP数据报格式 IPv4头部字段结构： 版本（Version）（4 bits）：指定使用的IPv4协议版本，通常为IPv4，值为4。 头部长度（IHL - Internet Header Length）（4 bits）：表示IPv4头部的长度，以32位字的数量来计算，因此值为正整数，最小值为5，最大值为15（即最大长度为60字节）。 区分服务（Type of Service, ToS）（8 bits）：用于指定数据包的服务质量要求，包括优先级、延迟、吞吐量、可靠性等。 总长度（Total Length）（16 bits）：指定整个IPv4数据报的长度，包括头部和数据部分的总长度。 标识（Identification）（16 bits）：用于识别数据报的唯一性，有助于数据包的重组和重组应用（如分片）。 标志（Flags）（3 bits）：包含分片的标志信息，包括标记、不分片和更多分片。 片偏移（Fragment Offset）（13 bits）：指定数据报的片偏移，表示数据报在原始报文中的位置。 生存时间（Time to Live, TTL）（8 bits）：指定数据报在网络中最大生存时间，每经过一个路由器减一，直到为0时被丢弃。 协议（Protocol）（8 bits）：指定数据部分使用的协议，例如TCP为6，UDP为17。 头部校验和（Header Checksum）（16 bits）：用于校验IPv4头部的完整性，检测传输过程中是否发生错误。 源IP地址（Source IP Address）（32 bits）：指定数据包的源IP地址。 目的IP地址（Destination IP Address）（32 bits）：指定数据包的目的IP地址。 IPV6头信息 #IP地址变成了8个字节\n版本（Version）（4 bits）：表示使用的IPv6协议版本，值为6。 流量分类（Traffic Class）（8 bits）：类似于IPv4中的区分服务（Type of Service），用于指定不同类型的数据流，如优先级、延迟或吞吐量要求。 有效载荷长度（Payload Length）（16 bits）：指定IPv6头部后面的有效载荷（payload）的长度，包括扩展头部及数据部分的总长度。 下一个头部（Next Header）（8 bits）：指示紧随IPv6头部的下一个头部类型，类似IPv4的协议字段，确定如何解释数据包的有效载荷。 跳限制（Hop Limit）（8 bits）：类似于IPv4中的生存时间（Time to Live），指定数据包在网络中能通过的最大跳数，每经过一个路由器减一，最终为0时数据包被丢弃。 源地址（Source Address）（128 bits）：指定IPv6数据包的源IPv6地址。 目的地址（Destination Address）（128 bits）：指定IPv6数据包的目的IPv6地址。 Flow Label 标识数据流：Flow Label用于唯一标识一个数据流，帮助网络设备识别和区分不同的数据流。这对于实时传输、多媒体传输和其他需要特殊处理的数据流尤为重要。 优化路由决策：Flow Label可以帮助路由器做出更智能的路由决策，以提高数据流的传输效率和减少传输时延。通过识别Flow Label，路由器可以采取更合适的路由策略，如流级负载均衡或特定路径选择。 提高服务质量：使用Flow Label可以支持差异化服务质量（QoS），确保特定的数据流能够获得适当的带宽和延迟要求。这对于要求实时传输和延迟敏感的应用程序非常重要。 简化数据包处理：Flow Label可以帮助网络设备快速识别特定数据流，从而简化数据包的处理过程，提高网络设备的效率和性能。 从IPV4向IPV6的转换方法: 双栈:由支持IPV4/IPV6的路由器将包转换为IPV4的包,当发送给只支持IPV4的路由器的时候.\n">
+<title>网络层</title>
+
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/'>
+
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="网络层">
+<meta property='og:description' content="网络层协议 Internet的网络架构是best-effort的网络协议,不会做任何的保证,并且没有拥塞的通知.IPV4的头部的基础长度是20字节,而IPV6的长度是40字节.\nIP协议简介: 网络-IP协议详解（报文格式、分类、NAT、子网、CIDR、抓包分析）_nat报文-CSDN博客\n在IPV4或者IPV6都要有一个信息去指示包裹在IP中的数据报文的类型\nIP数据报格式 IPv4头部字段结构： 版本（Version）（4 bits）：指定使用的IPv4协议版本，通常为IPv4，值为4。 头部长度（IHL - Internet Header Length）（4 bits）：表示IPv4头部的长度，以32位字的数量来计算，因此值为正整数，最小值为5，最大值为15（即最大长度为60字节）。 区分服务（Type of Service, ToS）（8 bits）：用于指定数据包的服务质量要求，包括优先级、延迟、吞吐量、可靠性等。 总长度（Total Length）（16 bits）：指定整个IPv4数据报的长度，包括头部和数据部分的总长度。 标识（Identification）（16 bits）：用于识别数据报的唯一性，有助于数据包的重组和重组应用（如分片）。 标志（Flags）（3 bits）：包含分片的标志信息，包括标记、不分片和更多分片。 片偏移（Fragment Offset）（13 bits）：指定数据报的片偏移，表示数据报在原始报文中的位置。 生存时间（Time to Live, TTL）（8 bits）：指定数据报在网络中最大生存时间，每经过一个路由器减一，直到为0时被丢弃。 协议（Protocol）（8 bits）：指定数据部分使用的协议，例如TCP为6，UDP为17。 头部校验和（Header Checksum）（16 bits）：用于校验IPv4头部的完整性，检测传输过程中是否发生错误。 源IP地址（Source IP Address）（32 bits）：指定数据包的源IP地址。 目的IP地址（Destination IP Address）（32 bits）：指定数据包的目的IP地址。 IPV6头信息 #IP地址变成了8个字节\n版本（Version）（4 bits）：表示使用的IPv6协议版本，值为6。 流量分类（Traffic Class）（8 bits）：类似于IPv4中的区分服务（Type of Service），用于指定不同类型的数据流，如优先级、延迟或吞吐量要求。 有效载荷长度（Payload Length）（16 bits）：指定IPv6头部后面的有效载荷（payload）的长度，包括扩展头部及数据部分的总长度。 下一个头部（Next Header）（8 bits）：指示紧随IPv6头部的下一个头部类型，类似IPv4的协议字段，确定如何解释数据包的有效载荷。 跳限制（Hop Limit）（8 bits）：类似于IPv4中的生存时间（Time to Live），指定数据包在网络中能通过的最大跳数，每经过一个路由器减一，最终为0时数据包被丢弃。 源地址（Source Address）（128 bits）：指定IPv6数据包的源IPv6地址。 目的地址（Destination Address）（128 bits）：指定IPv6数据包的目的IPv6地址。 Flow Label 标识数据流：Flow Label用于唯一标识一个数据流，帮助网络设备识别和区分不同的数据流。这对于实时传输、多媒体传输和其他需要特殊处理的数据流尤为重要。 优化路由决策：Flow Label可以帮助路由器做出更智能的路由决策，以提高数据流的传输效率和减少传输时延。通过识别Flow Label，路由器可以采取更合适的路由策略，如流级负载均衡或特定路径选择。 提高服务质量：使用Flow Label可以支持差异化服务质量（QoS），确保特定的数据流能够获得适当的带宽和延迟要求。这对于要求实时传输和延迟敏感的应用程序非常重要。 简化数据包处理：Flow Label可以帮助网络设备快速识别特定数据流，从而简化数据包的处理过程，提高网络设备的效率和性能。 从IPV4向IPV6的转换方法: 双栈:由支持IPV4/IPV6的路由器将包转换为IPV4的包,当发送给只支持IPV4的路由器的时候.\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/'>
+<meta property='og:site_name' content='Hu Yang&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-24T17:10:21&#43;00:00'/><meta property='article:modified_time' content='2025-05-24T17:10:21&#43;00:00'/>
+<meta name="twitter:title" content="网络层">
+<meta name="twitter:description" content="网络层协议 Internet的网络架构是best-effort的网络协议,不会做任何的保证,并且没有拥塞的通知.IPV4的头部的基础长度是20字节,而IPV6的长度是40字节.\nIP协议简介: 网络-IP协议详解（报文格式、分类、NAT、子网、CIDR、抓包分析）_nat报文-CSDN博客\n在IPV4或者IPV6都要有一个信息去指示包裹在IP中的数据报文的类型\nIP数据报格式 IPv4头部字段结构： 版本（Version）（4 bits）：指定使用的IPv4协议版本，通常为IPv4，值为4。 头部长度（IHL - Internet Header Length）（4 bits）：表示IPv4头部的长度，以32位字的数量来计算，因此值为正整数，最小值为5，最大值为15（即最大长度为60字节）。 区分服务（Type of Service, ToS）（8 bits）：用于指定数据包的服务质量要求，包括优先级、延迟、吞吐量、可靠性等。 总长度（Total Length）（16 bits）：指定整个IPv4数据报的长度，包括头部和数据部分的总长度。 标识（Identification）（16 bits）：用于识别数据报的唯一性，有助于数据包的重组和重组应用（如分片）。 标志（Flags）（3 bits）：包含分片的标志信息，包括标记、不分片和更多分片。 片偏移（Fragment Offset）（13 bits）：指定数据报的片偏移，表示数据报在原始报文中的位置。 生存时间（Time to Live, TTL）（8 bits）：指定数据报在网络中最大生存时间，每经过一个路由器减一，直到为0时被丢弃。 协议（Protocol）（8 bits）：指定数据部分使用的协议，例如TCP为6，UDP为17。 头部校验和（Header Checksum）（16 bits）：用于校验IPv4头部的完整性，检测传输过程中是否发生错误。 源IP地址（Source IP Address）（32 bits）：指定数据包的源IP地址。 目的IP地址（Destination IP Address）（32 bits）：指定数据包的目的IP地址。 IPV6头信息 #IP地址变成了8个字节\n版本（Version）（4 bits）：表示使用的IPv6协议版本，值为6。 流量分类（Traffic Class）（8 bits）：类似于IPv4中的区分服务（Type of Service），用于指定不同类型的数据流，如优先级、延迟或吞吐量要求。 有效载荷长度（Payload Length）（16 bits）：指定IPv6头部后面的有效载荷（payload）的长度，包括扩展头部及数据部分的总长度。 下一个头部（Next Header）（8 bits）：指示紧随IPv6头部的下一个头部类型，类似IPv4的协议字段，确定如何解释数据包的有效载荷。 跳限制（Hop Limit）（8 bits）：类似于IPv4中的生存时间（Time to Live），指定数据包在网络中能通过的最大跳数，每经过一个路由器减一，最终为0时数据包被丢弃。 源地址（Source Address）（128 bits）：指定IPv6数据包的源IPv6地址。 目的地址（Destination Address）（128 bits）：指定IPv6数据包的目的IPv6地址。 Flow Label 标识数据流：Flow Label用于唯一标识一个数据流，帮助网络设备识别和区分不同的数据流。这对于实时传输、多媒体传输和其他需要特殊处理的数据流尤为重要。 优化路由决策：Flow Label可以帮助路由器做出更智能的路由决策，以提高数据流的传输效率和减少传输时延。通过识别Flow Label，路由器可以采取更合适的路由策略，如流级负载均衡或特定路径选择。 提高服务质量：使用Flow Label可以支持差异化服务质量（QoS），确保特定的数据流能够获得适当的带宽和延迟要求。这对于要求实时传输和延迟敏感的应用程序非常重要。 简化数据包处理：Flow Label可以帮助网络设备快速识别特定数据流，从而简化数据包的处理过程，提高网络设备的效率和性能。 从IPV4向IPV6的转换方法: 双栈:由支持IPV4/IPV6的路由器将包转换为IPV4的包,当发送给只支持IPV4的路由器的时候.\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/huyang/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/huyang/img/logo-transparent_hu_2593eda3cf734d42.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/huyang">Hu Yang&#39;s Blog</a></h1>
+            <h2 class="site-description">Blog</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://114514yangyi.github.io/huyang/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='2416572689@qq.com'
+                        target="_blank"
+                        title="QQ"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/huyang/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#ip协议简介">IP协议简介:</a>
+      <ol>
+        <li><a href="#ip数据报格式">IP数据报格式</a>
+          <ol>
+            <li><a href="#ipv4头部字段结构">IPv4头部字段结构：</a></li>
+            <li><a href="#ipv6头信息">IPV6头信息</a></li>
+            <li><a href="#从ipv4向ipv6的转换方法">从IPV4向IPV6的转换方法:</a></li>
+          </ol>
+        </li>
+        <li><a href="#ip网络格式">IP网络格式</a>
+          <ol>
+            <li><a href="#class-a">class A:</a></li>
+            <li><a href="#class-b">class B:</a></li>
+            <li><a href="#class-c">class C:</a></li>
+            <li><a href="#子网">子网</a></li>
+            <li><a href="#cidr无类别域间路由选择">CIDR:无类别域间路由选择</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#主机是怎么获得自己的ip地址的">主机是怎么获得自己的IP地址的:</a></li>
+    <li><a href="#natnetwork-address-translation">NAT:Network Address Translation:</a></li>
+    <li><a href="#泛化转发匹配操作">泛化转发:匹配+操作:</a></li>
+    <li><a href="#中间盒">中间盒</a></li>
+    <li><a href="#数据平面">数据平面:</a>
+      <ol>
+        <li><a href="#input-port">input port:</a></li>
+        <li><a href="#output-port">output port:</a></li>
+        <li><a href="#switch-fabric">switch fabric:</a></li>
+        <li><a href="#路由选择处理器">路由选择处理器:</a></li>
+      </ol>
+    </li>
+    <li><a href="#控制平面">控制平面:</a>
+      <ol>
+        <li><a href="#路由器间的控制平面">路由器间的控制平面:</a>
+          <ol>
+            <li><a href="#1全局算法每一个路由器都知道关于网络上所有的信息">1.全局算法(每一个路由器都知道关于网络上所有的信息)</a></li>
+            <li><a href="#2分布式的算法每一个路由器只知道自己的信息和邻居的信息">2.分布式的算法(每一个路由器只知道自己的信息和邻居的信息)</a></li>
+          </ol>
+        </li>
+        <li><a href="#snd软件定义的控制平面">SND:软件定义的控制平面:</a>
+          <ol>
+            <li><a href="#sdn的特征">SDN的特征</a></li>
+          </ol>
+        </li>
+        <li><a href="#ospf开放最短路径优先">OSPF(开放最短路径优先):</a></li>
+        <li><a href="#bgpborder-gateway-protocol">BGP(Border Gateway Protocol):</a>
+          <ol>
+            <li><a href="#选择最好的路由">选择最好的路由:</a></li>
+          </ol>
+        </li>
+        <li><a href="#icmpinternet-control-message-protocol">ICMP:internet control message protocol</a></li>
+        <li><a href="#网络管理">网络管理:</a>
+          <ol>
+            <li><a href="#snmp">SNMP</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/huyang/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="background-color: #2a9d8f; color: #fff;">
+                计算机网络
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/">网络层</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 24, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="网络层协议">网络层协议
+</h1><p>Internet的网络架构是best-effort的网络协议,不会做任何的保证,并且没有拥塞的通知.IPV4的头部的基础长度是20字节,而IPV6的长度是40字节.</p>
+<h2 id="ip协议简介">IP协议简介:
+</h2><p><a class="link" href="https://blog.csdn.net/lady_killer9/article/details/113482131"  target="_blank" rel="noopener"
+    >网络-IP协议详解（报文格式、分类、NAT、子网、CIDR、抓包分析）_nat报文-CSDN博客</a></p>
+<p>在IPV4或者IPV6都要有一个信息去指示包裹在IP中的数据报文的类型</p>
+<h3 id="ip数据报格式">IP数据报格式
+</h3><p><img src="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170902702.png"
+	width="1452"
+	height="694"
+	srcset="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170902702_hu_76ae64fc52b0e81c.png 480w, /huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170902702_hu_df119fff0d8c677b.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240610170902702"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="209"
+		data-flex-basis="502px"
+	
+></p>
+<h4 id="ipv4头部字段结构">IPv4头部字段结构：
+</h4><ul>
+<li><strong>版本（Version）</strong>（4 bits）：指定使用的IPv4协议版本，通常为IPv4，值为4。</li>
+<li><strong>头部长度（IHL - Internet Header Length）</strong>（4 bits）：表示IPv4头部的长度，以32位字的数量来计算，因此值为正整数，最小值为5，最大值为15（即最大长度为60字节）。</li>
+<li><strong>区分服务（Type of Service, ToS）</strong>（8 bits）：用于指定数据包的服务质量要求，包括优先级、延迟、吞吐量、可靠性等。</li>
+<li><strong>总长度（Total Length）</strong>（16 bits）：指定整个IPv4数据报的长度，包括头部和数据部分的总长度。</li>
+<li><strong>标识（Identification）</strong>（16 bits）：用于识别数据报的唯一性，有助于数据包的重组和重组应用（如分片）。</li>
+<li><strong>标志（Flags）</strong>（3 bits）：包含分片的标志信息，包括标记、不分片和更多分片。</li>
+<li><strong>片偏移（Fragment Offset）</strong>（13 bits）：指定数据报的片偏移，表示数据报在原始报文中的位置。</li>
+<li><strong>生存时间（Time to Live, TTL）</strong>（8 bits）：指定数据报在网络中最大生存时间，每经过一个路由器减一，直到为0时被丢弃。</li>
+<li><strong>协议（Protocol）</strong>（8 bits）：指定数据部分使用的协议，例如TCP为6，UDP为17。</li>
+<li><strong>头部校验和（Header Checksum）</strong>（16 bits）：用于校验IPv4头部的完整性，检测传输过程中是否发生错误。</li>
+<li><strong>源IP地址（Source IP Address）</strong>（32 bits）：指定数据包的源IP地址。</li>
+<li><strong>目的IP地址（Destination IP Address）</strong>（32 bits）：指定数据包的目的IP地址。</li>
+</ul>
+<h4 id="ipv6头信息">IPV6头信息
+</h4><p><img src="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610172931459.png"
+	width="712"
+	height="753"
+	srcset="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610172931459_hu_52666f5dc3762373.png 480w, /huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610172931459_hu_d5720e54ca18656f.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240610172931459"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="94"
+		data-flex-basis="226px"
+	
+></p>
+<p>#IP地址变成了8个字节</p>
+<ul>
+<li><strong>版本（Version）</strong>（4 bits）：表示使用的IPv6协议版本，值为6。</li>
+<li><strong>流量分类（Traffic Class）</strong>（8 bits）：类似于IPv4中的区分服务（Type of Service），用于指定不同类型的数据流，如优先级、延迟或吞吐量要求。</li>
+<li><strong>有效载荷长度（Payload Length）</strong>（16 bits）：指定IPv6头部后面的有效载荷（payload）的长度，包括扩展头部及数据部分的总长度。</li>
+<li><strong>下一个头部（Next Header）</strong>（8 bits）：指示紧随IPv6头部的下一个头部类型，类似IPv4的协议字段，确定如何解释数据包的有效载荷。</li>
+<li><strong>跳限制（Hop Limit）</strong>（8 bits）：类似于IPv4中的生存时间（Time to Live），指定数据包在网络中能通过的最大跳数，每经过一个路由器减一，最终为0时数据包被丢弃。</li>
+<li><strong>源地址（Source Address）</strong>（128 bits）：指定IPv6数据包的源IPv6地址。</li>
+<li><strong>目的地址（Destination Address）</strong>（128 bits）：指定IPv6数据包的目的IPv6地址。</li>
+<li><strong>Flow Label</strong>
+<ol>
+<li><strong>标识数据流</strong>：Flow Label用于唯一标识一个数据流，帮助网络设备识别和区分不同的数据流。这对于实时传输、多媒体传输和其他需要特殊处理的数据流尤为重要。</li>
+<li><strong>优化路由决策</strong>：Flow Label可以帮助路由器做出更智能的路由决策，以提高数据流的传输效率和减少传输时延。通过识别Flow Label，路由器可以采取更合适的路由策略，如流级负载均衡或特定路径选择。</li>
+<li><strong>提高服务质量</strong>：使用Flow Label可以支持差异化服务质量（QoS），确保特定的数据流能够获得适当的带宽和延迟要求。这对于要求实时传输和延迟敏感的应用程序非常重要。</li>
+<li><strong>简化数据包处理</strong>：Flow Label可以帮助网络设备快速识别特定数据流，从而简化数据包的处理过程，提高网络设备的效率和性能。</li>
+</ol>
+</li>
+</ul>
+<h4 id="从ipv4向ipv6的转换方法">从IPV4向IPV6的转换方法:
+</h4><ol>
+<li>
+<p>双栈:由支持IPV4/IPV6的路由器将包转换为IPV4的包,当发送给只支持IPV4的路由器的时候.</p>
+</li>
+<li>
+<p>隧道技术:将IPV6的头部信息包裹在IPV4中来传输给只支持IPV4的路由器设备.</p>
+</li>
+</ol>
+<h3 id="ip网络格式">IP网络格式
+</h3><p><img src="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529120122482.png"
+	width="968"
+	height="552"
+	srcset="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529120122482_hu_a788b7c2d0836a94.png 480w, /huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529120122482_hu_a739d7f43ca9deff.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240529120122482"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="420px"
+	
+></p>
+<p>全1代表着广播,全0代表着自己</p>
+<h4 id="class-a">class A:
+</h4><p><img src="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529120738430.png"
+	width="1094"
+	height="295"
+	srcset="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529120738430_hu_84268ed1a1d17835.png 480w, /huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529120738430_hu_eebad524001ac688.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240529120738430"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="370"
+		data-flex-basis="890px"
+	
+></p>
+<p>可以使用的主机数量为$(2^7-2)\times(2^{24}-2)$​.</p>
+<h4 id="class-b">class B:
+</h4><p>总共有$(2^{14})(2^{16}-2)$,因为主机的id不能够是全1或者是全0.</p>
+<h4 id="class-c">class C:
+</h4><p>同样的是子网的数量可以随便取,但是主机的数量要减去2.为$(2^{21})(2^{8}-2)$​.</p>
+<h4 id="子网">子网
+</h4><p>为解决网络地址不足的问题，IPv4引入了子网划分的概念，使主机地址部分被划分为子网号和主机号，通过子网掩码表示哪些位属于子网号，哪些位属于主机号。这种划分带来以下好处：</p>
+<ol>
+<li><strong>更灵活的地址分配</strong>：将每个局域网分配一个子网号，使得在特定网络内部更灵活地管理和分配IP地址。</li>
+<li><strong>本地路由器在子网网络内部路由</strong>：局域网内的路由器可以直接在子网内进行路由，管理子网内部的数据流量，提高网络性能和安全性。</li>
+<li><strong>子网对外看起来像单个网络</strong>：对外部网络而言，划分的子网会像单个网络一样呈现，从而简化网络的结构，减少增长的网络号和路由复杂性对整个互联网造成的影响。</li>
+</ol>
+<p>通过子网划分，IPv4网络可以更好地应对网络地址空间不足的问题，提高网络管理的效率和灵活性。同时，子网划分能够在全球互联网中提供一种有效的方式来处理与网络增长和复杂性增加相关的挑战，为网络的可扩展性和可管理性提供支持。</p>
+<h4 id="cidr无类别域间路由选择">CIDR:无类别域间路由选择
+</h4><p>表示方法:10.217.112.0/20</p>
+<hr>
+<h2 id="主机是怎么获得自己的ip地址的">主机是怎么获得自己的IP地址的:
+</h2><p><strong>DHCP: Dynamic Host Configuration Protocol</strong>:应用层的协议</p>
+<p><img src="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529122331506.png"
+	width="918"
+	height="494"
+	srcset="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529122331506_hu_f326ef5e2d0c0b3.png 480w, /huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529122331506_hu_8e1feac05b7ceaae.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240529122331506"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="185"
+		data-flex-basis="445px"
+	
+></p>
+<p>Dynamic Host Configuration Protocol (DHCP)是一种网络协议，用于自动分配IP地址和其他网络配置给主机。下面是DHCP的工作过程概述：</p>
+<ol>
+<li><strong>主机广播 DHCP Discover 消息（可选）</strong>：
+<ul>
+<li>当主机加入网络时（如启动时或更换网络时），它可以广播一个DHCP Discover消息，以寻找可用的DHCP服务器。</li>
+</ul>
+</li>
+<li><strong>DHCP服务器响应 DHCP Offer 消息（可选）</strong>：
+<ul>
+<li>DHCP服务器收到Discover消息后，可以向主机发送一个DHCP Offer消息，提供可用的IP地址、子网掩码、网关等配置信息。</li>
+</ul>
+</li>
+<li><strong>主机请求IP地址：发送 DHCP Request 消息</strong>：
+<ul>
+<li>主机在接收到DHCP Offer后，选择其中一个提供的IP地址，并向DHCP服务器发送一个DHCP Request消息，请求分配该IP地址。</li>
+</ul>
+</li>
+<li><strong>DHCP服务器发送地址：发送 DHCP Ack 消息</strong>：
+<ul>
+<li>DHCP服务器收到主机的Request消息后，确认IP地址的分配情况，然后发送一个DHCP Ack消息给主机，正式分配该IP地址并包含其他网络配置信息。</li>
+</ul>
+</li>
+</ol>
+<h2 id="natnetwork-address-translation">NAT:Network Address Translation:
+</h2><ul>
+<li>将内网的地址映射到外网的地址,可以是静态的IP映射,也可能是从一系列的IP池中随机选择一个IP进行映射.可以起到防火墙的作用,或者是隔离内网的变化.这种映射可以是单一的IP地址的映射也可以是将IP和port的键值对的映射.</li>
+<li>使用10.0.0.0/24的同样的子网内网地址</li>
+<li>在外界看来就是一个拥有一个地址或者一系列地址的NAT转换主机.隐藏了内部网络的细节</li>
+<li>使用一张NAT转换表,将相应的<code>外界IP地址和端口唯一映射到一个内网的IP地址和端口</code></li>
+<li></li>
+</ul>
+<h2 id="泛化转发匹配操作">泛化转发:匹配+操作:
+</h2><p>\泛化转发：简单的数据包处理规则,使用OpenFlow协议</p>
+<p><img src="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610201843709.png"
+	width="361"
+	height="202"
+	srcset="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610201843709_hu_5d6e958ca61068e6.png 480w, /huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610201843709_hu_68b1972f9a32eeea.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240610201843709"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="178"
+		data-flex-basis="428px"
+	
+></p>
+<ul>
+<li>– 匹配：数据包头字段中的模式值-&gt;会匹配头信息中的<code>链路层,网络层,传输层</code>的信息.</li>
+<li>– 动作：对匹配的数据包进行操作：丢弃、转发、修改匹配的数据包或将匹配的数据包发送至控制器</li>
+<li>– 优先级：消除重叠模式</li>
+<li>– 计数器：字节数和数据包数</li>
+<li>可以根据链路层帧,网络层的数据报,传输层的报文段来进行匹配操作</li>
+</ul>
+<h2 id="中间盒">中间盒
+</h2><p>除了路由器之外的其他的网络层设备:</p>
+<ol>
+<li><strong>防火墙（Firewall）</strong>：
+<ul>
+<li>防火墙是网络安全的重要组成部分，用于监控和控制进出网络的流量。它可以根据预设的规则阻止恶意流量并确保网络安全。</li>
+</ul>
+</li>
+<li><strong>负载均衡器（Load Balancer）</strong>：
+<ul>
+<li>负载均衡器用于在多个服务器之间分配传入流量，以确保各个服务器都能够有效处理请求并提高整体性能和可靠性。</li>
+</ul>
+</li>
+<li><strong>代理服务器（Proxy Server）</strong>：
+<ul>
+<li>代理服务器充当客户端和服务器之间的中介，可用于过滤内容、加速访问、提供匿名性等功能。</li>
+</ul>
+</li>
+<li><strong>NAT盒</strong>:
+<ul>
+<li>NAT用于在私有网络和公共网络之间进行地址转换，有效地隐藏内部网络的真实IP地址，同时允许多个主机共享同一个公共IP地址，从而解决IPv4地址不足的问题。</li>
+</ul>
+</li>
+</ol>
+<h2 id="数据平面">数据平面:
+</h2><p><code>在router的内部进行的算法,转发</code></p>
+<p>使用最长前缀匹配的原则</p>
+<p><img src="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610165559815.png"
+	width="1043"
+	height="612"
+	srcset="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610165559815_hu_e8b14b2799cd455b.png 480w, /huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610165559815_hu_19aa51df39e6b773.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240610165559815"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="170"
+		data-flex-basis="409px"
+	
+></p>
+<h3 id="input-port">input port:
+</h3><p>会在端口前面进行链路层的<code>比特差错</code>的检测</p>
+<p>使用排队的队列缓冲接受的包,但是可能会发生Head-of-the-Line (HOL) blocking的情况,由于在队列的前端的包在等待着同一个switch fabric的转发,所以导致在队列后面的包不能够提前进行转发.</p>
+<ul>
+<li>更新数据报的头信息</li>
+<li>查找相应的destPort</li>
+</ul>
+<h3 id="output-port">output port:
+</h3><p>会将输入的package进行分类,根据每一个包的优先级,应该考虑但队列满的时候应该让哪些包进入队列,而丢弃哪些包.</p>
+<ul>
+<li>
+<p>FIFO router</p>
+<p><img src="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170621145.png"
+	width="616"
+	height="278"
+	srcset="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170621145_hu_a8bf662416c0d15c.png 480w, /huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170621145_hu_639b200972688129.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240610170621145"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="221"
+		data-flex-basis="531px"
+	
+></p>
+</li>
+<li>
+<p>Priority scheduling:将每一个包进行优先级的划分,总是先发送有=优先级高的包,直到优先级高的队列里面没有任何包为止.</p>
+<p><img src="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170632548.png"
+	width="704"
+	height="327"
+	srcset="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170632548_hu_3b01501c76af812f.png 480w, /huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170632548_hu_d54171c884df68f2.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240610170632548"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="215"
+		data-flex-basis="516px"
+	
+></p>
+</li>
+<li>
+<p>Round Robin (RR) scheduling:循环着发送每一个队列的数据包.</p>
+<p><img src="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170641482.png"
+	width="920"
+	height="477"
+	srcset="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170641482_hu_c416bf9b1a341ed8.png 480w, /huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170641482_hu_6ac6e35fedd8c4d3.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240610170641482"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="192"
+		data-flex-basis="462px"
+	
+></p>
+</li>
+<li>
+<p>Weighted Fair Queuing (WFQ):每一次循环发送队列中的包的数量是有权重的.</p>
+<p><img src="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170650448.png"
+	width="905"
+	height="429"
+	srcset="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170650448_hu_38396937c3500b60.png 480w, /huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170650448_hu_bd277c7441150f26.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240610170650448"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="210"
+		data-flex-basis="506px"
+	
+></p>
+</li>
+</ul>
+<h3 id="switch-fabric">switch fabric:
+</h3><ul>
+<li>
+<p>使用内存实现
+将数据放进特定的地址空间,而output port从memery中找到相应的数据</p>
+</li>
+<li>
+<p>使用总线实现
+每次使用总线将一对的输入输出的端口相连</p>
+</li>
+<li>
+<p>使用互联网络实现
+每一个相交的点都可以进行开关</p>
+</li>
+</ul>
+<h3 id="路由选择处理器">路由选择处理器:
+</h3><ul>
+<li>使用destIP的最长前缀匹配</li>
+<li>使用OpenFlow的泛化转发</li>
+</ul>
+<h2 id="控制平面">控制平面:
+</h2><p><code>决定一个数据包应该在整个网络中如何传输,从起点是如何传输到终点的.</code></p>
+<h3 id="路由器间的控制平面">路由器间的控制平面:
+</h3><h4 id="1全局算法每一个路由器都知道关于网络上所有的信息">1.全局算法(每一个路由器都知道关于网络上所有的信息)
+</h4><p>Dijkstra算法:</p>
+<p>下面是一个简单的Dijkstra（迪杰斯特拉）最短路径算法的伪代码实现，用于找到从起点到其余各顶点的最短路径：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">Dijkstra(Graph, source):
+</span></span><span class="line"><span class="cl">1. 初始化集合distances，用于存储每个顶点到起点的最短距离，初始化为无穷大(INF)。
+</span></span><span class="line"><span class="cl">2. 初始化集合visited，用于标记已经找到最短路径的顶点，初始时为空。
+</span></span><span class="line"><span class="cl">3. 将源顶点的距离设置为0，表示源顶点到自身的距离为0。
+</span></span><span class="line"><span class="cl">4. while 未访问完所有顶点:
+</span></span><span class="line"><span class="cl">   a. 选取未访问过的距禓源顶点最近的顶点u，将其标记为visited。
+</span></span><span class="line"><span class="cl">   b. for 每个与顶点u相邻的顶点v:
+</span></span><span class="line"><span class="cl">      i. 计算从源顶点经过u到v的距离d。
+</span></span><span class="line"><span class="cl">      ii. 如果d &lt; distances[v]，更新distances[v]为d。
+</span></span><span class="line"><span class="cl">5. 返回distances。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="2分布式的算法每一个路由器只知道自己的信息和邻居的信息">2.分布式的算法(每一个路由器只知道自己的信息和邻居的信息)
+</h4><ol>
+<li>每一个路由器间自己的对于每一个点的最短向量告诉邻居</li>
+<li>假如一个路由器u发现了有邻居发送的cost向量:$DV_u(x)&gt;w(u,v)+DV_v(x)$,则更新自己的DV值为最小的,并且修改转发表让到x的packet走通向v的端口.假如自己的转发表发生了变动,则将自己的cost向量也发送给邻居.</li>
+<li>每一个路由器分布式地更新数据,直到最终的cost向量不再发生变化.</li>
+</ol>
+<p>效应:</p>
+<p>好的消息(链路的状态变好)传播的快,但是坏消息(链路上面的cost增大)传播地慢.</p>
+<p><img src="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610203724832.png"
+	width="1536"
+	height="653"
+	srcset="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610203724832_hu_5f7d6dcd1a46654f.png 480w, /huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610203724832_hu_9c4ba39344625a26.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240610203724832"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="235"
+		data-flex-basis="564px"
+	
+></p>
+<p><img src="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610203734381.png"
+	width="1463"
+	height="699"
+	srcset="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610203734381_hu_25675deece0154b4.png 480w, /huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610203734381_hu_42d5d65aafa349f6.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240610203734381"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="209"
+		data-flex-basis="502px"
+	
+></p>
+<h3 id="snd软件定义的控制平面">SND:软件定义的控制平面:
+</h3><p>使用一个远程的软件定义的服务器去计算每一个路由器的转发表</p>
+<p>转发表基于OpenFlow API,并且可以根据流标签来进行负载均衡</p>
+<h4 id="sdn的特征">SDN的特征
+</h4><ol>
+<li>基于流的转发</li>
+<li>数据平面与控制平面的分离</li>
+<li>网络控制能力</li>
+<li>可编程的网络</li>
+</ol>
+<p>优点:</p>
+<ul>
+<li>可以更加方便管理,更多的灵活性;</li>
+<li>可以编程的转发表,由于传统的路径固定不能实现负载均衡</li>
+<li>可以将控制平面的实现公开</li>
+</ul>
+<p>结构:</p>
+<p><img src="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610212026918.png"
+	width="639"
+	height="801"
+	srcset="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610212026918_hu_659eb245f412ee37.png 480w, /huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610212026918_hu_5a2ac4c2bd250645.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240610212026918"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="79"
+		data-flex-basis="191px"
+	
+></p>
+<ol>
+<li>最底层**:(数据平面交换机)**
+<ul>
+<li>它们是快速、简单的商品化交换机，能够高效处理数据转发任务。</li>
+<li>这些交换机的流表（转发表）是在控制器监督下计算并安装的。</li>
+<li>它们提供基于表格的交换机控制的API，比如OpenFlow，该API定义了可控制和不可控制的内容。</li>
+<li>数据平面交换机使用与控制器通信的协议（例如OpenFlow），实现与控制器的通信，从而实现网络的集中化控制</li>
+<li>使用广义转发的OpenFlow协议,并且抽象出API提供给上层的SDN Controller使用,和Controller进行交互</li>
+</ul>
+</li>
+<li>中层:<strong>SDN controller (network OS)</strong>
+<ul>
+<li>维护<code>网络状态信息</code>，持续跟踪网络中各个设备的状态和信息。</li>
+<li>通过北向API与<code>上层的网络控制应用程序进行交互</code>，<code>接收和处理来自应用层的指令和需求。</code></li>
+<li>通过南向API与<code>下层的网络交换机进行交互</code>，向网络设备下发配置命令和路由信息。</li>
+<li>通常以分布式系统的形式实现，以确保性能、可扩展性、容错性和稳健性。</li>
+</ul>
+</li>
+<li>上层:<strong>network-control apps</strong>
+<ul>
+<li>实现控制功能：利用SDN控制器提供的低层服务和API，执行各种控制功能，如流量管理、策略实施等。</li>
+<li>解耦化：这些控制功能可以由第三方提供，与路由器供应商或SDN控制器本身分离，使得控制功能的提供更加灵活和可定制化。</li>
+</ul>
+</li>
+</ol>
+<h3 id="ospf开放最短路径优先">OSPF(开放最短路径优先):
+</h3><ol>
+<li>将一片区域的Router归纳与于一个autonomous systems.</li>
+<li>每一个路由器都知道整个自治系统拓扑图,一次来确定由自己到AS中的所有的节点的最短路径</li>
+<li>OSPF是link-state的协议,使用dijkstra的算法.</li>
+<li>OSPF只在每一个区域中和每一个骨干区域中内部传播,这个是<code>层次化</code>的表现.</li>
+</ol>
+<h3 id="bgpborder-gateway-protocol">BGP(Border Gateway Protocol):
+</h3><p>inter:告诉其他的AS他的终点网络的可达性;</p>
+<p>intra:告诉在同一个AS中的路由器自己的可达性;</p>
+<p>BGP链接是<code>半永久的TCP连接</code></p>
+<p>包含的信息:</p>
+<ul>
+<li>AS_PATH:经过的AS的路径</li>
+<li>next-hop:是到达发布更新消息的AS的<code>边界路由器的IP地址</code></li>
+</ul>
+<p>是以<code>策略</code>为基础的路由,每一个gateway路由器使用import 策略来接受路径,而根据AS的策略决定是否广播路径.</p>
+<ol>
+<li>
+<p><strong>iBGP-&gt;Intra-ISP (Intra-AS)Routing:</strong></p>
+<ol>
+<li>网关路由器在接收到其他的AS的子网可达的信息的时候,会<code>将这种可达的信息传递给内部的AS中的所有的路由器</code></li>
+</ol>
+</li>
+<li>
+<p><strong>eBGP-&gt;Inter-AS:</strong></p>
+<ol>
+<li>网关路由器是AS的边界</li>
+<li><code>将自身网络的子网可达性通知给相邻的AS的网关路由器</code></li>
+<li>一个网关路由器在接受到了来自同一个子网的不同的AS路径会根据自己的算法选择一个</li>
+</ol>
+</li>
+</ol>
+<h4 id="选择最好的路由">选择最好的路由:
+</h4><ol>
+<li>热土豆路由:在内部的路由器不考虑AS间的路径开销,只是单纯地想要将发往其他AS的packet<code>尽快发送到网关路由器.</code></li>
+<li>根据<code>本地设置的偏好值</code>来确定当多个通往相同的子网的路径的时候选择将哪一个条目来进行保存在转发表中</li>
+<li>AS可以设置是否要将由其他AS传递过来的可达状态继续传递下去</li>
+<li>最短路径决定</li>
+</ol>
+<h3 id="icmpinternet-control-message-protocol">ICMP:internet control message protocol
+</h3><ol>
+<li><code>用于主机和路由器交流网络状态信息的协议</code>,即是否可达,是否有错误</li>
+<li>ICMP是分装在IP协议中的</li>
+<li>拥有一个type,code,和8字节的错误原因</li>
+</ol>
+<p>实现路由跟踪:</p>
+<p>​	source设置一个合适的ttl=n,当这个发送的数据包经过了第n个路由器的时候,会被丢弃并且这个路由器会向source发送一个ICMP的状态包,记录着自己的信息,而source可以等待这个ICMP的包,用于计算RTT;假如这个UDP的数据包到达了目标的主机就会直接返回一个ICMP信息,表示自己是可达的.</p>
+<h3 id="网络管理">网络管理:
+</h3><p>网络管理的关键设备:</p>
+<ol>
+<li>管理服务器</li>
+<li>被管理设备</li>
+<li>数据</li>
+<li>网络管理协议</li>
+</ol>
+<h4 id="snmp">SNMP
+</h4><p>SNMP（Simple Network Management Protocol，简单网络管理协议）是一种<code>管理服务器和代管理服务器执行的代理之间传递网络管理信息报文的协议</code></p>
+<h5 id="功能和工作原理">功能和工作原理：
+</h5><ol>
+<li><strong>功能</strong>：
+<ul>
+<li>SNMP允许网络管理系统（NMS）通过网络与SNMP代理交互，以监视设备状态、配置设备参数、远程管理和故障排除等。它提供了一种标准化的管理框架，使得不同厂商生产的设备可以方便地与管理系统集成。</li>
+</ul>
+</li>
+<li><strong>工作原理</strong>：
+<ul>
+<li>SNMP基于客户端-服务器模型，包括三个主要组件：
+<ul>
+<li><strong>管理系统</strong>：负责监控和管理网络设备。</li>
+<li><strong>代理</strong>（Agent）：安装在网络设备上，负责收集设备状态信息并向管理系统提供数据。</li>
+<li><strong>MIB</strong>（Management Information Base）：包含设备的管理信息数据库，管理系统通过查询MIB获取设备信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h5 id="snmp消息类型">SNMP消息类型：
+</h5><ol>
+<li><strong>Get Request</strong>：管理系统向代理请求特定参数值。</li>
+<li><strong>Get Response</strong>：代理响应Get请求，返回参数值。</li>
+<li><strong>Set Request</strong>：管理系统向代理发送设置参数值的请求。</li>
+<li><strong>Trap</strong>：代理向管理系统主动发送警报消息。</li>
+</ol>
+<p>管理者使用SNMP(Simple Network Management Protocol)来获取设备信息(MIB)</p>
+<p>网络配置协议:NETCONF 使用RFC(remote procedure call),格式为xml,是一种配置的语言,可以使用yang这种编程语言来编写.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网安全</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%A6%81%E7%82%B9/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网要点</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网计算简洁</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">传输层</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E5%BA%94%E7%94%A8%E5%B1%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">应用层</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Hu Yang
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
+
+    </body>
+</html>

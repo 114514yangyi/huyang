@@ -7,7 +7,560 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Hu Yang</copyright>
-        <lastBuildDate>Tue, 20 May 2025 11:54:10 +0800</lastBuildDate><atom:link href="https://114514yangyi.github.io/huyang/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 24 May 2025 17:10:21 +0000</lastBuildDate><atom:link href="https://114514yangyi.github.io/huyang/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>网络层</title>
+        <link>https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/</link>
+        <pubDate>Sat, 24 May 2025 17:10:21 +0000</pubDate>
+        
+        <guid>https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/</guid>
+        <description>&lt;h1 id=&#34;网络层协议&#34;&gt;网络层协议
+&lt;/h1&gt;&lt;p&gt;Internet的网络架构是best-effort的网络协议,不会做任何的保证,并且没有拥塞的通知.IPV4的头部的基础长度是20字节,而IPV6的长度是40字节.&lt;/p&gt;
+&lt;h2 id=&#34;ip协议简介&#34;&gt;IP协议简介:
+&lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/lady_killer9/article/details/113482131&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;网络-IP协议详解（报文格式、分类、NAT、子网、CIDR、抓包分析）_nat报文-CSDN博客&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;在IPV4或者IPV6都要有一个信息去指示包裹在IP中的数据报文的类型&lt;/p&gt;
+&lt;h3 id=&#34;ip数据报格式&#34;&gt;IP数据报格式
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170902702.png&#34;
+	width=&#34;1452&#34;
+	height=&#34;694&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170902702_hu_76ae64fc52b0e81c.png 480w, https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170902702_hu_df119fff0d8c677b.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610170902702&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;209&#34;
+		data-flex-basis=&#34;502px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;ipv4头部字段结构&#34;&gt;IPv4头部字段结构：
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;版本（Version）&lt;/strong&gt;（4 bits）：指定使用的IPv4协议版本，通常为IPv4，值为4。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;头部长度（IHL - Internet Header Length）&lt;/strong&gt;（4 bits）：表示IPv4头部的长度，以32位字的数量来计算，因此值为正整数，最小值为5，最大值为15（即最大长度为60字节）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;区分服务（Type of Service, ToS）&lt;/strong&gt;（8 bits）：用于指定数据包的服务质量要求，包括优先级、延迟、吞吐量、可靠性等。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;总长度（Total Length）&lt;/strong&gt;（16 bits）：指定整个IPv4数据报的长度，包括头部和数据部分的总长度。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;标识（Identification）&lt;/strong&gt;（16 bits）：用于识别数据报的唯一性，有助于数据包的重组和重组应用（如分片）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;标志（Flags）&lt;/strong&gt;（3 bits）：包含分片的标志信息，包括标记、不分片和更多分片。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;片偏移（Fragment Offset）&lt;/strong&gt;（13 bits）：指定数据报的片偏移，表示数据报在原始报文中的位置。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;生存时间（Time to Live, TTL）&lt;/strong&gt;（8 bits）：指定数据报在网络中最大生存时间，每经过一个路由器减一，直到为0时被丢弃。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;协议（Protocol）&lt;/strong&gt;（8 bits）：指定数据部分使用的协议，例如TCP为6，UDP为17。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;头部校验和（Header Checksum）&lt;/strong&gt;（16 bits）：用于校验IPv4头部的完整性，检测传输过程中是否发生错误。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;源IP地址（Source IP Address）&lt;/strong&gt;（32 bits）：指定数据包的源IP地址。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;目的IP地址（Destination IP Address）&lt;/strong&gt;（32 bits）：指定数据包的目的IP地址。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;ipv6头信息&#34;&gt;IPV6头信息
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610172931459.png&#34;
+	width=&#34;712&#34;
+	height=&#34;753&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610172931459_hu_52666f5dc3762373.png 480w, https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610172931459_hu_d5720e54ca18656f.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610172931459&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;94&#34;
+		data-flex-basis=&#34;226px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;#IP地址变成了8个字节&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;版本（Version）&lt;/strong&gt;（4 bits）：表示使用的IPv6协议版本，值为6。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;流量分类（Traffic Class）&lt;/strong&gt;（8 bits）：类似于IPv4中的区分服务（Type of Service），用于指定不同类型的数据流，如优先级、延迟或吞吐量要求。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;有效载荷长度（Payload Length）&lt;/strong&gt;（16 bits）：指定IPv6头部后面的有效载荷（payload）的长度，包括扩展头部及数据部分的总长度。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;下一个头部（Next Header）&lt;/strong&gt;（8 bits）：指示紧随IPv6头部的下一个头部类型，类似IPv4的协议字段，确定如何解释数据包的有效载荷。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;跳限制（Hop Limit）&lt;/strong&gt;（8 bits）：类似于IPv4中的生存时间（Time to Live），指定数据包在网络中能通过的最大跳数，每经过一个路由器减一，最终为0时数据包被丢弃。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;源地址（Source Address）&lt;/strong&gt;（128 bits）：指定IPv6数据包的源IPv6地址。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;目的地址（Destination Address）&lt;/strong&gt;（128 bits）：指定IPv6数据包的目的IPv6地址。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flow Label&lt;/strong&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;标识数据流&lt;/strong&gt;：Flow Label用于唯一标识一个数据流，帮助网络设备识别和区分不同的数据流。这对于实时传输、多媒体传输和其他需要特殊处理的数据流尤为重要。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;优化路由决策&lt;/strong&gt;：Flow Label可以帮助路由器做出更智能的路由决策，以提高数据流的传输效率和减少传输时延。通过识别Flow Label，路由器可以采取更合适的路由策略，如流级负载均衡或特定路径选择。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;提高服务质量&lt;/strong&gt;：使用Flow Label可以支持差异化服务质量（QoS），确保特定的数据流能够获得适当的带宽和延迟要求。这对于要求实时传输和延迟敏感的应用程序非常重要。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;简化数据包处理&lt;/strong&gt;：Flow Label可以帮助网络设备快速识别特定数据流，从而简化数据包的处理过程，提高网络设备的效率和性能。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;从ipv4向ipv6的转换方法&#34;&gt;从IPV4向IPV6的转换方法:
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;双栈:由支持IPV4/IPV6的路由器将包转换为IPV4的包,当发送给只支持IPV4的路由器的时候.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;隧道技术:将IPV6的头部信息包裹在IPV4中来传输给只支持IPV4的路由器设备.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;ip网络格式&#34;&gt;IP网络格式
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529120122482.png&#34;
+	width=&#34;968&#34;
+	height=&#34;552&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529120122482_hu_a788b7c2d0836a94.png 480w, https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529120122482_hu_a739d7f43ca9deff.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240529120122482&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;420px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;全1代表着广播,全0代表着自己&lt;/p&gt;
+&lt;h4 id=&#34;class-a&#34;&gt;class A:
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529120738430.png&#34;
+	width=&#34;1094&#34;
+	height=&#34;295&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529120738430_hu_84268ed1a1d17835.png 480w, https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529120738430_hu_eebad524001ac688.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240529120738430&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;370&#34;
+		data-flex-basis=&#34;890px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;可以使用的主机数量为$(2^7-2)\times(2^{24}-2)$​.&lt;/p&gt;
+&lt;h4 id=&#34;class-b&#34;&gt;class B:
+&lt;/h4&gt;&lt;p&gt;总共有$(2^{14})(2^{16}-2)$,因为主机的id不能够是全1或者是全0.&lt;/p&gt;
+&lt;h4 id=&#34;class-c&#34;&gt;class C:
+&lt;/h4&gt;&lt;p&gt;同样的是子网的数量可以随便取,但是主机的数量要减去2.为$(2^{21})(2^{8}-2)$​.&lt;/p&gt;
+&lt;h4 id=&#34;子网&#34;&gt;子网
+&lt;/h4&gt;&lt;p&gt;为解决网络地址不足的问题，IPv4引入了子网划分的概念，使主机地址部分被划分为子网号和主机号，通过子网掩码表示哪些位属于子网号，哪些位属于主机号。这种划分带来以下好处：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;更灵活的地址分配&lt;/strong&gt;：将每个局域网分配一个子网号，使得在特定网络内部更灵活地管理和分配IP地址。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;本地路由器在子网网络内部路由&lt;/strong&gt;：局域网内的路由器可以直接在子网内进行路由，管理子网内部的数据流量，提高网络性能和安全性。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;子网对外看起来像单个网络&lt;/strong&gt;：对外部网络而言，划分的子网会像单个网络一样呈现，从而简化网络的结构，减少增长的网络号和路由复杂性对整个互联网造成的影响。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;通过子网划分，IPv4网络可以更好地应对网络地址空间不足的问题，提高网络管理的效率和灵活性。同时，子网划分能够在全球互联网中提供一种有效的方式来处理与网络增长和复杂性增加相关的挑战，为网络的可扩展性和可管理性提供支持。&lt;/p&gt;
+&lt;h4 id=&#34;cidr无类别域间路由选择&#34;&gt;CIDR:无类别域间路由选择
+&lt;/h4&gt;&lt;p&gt;表示方法:10.217.112.0/20&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;主机是怎么获得自己的ip地址的&#34;&gt;主机是怎么获得自己的IP地址的:
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;DHCP: Dynamic Host Configuration Protocol&lt;/strong&gt;:应用层的协议&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529122331506.png&#34;
+	width=&#34;918&#34;
+	height=&#34;494&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529122331506_hu_f326ef5e2d0c0b3.png 480w, https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240529122331506_hu_8e1feac05b7ceaae.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240529122331506&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;185&#34;
+		data-flex-basis=&#34;445px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Dynamic Host Configuration Protocol (DHCP)是一种网络协议，用于自动分配IP地址和其他网络配置给主机。下面是DHCP的工作过程概述：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;主机广播 DHCP Discover 消息（可选）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;当主机加入网络时（如启动时或更换网络时），它可以广播一个DHCP Discover消息，以寻找可用的DHCP服务器。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DHCP服务器响应 DHCP Offer 消息（可选）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;DHCP服务器收到Discover消息后，可以向主机发送一个DHCP Offer消息，提供可用的IP地址、子网掩码、网关等配置信息。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;主机请求IP地址：发送 DHCP Request 消息&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;主机在接收到DHCP Offer后，选择其中一个提供的IP地址，并向DHCP服务器发送一个DHCP Request消息，请求分配该IP地址。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DHCP服务器发送地址：发送 DHCP Ack 消息&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;DHCP服务器收到主机的Request消息后，确认IP地址的分配情况，然后发送一个DHCP Ack消息给主机，正式分配该IP地址并包含其他网络配置信息。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;natnetwork-address-translation&#34;&gt;NAT:Network Address Translation:
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;将内网的地址映射到外网的地址,可以是静态的IP映射,也可能是从一系列的IP池中随机选择一个IP进行映射.可以起到防火墙的作用,或者是隔离内网的变化.这种映射可以是单一的IP地址的映射也可以是将IP和port的键值对的映射.&lt;/li&gt;
+&lt;li&gt;使用10.0.0.0/24的同样的子网内网地址&lt;/li&gt;
+&lt;li&gt;在外界看来就是一个拥有一个地址或者一系列地址的NAT转换主机.隐藏了内部网络的细节&lt;/li&gt;
+&lt;li&gt;使用一张NAT转换表,将相应的&lt;code&gt;外界IP地址和端口唯一映射到一个内网的IP地址和端口&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;泛化转发匹配操作&#34;&gt;泛化转发:匹配+操作:
+&lt;/h2&gt;&lt;p&gt;\泛化转发：简单的数据包处理规则,使用OpenFlow协议&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610201843709.png&#34;
+	width=&#34;361&#34;
+	height=&#34;202&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610201843709_hu_5d6e958ca61068e6.png 480w, https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610201843709_hu_68b1972f9a32eeea.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610201843709&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;178&#34;
+		data-flex-basis=&#34;428px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;– 匹配：数据包头字段中的模式值-&amp;gt;会匹配头信息中的&lt;code&gt;链路层,网络层,传输层&lt;/code&gt;的信息.&lt;/li&gt;
+&lt;li&gt;– 动作：对匹配的数据包进行操作：丢弃、转发、修改匹配的数据包或将匹配的数据包发送至控制器&lt;/li&gt;
+&lt;li&gt;– 优先级：消除重叠模式&lt;/li&gt;
+&lt;li&gt;– 计数器：字节数和数据包数&lt;/li&gt;
+&lt;li&gt;可以根据链路层帧,网络层的数据报,传输层的报文段来进行匹配操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;中间盒&#34;&gt;中间盒
+&lt;/h2&gt;&lt;p&gt;除了路由器之外的其他的网络层设备:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;防火墙（Firewall）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;防火墙是网络安全的重要组成部分，用于监控和控制进出网络的流量。它可以根据预设的规则阻止恶意流量并确保网络安全。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;负载均衡器（Load Balancer）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;负载均衡器用于在多个服务器之间分配传入流量，以确保各个服务器都能够有效处理请求并提高整体性能和可靠性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;代理服务器（Proxy Server）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;代理服务器充当客户端和服务器之间的中介，可用于过滤内容、加速访问、提供匿名性等功能。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NAT盒&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;NAT用于在私有网络和公共网络之间进行地址转换，有效地隐藏内部网络的真实IP地址，同时允许多个主机共享同一个公共IP地址，从而解决IPv4地址不足的问题。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;数据平面&#34;&gt;数据平面:
+&lt;/h2&gt;&lt;p&gt;&lt;code&gt;在router的内部进行的算法,转发&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;使用最长前缀匹配的原则&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610165559815.png&#34;
+	width=&#34;1043&#34;
+	height=&#34;612&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610165559815_hu_e8b14b2799cd455b.png 480w, https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610165559815_hu_19aa51df39e6b773.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610165559815&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;170&#34;
+		data-flex-basis=&#34;409px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;input-port&#34;&gt;input port:
+&lt;/h3&gt;&lt;p&gt;会在端口前面进行链路层的&lt;code&gt;比特差错&lt;/code&gt;的检测&lt;/p&gt;
+&lt;p&gt;使用排队的队列缓冲接受的包,但是可能会发生Head-of-the-Line (HOL) blocking的情况,由于在队列的前端的包在等待着同一个switch fabric的转发,所以导致在队列后面的包不能够提前进行转发.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;更新数据报的头信息&lt;/li&gt;
+&lt;li&gt;查找相应的destPort&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;output-port&#34;&gt;output port:
+&lt;/h3&gt;&lt;p&gt;会将输入的package进行分类,根据每一个包的优先级,应该考虑但队列满的时候应该让哪些包进入队列,而丢弃哪些包.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;FIFO router&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170621145.png&#34;
+	width=&#34;616&#34;
+	height=&#34;278&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170621145_hu_a8bf662416c0d15c.png 480w, https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170621145_hu_639b200972688129.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610170621145&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;221&#34;
+		data-flex-basis=&#34;531px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Priority scheduling:将每一个包进行优先级的划分,总是先发送有=优先级高的包,直到优先级高的队列里面没有任何包为止.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170632548.png&#34;
+	width=&#34;704&#34;
+	height=&#34;327&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170632548_hu_3b01501c76af812f.png 480w, https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170632548_hu_d54171c884df68f2.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610170632548&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;215&#34;
+		data-flex-basis=&#34;516px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Round Robin (RR) scheduling:循环着发送每一个队列的数据包.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170641482.png&#34;
+	width=&#34;920&#34;
+	height=&#34;477&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170641482_hu_c416bf9b1a341ed8.png 480w, https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170641482_hu_6ac6e35fedd8c4d3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610170641482&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;192&#34;
+		data-flex-basis=&#34;462px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Weighted Fair Queuing (WFQ):每一次循环发送队列中的包的数量是有权重的.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170650448.png&#34;
+	width=&#34;905&#34;
+	height=&#34;429&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170650448_hu_38396937c3500b60.png 480w, https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610170650448_hu_bd277c7441150f26.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610170650448&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;210&#34;
+		data-flex-basis=&#34;506px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;switch-fabric&#34;&gt;switch fabric:
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;使用内存实现
+将数据放进特定的地址空间,而output port从memery中找到相应的数据&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用总线实现
+每次使用总线将一对的输入输出的端口相连&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用互联网络实现
+每一个相交的点都可以进行开关&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;路由选择处理器&#34;&gt;路由选择处理器:
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;使用destIP的最长前缀匹配&lt;/li&gt;
+&lt;li&gt;使用OpenFlow的泛化转发&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;控制平面&#34;&gt;控制平面:
+&lt;/h2&gt;&lt;p&gt;&lt;code&gt;决定一个数据包应该在整个网络中如何传输,从起点是如何传输到终点的.&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;路由器间的控制平面&#34;&gt;路由器间的控制平面:
+&lt;/h3&gt;&lt;h4 id=&#34;1全局算法每一个路由器都知道关于网络上所有的信息&#34;&gt;1.全局算法(每一个路由器都知道关于网络上所有的信息)
+&lt;/h4&gt;&lt;p&gt;Dijkstra算法:&lt;/p&gt;
+&lt;p&gt;下面是一个简单的Dijkstra（迪杰斯特拉）最短路径算法的伪代码实现，用于找到从起点到其余各顶点的最短路径：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Dijkstra(Graph, source):
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;1. 初始化集合distances，用于存储每个顶点到起点的最短距离，初始化为无穷大(INF)。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2. 初始化集合visited，用于标记已经找到最短路径的顶点，初始时为空。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;3. 将源顶点的距离设置为0，表示源顶点到自身的距离为0。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;4. while 未访问完所有顶点:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   a. 选取未访问过的距禓源顶点最近的顶点u，将其标记为visited。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   b. for 每个与顶点u相邻的顶点v:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      i. 计算从源顶点经过u到v的距离d。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      ii. 如果d &amp;lt; distances[v]，更新distances[v]为d。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;5. 返回distances。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;2分布式的算法每一个路由器只知道自己的信息和邻居的信息&#34;&gt;2.分布式的算法(每一个路由器只知道自己的信息和邻居的信息)
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;每一个路由器间自己的对于每一个点的最短向量告诉邻居&lt;/li&gt;
+&lt;li&gt;假如一个路由器u发现了有邻居发送的cost向量:$DV_u(x)&amp;gt;w(u,v)+DV_v(x)$,则更新自己的DV值为最小的,并且修改转发表让到x的packet走通向v的端口.假如自己的转发表发生了变动,则将自己的cost向量也发送给邻居.&lt;/li&gt;
+&lt;li&gt;每一个路由器分布式地更新数据,直到最终的cost向量不再发生变化.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;效应:&lt;/p&gt;
+&lt;p&gt;好的消息(链路的状态变好)传播的快,但是坏消息(链路上面的cost增大)传播地慢.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610203724832.png&#34;
+	width=&#34;1536&#34;
+	height=&#34;653&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610203724832_hu_5f7d6dcd1a46654f.png 480w, https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610203724832_hu_9c4ba39344625a26.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610203724832&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;235&#34;
+		data-flex-basis=&#34;564px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610203734381.png&#34;
+	width=&#34;1463&#34;
+	height=&#34;699&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610203734381_hu_25675deece0154b4.png 480w, https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610203734381_hu_42d5d65aafa349f6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610203734381&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;209&#34;
+		data-flex-basis=&#34;502px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;snd软件定义的控制平面&#34;&gt;SND:软件定义的控制平面:
+&lt;/h3&gt;&lt;p&gt;使用一个远程的软件定义的服务器去计算每一个路由器的转发表&lt;/p&gt;
+&lt;p&gt;转发表基于OpenFlow API,并且可以根据流标签来进行负载均衡&lt;/p&gt;
+&lt;h4 id=&#34;sdn的特征&#34;&gt;SDN的特征
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;基于流的转发&lt;/li&gt;
+&lt;li&gt;数据平面与控制平面的分离&lt;/li&gt;
+&lt;li&gt;网络控制能力&lt;/li&gt;
+&lt;li&gt;可编程的网络&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;优点:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可以更加方便管理,更多的灵活性;&lt;/li&gt;
+&lt;li&gt;可以编程的转发表,由于传统的路径固定不能实现负载均衡&lt;/li&gt;
+&lt;li&gt;可以将控制平面的实现公开&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;结构:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610212026918.png&#34;
+	width=&#34;639&#34;
+	height=&#34;801&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610212026918_hu_659eb245f412ee37.png 480w, https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20240610212026918_hu_5a2ac4c2bd250645.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610212026918&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;79&#34;
+		data-flex-basis=&#34;191px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;最底层**:(数据平面交换机)**
+&lt;ul&gt;
+&lt;li&gt;它们是快速、简单的商品化交换机，能够高效处理数据转发任务。&lt;/li&gt;
+&lt;li&gt;这些交换机的流表（转发表）是在控制器监督下计算并安装的。&lt;/li&gt;
+&lt;li&gt;它们提供基于表格的交换机控制的API，比如OpenFlow，该API定义了可控制和不可控制的内容。&lt;/li&gt;
+&lt;li&gt;数据平面交换机使用与控制器通信的协议（例如OpenFlow），实现与控制器的通信，从而实现网络的集中化控制&lt;/li&gt;
+&lt;li&gt;使用广义转发的OpenFlow协议,并且抽象出API提供给上层的SDN Controller使用,和Controller进行交互&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;中层:&lt;strong&gt;SDN controller (network OS)&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;维护&lt;code&gt;网络状态信息&lt;/code&gt;，持续跟踪网络中各个设备的状态和信息。&lt;/li&gt;
+&lt;li&gt;通过北向API与&lt;code&gt;上层的网络控制应用程序进行交互&lt;/code&gt;，&lt;code&gt;接收和处理来自应用层的指令和需求。&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;通过南向API与&lt;code&gt;下层的网络交换机进行交互&lt;/code&gt;，向网络设备下发配置命令和路由信息。&lt;/li&gt;
+&lt;li&gt;通常以分布式系统的形式实现，以确保性能、可扩展性、容错性和稳健性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;上层:&lt;strong&gt;network-control apps&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;实现控制功能：利用SDN控制器提供的低层服务和API，执行各种控制功能，如流量管理、策略实施等。&lt;/li&gt;
+&lt;li&gt;解耦化：这些控制功能可以由第三方提供，与路由器供应商或SDN控制器本身分离，使得控制功能的提供更加灵活和可定制化。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;ospf开放最短路径优先&#34;&gt;OSPF(开放最短路径优先):
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;将一片区域的Router归纳与于一个autonomous systems.&lt;/li&gt;
+&lt;li&gt;每一个路由器都知道整个自治系统拓扑图,一次来确定由自己到AS中的所有的节点的最短路径&lt;/li&gt;
+&lt;li&gt;OSPF是link-state的协议,使用dijkstra的算法.&lt;/li&gt;
+&lt;li&gt;OSPF只在每一个区域中和每一个骨干区域中内部传播,这个是&lt;code&gt;层次化&lt;/code&gt;的表现.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;bgpborder-gateway-protocol&#34;&gt;BGP(Border Gateway Protocol):
+&lt;/h3&gt;&lt;p&gt;inter:告诉其他的AS他的终点网络的可达性;&lt;/p&gt;
+&lt;p&gt;intra:告诉在同一个AS中的路由器自己的可达性;&lt;/p&gt;
+&lt;p&gt;BGP链接是&lt;code&gt;半永久的TCP连接&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;包含的信息:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AS_PATH:经过的AS的路径&lt;/li&gt;
+&lt;li&gt;next-hop:是到达发布更新消息的AS的&lt;code&gt;边界路由器的IP地址&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;是以&lt;code&gt;策略&lt;/code&gt;为基础的路由,每一个gateway路由器使用import 策略来接受路径,而根据AS的策略决定是否广播路径.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;iBGP-&amp;gt;Intra-ISP (Intra-AS)Routing:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;网关路由器在接收到其他的AS的子网可达的信息的时候,会&lt;code&gt;将这种可达的信息传递给内部的AS中的所有的路由器&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;eBGP-&amp;gt;Inter-AS:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;网关路由器是AS的边界&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;将自身网络的子网可达性通知给相邻的AS的网关路由器&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;一个网关路由器在接受到了来自同一个子网的不同的AS路径会根据自己的算法选择一个&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;选择最好的路由&#34;&gt;选择最好的路由:
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;热土豆路由:在内部的路由器不考虑AS间的路径开销,只是单纯地想要将发往其他AS的packet&lt;code&gt;尽快发送到网关路由器.&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;根据&lt;code&gt;本地设置的偏好值&lt;/code&gt;来确定当多个通往相同的子网的路径的时候选择将哪一个条目来进行保存在转发表中&lt;/li&gt;
+&lt;li&gt;AS可以设置是否要将由其他AS传递过来的可达状态继续传递下去&lt;/li&gt;
+&lt;li&gt;最短路径决定&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;icmpinternet-control-message-protocol&#34;&gt;ICMP:internet control message protocol
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;用于主机和路由器交流网络状态信息的协议&lt;/code&gt;,即是否可达,是否有错误&lt;/li&gt;
+&lt;li&gt;ICMP是分装在IP协议中的&lt;/li&gt;
+&lt;li&gt;拥有一个type,code,和8字节的错误原因&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;实现路由跟踪:&lt;/p&gt;
+&lt;p&gt;​	source设置一个合适的ttl=n,当这个发送的数据包经过了第n个路由器的时候,会被丢弃并且这个路由器会向source发送一个ICMP的状态包,记录着自己的信息,而source可以等待这个ICMP的包,用于计算RTT;假如这个UDP的数据包到达了目标的主机就会直接返回一个ICMP信息,表示自己是可达的.&lt;/p&gt;
+&lt;h3 id=&#34;网络管理&#34;&gt;网络管理:
+&lt;/h3&gt;&lt;p&gt;网络管理的关键设备:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;管理服务器&lt;/li&gt;
+&lt;li&gt;被管理设备&lt;/li&gt;
+&lt;li&gt;数据&lt;/li&gt;
+&lt;li&gt;网络管理协议&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;snmp&#34;&gt;SNMP
+&lt;/h4&gt;&lt;p&gt;SNMP（Simple Network Management Protocol，简单网络管理协议）是一种&lt;code&gt;管理服务器和代管理服务器执行的代理之间传递网络管理信息报文的协议&lt;/code&gt;&lt;/p&gt;
+&lt;h5 id=&#34;功能和工作原理&#34;&gt;功能和工作原理：
+&lt;/h5&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;功能&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;SNMP允许网络管理系统（NMS）通过网络与SNMP代理交互，以监视设备状态、配置设备参数、远程管理和故障排除等。它提供了一种标准化的管理框架，使得不同厂商生产的设备可以方便地与管理系统集成。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;工作原理&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;SNMP基于客户端-服务器模型，包括三个主要组件：
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;管理系统&lt;/strong&gt;：负责监控和管理网络设备。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;代理&lt;/strong&gt;（Agent）：安装在网络设备上，负责收集设备状态信息并向管理系统提供数据。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MIB&lt;/strong&gt;（Management Information Base）：包含设备的管理信息数据库，管理系统通过查询MIB获取设备信息。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id=&#34;snmp消息类型&#34;&gt;SNMP消息类型：
+&lt;/h5&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Get Request&lt;/strong&gt;：管理系统向代理请求特定参数值。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Get Response&lt;/strong&gt;：代理响应Get请求，返回参数值。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Set Request&lt;/strong&gt;：管理系统向代理发送设置参数值的请求。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Trap&lt;/strong&gt;：代理向管理系统主动发送警报消息。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;管理者使用SNMP(Simple Network Management Protocol)来获取设备信息(MIB)&lt;/p&gt;
+&lt;p&gt;网络配置协议:NETCONF 使用RFC(remote procedure call),格式为xml,是一种配置的语言,可以使用yang这种编程语言来编写.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>互联网安全</title>
         <link>https://114514yangyi.github.io/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/</link>
         <pubDate>Tue, 20 May 2025 11:54:10 +0800</pubDate>
@@ -570,7 +1123,8 @@
 &lt;h2 id=&#34;交换技术时延计算核心公式-&#34;&gt;交换技术时延计算核心公式 ⏱️
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;[!NOTE]&lt;/p&gt;
-&lt;p&gt;发送延时在每一个路由器上都要记一次，一次的发送延时是发送一次分组的时间。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;发送延时在每一个路由器上（包括原主机上）都要记一次，一次的发送延时是发送一次分组的时间。&lt;/p&gt;
+&lt;p&gt;在进行分组传输比较麻烦的情况可以使用画图的形式来说明。&lt;/p&gt;&lt;/blockquote&gt;
 &lt;h3 id=&#34;1-电路交换-circuit-switching-&#34;&gt;1. 电路交换 (Circuit Switching) 📞
 &lt;/h3&gt;&lt;p&gt;通信前先建立专用物理路径。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;总时延 ($T_{circuit}$)&lt;/strong&gt; $\approx$ &lt;strong&gt;连接建立时延&lt;/strong&gt; + &lt;strong&gt;数据传输时延&lt;/strong&gt; + &lt;strong&gt;传播时延&lt;/strong&gt;&lt;/p&gt;
@@ -604,6 +1158,13 @@
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;关键在于流水线效应：&lt;/strong&gt; 第一个分组到达后，后续分组相继到达，减少了等待。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;特点:&lt;/strong&gt; 分组流水线传输，比报文交换高效，但仍有排队时延。&lt;/p&gt;
+&lt;p&gt;分组计算的方式如下：&lt;/p&gt;
+&lt;p&gt;假设有k条路，每条路的传播时延为i，中间节点有k-1个，处理时延为m，传输速率为b，分组有n个，每个分组的大小是r，则总的时延为：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;传输时延：（源主机传输时延）（n*r）/b+(每一个中间节点的传输时延)(（k-1）*(r/b))&lt;/li&gt;
+&lt;li&gt;传播时延：k*i&lt;/li&gt;
+&lt;li&gt;处理时延：m*(k-1)&lt;/li&gt;
+&lt;/ol&gt;
 &lt;hr&gt;
 &lt;p&gt;&lt;strong&gt;通用时延组成部分：&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -621,7 +1182,12 @@
 &lt;p&gt;每一层都向上一层去提供功能&lt;/p&gt;
 &lt;h3 id=&#34;传统的osi模型&#34;&gt;传统的OSI模型
 &lt;/h3&gt;&lt;p&gt;ISO-OSI模型（International Standards Organization Open Systems Interconnection model，国际标准化组织开放系统互联模型）是一个概念模型，用于标准化网络通信，确保不同系统和网络设备之间可以互相通信。OSI模型将复杂的网络通信任务分为七个独立的层次，每一层都有特定的功能和职责。这个模型为理解和设计网络体系结构提供了一个直观的框架。&lt;/p&gt;
-&lt;h3 id=&#34;osi模型的七个层次&#34;&gt;OSI模型的七个层次：
+&lt;p&gt;OSI/ISO模型和TCP/IP模型又一点的不同，比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;OSI的传输层提供的是有链接的服务，二在网络层提供的是有连接的和无连接的协议；TCP/IP在传输层提供有链接的TCP协议和无连接的UDP协议，但是在网络层只提供无连接的IP协议。&lt;/li&gt;
+&lt;li&gt;传输层协议是端到端的，也就是从原主机到目的主机进程之间的通信，而网络层和链路层是点到点的连接，也就是主机之间的通信。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;tcpip模型&#34;&gt;TCP/IP模型：
 &lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;物理层（Physical Layer）&lt;/strong&gt;-&amp;gt;比特流&lt;/p&gt;
@@ -631,7 +1197,7 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;数据链路层（Data Link Layer）&lt;/strong&gt;-&amp;gt;帧&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;数据链路层（Data Link Layer）&lt;/strong&gt;-&amp;gt;帧（点到点）&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;链路层帧是链路层协议在实际传输介质上传输数据时所使用的单位。&lt;/code&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;功能：&lt;/strong&gt; &lt;code&gt;数据链路层负责提供节点到节点的数据传输&lt;/code&gt;，确保传输的可靠性。它处理帧的创建、发送、接收和确认，并检测和纠正传输错误。&lt;/li&gt;
@@ -689,7 +1255,6 @@
 &lt;/ol&gt;
 &lt;h3 id=&#34;吞吐量&#34;&gt;吞吐量
 &lt;/h3&gt;&lt;p&gt;$Throughput=\frac{L}{T_{delay}+P_{delay}}$&lt;/p&gt;
-&lt;p&gt;$Throughput=\frac{L}{T_{delay}+P_{delay}}$&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -2024,7 +2589,11 @@ APs向主机发送信标帧,主机选择一个向AP发送关联请求帧,选择�
 &lt;/h1&gt;&lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;节点&lt;/strong&gt;:运行链路层协议的任何设备&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;链路&lt;/strong&gt;:连接两个节点的通信信道&lt;/li&gt;
+&lt;li&gt;点对点传输&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h2 id=&#34;流量控制&#34;&gt;流量控制
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;流量控制就是限制发送方的传输速率，以免超过接受方的接受能力，造成帧丢失&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在OSI体系中链路层是有流量控制的，而在TCP/IP体系中流量控制在传输层实现。&lt;/p&gt;
 &lt;h2 id=&#34;链路层提供的服务&#34;&gt;链路层提供的服务
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;成帧&lt;/li&gt;
@@ -2041,14 +2610,41 @@ APs向主机发送信标帧,主机选择一个向AP发送关联请求帧,选择�
 &lt;li&gt;全双工通道:能够有两端同时向对方传输信息&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;错误检查和纠正&#34;&gt;错误检查和纠正
-&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;使用奇偶校验:
-一维的奇偶校验,只能够检测出一位的错误,但是不能纠正错误,需要1bit冗余
-二维的奇偶校验,可以检测一位的错误,可以纠正一位的错误,需要2n bit的冗余&lt;/li&gt;
-&lt;li&gt;使用校验和:
-将每16位相加最终结果取反&lt;/li&gt;
-&lt;li&gt;使用循环冗余校验法:
-先决定R位的冗余位,再确定生成的G(R+1位)生成码,使用数据$D\times 2^R$来异或除G,最终得到R位的异或余数,为最终的冗余位.&lt;/li&gt;
+&lt;/h2&gt;&lt;p&gt;错误分为位错（帧中的几个数据位出现错误）和帧错（帧丢失，顺序错误，帧重复）&lt;/p&gt;
+&lt;p&gt;（在OSI中认为链路层应该提供可靠的传输，所以提供了原本应该是传输层的作用：帧的重传，确认，标号）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;使用奇偶校验:&lt;/p&gt;
+&lt;p&gt;对于n位的数据位来说：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;奇检验码是在数据位后面添一个位数使得所有位数中“1”的个数为奇数；&lt;/li&gt;
+&lt;li&gt;偶检验码是在数据位后面添加一个位数使得所有位数中“1”的个数为偶数；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一维的奇偶校验,只能够检测出一位的错误,但是不能纠正错误,需要1bit冗余
+二维的奇偶校验,可以检测一位的错误,可以纠正一位的错误,需要2n bit的冗余&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用校验和:
+将每16位相加最终结果取反&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用循环冗余校验法:
+先决定R位的冗余位,再确定生成的G(R+1位)生成码,使用数据$D\times 2^R$（在D的后面添加R个0）来异或除G,最终得到R位的异或余数,为最终的冗余位.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20250525175654360.png&#34;
+	width=&#34;1902&#34;
+	height=&#34;1062&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20250525175654360_hu_49603698b93f65b6.png 480w, https://114514yangyi.github.io/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20250525175654360_hu_d6a00d3d1235685f.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250525175654360&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;429px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;多路访问链路multiple-access-links&#34;&gt;多路访问链路(Multiple access links)
 &lt;/h2&gt;&lt;p&gt;类型:&lt;/p&gt;
