@@ -381,6 +381,12 @@
         <li><a href="#kahn-算法-基于入度">Kahn 算法 (基于入度)</a></li>
       </ol>
     </li>
+    <li><a href="#组合数递推关系">组合数递推关系</a>
+      <ol>
+        <li><a href="#c-计算组合数代码">C++ 计算组合数代码</a></li>
+      </ol>
+    </li>
+    <li><a href="#曼哈顿距离等价公式推导">曼哈顿距离等价公式推导</a></li>
   </ol>
 </nav>
         </div>
@@ -449,7 +455,7 @@
 
 
                 <time class="article-time--reading">
-                    41 minute read
+                    44 minute read
                 </time>
             </div>
         
@@ -4377,7 +4383,221 @@ $$ S_n = (k-2)S_{n-1} + (k-1)S_{n-2} \quad (\text{对于 } n \ge 3) $$<h2 id="7-
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span></code></pre></td></tr></table>
 </div>
+</div><h2 id="组合数递推关系">组合数递推关系
+</h2><p>组合数遵循帕斯卡恒等式（Pascal&rsquo;s Identity）：
+</p>
+$$C(n, k) = C(n-1, k-1) + C(n-1, k)$$<p>
+此公式适用于 $1 \le k \le n-1$。</p>
+<p><strong>边界条件</strong> (Base Cases):</p>
+<ol>
+<li>$C(n, 0) = 1$  （对于 $n \ge 0$）：从 $n$ 个元素中选 0 个，只有一种方法（选择空集）。</li>
+<li>$C(n, n) = 1$  （对于 $n \ge 0$）：从 $n$ 个元素中选 $n$ 个，只有一种方法（选择所有元素）。</li>
+<li>$C(n, k) = 0$  如果 $k &gt; n$ 或 $k &lt; 0$。</li>
+</ol>
+<p>这条递推关系是构建帕斯卡三角形的基础。</p>
+<hr>
+<h3 id="c-计算组合数代码">C++ 计算组合数代码
+</h3><p>下面是一个使用动态规划（基于上述递推关系并优化空间复杂度）计算组合数的 C++ 函数。该方法通常称为“杨辉三角”或“帕斯卡三角形”的逐行计算。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"> </span><span class="c1">// 用于 std::min
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 函数计算组合数 C(n, k)
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 返回 long long 类型以处理较大的结果
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">long</span> <span class="kt">long</span> <span class="nf">combinations</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 处理无效输入或边界情况：k &lt; 0 或 k &gt; n
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 边界情况：C(n, 0) = 1, C(n, n) = 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">k</span> <span class="o">==</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 优化：C(n, k) = C(n, n - k)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 选择较小的 k 可以减少计算量和空间需求
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">k</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 创建一个大小为 k+1 的动态规划数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// dp[j] 将存储 C(current_row, j)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">long</span> <span class="kt">long</span><span class="o">&gt;</span> <span class="n">dp</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 初始化基础情况 C(any_row, 0) = 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 逐行计算帕斯卡三角形的当前行值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 外层循环代表行数 i (从 1 到 n)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 内层循环代表当前行中的元素 j (从 min(i, k) 到 1)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// 从右向左计算，以利用上一行 (i-1) 的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// dp[j] (新) = dp[j] (旧) + dp[j-1] (旧)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// 即 C(i, j) = C(i-1, j) + C(i-1, j-1)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">;</span> <span class="o">--</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 最终结果存储在 dp[k] 中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">k</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">// 示例用法：
+</span></span></span><span class="line"><span class="cl"><span class="cm">#include &lt;iostream&gt;
+</span></span></span><span class="line"><span class="cl"><span class="cm">int main() {
+</span></span></span><span class="line"><span class="cl"><span class="cm">    int n = 5;
+</span></span></span><span class="line"><span class="cl"><span class="cm">    int k = 2;
+</span></span></span><span class="line"><span class="cl"><span class="cm">    std::cout &lt;&lt; &#34;C(&#34; &lt;&lt; n &lt;&lt; &#34;, &#34; &lt;&lt; k &lt;&lt; &#34;) = &#34; &lt;&lt; combinations(n, k) &lt;&lt; std::endl; // 输出 C(5, 2) = 10
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">    n = 10;
+</span></span></span><span class="line"><span class="cl"><span class="cm">    k = 3;
+</span></span></span><span class="line"><span class="cl"><span class="cm">    std::cout &lt;&lt; &#34;C(&#34; &lt;&lt; n &lt;&lt; &#34;, &#34; &lt;&lt; k &lt;&lt; &#34;) = &#34; &lt;&lt; combinations(n, k) &lt;&lt; std::endl; // 输出 C(10, 3) = 120
+</span></span></span><span class="line"><span class="cl"><span class="cm">    
+</span></span></span><span class="line"><span class="cl"><span class="cm">    n = 67; // 对于更大的 n, k 注意 long long 溢出
+</span></span></span><span class="line"><span class="cl"><span class="cm">    k = 33;
+</span></span></span><span class="line"><span class="cl"><span class="cm">    // C(67,33) 约为 1.4 * 10^19，接近 long long 上限
+</span></span></span><span class="line"><span class="cl"><span class="cm">    std::cout &lt;&lt; &#34;C(&#34; &lt;&lt; n &lt;&lt; &#34;, &#34; &lt;&lt; k &lt;&lt; &#34;) = &#34; &lt;&lt; combinations(n, k) &lt;&lt; std::endl; 
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">    return 0;
+</span></span></span><span class="line"><span class="cl"><span class="cm">}
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span></code></pre></td></tr></table>
 </div>
+</div><h2 id="曼哈顿距离等价公式推导">曼哈顿距离等价公式推导
+</h2><p>给定两个点 $A(x_1, y_1)$ 和 $B(x_2, y_2)$。
+标准的曼哈顿距离定义为：
+</p>
+$$d_M(A,B) = |x_1-x_2| + |y_1-y_2|$$<p>您给出的公式是：
+</p>
+$$s(A,B) = \max(|(x_1+y_1)-(x_2+y_2)|, |(x_1-y_1)-(x_2-y_2)|)$$<p>我们需要证明这两个公式是等价的。
+设 $\Delta x = x_1-x_2$ 且 $\Delta y = y_1-y_2$。
+那么，标准曼哈顿距离可以写作 $|\Delta x| + |\Delta y|$。
+您给出的公式可以写作 $\max(|(\Delta x + \Delta y)|, |(\Delta x - \Delta y)|)$。</p>
+<p>因此，核心是证明以下恒等式：
+</p>
+$$|\Delta x| + |\Delta y| = \max(|\Delta x + \Delta y|, |\Delta x - \Delta y|)$$<p>为了简化书写，我们令 $X = \Delta x$，$Y = \Delta y$。需要证明的恒等式即：
+</p>
+$$|X| + |Y| = \max(|X+Y|, |X-Y|)$$<p><strong>证明过程如下：</strong></p>
+<p>由于等式两边均为非负值，我们可以通过比较它们平方值来证明等式成立。</p>
+<ol>
+<li>
+<p><strong>计算左手边 (LHS) 的平方：</strong>
+</p>
+$$(|X| + |Y|)^2 = |X|^2 + 2|X||Y| + |Y|^2 = X^2 + 2|XY| + Y^2$$</li>
+<li>
+<p><strong>计算右手边 (RHS) 的平方：</strong>
+</p>
+$$(\max(|X+Y|, |X-Y|))^2 = \max(|X+Y|^2, |X-Y|^2)$$<p>   </p>
+$$= \max((X+Y)^2, (X-Y)^2)$$<p>   </p>
+$$= \max(X^2+2XY+Y^2, X^2-2XY+Y^2)$$</li>
+<li>
+<p><strong>比较平方结果：</strong>
+我们需要证明 $X^2 + Y^2 + 2|XY| = \max(X^2+2XY+Y^2, X^2-2XY+Y^2)$。
+令 $P = X^2+Y^2$ 和 $Q = 2XY$。
+那么，上述等式可以改写为证明：
+</p>
+$$P + |Q| = \max(P+Q, P-Q)$$<p>我们分两种情况讨论 $Q$ 的符号：</p>
+<ul>
+<li>
+<p><strong>情况一：$Q \ge 0$</strong>
+此时，$|Q| = Q$。
+所以 $P+|Q| = P+Q$。
+同时，$\max(P+Q, P-Q) = P+Q$ （因为 $Q \ge 0 \implies P+Q \ge P-Q$）。
+因此，$P+Q = P+Q$，等式成立。</p>
+</li>
+<li>
+<p><strong>情况二：$Q &lt; 0$</strong>
+此时，$|Q| = -Q$。
+所以 $P+|Q| = P-Q$。
+同时，$\max(P+Q, P-Q) = P-Q$ （因为 $Q &lt; 0 \implies P-Q &gt; P+Q$）。
+因此，$P-Q = P-Q$，等式成立。</p>
+</li>
+</ul>
+<p>由于在所有情况下 $P+|Q| = \max(P+Q, P-Q)$ 都成立，所以我们证明了：
+</p>
+$$X^2 + Y^2 + 2|XY| = \max(X^2+2XY+Y^2, X^2-2XY+Y^2)$$<p>
+这意味着：
+</p>
+$$(|X| + |Y|)^2 = (\max(|X+Y|, |X-Y|))^2$$</li>
+<li>
+<p><strong>取平方根：</strong>
+由于 $|X|+|Y|$ 和 $\max(|X+Y|, |X-Y|)$ 均为非负值，对两边取平方根，等式依然成立：
+</p>
+$$|X| + |Y| = \max(|X+Y|, |X-Y|)$$</li>
+</ol>
+<p>将 $X = x_1-x_2$ 和 $Y = y_1-y_2$ 代回上式：
+</p>
+$$|x_1-x_2| + |y_1-y_2| = \max(|(x_1-x_2) + (y_1-y_2)|, |(x_1-x_2) - (y_1-y_2)|)$$<p>整理括号内部：</p>
+$$|x_1-x_2| + |y_1-y_2| = \max(|(x_1+y_1) - (x_2+y_2)|, |(x_1-y_1) - (x_2-y_2)|)$$<p>这就证明了您给出的公式 $s(A,B)$ 确实等价于标准曼哈顿距离 $d_M(A,B)$。</p>
+<p>这种坐标变换 $(x,y) \to (x+y, x-y)$ 实质上是将坐标系旋转45度并进行拉伸，曼哈顿距离在原坐标系下的计算等价于新坐标系下的切比雪夫距离（$L_\infty$ 范数）。</p>
+
 </section>
 
 
