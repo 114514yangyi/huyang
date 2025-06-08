@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" SCRUM 基于提供的index.md文件内容，以下是针对软件质量（特别是Scrum框架）的关键知识点总结问题：\nScrum核心框架 三大支柱是什么？如何支撑Scrum的透明、检视与适应？ 33355原则包含哪些核心元素？（3大支柱、3个角色、3个工件、5个价值观、5个事件） Scrum Team的理想规模和跨职能性要求是什么？为什么强调“自管理”？ 角色职责 Product Owner (PO) 的核心职责是什么？PO如何确保产品价值最大化？ Scrum Master (SM) 的三大服务对象（团队、PO、组织）分别需履行哪些职责？ Developers (DV) 在Sprint中需承担哪些具体工作？（如Sprint Backlog任务分解、DoD遵守等） 工件与流程 Product Backlog 的精化（Refinement）过程包含哪些活动？如何判断条目&quot;准备就绪&quot;？ Definition of Done (DoD) 的定义与作用是什么？请举例说明典型DoD条目。 Sprint Planning 会议的四个核心议程是什么？PO为什么必须参与？ 实践技术 估算方法对比：计划扑克、队列估算、金发女孩算法的适用场景与差异？ 用户故事原则：INVEST与SMART原则如何指导故事拆分？结合3C原则（Card/Conversation/Confirmation）说明。 BDD（行为驱动开发） 的流程步骤是什么？如何通过Given-When-Then定义验收标准？ 事件与会议 每日站会（Daily Scrum） 的三大问题是什么？为什么限制15分钟内？ Sprint Review 与 Sprint Retrospective 的目标差异是什么？各自的关键输出物？ 燃尽图（Burndown Chart）如何反映团队进度？异常波动可能预示什么问题？ 扩展与对比 大规模敏捷框架：SAFe与LeSS的核心区别是什么？（如SAFe的ART vs LeSS的单一Product Backlog） Scrum与瀑布模型在质量保障机制上的根本差异是什么？ 如何通过用户故事地图（User Story Mapping） 管理复杂产品需求？ 这些问题覆盖了Scrum的核心概念、角色分工、流程实践及扩展框架，可用于知识自测、团队培训或考试复习。如需深入某个问题的解析，可随时提出！\n">
+<title>软件质量管理问题</title>
+
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E7%AE%A1%E7%90%86%E9%97%AE%E9%A2%98/'>
+
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="软件质量管理问题">
+<meta property='og:description' content=" SCRUM 基于提供的index.md文件内容，以下是针对软件质量（特别是Scrum框架）的关键知识点总结问题：\nScrum核心框架 三大支柱是什么？如何支撑Scrum的透明、检视与适应？ 33355原则包含哪些核心元素？（3大支柱、3个角色、3个工件、5个价值观、5个事件） Scrum Team的理想规模和跨职能性要求是什么？为什么强调“自管理”？ 角色职责 Product Owner (PO) 的核心职责是什么？PO如何确保产品价值最大化？ Scrum Master (SM) 的三大服务对象（团队、PO、组织）分别需履行哪些职责？ Developers (DV) 在Sprint中需承担哪些具体工作？（如Sprint Backlog任务分解、DoD遵守等） 工件与流程 Product Backlog 的精化（Refinement）过程包含哪些活动？如何判断条目&quot;准备就绪&quot;？ Definition of Done (DoD) 的定义与作用是什么？请举例说明典型DoD条目。 Sprint Planning 会议的四个核心议程是什么？PO为什么必须参与？ 实践技术 估算方法对比：计划扑克、队列估算、金发女孩算法的适用场景与差异？ 用户故事原则：INVEST与SMART原则如何指导故事拆分？结合3C原则（Card/Conversation/Confirmation）说明。 BDD（行为驱动开发） 的流程步骤是什么？如何通过Given-When-Then定义验收标准？ 事件与会议 每日站会（Daily Scrum） 的三大问题是什么？为什么限制15分钟内？ Sprint Review 与 Sprint Retrospective 的目标差异是什么？各自的关键输出物？ 燃尽图（Burndown Chart）如何反映团队进度？异常波动可能预示什么问题？ 扩展与对比 大规模敏捷框架：SAFe与LeSS的核心区别是什么？（如SAFe的ART vs LeSS的单一Product Backlog） Scrum与瀑布模型在质量保障机制上的根本差异是什么？ 如何通过用户故事地图（User Story Mapping） 管理复杂产品需求？ 这些问题覆盖了Scrum的核心概念、角色分工、流程实践及扩展框架，可用于知识自测、团队培训或考试复习。如需深入某个问题的解析，可随时提出！\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E7%AE%A1%E7%90%86%E9%97%AE%E9%A2%98/'>
+<meta property='og:site_name' content='Hu Yang&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-06-08T15:28:34&#43;08:00'/><meta property='article:modified_time' content='2025-06-08T15:28:34&#43;08:00'/>
+<meta name="twitter:title" content="软件质量管理问题">
+<meta name="twitter:description" content=" SCRUM 基于提供的index.md文件内容，以下是针对软件质量（特别是Scrum框架）的关键知识点总结问题：\nScrum核心框架 三大支柱是什么？如何支撑Scrum的透明、检视与适应？ 33355原则包含哪些核心元素？（3大支柱、3个角色、3个工件、5个价值观、5个事件） Scrum Team的理想规模和跨职能性要求是什么？为什么强调“自管理”？ 角色职责 Product Owner (PO) 的核心职责是什么？PO如何确保产品价值最大化？ Scrum Master (SM) 的三大服务对象（团队、PO、组织）分别需履行哪些职责？ Developers (DV) 在Sprint中需承担哪些具体工作？（如Sprint Backlog任务分解、DoD遵守等） 工件与流程 Product Backlog 的精化（Refinement）过程包含哪些活动？如何判断条目&quot;准备就绪&quot;？ Definition of Done (DoD) 的定义与作用是什么？请举例说明典型DoD条目。 Sprint Planning 会议的四个核心议程是什么？PO为什么必须参与？ 实践技术 估算方法对比：计划扑克、队列估算、金发女孩算法的适用场景与差异？ 用户故事原则：INVEST与SMART原则如何指导故事拆分？结合3C原则（Card/Conversation/Confirmation）说明。 BDD（行为驱动开发） 的流程步骤是什么？如何通过Given-When-Then定义验收标准？ 事件与会议 每日站会（Daily Scrum） 的三大问题是什么？为什么限制15分钟内？ Sprint Review 与 Sprint Retrospective 的目标差异是什么？各自的关键输出物？ 燃尽图（Burndown Chart）如何反映团队进度？异常波动可能预示什么问题？ 扩展与对比 大规模敏捷框架：SAFe与LeSS的核心区别是什么？（如SAFe的ART vs LeSS的单一Product Backlog） Scrum与瀑布模型在质量保障机制上的根本差异是什么？ 如何通过用户故事地图（User Story Mapping） 管理复杂产品需求？ 这些问题覆盖了Scrum的核心概念、角色分工、流程实践及扩展框架，可用于知识自测、团队培训或考试复习。如需深入某个问题的解析，可随时提出！\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/huyang/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/huyang/img/logo-transparent_hu_2593eda3cf734d42.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/huyang">Hu Yang&#39;s Blog</a></h1>
+            <h2 class="site-description">Blog</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://114514yangyi.github.io/huyang/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='2416572689@qq.com'
+                        target="_blank"
+                        title="QQ"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/huyang/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#scrum核心框架">Scrum核心框架</a></li>
+        <li><a href="#角色职责">角色职责</a></li>
+        <li><a href="#工件与流程">工件与流程</a></li>
+        <li><a href="#实践技术">实践技术</a></li>
+        <li><a href="#事件与会议">事件与会议</a></li>
+        <li><a href="#扩展与对比">扩展与对比</a></li>
+      </ol>
+    </li>
+    <li><a href="#回答">回答</a>
+      <ol>
+        <li><a href="#一scrum核心框架"><strong>一、Scrum核心框架</strong></a></li>
+        <li><a href="#二角色职责"><strong>二、角色职责</strong></a></li>
+        <li><a href="#三工件与流程"><strong>三、工件与流程</strong></a></li>
+        <li><a href="#四实践技术"><strong>四、实践技术</strong></a></li>
+        <li><a href="#五事件与会议"><strong>五、事件与会议</strong></a></li>
+        <li><a href="#六扩展与对比"><strong>六、扩展与对比</strong></a></li>
+      </ol>
+    </li>
+  </ol>
+
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#一核心概念"><strong>一、核心概念</strong></a></li>
+        <li><a href="#二技术实践"><strong>二、技术实践</strong></a></li>
+        <li><a href="#三角色与职责"><strong>三、角色与职责</strong></a></li>
+        <li><a href="#四原则与机制"><strong>四、原则与机制</strong></a></li>
+        <li><a href="#五概念辨析"><strong>五、概念辨析</strong></a></li>
+        <li><a href="#六深度细节"><strong>六、深度细节</strong></a></li>
+        <li><a href="#七连线题"><strong>七、连线题</strong></a></li>
+        <li><a href="#八精确复述"><strong>八、精确复述</strong></a></li>
+        <li><a href="#九术语填空"><strong>九、术语填空</strong></a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E7%AE%A1%E7%90%86%E9%97%AE%E9%A2%98/">软件质量管理问题</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 08, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/math-code.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+<h1 id="scrum">SCRUM
+</h1><p>基于提供的<code>index.md</code>文件内容，以下是针对<strong>软件质量</strong>（特别是Scrum框架）的关键知识点总结问题：</p>
+<h3 id="scrum核心框架">Scrum核心框架
+</h3><ol>
+<li><strong>三大支柱</strong>是什么？如何支撑Scrum的透明、检视与适应？</li>
+<li><strong>33355原则</strong>包含哪些核心元素？（3大支柱、3个角色、3个工件、5个价值观、5个事件）</li>
+<li><strong>Scrum Team</strong>的理想规模和跨职能性要求是什么？为什么强调“自管理”？</li>
+</ol>
+<hr>
+<h3 id="角色职责">角色职责
+</h3><ol start="4">
+<li><strong>Product Owner (PO)</strong> 的核心职责是什么？PO如何确保产品价值最大化？</li>
+<li><strong>Scrum Master (SM)</strong> 的三大服务对象（团队、PO、组织）分别需履行哪些职责？</li>
+<li><strong>Developers (DV)</strong> 在Sprint中需承担哪些具体工作？（如Sprint Backlog任务分解、DoD遵守等）</li>
+</ol>
+<hr>
+<h3 id="工件与流程">工件与流程
+</h3><ol start="7">
+<li><strong>Product Backlog</strong> 的精化（Refinement）过程包含哪些活动？如何判断条目&quot;准备就绪&quot;？</li>
+<li><strong>Definition of Done (DoD)</strong> 的定义与作用是什么？请举例说明典型DoD条目。</li>
+<li><strong>Sprint Planning</strong> 会议的四个核心议程是什么？PO为什么必须参与？</li>
+</ol>
+<hr>
+<h3 id="实践技术">实践技术
+</h3><ol start="10">
+<li><strong>估算方法对比</strong>：计划扑克、队列估算、金发女孩算法的适用场景与差异？</li>
+<li><strong>用户故事原则</strong>：INVEST与SMART原则如何指导故事拆分？结合3C原则（Card/Conversation/Confirmation）说明。</li>
+<li><strong>BDD（行为驱动开发）</strong> 的流程步骤是什么？如何通过<code>Given-When-Then</code>定义验收标准？</li>
+</ol>
+<hr>
+<h3 id="事件与会议">事件与会议
+</h3><ol start="13">
+<li><strong>每日站会（Daily Scrum）</strong> 的三大问题是什么？为什么限制15分钟内？</li>
+<li><strong>Sprint Review</strong> 与 <strong>Sprint Retrospective</strong> 的目标差异是什么？各自的关键输出物？</li>
+<li>燃尽图（Burndown Chart）如何反映团队进度？异常波动可能预示什么问题？</li>
+</ol>
+<hr>
+<h3 id="扩展与对比">扩展与对比
+</h3><ol start="16">
+<li><strong>大规模敏捷框架</strong>：SAFe与LeSS的核心区别是什么？（如SAFe的ART vs LeSS的单一Product Backlog）</li>
+<li><strong>Scrum与瀑布模型</strong>在质量保障机制上的根本差异是什么？</li>
+<li>如何通过<strong>用户故事地图（User Story Mapping）</strong> 管理复杂产品需求？</li>
+</ol>
+<hr>
+<blockquote>
+<p>这些问题覆盖了Scrum的核心概念、角色分工、流程实践及扩展框架，可用于知识自测、团队培训或考试复习。如需深入某个问题的解析，可随时提出！</p></blockquote>
+<h2 id="回答">回答
+</h2><p>以下是对<strong>Scrum框架核心问题</strong>的完整解答，严格基于你提供的 <code>index.md</code> 内容整理：</p>
+<hr>
+<h3 id="一scrum核心框架"><strong>一、Scrum核心框架</strong>
+</h3><ol>
+<li>
+<p><strong>三大支柱</strong></p>
+<ul>
+<li><strong>透明</strong>：过程与工作成果对团队和利益相关者可见。</li>
+<li><strong>检视</strong>：定期审查进展（通过5大事件实现），识别偏差。</li>
+<li><strong>适应</strong>：及时调整偏离目标或质量的问题。
+<em>支撑逻辑</em>：透明是基础，检视发现偏差，适应实现持续改进。</li>
+</ul>
+</li>
+<li>
+<p><strong>33355原则</strong></p>
+<ul>
+<li><strong>3大支柱</strong>：透明、检视、适应</li>
+<li><strong>3个角色</strong>：Scrum Master（SM）、Product Owner（PO）、Developers（DV）</li>
+<li><strong>3个工件</strong>：Product Backlog、Sprint Backlog、Increment</li>
+<li><strong>5个价值观</strong>：勇气、尊重、承诺、专注、开放</li>
+<li><strong>5个事件</strong>：Sprint、Sprint Planning、Daily Scrum、Sprint Review、Sprint Retrospective</li>
+</ul>
+</li>
+<li>
+<p><strong>Scrum Team要求</strong></p>
+<ul>
+<li><strong>规模</strong>：10人或更少（足够小以灵活，足够大以交付价值）。</li>
+<li><strong>跨职能性</strong>：具备端到端交付所需的全部技能（开发、测试、设计等）。</li>
+<li><strong>自管理</strong>：团队自主决定工作执行方式，SM仅负责移除障碍。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="二角色职责"><strong>二、角色职责</strong>
+</h3><ol start="4">
+<li>
+<p><strong>Product Owner（PO）职责</strong></p>
+<ul>
+<li>核心目标：<strong>最大化产品价值</strong>。</li>
+<li>关键行动：
+<ul>
+<li>定义并维护 <strong>Product Goal</strong>。</li>
+<li>创建、排序 <strong>Product Backlog</strong>（代表利益相关者需求）。</li>
+<li>确保Backlog透明可理解。</li>
+</ul>
+</li>
+<li><strong>最终责任</strong>：PO可委托任务，但对Backlog内容负全责。</li>
+</ul>
+</li>
+<li>
+<p><strong>Scrum Master（SM）职责</strong></p>
+<ul>
+<li><strong>对团队</strong>：教练角色，辅助Scrum事件执行，消除协作障碍。</li>
+<li><strong>对PO</strong>：帮助管理Product Goal和Backlog优先级。</li>
+<li><strong>对组织</strong>：推广Scrum实践，打破团队与利益相关者隔阂。</li>
+</ul>
+</li>
+<li>
+<p><strong>Developers（DV）职责</strong></p>
+<ul>
+<li>交付 <strong>可用Increment</strong>（每个Sprint的核心产出）。</li>
+<li>具体任务：
+<ul>
+<li>向Sprint Backlog添加技术任务（如“安装持续构建服务器”）。</li>
+<li>遵守 <strong>Definition of Done（DoD）</strong>。</li>
+<li>根据Sprint Goal动态调整计划。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="三工件与流程"><strong>三、工件与流程</strong>
+</h3><ol start="7">
+<li>
+<p><strong>Product Backlog精化（Refinement）</strong></p>
+<ul>
+<li>活动：拆分条目、补充细节（描述/优先级/规模）、确保条目 <strong>“准备就绪”</strong>。</li>
+<li><strong>“准备就绪”标志</strong>：条目可在单个Sprint内完成（符合DoD）。</li>
+</ul>
+</li>
+<li>
+<p><strong>Definition of Done（DoD）</strong></p>
+<ul>
+<li><strong>定义</strong>：描述用户故事/任务何时真正“完成”的标准清单。</li>
+<li><strong>作用</strong>：保障增量质量一致，避免技术债。</li>
+<li><strong>示例条目</strong>：
+<ul>
+<li>代码通过所有自动化测试</li>
+<li>完成代码审查</li>
+<li>更新用户文档</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Sprint Planning议程</strong></p>
+<ol>
+<li>PO说明Product Backlog，确定演示时间地点。</li>
+<li>团队估算并拆分条目（重要性评分、范围拆分）。</li>
+<li>确定放入Sprint Backlog的条目。</li>
+<li>为Daily Scrum安排时间地点。</li>
+</ol>
+<ul>
+<li><strong>PO必须参与</strong>：确保目标对齐，优先级清晰。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="四实践技术"><strong>四、实践技术</strong>
+</h3><ol start="10">
+<li>
+<p><strong>估算方法对比</strong></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th><strong>方法</strong></th>
+          <th><strong>适用场景</strong></th>
+          <th><strong>关键差异</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>计划扑克</td>
+          <td>团队初估算，快速共识</td>
+          <td>使用斐波那契数列投票</td>
+      </tr>
+      <tr>
+          <td>队列估算</td>
+          <td>大量条目快速排序</td>
+          <td>仅比较相对大小（如T恤尺码）</td>
+      </tr>
+      <tr>
+          <td>金发女孩算法</td>
+          <td>避免过度估算</td>
+          <td>只拆分故事，不做数值估算</td>
+      </tr>
+  </tbody>
+</table></div>
+</li>
+<li>
+<p><strong>用户故事原则</strong></p>
+<ul>
+<li><strong>INVEST原则</strong>：
+<ul>
+<li>Independent（独立）、Negotiable（可协商）、Valuable（有价值）</li>
+<li>Estimable（可估算）、Small（足够小）、Testable（可测试）</li>
+</ul>
+</li>
+<li><strong>SMART原则</strong>：Specific（具体）、Measurable（可衡量）、Achievable（可实现）、Relevant（相关）、Time-bound（有时限）。</li>
+<li><strong>3C原则</strong>：
+<ul>
+<li><strong>Card</strong>（卡片记录需求）、<strong>Conversation</strong>（团队对话澄清）、<strong>Confirmation</strong>（验收标准验证）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>BDD（行为驱动开发）流程</strong></p>
+<ul>
+<li><strong>步骤</strong>：
+<ol>
+<li>编写用户故事：<code>As a [角色], I want [功能], so that [价值]</code>。</li>
+<li>用<code>Given-When-Then</code>定义验收标准：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gherkin" data-lang="gherkin"><span class="line"><span class="cl"><span class="k">Scenario:</span><span class="nf"> 用户登录成功
+</span></span></span><span class="line"><span class="cl"><span class="nf"></span><span class="k">  Given </span><span class="nf">用户输入有效用户名和密码
+</span></span></span><span class="line"><span class="cl"><span class="nf">  </span><span class="k">When </span><span class="nf">点击登录按钮
+</span></span></span><span class="line"><span class="cl"><span class="nf">  </span><span class="k">Then </span><span class="nf">跳转到首页
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="五事件与会议"><strong>五、事件与会议</strong>
+</h3><ol start="13">
+<li>
+<p><strong>每日站会（Daily Scrum）</strong></p>
+<ul>
+<li><strong>三大问题</strong>：
+<ol>
+<li>“昨天我做了什么？”</li>
+<li>“今天准备干什么？”</li>
+<li>“遇到了什么障碍？需要其他人如何帮助？”</li>
+</ol>
+</li>
+<li><strong>限时15分钟</strong>：聚焦进展与障碍，避免细节讨论。</li>
+</ul>
+</li>
+<li>
+<p><strong>Sprint Review vs Retrospective</strong></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th><strong>会议</strong></th>
+          <th><strong>目标</strong></th>
+          <th><strong>关键输出</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Sprint Review</td>
+          <td>演示增量，获取反馈</td>
+          <td>更新的Product Backlog</td>
+      </tr>
+      <tr>
+          <td>Retrospective</td>
+          <td>改进团队工作流程</td>
+          <td>下个Sprint改进计划（Good/Better/Improvement）</td>
+      </tr>
+  </tbody>
+</table></div>
+</li>
+<li>
+<p><strong>燃尽图（Burndown Chart）</strong></p>
+<ul>
+<li><strong>作用</strong>：可视化剩余工作量（故事点）随时间变化趋势。</li>
+<li><strong>异常波动</strong>：
+<ul>
+<li>曲线上升：新增未计划工作（范围蔓延）。</li>
+<li>平缓不下：任务阻塞或估算偏差。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="六扩展与对比"><strong>六、扩展与对比</strong>
+</h3><ol start="16">
+<li>
+<p><strong>SAFe vs LeSS</strong></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th><strong>框架</strong></th>
+          <th><strong>核心差异</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>SAFe</td>
+          <td>分层结构（团队/项目群/投资组合），使用**ART（敏捷发布火车）**协调多团队。</td>
+      </tr>
+      <tr>
+          <td>LeSS</td>
+          <td><strong>单一Product Backlog</strong>，所有团队共用同一优先级队列，极简规则。</td>
+      </tr>
+  </tbody>
+</table></div>
+</li>
+<li>
+<p><strong>Scrum vs 瀑布模型的质量保障</strong></p>
+<ul>
+<li><strong>Scrum</strong>：质量内建（DoD强制验收），每个Sprint交付可用增量，持续反馈。</li>
+<li><strong>瀑布模型</strong>：质量集中在测试阶段，变更成本高，反馈延迟。</li>
+</ul>
+</li>
+<li>
+<p><strong>用户故事地图（User Story Mapping）</strong></p>
+<ul>
+<li><strong>作用</strong>：可视化需求全景，管理复杂产品需求。</li>
+<li><strong>方法</strong>：
+<ul>
+<li>横向：用户活动流程（如“注册→登录→下单”）。</li>
+<li>纵向：拆分优先级（MVP在上层，优化在下层）。</li>
+</ul>
+</li>
+<li><strong>优势</strong>：避免需求碎片化，保持端到端价值流可见。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<blockquote>
+<p>答案完全基于你提供的 <code>index.md</code> 内容，如需扩展某个知识点或补充实例，可随时告知！</p></blockquote>
+<h1 id="xp">XP
+</h1><p>根据文档内容，现系统梳理 <strong>XP（极限编程）全知识点背诵题库</strong>，覆盖核心概念、实践、角色、原则等模块，共计30题：</p>
+<hr>
+<h3 id="一核心概念"><strong>一、核心概念</strong>
+</h3><ol>
+<li>
+<p>XP的四大价值观：<strong><strong><strong>、</strong></strong></strong>、<strong><strong><strong>、</strong></strong></strong>
+<strong>答案</strong>：简单、交流、反馈、勇气</p>
+</li>
+<li>
+<p>XP开发阶段的四项基本活动：______ → ______ → ______ → ______
+<strong>答案</strong>：编码、测试、倾听、设计</p>
+</li>
+<li>
+<p>支撑XP的“三位一体技术基石”：______ → ______ → ______
+<strong>答案</strong>：自动化测试 → 持续集成 → 重构</p>
+</li>
+<li>
+<p><strong>演进式设计</strong>的本质是通过______实现设计随时间优化，而非前期一次性完成。
+<strong>答案</strong>：持续重构</p>
+</li>
+</ol>
+<hr>
+<h3 id="二技术实践"><strong>二、技术实践</strong>
+</h3><ol start="5">
+<li>
+<p>简单设计的四个原则：
+(1) ______ (2) ______ (3) ______ (4) ______
+<strong>答案</strong>：通过所有测试、消除重复、清晰表达意图、最小化元素</p>
+</li>
+<li>
+<p>TDD循环的三阶段：______ → ______ → ______
+<strong>答案</strong>：红（写失败测试）→ 绿（写最小实现）→ 重构</p>
+</li>
+<li>
+<p>持续集成的<strong>七大核心实践</strong>：
+(1) ______ (2) ______ (3) 构建自测试 (4) ______
+(5) 提交即构建 (6) ______ (7) ______
+<strong>答案</strong>：版本控制、自动化构建、每人每天提交、快速构建、隐藏未完成工作</p>
+</li>
+<li>
+<p>重构的明确定义：在不改变______的前提下，调整代码内部结构。
+<strong>答案</strong>：外部可见行为</p>
+</li>
+<li>
+<p>防止未完成代码影响主线的两种技术：______ 和 ______
+<strong>答案</strong>：特征开关（Feature Toggles）、按抽象分支（Branch by Abstraction），暗启动</p>
+</li>
+</ol>
+<hr>
+<h3 id="三角色与职责"><strong>三、角色与职责</strong>
+</h3><ol start="10">
+<li>
+<p><strong>单元测试</strong>由______编写，<strong>功能测试</strong>由______编写。
+<strong>答案</strong>：程序员、客户</p>
+</li>
+<li>
+<p>结对编程中：</p>
+<ul>
+<li>驾驶员（Driver）专注：______</li>
+<li>领航员（Navigator）专注：______
+<strong>答案</strong>：敲代码实现细节、思考整体方向和策略</li>
+</ul>
+</li>
+<li>
+<p><strong>现场客户</strong>的核心职责：实时解答______问题，并编写______。
+<strong>答案</strong>：业务需求、用户故事和功能测试</p>
+</li>
+<li>
+<p>管理者需权衡的两个价值：______ 和 ______
+<strong>答案</strong>：短期交付压力、长期质量保障</p>
+</li>
+</ol>
+<hr>
+<h3 id="四原则与机制"><strong>四、原则与机制</strong>
+</h3><ol start="14">
+<li>
+<p>YAGNI原则全称：______，反对______设计。
+<strong>答案</strong>：You Aren&rsquo;t Gonna Need It、超前</p>
+</li>
+<li>
+<p>代码所有制的核心规则：______
+<strong>答案</strong>：任何人可随时修改任何代码</p>
+</li>
+<li>
+<p>持续集成中的“主线”（Mainline）定义：______
+<strong>答案</strong>：代表项目当前状态的单一共享分支</p>
+</li>
+<li>
+<p>提交构建必须在______分钟内完成，否则需______。
+<strong>答案</strong>：10、拆分任务</p>
+</li>
+</ol>
+<hr>
+<h3 id="五概念辨析"><strong>五、概念辨析</strong>
+</h3><ol start="18">
+<li>
+<p><strong>演进式设计 vs 传统BDUF设计</strong>的四个维度差异：</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>维度</th>
+          <th>演进式设计</th>
+          <th>BDUF设计</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>设计时机</td>
+          <td>______</td>
+          <td>前期一次性</td>
+      </tr>
+      <tr>
+          <td>设计载体</td>
+          <td>______</td>
+          <td>文档</td>
+      </tr>
+      <tr>
+          <td>变更成本</td>
+          <td>______</td>
+          <td>极高</td>
+      </tr>
+      <tr>
+          <td>模式应用</td>
+          <td>______</td>
+          <td>预先定义</td>
+      </tr>
+      <tr>
+          <td><strong>答案</strong>：持续演进、可执行代码、极低、按需引入</td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table></div>
+</li>
+<li>
+<p>CI（持续集成）与CD（持续交付）的关系：______
+<strong>答案</strong>：CI是实现CD的必要前提</p>
+</li>
+<li>
+<p>XP中取代传统“架构”概念的术语：______
+<strong>答案</strong>：隐喻（Metaphor）</p>
+</li>
+</ol>
+<hr>
+<h3 id="六深度细节"><strong>六、深度细节</strong>
+</h3><ol start="21">
+<li>
+<p>自动化测试金字塔的三层结构（从底到顶）：______ → ______ → ______
+<strong>答案</strong>：单元测试、服务测试、UI测试</p>
+</li>
+<li>
+<p>重构的四种具体技法：<strong><strong><strong>、</strong></strong></strong>、<strong><strong><strong>、</strong></strong></strong>（答任意四种）
+<strong>答案</strong>：提取方法/内联方法/搬移方法/封装字段（其他如重命名、分解条件等也可）</p>
+</li>
+<li>
+<p><strong>Jim Highsmith天平隐喻</strong>：
+当变更成本极高，天平倒向______；
+当变更成本极低，天平倒向______。
+<strong>答案</strong>：前期计划设计、持续演进设计</p>
+</li>
+<li>
+<p>持续集成中“隐藏未完成工作”的两种实现方式：______ 和 ______
+<strong>答案</strong>：特性开关、分支抽象</p>
+</li>
+<li>
+<p>XP要求单元测试通过率必须保持______%
+<strong>答案</strong>：100</p>
+</li>
+</ol>
+<hr>
+<h3 id="七连线题"><strong>七、连线题</strong>
+</h3><ol start="26">
+<li>匹配实践与目标：
+<ul>
+<li>结对编程      → A. 减少知识孤岛，提升代码质量</li>
+<li>持续集成      → B. 快速暴露集成冲突</li>
+<li>代码集体所有  → C. 加速问题解决，消除瓶颈</li>
+<li>测试驱动开发  → D. 以需求验证驱动代码实现
+<strong>答案</strong>：1-A, 2-B, 3-C, 4-D</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="八精确复述"><strong>八、精确复述</strong>
+</h3><ol start="27">
+<li>
+<p>完整写出“简单设计的进化路径”：
+<strong>答案</strong>：</p>
+<blockquote>
+<p>从<strong>最简单的方案开始</strong> → 通过<strong>重构</strong>逐步演进 → 最终达到<strong>恰好满足需求</strong>的优雅设计</p></blockquote>
+</li>
+<li>
+<p>写出“重构的两个关键前提条件”：
+<strong>答案</strong>：
+(1) 存在可靠的自动化测试套件
+(2) 每次重构仅进行微小步骤</p>
+</li>
+</ol>
+<hr>
+<h3 id="九术语填空"><strong>九、术语填空</strong>
+</h3><ol start="29">
+<li>
+<p>通过______实现“随时发布”的能力，是持续集成的终极目标。
+<strong>答案</strong>：自动化部署流水线</p>
+</li>
+<li>
+<p>XP认为文档应当作为______的副产品生成，而非独立产出物。
+<strong>答案</strong>：沟通和编码</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>命题说明</strong>：</p>
+<ul>
+<li>覆盖文档中所有加粗/高亮/表格核心知识点，共30题</li>
+<li>题型包括填空、连线、复述、辨析等，均为原文背诵</li>
+<li>答案严格按文档表述，无引申或开放性内容</li>
+</ul></blockquote>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Hu Yang
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
+
+    </body>
+</html>

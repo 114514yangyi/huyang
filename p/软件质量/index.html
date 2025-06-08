@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 软件质量 Scrum 起源 1986年竹内弘高《新型新产品开发策略》\nSCRUM是一个敏捷框架\n过程 Scrum 基于经验主义和精益思维。 经验主义主张知识源自实际经验以及根据当前观察到的事物作出的判断所获得。精益思维减少浪费,专注于根本(第一性思维)。 Scrum Team 规模足够小以保持灵活,同时足够大以便可以在 一个 Sprint 中完成重要的工作,通常只有 10 人或更少。总的来说, 我们发现较小的团队沟通更好,效率更高。 Scrum Team 是跨职能的(cross-functional),这意味着团队成员具有在每个 Sprint 中创造价值而所需的全部技能。具备端到端交付价值所需全部能力，保持核心技能深度的同时,建立足够的协作带宽 一个Sprint为两周到一个月 自管理的Scrum：团队在工作上拥有自主权，可以自行决定工作的执行方式 33355 三大支柱\n透明，检视，适应\n过程与工作成果对团队和利益相关者可见\n定期审查进展,识别偏差(通过5大事件实现)\n及时调整偏离目标或质量的问题\n三个角色\nSM，PO，DV\n三个工件\nProduct Backlog，Sprint Backlog，Increment\n五个价值\n勇气，尊重，承诺，专注，开放\n五个事件\nSpirnt（整个事件）\nSprint Planning\nDaily Scrum\nSprint Review\nSprint Retrospective\nDV Developers 是 Scrum Team 中致力于创建每个 Sprint 可用Increment 的任何方面的人员\n">
+<title>软件质量</title>
+
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/'>
+
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="软件质量">
+<meta property='og:description' content=" 软件质量 Scrum 起源 1986年竹内弘高《新型新产品开发策略》\nSCRUM是一个敏捷框架\n过程 Scrum 基于经验主义和精益思维。 经验主义主张知识源自实际经验以及根据当前观察到的事物作出的判断所获得。精益思维减少浪费,专注于根本(第一性思维)。 Scrum Team 规模足够小以保持灵活,同时足够大以便可以在 一个 Sprint 中完成重要的工作,通常只有 10 人或更少。总的来说, 我们发现较小的团队沟通更好,效率更高。 Scrum Team 是跨职能的(cross-functional),这意味着团队成员具有在每个 Sprint 中创造价值而所需的全部技能。具备端到端交付价值所需全部能力，保持核心技能深度的同时,建立足够的协作带宽 一个Sprint为两周到一个月 自管理的Scrum：团队在工作上拥有自主权，可以自行决定工作的执行方式 33355 三大支柱\n透明，检视，适应\n过程与工作成果对团队和利益相关者可见\n定期审查进展,识别偏差(通过5大事件实现)\n及时调整偏离目标或质量的问题\n三个角色\nSM，PO，DV\n三个工件\nProduct Backlog，Sprint Backlog，Increment\n五个价值\n勇气，尊重，承诺，专注，开放\n五个事件\nSpirnt（整个事件）\nSprint Planning\nDaily Scrum\nSprint Review\nSprint Retrospective\nDV Developers 是 Scrum Team 中致力于创建每个 Sprint 可用Increment 的任何方面的人员\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/'>
+<meta property='og:site_name' content='Hu Yang&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-06-07T23:06:03&#43;08:00'/><meta property='article:modified_time' content='2025-06-07T23:06:03&#43;08:00'/>
+<meta name="twitter:title" content="软件质量">
+<meta name="twitter:description" content=" 软件质量 Scrum 起源 1986年竹内弘高《新型新产品开发策略》\nSCRUM是一个敏捷框架\n过程 Scrum 基于经验主义和精益思维。 经验主义主张知识源自实际经验以及根据当前观察到的事物作出的判断所获得。精益思维减少浪费,专注于根本(第一性思维)。 Scrum Team 规模足够小以保持灵活,同时足够大以便可以在 一个 Sprint 中完成重要的工作,通常只有 10 人或更少。总的来说, 我们发现较小的团队沟通更好,效率更高。 Scrum Team 是跨职能的(cross-functional),这意味着团队成员具有在每个 Sprint 中创造价值而所需的全部技能。具备端到端交付价值所需全部能力，保持核心技能深度的同时,建立足够的协作带宽 一个Sprint为两周到一个月 自管理的Scrum：团队在工作上拥有自主权，可以自行决定工作的执行方式 33355 三大支柱\n透明，检视，适应\n过程与工作成果对团队和利益相关者可见\n定期审查进展,识别偏差(通过5大事件实现)\n及时调整偏离目标或质量的问题\n三个角色\nSM，PO，DV\n三个工件\nProduct Backlog，Sprint Backlog，Increment\n五个价值\n勇气，尊重，承诺，专注，开放\n五个事件\nSpirnt（整个事件）\nSprint Planning\nDaily Scrum\nSprint Review\nSprint Retrospective\nDV Developers 是 Scrum Team 中致力于创建每个 Sprint 可用Increment 的任何方面的人员\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/huyang/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/huyang/img/logo-transparent_hu_2593eda3cf734d42.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/huyang">Hu Yang&#39;s Blog</a></h1>
+            <h2 class="site-description">Blog</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://114514yangyi.github.io/huyang/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='2416572689@qq.com'
+                        target="_blank"
+                        title="QQ"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/huyang/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#scrum">Scrum</a>
+      <ol>
+        <li><a href="#起源">起源</a></li>
+        <li><a href="#过程">过程</a>
+          <ol>
+            <li><a href="#33355">33355</a></li>
+            <li><a href="#dv">DV</a></li>
+            <li><a href="#po">PO</a></li>
+            <li><a href="#sm">SM</a></li>
+            <li><a href="#dod">DoD</a></li>
+            <li><a href="#product-backlog">Product Backlog</a></li>
+            <li><a href="#sprint">Sprint</a></li>
+            <li><a href="#sprint-planning">Sprint Planning</a></li>
+            <li><a href="#估算">估算</a></li>
+            <li><a href="#每日站会">每日站会</a></li>
+            <li><a href="#sprint-review会议演示">Sprint Review会议演示</a></li>
+            <li><a href="#sprint-retrospective-会议回顾">Sprint Retrospective 会议回顾</a></li>
+          </ol>
+        </li>
+        <li><a href="#额外内容">额外内容</a>
+          <ol>
+            <li><a href="#bdd">BDD</a></li>
+            <li><a href="#用户故事">用户故事</a></li>
+            <li><a href="#3c原则">3C原则</a></li>
+            <li><a href="#大规模敏捷--safe">大规模敏捷 – SAFe</a></li>
+            <li><a href="#less">LeSS</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#xp">XP</a>
+      <ol>
+        <li><a href="#历史背景">历史背景</a></li>
+        <li><a href="#开发阶段">开发阶段</a></li>
+        <li><a href="#价值观">价值观</a></li>
+        <li><a href="#基本实践">基本实践</a>
+          <ol>
+            <li><a href="#计划游戏">计划游戏</a></li>
+            <li><a href="#小的发布">小的发布</a></li>
+            <li><a href="#隐喻">隐喻</a></li>
+            <li><a href="#简单设计">简单设计</a></li>
+            <li><a href="#测试tdd">测试TDD</a></li>
+            <li><a href="#重构">重构</a></li>
+            <li><a href="#结对编程">结对编程</a></li>
+            <li><a href="#代码所有制">代码所有制</a></li>
+            <li><a href="#持续集成cicd">持续集成CICD</a></li>
+            <li><a href="#40小时工作制">40小时工作制</a></li>
+            <li><a href="#现场客户">现场客户</a></li>
+            <li><a href="#编码标准">编码标准</a></li>
+          </ol>
+        </li>
+        <li><a href="#tdd">TDD</a></li>
+        <li><a href="#xp测试额外内容">XP测试额外内容：</a>
+          <ol>
+            <li><a href="#xp设计演进式设计">XP设计：演进式设计</a></li>
+            <li><a href="#简单设计原则">简单设计原则</a></li>
+            <li><a href="#yagni">YAGNI</a></li>
+            <li><a href="#重构-1">重构</a></li>
+          </ol>
+        </li>
+        <li><a href="#持续集成">持续集成</a>
+          <ol>
+            <li><a href="#ci操作的流程">CI操作的流程</a></li>
+            <li><a href="#ci核心实践">CI核心实践</a></li>
+            <li><a href="#持续集成的好处">持续集成的好处</a></li>
+            <li><a href="#持续集成的额外点">持续集成的额外点</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/">软件质量</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 07, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/math-code.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+<h1 id="软件质量">软件质量
+</h1><h2 id="scrum">Scrum
+</h2><h3 id="起源">起源
+</h3><p>1986年竹内弘高《新型新产品开发策略》</p>
+<p>SCRUM是一个敏捷框架</p>
+<h3 id="过程">过程
+</h3><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608105627834.png"
+	width="2530"
+	height="1114"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608105627834_hu_b521c52c8744f02e.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608105627834_hu_6a3758a37cd18313.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608105627834"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="227"
+		data-flex-basis="545px"
+	
+></p>
+<ul>
+<li>Scrum 基于经验主义和精益思维。 经验主义主张知识源自实际经验以及根据当前观察到的事物作出的判断所获得。精益思维减少浪费,专注于根本(第一性思维)。</li>
+<li>Scrum Team 规模足够小以保持灵活,同时足够大以便可以在 一个 Sprint 中完成重要的工作,通常只有 10 人或更少。总的来说, 我们发现较小的团队沟通更好,效率更高。</li>
+<li>Scrum Team 是跨职能的(cross-functional),这意味着团队成员具有在每个 Sprint 中创造价值而所需的全部技能。具备端到端交付价值所需全部能力，保持核心技能深度的同时,建立足够的协作带宽</li>
+<li>一个Sprint为两周到一个月</li>
+<li>自管理的Scrum：团队在工作上拥有自主权，可以自行决定工作的执行方式
+<img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608111520091.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608111520091_hu_e7c8c98d6603eff1.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608111520091_hu_ed820c780a73dd77.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608111520091"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></li>
+<li></li>
+</ul>
+<h4 id="33355">33355
+</h4><ol>
+<li>
+<p>三大支柱</p>
+<p>透明，检视，适应</p>
+<p>过程与工作成果对团队和利益相关者可见</p>
+<p>定期审查进展,识别偏差(通过5大事件实现)</p>
+<p>及时调整偏离目标或质量的问题</p>
+</li>
+<li>
+<p>三个角色</p>
+<p>SM，PO，DV</p>
+</li>
+<li>
+<p>三个工件</p>
+<p>Product Backlog，Sprint Backlog，Increment</p>
+</li>
+<li>
+<p>五个价值</p>
+<p>勇气，尊重，承诺，专注，开放</p>
+</li>
+<li>
+<p>五个事件</p>
+<p>Spirnt（整个事件）</p>
+<p>Sprint Planning</p>
+<p>Daily Scrum</p>
+<p>Sprint Review</p>
+<p>Sprint Retrospective</p>
+</li>
+</ol>
+<h4 id="dv">DV
+</h4><p>Developers 是 Scrum Team 中致力于<code>创建每个 Sprint 可用Increment</code> 的任何方面的人员</p>
+<p>DV负责：Sprint Backlog中添加任务，遵循Definition Of Done，根据Sprint Goal调整计划，</p>
+<h4 id="po">PO
+</h4><p>Product Owner 负责将 Scrum Team 的工作所产生的<code>产品价值最大化</code>。</p>
+<p>PO负责：开发Product Goal，创建并排序Product Backlog，确保它的透明性</p>
+<ul>
+<li>Product Owner 可以自己做上述工作,或者也可以将职责委托他人。
+然而无论如何, Product Owner 是负最终责任的人。</li>
+<li>为保证 Product Owner 取得成功,整个组织必须尊重他们的决定。这些决定在 Product Backlog 的内容和顺序中可见,并在 Sprint Review 时透过可检视的 Increment 予以体现。</li>
+<li>Product Owner 是一个人,而不是一个委员会。在 Product Backlog 中, Product Owner 可以代表许多利益攸关者的期望要求。那些想要改变Product Backlog 的人可以尝试去说服 Product Owner 来做到这一点。</li>
+</ul>
+<h4 id="sm">SM
+</h4><p>Scrum Master 负责按照 Scrum 指南的游戏规则来<code>建立 Scrum</code>。他们通过帮助 Scrum Team 和组织内的每个人<code>理解 Scrum 理论和实践</code>来做到这一点</p>
+<ul>
+<li>Scrum Master 对 Scrum Team 的效能负责</li>
+<li>SM-》Scrum Team：作为教练来辅助各个环节</li>
+<li>SM-〉PO：帮助管理Product Goal，Product Backlog</li>
+<li>消除利益攸关者和 Scrum Teams 之间的隔阂</li>
+</ul>
+<h4 id="dod">DoD
+</h4><p>“Definition of Done”(DoD,完成的定义) 是敏捷软件开发中的一个关键概念,用于描述一个用户故事、任务或功能何时可以被认为真正“完成”。</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608145057562.png"
+	width="2448"
+	height="700"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608145057562_hu_247b2aea141ca478.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608145057562_hu_aeeaebe8fde885cd.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608145057562"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="349"
+		data-flex-basis="839px"
+	
+></p>
+<h4 id="product-backlog">Product Backlog
+</h4><p>是Scrum的核心,是按重要性排序的需求或故事(Story)的列表(客户语言描述的客户需求)</p>
+<p>能够被 Scrum Team 在一个 Sprint 中完成(Done)的 Product Backlog 条目被认为准备就绪,在Sprint Planning 事件中可供选择。它们通常在精化活动后获得这种透明度。</p>
+<p>Product Backlog 精化是将 Product Backlog 条目分解并进一步定义为更小更精确的行为。这是一项持续进行的活动,为Product Backlog 条目增添细节,例如描述、优先顺序和规模。这些属性通常随工作领域而变化。</p>
+<h4 id="sprint">Sprint
+</h4><p>Sprint 是 Scrum 的核心,在这里创意(idea)转化为价值。</p>
+<p>两周到一个月</p>
+<p>实现 Product Goal 所需的所有工作,包括 Sprint Planning、Daily Scrum、Sprint Review 和 Sprint Retrospective,都发生在 Sprint 内</p>
+<h4 id="sprint-planning">Sprint Planning
+</h4><p>所有人都可以往Sprint Backlog中添加条目</p>
+<p>确定技术故事:需要完成但是不属于可交付物的东西,如: •-安装持续构建服务器•-编写系统设计概览</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608113920046.png"
+	width="1936"
+	height="664"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608113920046_hu_2b846c54669c9b44.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608113920046_hu_c0e1f97d484ba768.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608113920046"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="291"
+		data-flex-basis="699px"
+	
+></p>
+<p>==PO必须参加Sprint Planning==</p>
+<p>一个故事有三个变量：范围，重要性，估算</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608114129854.png"
+	width="2532"
+	height="784"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608114129854_hu_e5efb279d9db20de.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608114129854_hu_3f03f21d1e0e55b7.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608114129854"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="322"
+		data-flex-basis="775px"
+	
+></p>
+<ol>
+<li>PO说明Product Backlog，确定演示的时间地点</li>
+<li>团队对于Product Backlog进行估算，对条目进行拆分（重要性评分，范围拆分）</li>
+<li>确定放入Sprint Backlog的条目</li>
+<li>为Daily Scrum安排时间地点</li>
+</ol>
+<h4 id="估算">估算
+</h4><ol>
+<li>
+<p>Story point:故事点,选取可识别的最小用例为2个story point.其它估算都是相对值,在所有sprint中保持该相对值一致。</p>
+</li>
+<li>
+<p>在估算速度时,估计能在一个迭代周期内能够完成的story point。</p>
+</li>
+<li>
+<p>使用计划扑克</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608114809286.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608114809286_hu_f206a38285d6bf89.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608114809286_hu_d3cc5f20e5e37eb9.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608114809286"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608114949010.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608114949010_hu_1e9c9bdf79d97568.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608114949010_hu_6b9d469409661abc.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608114949010"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+</li>
+<li>
+<p>队列估计算法</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608143105812.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608143105812_hu_ab3f70cd6ef279fb.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608143105812_hu_3d5a94ec7881396b.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608143105812"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608143118297.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608143118297_hu_e622deda07a0ea94.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608143118297_hu_bd58f9b2bfb3bd82.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608143118297"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+</li>
+<li>
+<p>金发女孩算法：只拆分，不估计</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608143232252.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608143232252_hu_e3968636440f3ba8.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608143232252_hu_5a8b05065ce63369.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608143232252"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+</li>
+<li>
+<p>Story是可以交付的东西,Task是不可以交付的,Product Owner对Task不关心;</p>
+</li>
+<li>
+<p>燃尽图</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608143458732.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608143458732_hu_d9f3071204858f1c.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608143458732_hu_cbab12bbdcd56d6b.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608143458732"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+</li>
+</ol>
+<h4 id="每日站会">每日站会
+</h4><p>不超过15分钟⚫回答三个问题: ◼“昨天我做了什么。”◼“今天准备干什么。”◼“你遇到了什么障碍,需要其他人如何帮你。”⚫移动任务板上的即时贴到对应的地方⚫每日例会一结束就要计算剩余工作故事点并更新燃尽图</p>
+<h4 id="sprint-review会议演示">Sprint Review会议演示
+</h4><ul>
+<li>开发团队演示 Sprint 中“完成”的工作。</li>
+<li>团队和利益相关者（客户、用户、管理层等）讨论进展、反馈和市场变化。</li>
+<li>产品负责人根据反馈和当前环境更新产品待办列表（优先级可能调整）。</li>
+<li>讨论下一个可能的价值交付方向。</li>
+<li>演示我们做了什么而不是我们怎么做的</li>
+<li>演示保持快节奏</li>
+</ul>
+<h4 id="sprint-retrospective-会议回顾">Sprint Retrospective 会议回顾
+</h4><ul>
+<li>我们怎样才能在下个Sprint中做的更好,不是追究责任</li>
+<li>根据要讨论的内容范围,设定时间为 1 至 3 个小时</li>
+<li>Scrum master 向大家展示 sprint backlog,在团队的帮助下对sprint 做总结。包括重要事件和决策等。</li>
+<li>我们会轮流发言。每个人都有机会在不被人打断的情况下讲出自己的想法,他认为什么是好的,哪些可以做的更好,哪些需要在下个 sprint 中改变</li>
+<li>我们对预估生产率和实际生产率进行比较。如果差异比较大的话,我们会分析原因</li>
+<li>快结束的时候,Scrum master 对具体建议进行总结,得出下个 sprint 需要改进的地方。</li>
+<li>这次的会议中哪些做得好（GOOD），哪些需要改进（BETTER），具体怎么改进（IMPROVEMENT）</li>
+</ul>
+<h3 id="额外内容">额外内容
+</h3><h4 id="bdd">BDD
+</h4><p>那么应该怎么才算是完成了一个功能呢？（DoD），可以使用BDD来指导一个软件的行为应该是怎么样子的</p>
+<p>行为驱动开发(BDD) 是一种基于敏捷的软件开发方法论,其核心思想是通过定义软件的行为来驱动开发过程。BDD 的重点是增强团队对<code>需求的理解</code>,并确保开发的软件满足业务目标。</p>
+<h5 id="流程">流程
+</h5><ol>
+<li>
+<p>编写用户故事</p>
+<p>as a [] ,i want [],so that []</p>
+</li>
+<li>
+<p>定义验收标准</p>
+<p>Scenario</p>
+<p>Given</p>
+<p>When</p>
+<p>Then</p>
+</li>
+</ol>
+<h4 id="用户故事">用户故事
+</h4><p>停止写出完美文档的“执念”</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608144520964.png"
+	width="1638"
+	height="542"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608144520964_hu_9bbbe5f18bc5c829.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608144520964_hu_2cae81661493ed0e.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608144520964"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="302"
+		data-flex-basis="725px"
+	
+></p>
+<ul>
+<li>用户（WHO）</li>
+<li>功能（WHAT）</li>
+<li>为什么（WHY）</li>
+</ul>
+<p>==用户故事是占位符==</p>
+<p>接收标准回答如下的问题:“ 我们如何得知它何时已完工?</p>
+<p>用户故事的原则：</p>
+<p><strong>INVEST原则：</strong></p>
+<ol>
+<li>indepandent</li>
+<li>negotiate</li>
+<li>valuable</li>
+<li>estimatale</li>
+<li>small</li>
+<li>testable</li>
+</ol>
+<p><strong>SMART原则</strong></p>
+<ol>
+<li>specific</li>
+<li>measurable</li>
+<li>archeive</li>
+<li>relavant</li>
+<li>time-bound</li>
+</ol>
+<p><strong>用户故事地图</strong></p>
+<p>用户故事地图是一门在需求拆分过程中保持全景图的技术。</p>
+<p>敏捷软件开发中使用用户故事地图来<strong>发现、管理需求</strong></p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608145855116.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608145855116_hu_99bb5de5339ec805.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608145855116_hu_9dc90dfa8df0c144.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608145855116"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<h4 id="3c原则">3C原则
+</h4><ol>
+<li>card</li>
+<li>coversation</li>
+<li>comfirmation</li>
+</ol>
+<h4 id="大规模敏捷--safe">大规模敏捷 – SAFe
+</h4><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608150911943.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608150911943_hu_48bce09775103305.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608150911943_hu_d2962a09e3659f1.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608150911943"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608150923113.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608150923113_hu_f739b23f8b404497.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608150923113_hu_55347cc893614492.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608150923113"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<h4 id="less">LeSS
+</h4><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608151018716.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608151018716_hu_258286427536b9c5.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608151018716_hu_3df216836d7cd74.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608151018716"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608151244858.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608151244858_hu_eeea3a9282ad2fd8.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608151244858_hu_ef7fea297487fd1.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608151244858"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p>==多个团队共享一个相同的Product Backlog==</p>
+<h2 id="xp">XP
+</h2><h3 id="历史背景">历史背景
+</h3><p>诞生于C3系统</p>
+<p>核心理念:把有益的实践做到极致</p>
+<p>XP是一系列软件开发技术实践的集合</p>
+<h3 id="开发阶段">开发阶段
+</h3><p>最前面的任务卡:“用户管理:登录、退出、分组。”⚫ 找一个结对编程伙伴⚫ 讨论任务⚫ 什么是测试用例?如果对任何事情不确定,向他人寻求帮助。
+⚫ 编写测试用例⚫ 测试失败⚫编写代码⚫运行所有测试用例⚫迭代测试用例和代码⚫如果需要,进行重构⚫集成,包括测试</p>
+<p>开发的四项基本活动是编码、测试、倾听和设计</p>
+<p><strong>测试类型：</strong></p>
+<ul>
+<li>单元测试：由程序员来写</li>
+<li>功能测试：由客户来写</li>
+</ul>
+<p><strong>倾听：</strong></p>
+<p>程序员请业务人员说明项目的需求</p>
+<h3 id="价值观">价值观
+</h3><ol>
+<li>
+<p>简单</p>
+<p>当前可能奏效的最简方案是什么?</p>
+</li>
+<li>
+<p>交流</p>
+<p>单元测试</p>
+<p>结对编程</p>
+<p>任务估算</p>
+</li>
+<li>
+<p>反馈</p>
+<p>及时反馈</p>
+</li>
+<li>
+<p>勇气</p>
+<p>勇于推倒重来</p>
+</li>
+</ol>
+<h3 id="基本实践">基本实践
+</h3><h4 id="计划游戏">计划游戏
+</h4><p>无论是业务考虑还是技术考虑都不应占据单一决定地位</p>
+<p>业务决策需结合技术可行性。开发团队需提供技术评估(如实现成本、风险等),作为业务决策的依据</p>
+<p>平衡双方，==寻找最有价值的用户故事==，制定计划</p>
+<h4 id="小的发布">小的发布
+</h4><p>每次发布都应尽可能小,包含最有价值的业务需求。</p>
+<p>发布必须作为一个整体有意义。</p>
+<p>一次计划一两个月远比一次计划六个月或一年要好得多</p>
+<h4 id="隐喻">隐喻
+</h4><p>每个极限编程(XP)软件项目都由一个总体隐喻来指导</p>
+<p>在极限编程中,这个隐喻取代了许多其他人所说的 “架构”</p>
+<p>指导后续的设计</p>
+<p>隐喻指导结对编程的命名设计</p>
+<h4 id="简单设计">简单设计
+</h4><p>在能够通过所有测试下的，没有重复逻辑，能清晰表明意图，最少的类和方法的设计</p>
+<p>简洁的设计使得重构变得简单</p>
+<h4 id="测试tdd">测试TDD
+</h4><ul>
+<li>任何没有自动化测试的程序功能实际上都不存在。</li>
+<li>程序员编写单元测试,以便他们对程序运行的信心能够成为程序本身的一部分。</li>
+<li>客户（现场客户）编写功能测试,以便他们对程序运行的信心也能成为程序的一部分。</li>
+</ul>
+<p>测试保证不会破坏重构的原有功能</p>
+<p>测试达成结对编程两人的共同理解</p>
+<h4 id="重构">重构
+</h4><p>只有当系统要求你进行重构时, 你才进行重构：当系统要求你复制代码时,它就是在要求进行重构。</p>
+<p>在实现程序功能时,程序员总是会问是否有办法改变现有程序, 以使添加该功能变得简单。</p>
+<h4 id="结对编程">结对编程
+</h4><p>其中一个人,即手握键盘和鼠标的那位,思考的是在此处实现这个方法的最佳方式。</p>
+<p>另一个人则从更具战略性的角度思考:</p>
+<p>◼整个方法行得通吗? ◼还有哪些测试用例可能尚未通过? ◼有没有办法简化整个系统,让当前的问题迎刃而解?</p>
+<p>防止愚蠢的设计</p>
+<h4 id="代码所有制">代码所有制
+</h4><p>任何人若发现有机会为代码的任何部分增加价值,都应随时这么做。</p>
+<p>代码所有制激发重构</p>
+<h4 id="持续集成cicd">持续集成CICD
+</h4><p>代码在几小时内 —— 最多一天的开发时间内 —— 完成集成与测试。</p>
+<p>少量变更的持续集成能快速定位问题:若测试失败,责任明确归属于当前集成人员,因上一轮集成已确保测试通过。</p>
+<p>集成测试使得重构的错误杯及时发现</p>
+<p>集成测试使得代码所有制的错误被及时发现</p>
+<h4 id="40小时工作制">40小时工作制
+</h4><p>加班是项目中存在严重问题的一个征兆</p>
+<p>充分休息使得重构不会发生错误</p>
+<h4 id="现场客户">现场客户
+</h4><p>真正的客户必须与团队坐在一起,随时解答问题、解决争议并确定小规模的优先级。</p>
+<p>管理者必须决定哪一个更有价值 —— 是让软件更快更好地投入使用,还是留住一两个人的产出。</p>
+<p>（软件重要还是客户重要）</p>
+<h4 id="编码标准">编码标准
+</h4><p>同一编码规范</p>
+<p>如果要让所有这些程序员在系统的不同部分之间切换,一天之内更换几次搭档,还不断重构彼此的代码,那你根本承受不起存在多套不同的编码规范。</p>
+<p>统一的标准无需在重构时进行格式化</p>
+<p>编码标准减少结对编程的冲突</p>
+<h3 id="tdd">TDD
+</h3><ul>
+<li>编码前编写测试–保留他们–一起运行</li>
+<li>测试应当是独立且自动的</li>
+<li>你只应该编写那些能带来回报的测试</li>
+<li>程序员编写的单元测试始终以100%的通过率运行</li>
+<li>功能测试并非总是能 100% 正常运行。客户通常无法自行编写功能测试。</li>
+<li>这就是为什么无论规模大小,极限编程(XP)团队至少要有==一名专职测试人员==。</li>
+</ul>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608164039171.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608164039171_hu_c70be8a4cfac7e67.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608164039171_hu_4b8b3a9bb56dd29e.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608164039171"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p><strong>实践过程：</strong></p>
+<p>三阶段循环:红(失败测试)→ 绿(通过实现)→ 重构(优化代码)</p>
+<p>终极目标:创建可测试、可维护、最小化的代码</p>
+<blockquote>
+<p>1 编写失败测试:仅定义接口与预期行为(如add(2,3)应返回5)</p>
+<p>2 快速实现通过:用最简单代码让测试变绿(如return 5硬编码)</p>
+<p>3 逐步泛化:补充更多测试案例,消除硬编码(如增加add(4,5)测试)</p>
+<p>4 持续重构:在测试保护下优化代码结构</p></blockquote>
+<p>==测试不是质量保证部门的工作,而是设计工具==</p>
+<h3 id="xp测试额外内容">XP测试额外内容：
+</h3><h4 id="xp设计演进式设计">XP设计：演进式设计
+</h4><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th><strong>维度</strong></th>
+          <th><strong>瀑布模型/BDUF</strong></th>
+          <th><strong>XP的演进式设计</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>设计时机</strong></td>
+          <td>需求分析后一次性完成</td>
+          <td>贯穿开发全程（每天迭代）</td>
+      </tr>
+      <tr>
+          <td><strong>设计载体</strong></td>
+          <td>UML图/文档（与代码脱节）</td>
+          <td><strong>代码即设计</strong>（文档自动生成）</td>
+      </tr>
+      <tr>
+          <td><strong>变更成本</strong></td>
+          <td>后期修改需重写文档，成本高昂</td>
+          <td>通过重构低成本调整</td>
+      </tr>
+      <tr>
+          <td><strong>模式应用</strong></td>
+          <td>预先强制套用</td>
+          <td>需求扩展时自然引入（如出现多个相似类→抽象工厂）</td>
+      </tr>
+  </tbody>
+</table></div>
+<blockquote>
+<p>🔥 <strong>关键结论</strong>：<br>
+<strong>XP不是抛弃设计，而是将设计从“前期仪式”转化为“持续呼吸”</strong> —— 通过重构和简单设计，让系统像生物一样随需求进化。这要求更高的工程素养，但能大幅降低过度设计风险。</p></blockquote>
+<p><strong>🔧 三位一体技术基石</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">graph LR
+</span></span><span class="line"><span class="cl">A[自动化测试] --&gt; B[持续集成] --&gt; C[重构] --&gt; A
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>自动化测试</strong>（覆盖率&gt;90%）→ 为重构提供安全网，敢改代码不惧破坏。</li>
+<li><strong>持续集成</strong>（每日多次）→ 快速发现冲突，避免系统偏离设计轨道。</li>
+<li><strong>重构</strong>（持续微调）→ 随时优化设计，抵御熵增。</li>
+</ul>
+<p>==赋能实践的核心是测试和持续集成==</p>
+<p><strong>⚖️ Jim Highsmith的天平隐喻</strong>：</p>
+<blockquote>
+<p>当<strong>变更成本极高</strong>（如传统开发），天平倒向“前期计划设计”；<br>
+当<strong>变更成本极低</strong>（XP通过技术实践实现），天平倒向“持续演进设计”。</p></blockquote>
+<h4 id="简单设计原则">简单设计原则
+</h4><ol>
+<li>通过所有测试</li>
+<li>消除重复</li>
+<li>清晰表达意图</li>
+<li>最小化元素</li>
+</ol>
+<h4 id="yagni">YAGNI
+</h4><p>你并不需要它，也就是说不要超前设计</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608193515422.png"
+	width="2188"
+	height="482"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608193515422_hu_af3d263d7c5668bf.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608193515422_hu_b83f26b8661a8033.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608193515422"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="453"
+		data-flex-basis="1089px"
+	
+></p>
+<p>==YAGNI不是反对设计,而是要求用经济学证据驱动每行代码的投资决策==</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608193605355.png"
+	width="2034"
+	height="356"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608193605355_hu_9e53f8d928b6a243.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608193605355_hu_316e71246ab9e983.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608193605355"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="571"
+		data-flex-basis="1371px"
+	
+></p>
+<h4 id="重构-1">重构
+</h4><p>在不改变代码外部可见行为的前提下,持续优化代码内部结构的技术</p>
+<p>工具: •IDE自动化重构:IntelliJ/Eclipse的提取方法/变量等快捷操作•测试框架:JUnit(Java)、pytest(Python)等快速验证行为•代码质量扫描:SonarQube检测重复代码、圈复杂度等异味•</p>
+<p>与临时调整的本质区别: • ==测试保护下的安全重构==• 重构不是推倒重写,而是让代码随时间越变越优雅的持续艺术。</p>
+<p><img src="/huyang/MarginNote%203%202025-06-08%2019.38.25.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="MarginNote 3 2025-06-08 19.38.25"
+	
+	
+></p>
+<blockquote>
+<p>Martin Fowler建议:评估可能架构。平衡YAGNI和合理的技术预见</p></blockquote>
+<p>对于<strong>UML</strong>：</p>
+<p>&ldquo;有用则用”</p>
+<p>•目标为沟通。选择重要内容,忽略次要。图表无需全面,代码才是全面信息源。</p>
+<p>•编码前可以用图表探索设计。但需: 保持简短</p>
+<p>•-不解决所有细节</p>
+<p>•-视设计为草图而非终稿</p>
+<p>==敏捷方法重视版本控制系，通过降低流程中的不可逆性来应对复杂性。==</p>
+<h3 id="持续集成">持续集成
+</h3><p>持续集成 (Continuous Integration, CI) 是一种软件开发实践,==团队成员频繁地(通常每天至少一次)将他们的代码更改集成到共享的代码库主线中==。</p>
+<p><strong>目的</strong>：CI 旨在==降低集成的复杂性和风险,==避免在项目后期出现痛苦而漫长的“集成地狱”</p>
+<p>传统集成：尽量减少与其他部分的交互, 但这往往会导致技术债的积累和代码质量的下降，避免重构</p>
+<hr>
+<p><strong>持续集成的解决方案：</strong></p>
+<p>核心理念:持续集成旨在消除传统集成的痛苦。
+⚫其核心思想是让团队成员非常频繁地集成他们的工作,通常是每天多次。
+⚫通过这种方式,任何个体开发者偏离主线的时间都不会超过几个小时。这意味着每次集成涉及的代码量都相对较小,从而显著降低了合并冲突的可能性和复杂性。
+⚫更重要的是,任何集成引入的问题都能够被自动化构建和测试快速发现。这种快速反馈机制使得问题定位和修复变得更加容易。
+⚫==CI 鼓励使用主线开发(Mainline Development),有时也被称为基于主干的开发(Trunk-Based Development)==。</p>
+<hr>
+<h4 id="ci操作的流程">CI操作的流程
+</h4><ol>
+<li>git pull：中央代码仓库(Central Repository)获取最新的产品代码</li>
+<li>autoconstruct：本地进行自动化构建</li>
+<li>git pull &amp; git merge &amp; autoconstruct：作出自己的更改以后，从服务器拉取并且将本地和服务器之间的代码冲突进行合并，最后在集成测试一下，运行完整的本地自动化构建脚本</li>
+<li>git push：在本地构建成功以后，将代码推送到服务器中，此时CI服务器会再次进行一次构建。</li>
+</ol>
+<hr>
+<h4 id="ci核心实践">CI核心实践
+</h4><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608203856723.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608203856723_hu_9535e4952dbcfbd4.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608203856723_hu_32641b276bbd9532.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608203856723"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<ol>
+<li>
+<p>版本控制：</p>
+<ol>
+<li>将项目所需的所有东西都纳入版本控制系统(Version Control System, VCS),并维护一个单一的、共享的主线(Mainline / Trunk)</li>
+<li>仅通过克隆(Clone)代码仓库, 就应该能够构建完整的系统</li>
+<li>代码仓库中不包含依赖，而是实时下载；构建产物也不要包含，应该要及时清理</li>
+<li>持续集成依赖于“主 线”的存在。==主线是代码库中一个单一的、共享的分支,它代表了项目当前的、经过集成的状态,通常是准备部署到生产(或下一个环境)的状态。==</li>
+<li>文本格式优先：方便diff</li>
+</ol>
+</li>
+<li>
+<p>自动化构建：</p>
+<ol>
+<li>==在软件开发中,任何可以自动化的重复性任务都应该自动化。==</li>
+<li>构建过程的自动化是持续集成的核心要求之一。目标是实现“一键构建”(Single Command Build)，通过执行一个简单、明确的单一命令,就能完成整个系统的构建过程</li>
+<li>构建脚本本身也应该是项目的一部分,并存储在版本控制中</li>
+</ol>
+</li>
+<li>
+<p>让构建自测试</p>
+<ol>
+<li>核心机制: 在 CI 中,防止错误进入产品的主要技术手段是一个全面的自动化测试套件。</li>
+<li>工具支持：Xunit 测试框架</li>
+<li>信心来源: 自测试构建的目标是,当所有的自动化测试都通过时(即构建是“绿色”的),团队应该有足够的信心认为产品中没有引入重大的、明显的错误。</li>
+<li>使用多层次的验证手段：
+<ol>
+<li>许多编程环境提供了==额外的静态和动态分析工具,可以集成到构建验证流程中==。</li>
+<li>◼Linter: 可以检测代码中的不良实践、潜在错误或风格问题。(静态分析工具的最基本形式)</li>
+<li>◼代码格式化检查: 确保代码遵循团队统一的格式规范。</li>
+<li>◼静态分析工具: 可以发现更复杂的代码问题,如潜在的 Null 指针异常、资源泄漏等。</li>
+<li>◼安全扫描工具: 检测已知的安全漏洞。</li>
+<li>◼覆盖率检查: 衡量测试覆盖了多少代码(但高覆盖率不等于高质量测试)。</li>
+</ol>
+</li>
+<li>即使是一个不完美的测试套件,只要它能够捕获一部分错误,并且被频繁地(在每次构建时)运行,它也比完全没有自动化测试要好得多。</li>
+</ol>
+</li>
+<li>
+<p>每个人每天提交到主线</p>
+<ol>
+<li>
+<p>“持续”意味着非常频繁。实践中的经验法则是,每个团队成员每天至少向主线提交(并推送)一次他们的代码更改。
+对于活跃的项目,更常见的是每天多次提交。==这种高频率是 CI 的核心特征==。</p>
+</li>
+<li>
+<p>CI的操作流程应该每天至少循环一次</p>
+</li>
+<li>
+<p>有利于发现源代码冲突和语义冲突：</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608210027552.png"
+	width="2514"
+	height="666"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608210027552_hu_ba29486ea86aaa43.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F/image-20250608210027552_hu_aabdaea35bdda342.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250608210027552"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="377"
+		data-flex-basis="905px"
+	
+></p>
+</li>
+<li>
+<p>每次的变更非常小，所以可以快速定位错误</p>
+</li>
+</ol>
+</li>
+<li>
+<p>每次提交触发主线构建</p>
+<ol>
+<li>必要性：可能有人因为懒惰导致没有进行本地构建+本地和服务器环境的不同</li>
+<li>CI 服务(如 Jenkins, GitLab CI, GitHub Actions, CircleCI, Travis CI, Azure Pipelines 等)是实现自动化主线构建的关键工具。</li>
+<li>==立即修复失败的构建，团队需要保持常绿，修复失败时最高的优先级任务==</li>
+<li>修复失败的方法：
+<ol>
+<li>恢复回退</li>
+<li>简单问题：直接在主线上进行修复提交</li>
+<li>使用门禁提交</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>保持构建的快速</p>
+<ol>
+<li>持续集成的核心价值在于提供快速反馈。缓慢的构建是扼杀 CI 活力的主要因素之一。</li>
+<li>目标时间: 一个经常被引用的经验法则是,主提交构建(Commit Build,即验证每次提交的核心构建)应该在==十分钟==内完成。这被认为是开发者注意力可以容忍的上限。</li>
+<li>解决方案：
+<ol>
+<li>使用构建流水线：流水线将整个构建和验证过程分解为多个阶段(Stage)。第一个阶段是“提交阶段”(Commit Stage)或“提交构建”(Commit Build),它专注于提供最快的反馈。后续阶段则运行更全面但更慢的测试。</li>
+<li>提交阶段：编译代码+执行单元测试+静态分析检查</li>
+<li>后续阶段：集成测试+端到端的测试+性能测试+安全扫描；后续阶段的失败虽然也需要尽快修复,但通常不会像提交阶段失败那样“停止一切”(stop-the-line)。团队会致力于尽快修复这些问题,但可能不会阻塞主线的提交。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>隐藏未完成的工作</p>
+<ol>
+<li>特征开关/特征标志 (Feature Toggles / Feature Flags): 在代码中加入配置开关,可以动态地启用或禁用某个功能模块。未完成的功能默认是禁用的,只有在特定环境(如测试环境)或对特定用户(如内部测试人员)才启用。这是最常用和灵活的技术之一。</li>
+<li>◼按抽象分支 (Branch by Abstraction): 在进行较大规模重构或替换系统某一部分时, 可以引入一个抽象层,使得新旧实现可以并存。通过配置或抽象工厂来选择使用哪个实现,逐步将依赖切换到新实现上,完成后再移除旧实现和抽象层。</li>
+<li>◼黑启动/暗启动 (Dark Launching): 将新功能部署到生产环境,但不暴露给最终用户,只在内部进行监控和测试。</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="持续集成的好处">持续集成的好处
+</h4><ul>
+<li>减少集成风险: 频繁的小规模集成取代了传统模式下的大规模、一次性集成。这使得合并冲突更容易解决,因为每次冲突涉及的代码量更少。</li>
+<li>⚫快速发现错误: 自动化构建和测试可以在集成后几分钟内就发现编译错误、测试失败或语义冲突。问题发现得越早,修复成本就越低。</li>
+<li>⚫更容易定位错误: 由于每次集成引入的更改量很小,当构建失败时,可以快速将问题范围缩小到最近一次或几次提交,大大简化了调试过程。这避免了在数周或数月积累的代码中大海捞针般地寻找错误。</li>
+<li>⚫减少“集成地狱”: 告别项目后期漫长而痛苦的集成阶段,让集成成为日常开发的一部分,而非一个令人生畏的里程碑。</li>
+<li>⚫鼓励并支持重构: 有了快速、可靠的自动化测试作为安全网,开发者更有信心进行代码重构,以改善设计、消除重复、提高可维护性。CI 使得重构成为一种持续的活动,有助于保持代码库的健康。</li>
+<li>⚫提高代码质量: 自动化测试和静态分析工具的持续运行,有助于及早发现并修复缺陷和不良实践,从而提升整体代码质量。</li>
+<li>⚫更频繁、更可靠的发布: 由于主线代码始终处于接近可发布的状态,并且经过了持续的自动化验证,团队可以更频繁、更自信地进行软件发布。发布不再是一个高风险、低频率的事件。</li>
+<li>⚫发布成为业务决策: 当技术上的发布障碍被移除后,“何时发布”更多地取决于业务需求和市场时机,而不是技术团队能否准备好一个版本。这与持续交付(Continuous Delivery)的理念紧密相连。</li>
+</ul>
+<h4 id="持续集成的额外点">持续集成的额外点
+</h4><p><strong>特征分支</strong></p>
+<p>持续集成与长期存在的特性分支(Feature Branching,即开发者在独立分支上工作数天、数周甚至数月)是互斥的开发模式。</p>
+<p>兼容性: 短暂的、生命周期不超过一天的特性分支(或个人任务分支) 与 CI 是兼容的,前提是这些分支最终会频繁地(每天至少一次)合并回主线,并且合并前后的主线都经过了 CI 验证。关键在于集成的频率和目标(主线)</p>
+<p><strong>CICD</strong></p>
+<p>关系与区别:</p>
+<p>◼持续集成 (CI): 关注点在于开发者将代码更改频繁集成到版本控制系统的主线, 并通过自动化构建和测试进行验证。其目标是确保主线代码始终处于健康、可工作、已集成的状态。CI 主要发生在开发环境中。</p>
+<p>◼持续交付 (CD): 是 CI 的自然延伸。它确保了通过 CI 验证的主线代码,能够通过一系列自动化的后续步骤(如更全面的测试、部署到类生产环境、准备发布包),使得任何版本的主线代码都可以被部署到生产环境。CD 的目标是让发布到生产成为一个低风险、可按需进行的常规活动,通常是一个业务决策。</p>
+<p>◼关系: ==CI 是实现 CD 的必要前提。没有有效的 CI,就无法可靠地进行 CD。==</p>
+<p>==持续部署是持续交付的更进一步==。在持续交付中,每次主线构建通过所有自动化测试和验证后,软件处于可发布状态,但最终部署到生产环境通常还需要一次手动触发(例如,业务人员点击按钮)。而在持续部署中, 这个手动触发步骤也被自动化了:只要主线构建成功通过了部署流水线中的所有阶段(包括所有自动化测试和检查),它就会自动被部署到生产环境中, 无需人工干预。</p>
+<p>持续集成对于维持一个健康的、可持续发展的软件产品至关重要,因为它是支持这种==进化式设计(Evolutionary Design)生态系统==的关键组成部分。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Hu Yang
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
+
+    </body>
+</html>

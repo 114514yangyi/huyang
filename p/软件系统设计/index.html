@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 软件系统设计 面向对象的设计原则 原则 单一职责原则\n一个对象应该只包含单一的职责,并且该职责被完整地封装在一个类中。\n就一个类而言,应该仅有一个引起它变化的原因\n开闭原则\n一个软件实体应当对扩展开放,对修改关闭。也就是说在设计一个模块的时候,应当使这个模块可以在不被修改的前提下被扩展,即实现在不修改源代码的情况下改变这个模块的行为。\n抽象化是开闭原则的关键。 • 开闭原则还可以通过一个更加具体的“对可变性封装原则”来描述,对可变性封装原则(Principle of Encapsulation of Variation, EVP)要求找到系统的可变因素并将其封装起来。\n里氏代换原则\n如果对每一个类型为S的对象o1,都有类型为T的对象o2,使得以T定义的所有程序P在所有的对象o2都代换成o1时,程序P的行为没有变化,那么类型S是类型T的子类型。\n所有引用基类(父类)的地方必须能透明地使用其子类的对象\n里氏代换原则是实现开闭原则的重要方式之一,由于使用基类对象的地方都可以使用子类对象,因此在程序中尽量使用基类类型来对对象进行定义,而在运行时再确定其子类类型,用子类对象来替换父类对象。\n依赖倒转原则\n高层模块不应该依赖低层模块,它们都应该依赖抽象。抽象不应该依赖于细节,细节应该依赖于抽象。\n也就是所有的东西都依赖于抽象，要针对接口（抽象）编程,不要针对实现编程\n实现开闭原则的关键是抽象化,并且从抽象化导出具体化实现,如果说开闭原则是面向对象设计的目标的话,那么依赖倒转原则就是面向对象设计的主要手段。\n接口隔离原则\n客户端不应该依赖那些它不需要的接口，每一个接口应该承担一种相对独立的角色\n一旦一个接口太大,则需要将它分割成一些更细小的接口, 使用该接口的客户端仅需知道与之相关的方法即可（将大接口划分为小接口）\n每一个客户使用的接口都应该是专用的，也就是不包含哪些他不用的功能职责。接口仅仅提供客户端需要的行为\n合成复用原则\n尽量使用对象组合,而不是继承来达到复用的目的。\n继承复用:实现简单,易于扩展。破坏系统的封装性;从基类继承而来的实现是静态的,不可能在运行时发生改变,没有足够的灵活性; 只能在有限的环境中使用。(“白箱”复用 )\n• 组合/聚合复用:耦合度相对较低,选择性地调用成员对象的操作;可以在运行时动态进行。 (“黑箱”复用 )\n迪米特法则\n一个软件实体应当尽可能少的与其他实体发生相互作用\n迪米特法则可分为狭义法则和广义法则。在狭义的迪米特法则中,如果两个类之间不必彼此直接通信,那么这两个类就不应当发生直接的相互作用,如果其中的一个类需要调用另一个类的某一个方法的话,可以通过第三者转发这个调用。\n可以降低类之间的耦合,但是会在系统中增加大量的小方法并散落在系统的各个角落,它可以使一个系统的局部设计简化,因为每一个局部都不会和远距离的对象有直接的关联,但是也会造成系统的不同模块之间的通信效率降低,使得系统的不同模块之间不容易协调。\n每一个类都应当尽量降低其成员变量和成员函数的访问权限\n在类的设计上,只要有可能,一个类型应当设计成不变类; •\n在对其他类的引用上,一个对象对其他对象的引用应当降到最低。\n">
+<title>软件系统设计</title>
+
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/'>
+
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="软件系统设计">
+<meta property='og:description' content=" 软件系统设计 面向对象的设计原则 原则 单一职责原则\n一个对象应该只包含单一的职责,并且该职责被完整地封装在一个类中。\n就一个类而言,应该仅有一个引起它变化的原因\n开闭原则\n一个软件实体应当对扩展开放,对修改关闭。也就是说在设计一个模块的时候,应当使这个模块可以在不被修改的前提下被扩展,即实现在不修改源代码的情况下改变这个模块的行为。\n抽象化是开闭原则的关键。 • 开闭原则还可以通过一个更加具体的“对可变性封装原则”来描述,对可变性封装原则(Principle of Encapsulation of Variation, EVP)要求找到系统的可变因素并将其封装起来。\n里氏代换原则\n如果对每一个类型为S的对象o1,都有类型为T的对象o2,使得以T定义的所有程序P在所有的对象o2都代换成o1时,程序P的行为没有变化,那么类型S是类型T的子类型。\n所有引用基类(父类)的地方必须能透明地使用其子类的对象\n里氏代换原则是实现开闭原则的重要方式之一,由于使用基类对象的地方都可以使用子类对象,因此在程序中尽量使用基类类型来对对象进行定义,而在运行时再确定其子类类型,用子类对象来替换父类对象。\n依赖倒转原则\n高层模块不应该依赖低层模块,它们都应该依赖抽象。抽象不应该依赖于细节,细节应该依赖于抽象。\n也就是所有的东西都依赖于抽象，要针对接口（抽象）编程,不要针对实现编程\n实现开闭原则的关键是抽象化,并且从抽象化导出具体化实现,如果说开闭原则是面向对象设计的目标的话,那么依赖倒转原则就是面向对象设计的主要手段。\n接口隔离原则\n客户端不应该依赖那些它不需要的接口，每一个接口应该承担一种相对独立的角色\n一旦一个接口太大,则需要将它分割成一些更细小的接口, 使用该接口的客户端仅需知道与之相关的方法即可（将大接口划分为小接口）\n每一个客户使用的接口都应该是专用的，也就是不包含哪些他不用的功能职责。接口仅仅提供客户端需要的行为\n合成复用原则\n尽量使用对象组合,而不是继承来达到复用的目的。\n继承复用:实现简单,易于扩展。破坏系统的封装性;从基类继承而来的实现是静态的,不可能在运行时发生改变,没有足够的灵活性; 只能在有限的环境中使用。(“白箱”复用 )\n• 组合/聚合复用:耦合度相对较低,选择性地调用成员对象的操作;可以在运行时动态进行。 (“黑箱”复用 )\n迪米特法则\n一个软件实体应当尽可能少的与其他实体发生相互作用\n迪米特法则可分为狭义法则和广义法则。在狭义的迪米特法则中,如果两个类之间不必彼此直接通信,那么这两个类就不应当发生直接的相互作用,如果其中的一个类需要调用另一个类的某一个方法的话,可以通过第三者转发这个调用。\n可以降低类之间的耦合,但是会在系统中增加大量的小方法并散落在系统的各个角落,它可以使一个系统的局部设计简化,因为每一个局部都不会和远距离的对象有直接的关联,但是也会造成系统的不同模块之间的通信效率降低,使得系统的不同模块之间不容易协调。\n每一个类都应当尽量降低其成员变量和成员函数的访问权限\n在类的设计上,只要有可能,一个类型应当设计成不变类; •\n在对其他类的引用上,一个对象对其他对象的引用应当降到最低。\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/'>
+<meta property='og:site_name' content='Hu Yang&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-06-07T21:40:16&#43;08:00'/><meta property='article:modified_time' content='2025-06-07T21:40:16&#43;08:00'/>
+<meta name="twitter:title" content="软件系统设计">
+<meta name="twitter:description" content=" 软件系统设计 面向对象的设计原则 原则 单一职责原则\n一个对象应该只包含单一的职责,并且该职责被完整地封装在一个类中。\n就一个类而言,应该仅有一个引起它变化的原因\n开闭原则\n一个软件实体应当对扩展开放,对修改关闭。也就是说在设计一个模块的时候,应当使这个模块可以在不被修改的前提下被扩展,即实现在不修改源代码的情况下改变这个模块的行为。\n抽象化是开闭原则的关键。 • 开闭原则还可以通过一个更加具体的“对可变性封装原则”来描述,对可变性封装原则(Principle of Encapsulation of Variation, EVP)要求找到系统的可变因素并将其封装起来。\n里氏代换原则\n如果对每一个类型为S的对象o1,都有类型为T的对象o2,使得以T定义的所有程序P在所有的对象o2都代换成o1时,程序P的行为没有变化,那么类型S是类型T的子类型。\n所有引用基类(父类)的地方必须能透明地使用其子类的对象\n里氏代换原则是实现开闭原则的重要方式之一,由于使用基类对象的地方都可以使用子类对象,因此在程序中尽量使用基类类型来对对象进行定义,而在运行时再确定其子类类型,用子类对象来替换父类对象。\n依赖倒转原则\n高层模块不应该依赖低层模块,它们都应该依赖抽象。抽象不应该依赖于细节,细节应该依赖于抽象。\n也就是所有的东西都依赖于抽象，要针对接口（抽象）编程,不要针对实现编程\n实现开闭原则的关键是抽象化,并且从抽象化导出具体化实现,如果说开闭原则是面向对象设计的目标的话,那么依赖倒转原则就是面向对象设计的主要手段。\n接口隔离原则\n客户端不应该依赖那些它不需要的接口，每一个接口应该承担一种相对独立的角色\n一旦一个接口太大,则需要将它分割成一些更细小的接口, 使用该接口的客户端仅需知道与之相关的方法即可（将大接口划分为小接口）\n每一个客户使用的接口都应该是专用的，也就是不包含哪些他不用的功能职责。接口仅仅提供客户端需要的行为\n合成复用原则\n尽量使用对象组合,而不是继承来达到复用的目的。\n继承复用:实现简单,易于扩展。破坏系统的封装性;从基类继承而来的实现是静态的,不可能在运行时发生改变,没有足够的灵活性; 只能在有限的环境中使用。(“白箱”复用 )\n• 组合/聚合复用:耦合度相对较低,选择性地调用成员对象的操作;可以在运行时动态进行。 (“黑箱”复用 )\n迪米特法则\n一个软件实体应当尽可能少的与其他实体发生相互作用\n迪米特法则可分为狭义法则和广义法则。在狭义的迪米特法则中,如果两个类之间不必彼此直接通信,那么这两个类就不应当发生直接的相互作用,如果其中的一个类需要调用另一个类的某一个方法的话,可以通过第三者转发这个调用。\n可以降低类之间的耦合,但是会在系统中增加大量的小方法并散落在系统的各个角落,它可以使一个系统的局部设计简化,因为每一个局部都不会和远距离的对象有直接的关联,但是也会造成系统的不同模块之间的通信效率降低,使得系统的不同模块之间不容易协调。\n每一个类都应当尽量降低其成员变量和成员函数的访问权限\n在类的设计上,只要有可能,一个类型应当设计成不变类; •\n在对其他类的引用上,一个对象对其他对象的引用应当降到最低。\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/huyang/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/huyang/img/logo-transparent_hu_2593eda3cf734d42.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/huyang">Hu Yang&#39;s Blog</a></h1>
+            <h2 class="site-description">Blog</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://114514yangyi.github.io/huyang/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='2416572689@qq.com'
+                        target="_blank"
+                        title="QQ"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/huyang/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#面向对象的设计原则">面向对象的设计原则</a>
+      <ol>
+        <li><a href="#原则">原则</a></li>
+        <li><a href="#其他主题导入概念">其他主题导入概念</a>
+          <ol>
+            <li><a href="#可维护性较低的原因">可维护性较低的原因</a></li>
+            <li><a href="#好的系统的特征">好的系统的特征</a></li>
+            <li><a href="#重构">重构</a></li>
+          </ol>
+        </li>
+        <li><a href="#原则的实战使用分析">原则的实战使用分析</a>
+          <ol>
+            <li><a href="#单一职责原则">单一职责原则</a></li>
+            <li><a href="#开闭原则">开闭原则</a></li>
+            <li><a href="#里氏代换原则">里氏代换原则</a></li>
+            <li><a href="#依赖倒转原则">依赖倒转原则</a></li>
+            <li><a href="#接口隔离原则">接口隔离原则</a></li>
+            <li><a href="#合成复用原则">合成复用原则</a></li>
+            <li><a href="#迪米特法则">迪米特法则</a></li>
+          </ol>
+        </li>
+        <li><a href="#总结">总结</a></li>
+      </ol>
+    </li>
+    <li><a href="#策略模式">策略模式</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">软件系统设计</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 07, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/math-code.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+<h1 id="软件系统设计">软件系统设计
+</h1><h2 id="面向对象的设计原则">面向对象的设计原则
+</h2><h3 id="原则">原则
+</h3><ol>
+<li>
+<p>单一职责原则</p>
+<p>一个对象应该只包含单一的职责,并且该职责被完整地封装在一个类中。</p>
+<p>就一个类而言,应该仅有一个引起它变化的原因</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220045446.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220045446_hu_91845475b6ad8880.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220045446_hu_d5458a711d6bf87a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607220045446"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+</li>
+<li>
+<p>开闭原则</p>
+<p>一个软件实体应当对扩展开放,对修改关闭。也就是说在设计一个模块的时候,应当使这个模块可以在不被修改的前提下被扩展,即实现在不修改源代码的情况下改变这个模块的行为。</p>
+<p>抽象化是开闭原则的关键。
+• 开闭原则还可以通过一个更加具体的“对可变性封装原则”来描述,对可变性封装原则(Principle of Encapsulation of Variation, EVP)要求找到系统的可变因素并将其封装起来。</p>
+</li>
+<li>
+<p>里氏代换原则</p>
+<p>如果对每一个类型为S的对象o1,都有类型为T的对象o2,使得以T定义的所有程序P在所有的对象o2都代换成o1时,程序P的行为没有变化,那么类型S是类型T的子类型。</p>
+<p>所有引用基类(父类)的地方必须能透明地使用其子类的对象</p>
+<p>里氏代换原则是实现开闭原则的重要方式之一,由于使用基类对象的地方都可以使用子类对象,因此在程序中尽量使用基类类型来对对象进行定义,而在运行时再确定其子类类型,用子类对象来替换父类对象。</p>
+</li>
+<li>
+<p>依赖倒转原则</p>
+<p>高层模块不应该依赖低层模块,它们都应该依赖抽象。抽象不应该依赖于细节,细节应该依赖于抽象。</p>
+<p>也就是所有的东西都依赖于抽象，要针对接口（抽象）编程,不要针对实现编程</p>
+<p>实现开闭原则的关键是<strong>抽象化</strong>,并且从抽象化导出具体化实现,如果说<strong>开闭原则是面向对象设计的目标的话,那么依赖倒转原则就是面向对象设计的主要手段</strong>。</p>
+</li>
+<li>
+<p>接口隔离原则</p>
+<p>客户端不应该依赖那些它不需要的接口，每一个接口应该承担一种相对独立的角色</p>
+<p>一旦一个接口太大,则需要将它分割成一些更细小的接口, 使用该接口的客户端仅需知道与之相关的方法即可（将大接口划分为小接口）</p>
+<p>每一个客户使用的接口都应该是专用的，也就是不包含哪些他不用的功能职责。接口仅仅提供客户端需要的行为</p>
+</li>
+<li>
+<p>合成复用原则</p>
+<p>尽量使用对象组合,而不是继承来达到复用的目的。</p>
+<p>继承复用:实现简单,易于扩展。破坏系统的封装性;从基类继承而来的实现是静态的,不可能在运行时发生改变,没有足够的灵活性; 只能在有限的环境中使用。(“白箱”复用 )</p>
+<p>• 组合/聚合复用:耦合度相对较低,选择性地调用成员对象的操作;可以在运行时动态进行。
+(“黑箱”复用 )</p>
+</li>
+<li>
+<p>迪米特法则</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223545469.png"
+	width="2494"
+	height="888"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223545469_hu_102cb5341aab0eb3.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223545469_hu_3f7b0457abdf8628.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607223545469"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="280"
+		data-flex-basis="674px"
+	
+></p>
+<p>一个软件实体应当尽可能少的与其他实体发生相互作用</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223718069.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223718069_hu_8f77c73965d361da.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223718069_hu_8db01be97b49017.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607223718069"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p>迪米特法则可分为狭义法则和广义法则。在狭义的迪米特法则中,如果两个类之间不必彼此直接通信,那么这两个类就不应当发生直接的相互作用,如果其中的一个类需要调用另一个类的某一个方法的话,可以通过第三者转发这个调用。</p>
+<p>可以降低类之间的耦合,但是会在系统中增加大量的小方法并散落在系统的各个角落,它可以使一个系统的局部设计简化,因为每一个局部都不会和远距离的对象有直接的关联,但是也会造成系统的不同模块之间的通信效率降低,使得系统的不同模块之间不容易协调。</p>
+<p>每一个类都应当尽量降低其成员变量和成员函数的访问权限</p>
+<p>在类的设计上,只要有可能,一个类型应当设计成不变类; •</p>
+<p>在对其他类的引用上,一个对象对其他对象的引用应当降到最低。</p>
+</li>
+</ol>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607214824793.png"
+	width="2660"
+	height="1198"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607214824793_hu_eb9c57c657c489ae.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607214824793_hu_8c35eaac4898e97e.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607214824793"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="222"
+		data-flex-basis="532px"
+	
+></p>
+<h3 id="其他主题导入概念">其他主题导入概念
+</h3><h4 id="可维护性较低的原因">可维护性较低的原因
+</h4><ul>
+<li>过于脆弱</li>
+<li>粘度过高</li>
+<li>复用性低</li>
+<li>过于僵硬</li>
+</ul>
+<h4 id="好的系统的特征">好的系统的特征
+</h4><ul>
+<li>可扩展性</li>
+<li>可插入性</li>
+<li>灵活性</li>
+</ul>
+<h4 id="重构">重构
+</h4><p>重构(Refactoring)是在不改变软件现有功能的基础上,通过调整程序代码改善软件的质量、性能,使其程序的设计模式和架构更趋合理,提高软件的扩展性和维护性。</p>
+<h3 id="原则的实战使用分析">原则的实战使用分析
+</h3><h4 id="单一职责原则">单一职责原则
+</h4><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220232248.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220232248_hu_10bdf2c39caebe76.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220232248_hu_d389305fcdf25e76.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607220232248"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<blockquote>
+<p>在这里里面我们需要将一个登录功能划分到不同的类中，使得能够划分为User的数据，DB的连接（这个是直接涉及到数据库而不是我们的Login），和界面的展示（也就是功能职责）。</p>
+<p>这里直接使用聚合的方式是因为合成复用原则。</p></blockquote>
+<h4 id="开闭原则">开闭原则
+</h4><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220833877.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220833877_hu_cc1662f219a5fb3c.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220833877_hu_6b02af7b1b7d7d61.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607220833877"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<blockquote>
+<p>开闭原则就是当我们需要对系统的功能（类）进行扩展的时候，只需添加代码而不修改原有的代码；这里主要体现在我们对于多个同一类型的类写一个抽象类，然后其他的子类都继承这个父类。</p></blockquote>
+<h4 id="里氏代换原则">里氏代换原则
+</h4><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607221337825.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607221337825_hu_8d9ff1b08efca6d8.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607221337825_hu_d84990f2f125a6d5.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607221337825"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<blockquote>
+<p>在所有能够使用基类的地方都能够使用子类进行替代，也就是说我们在每一个函数接受的参数中都使用基类，然后在运行时开始使用子类进行替代</p></blockquote>
+<h4 id="依赖倒转原则">依赖倒转原则
+</h4><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222149375.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222149375_hu_d75507e51cef56af.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222149375_hu_b1b2068b80a53fd5.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607222149375"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<blockquote>
+<p>在代码中使用抽象类,而将具体类放在配置文件中</p>
+<p>也就是对于不同的来源和变换使用抽象类，使得底层（具体的source）和高层（main）都依赖于抽象，面对接口编程。</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222107159.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222107159_hu_a77ee70e789e1da1.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222107159_hu_4e329fc8aacaefa1.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607222107159"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p></blockquote>
+<h4 id="接口隔离原则">接口隔离原则
+</h4><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222822622.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222822622_hu_3a6f4c82866281e4.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222822622_hu_d909b79a8aca519.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607222822622"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222833099.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222833099_hu_df8ab921551ed58f.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222833099_hu_31c6a1105e101513.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607222833099"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<blockquote>
+<p>为不同的客户端提供宽窄不同的接口</p></blockquote>
+<h4 id="合成复用原则">合成复用原则
+</h4><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223213787.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223213787_hu_aad37da7127069c1.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223213787_hu_ca939573ec9f3a19.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607223213787"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223309075.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223309075_hu_b84b309d868c0c5f.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223309075_hu_afffdf72fffb0742.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607223309075"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<blockquote>
+<p>这里我们可以看到合成复用：将原来对于DB的继承替换成了聚合，因为这里的DB和具体的DAO是无关的，所以我们需要降低他们的耦合，将原来的DB使用合成复用原则，并且这里面将原来的DB替换成了抽象类，使用了开闭原则（依赖倒转原则），使得能够使用不同的DB进行初始化</p></blockquote>
+<h4 id="迪米特法则">迪米特法则
+</h4><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607224050488.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607224050488_hu_2cb45c62ba59bcef.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607224050488_hu_e3a4029947636b21.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607224050488"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607224101769.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607224101769_hu_2a312f815d9f5ab.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607224101769_hu_bacb94789878e223.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250607224101769"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<blockquote>
+<p>这里使用迪米特法则的特征是：降低一个类能够访问其他类的数量</p>
+<p>并且假如B是A的朋友，C是B的朋友，A想要调用C，那么就需要在B中写一个小方法专门用于调用C的方法。</p></blockquote>
+<h3 id="总结">总结
+</h3><ul>
+<li>目标:开闭原则</li>
+<li>指导:最小知识原则</li>
+<li>基础:单一职责原则、可变性封装原则</li>
+<li>实现:依赖倒转原则、合成复用原则、里氏代换原则、接口隔离原</li>
+</ul>
+<h2 id="策略模式">策略模式
+</h2><p>在一系列的模式变换中：</p>
+<ol>
+<li>将有一些子类有的，一些子类没有的能力抽象为接口</li>
+<li>同一个能力的不同表现也可以是抽象出一个抽象类</li>
+<li>分装变化</li>
+<li>面向接口编程</li>
+<li></li>
+</ol>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Hu Yang
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
+
+    </body>
+</html>
