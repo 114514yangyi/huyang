@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 软件系统设计 面向对象的设计原则 原则 单一职责原则\n一个对象应该只包含单一的职责,并且该职责被完整地封装在一个类中。\n就一个类而言,应该仅有一个引起它变化的原因\n开闭原则\n一个软件实体应当对扩展开放,对修改关闭。也就是说在设计一个模块的时候,应当使这个模块可以在不被修改的前提下被扩展,即实现在不修改源代码的情况下改变这个模块的行为。\n抽象化是开闭原则的关键。 • 开闭原则还可以通过一个更加具体的“对可变性封装原则”来描述,对可变性封装原则(Principle of Encapsulation of Variation, EVP)要求找到系统的可变因素并将其封装起来。\n里氏代换原则\n如果对每一个类型为S的对象o1,都有类型为T的对象o2,使得以T定义的所有程序P在所有的对象o2都代换成o1时,程序P的行为没有变化,那么类型S是类型T的子类型。\n所有引用基类(父类)的地方必须能透明地使用其子类的对象\n里氏代换原则是实现开闭原则的重要方式之一,由于使用基类对象的地方都可以使用子类对象,因此在程序中尽量使用基类类型来对对象进行定义,而在运行时再确定其子类类型,用子类对象来替换父类对象。\n依赖倒转原则\n高层模块不应该依赖低层模块,它们都应该依赖抽象。抽象不应该依赖于细节,细节应该依赖于抽象。\n也就是所有的东西都依赖于抽象，要针对接口（抽象）编程,不要针对实现编程\n实现开闭原则的关键是抽象化,并且从抽象化导出具体化实现,如果说开闭原则是面向对象设计的目标的话,那么依赖倒转原则就是面向对象设计的主要手段。\n接口隔离原则\n客户端不应该依赖那些它不需要的接口，每一个接口应该承担一种相对独立的角色\n一旦一个接口太大,则需要将它分割成一些更细小的接口, 使用该接口的客户端仅需知道与之相关的方法即可（将大接口划分为小接口）\n每一个客户使用的接口都应该是专用的，也就是不包含哪些他不用的功能职责。接口仅仅提供客户端需要的行为\n合成复用原则\n尽量使用对象组合,而不是继承来达到复用的目的。\n继承复用:实现简单,易于扩展。破坏系统的封装性;从基类继承而来的实现是静态的,不可能在运行时发生改变,没有足够的灵活性; 只能在有限的环境中使用。(“白箱”复用 )\n• 组合/聚合复用:耦合度相对较低,选择性地调用成员对象的操作;可以在运行时动态进行。 (“黑箱”复用 )\n迪米特法则\n一个软件实体应当尽可能少的与其他实体发生相互作用\n迪米特法则可分为狭义法则和广义法则。在狭义的迪米特法则中,如果两个类之间不必彼此直接通信,那么这两个类就不应当发生直接的相互作用,如果其中的一个类需要调用另一个类的某一个方法的话,可以通过第三者转发这个调用。\n可以降低类之间的耦合,但是会在系统中增加大量的小方法并散落在系统的各个角落,它可以使一个系统的局部设计简化,因为每一个局部都不会和远距离的对象有直接的关联,但是也会造成系统的不同模块之间的通信效率降低,使得系统的不同模块之间不容易协调。\n每一个类都应当尽量降低其成员变量和成员函数的访问权限\n在类的设计上,只要有可能,一个类型应当设计成不变类; •\n在对其他类的引用上,一个对象对其他对象的引用应当降到最低。\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 软件系统设计 定义： 软件模式是将模式的一般概念应用于软件开发领域,即软件开发的总体指导思路或参照样板。\n设计模式(Design Pattern)是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结, 使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。\n设计模式的基本要素：模式名称，问题，解决方案，效果\n设计模式一般有如下几个基本要素:模式名称、问题、目的、解决方案、效果、实例代码和相关设计模式\n设计模式的分类\n根据其目的(模式是用来做什么的)可分为创建型(Creational),结构型(Structural)和行为型(Behavioral)三种:\n• 创建型模式主要用于创建对象。 • 结构型模式主要用于处理类或对象的组合。 • 行为型模式主要用于描述对类或对象怎样交互和怎样分配职责。 根据范围,即模式主要是用于处理类之间关系还是处理对象之间的关系,可分为类模式和对象模式两种:\n• 类模式处理类和子类之间的关系,这些关系通过继承建立, 在编译时刻就被确定下来,是属于静态的。 • 对象模式处理对象间的关系,这些关系在运行时刻变化,更具动态性。 目标:开闭原则•指导:最小知识原则•基础:单一职责原则、可变性封装原则•实现:依赖倒转原则、合成复用原则、里氏代换原则、接口隔离原则\n优缺点： 创建型模式-》客户端不用知道具体的构造过程，无需关心具体创建的细节，隔离了类的生成 是否违反开闭原则（灵活性，扩展性） 高内聚低耦合 隔离了什么和什么（解耦） 什么场景不适用，使用范围有局限性 在扩展时是否需要增加新的类，产生的是更多的小的对象 是否需要提供额外的函数 可重用性，透明性，可复用性 使用的类的数量 系统的复杂度和抽象性 子类是否可以动态指定 分层结构 对用户隐藏实现细节 分离抽象接口及其实现部分。 虚拟代理通过使用一个小对象来代表一个大对象,可以减少系统资源的消耗,对系统进行优化并提高运行速度 保护使用权限 面向对象的设计原则 原则 单一职责原则\n一个对象应该只包含单一的职责,并且该职责被完整地封装在一个类中。\n就一个类而言,应该仅有一个引起它变化的原因\n开闭原则\n一个软件实体应当对扩展开放,对修改关闭。也就是说在设计一个模块的时候,应当使这个模块可以在不被修改的前提下被扩展,即实现在不修改源代码的情况下改变这个模块的行为。\n抽象化是开闭原则的关键。 • 开闭原则还可以通过一个更加具体的“对可变性封装原则”来描述,对可变性封装原则(Principle of Encapsulation of Variation, EVP)要求找到系统的可变因素并将其封装起来。\n">
 <title>软件系统设计</title>
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/'>
 
 <link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="软件系统设计">
-<meta property='og:description' content=" 软件系统设计 面向对象的设计原则 原则 单一职责原则\n一个对象应该只包含单一的职责,并且该职责被完整地封装在一个类中。\n就一个类而言,应该仅有一个引起它变化的原因\n开闭原则\n一个软件实体应当对扩展开放,对修改关闭。也就是说在设计一个模块的时候,应当使这个模块可以在不被修改的前提下被扩展,即实现在不修改源代码的情况下改变这个模块的行为。\n抽象化是开闭原则的关键。 • 开闭原则还可以通过一个更加具体的“对可变性封装原则”来描述,对可变性封装原则(Principle of Encapsulation of Variation, EVP)要求找到系统的可变因素并将其封装起来。\n里氏代换原则\n如果对每一个类型为S的对象o1,都有类型为T的对象o2,使得以T定义的所有程序P在所有的对象o2都代换成o1时,程序P的行为没有变化,那么类型S是类型T的子类型。\n所有引用基类(父类)的地方必须能透明地使用其子类的对象\n里氏代换原则是实现开闭原则的重要方式之一,由于使用基类对象的地方都可以使用子类对象,因此在程序中尽量使用基类类型来对对象进行定义,而在运行时再确定其子类类型,用子类对象来替换父类对象。\n依赖倒转原则\n高层模块不应该依赖低层模块,它们都应该依赖抽象。抽象不应该依赖于细节,细节应该依赖于抽象。\n也就是所有的东西都依赖于抽象，要针对接口（抽象）编程,不要针对实现编程\n实现开闭原则的关键是抽象化,并且从抽象化导出具体化实现,如果说开闭原则是面向对象设计的目标的话,那么依赖倒转原则就是面向对象设计的主要手段。\n接口隔离原则\n客户端不应该依赖那些它不需要的接口，每一个接口应该承担一种相对独立的角色\n一旦一个接口太大,则需要将它分割成一些更细小的接口, 使用该接口的客户端仅需知道与之相关的方法即可（将大接口划分为小接口）\n每一个客户使用的接口都应该是专用的，也就是不包含哪些他不用的功能职责。接口仅仅提供客户端需要的行为\n合成复用原则\n尽量使用对象组合,而不是继承来达到复用的目的。\n继承复用:实现简单,易于扩展。破坏系统的封装性;从基类继承而来的实现是静态的,不可能在运行时发生改变,没有足够的灵活性; 只能在有限的环境中使用。(“白箱”复用 )\n• 组合/聚合复用:耦合度相对较低,选择性地调用成员对象的操作;可以在运行时动态进行。 (“黑箱”复用 )\n迪米特法则\n一个软件实体应当尽可能少的与其他实体发生相互作用\n迪米特法则可分为狭义法则和广义法则。在狭义的迪米特法则中,如果两个类之间不必彼此直接通信,那么这两个类就不应当发生直接的相互作用,如果其中的一个类需要调用另一个类的某一个方法的话,可以通过第三者转发这个调用。\n可以降低类之间的耦合,但是会在系统中增加大量的小方法并散落在系统的各个角落,它可以使一个系统的局部设计简化,因为每一个局部都不会和远距离的对象有直接的关联,但是也会造成系统的不同模块之间的通信效率降低,使得系统的不同模块之间不容易协调。\n每一个类都应当尽量降低其成员变量和成员函数的访问权限\n在类的设计上,只要有可能,一个类型应当设计成不变类; •\n在对其他类的引用上,一个对象对其他对象的引用应当降到最低。\n">
+<meta property='og:description' content=" 软件系统设计 定义： 软件模式是将模式的一般概念应用于软件开发领域,即软件开发的总体指导思路或参照样板。\n设计模式(Design Pattern)是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结, 使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。\n设计模式的基本要素：模式名称，问题，解决方案，效果\n设计模式一般有如下几个基本要素:模式名称、问题、目的、解决方案、效果、实例代码和相关设计模式\n设计模式的分类\n根据其目的(模式是用来做什么的)可分为创建型(Creational),结构型(Structural)和行为型(Behavioral)三种:\n• 创建型模式主要用于创建对象。 • 结构型模式主要用于处理类或对象的组合。 • 行为型模式主要用于描述对类或对象怎样交互和怎样分配职责。 根据范围,即模式主要是用于处理类之间关系还是处理对象之间的关系,可分为类模式和对象模式两种:\n• 类模式处理类和子类之间的关系,这些关系通过继承建立, 在编译时刻就被确定下来,是属于静态的。 • 对象模式处理对象间的关系,这些关系在运行时刻变化,更具动态性。 目标:开闭原则•指导:最小知识原则•基础:单一职责原则、可变性封装原则•实现:依赖倒转原则、合成复用原则、里氏代换原则、接口隔离原则\n优缺点： 创建型模式-》客户端不用知道具体的构造过程，无需关心具体创建的细节，隔离了类的生成 是否违反开闭原则（灵活性，扩展性） 高内聚低耦合 隔离了什么和什么（解耦） 什么场景不适用，使用范围有局限性 在扩展时是否需要增加新的类，产生的是更多的小的对象 是否需要提供额外的函数 可重用性，透明性，可复用性 使用的类的数量 系统的复杂度和抽象性 子类是否可以动态指定 分层结构 对用户隐藏实现细节 分离抽象接口及其实现部分。 虚拟代理通过使用一个小对象来代表一个大对象,可以减少系统资源的消耗,对系统进行优化并提高运行速度 保护使用权限 面向对象的设计原则 原则 单一职责原则\n一个对象应该只包含单一的职责,并且该职责被完整地封装在一个类中。\n就一个类而言,应该仅有一个引起它变化的原因\n开闭原则\n一个软件实体应当对扩展开放,对修改关闭。也就是说在设计一个模块的时候,应当使这个模块可以在不被修改的前提下被扩展,即实现在不修改源代码的情况下改变这个模块的行为。\n抽象化是开闭原则的关键。 • 开闭原则还可以通过一个更加具体的“对可变性封装原则”来描述,对可变性封装原则(Principle of Encapsulation of Variation, EVP)要求找到系统的可变因素并将其封装起来。\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-06-07T21:40:16&#43;08:00'/><meta property='article:modified_time' content='2025-06-07T21:40:16&#43;08:00'/>
 <meta name="twitter:title" content="软件系统设计">
-<meta name="twitter:description" content=" 软件系统设计 面向对象的设计原则 原则 单一职责原则\n一个对象应该只包含单一的职责,并且该职责被完整地封装在一个类中。\n就一个类而言,应该仅有一个引起它变化的原因\n开闭原则\n一个软件实体应当对扩展开放,对修改关闭。也就是说在设计一个模块的时候,应当使这个模块可以在不被修改的前提下被扩展,即实现在不修改源代码的情况下改变这个模块的行为。\n抽象化是开闭原则的关键。 • 开闭原则还可以通过一个更加具体的“对可变性封装原则”来描述,对可变性封装原则(Principle of Encapsulation of Variation, EVP)要求找到系统的可变因素并将其封装起来。\n里氏代换原则\n如果对每一个类型为S的对象o1,都有类型为T的对象o2,使得以T定义的所有程序P在所有的对象o2都代换成o1时,程序P的行为没有变化,那么类型S是类型T的子类型。\n所有引用基类(父类)的地方必须能透明地使用其子类的对象\n里氏代换原则是实现开闭原则的重要方式之一,由于使用基类对象的地方都可以使用子类对象,因此在程序中尽量使用基类类型来对对象进行定义,而在运行时再确定其子类类型,用子类对象来替换父类对象。\n依赖倒转原则\n高层模块不应该依赖低层模块,它们都应该依赖抽象。抽象不应该依赖于细节,细节应该依赖于抽象。\n也就是所有的东西都依赖于抽象，要针对接口（抽象）编程,不要针对实现编程\n实现开闭原则的关键是抽象化,并且从抽象化导出具体化实现,如果说开闭原则是面向对象设计的目标的话,那么依赖倒转原则就是面向对象设计的主要手段。\n接口隔离原则\n客户端不应该依赖那些它不需要的接口，每一个接口应该承担一种相对独立的角色\n一旦一个接口太大,则需要将它分割成一些更细小的接口, 使用该接口的客户端仅需知道与之相关的方法即可（将大接口划分为小接口）\n每一个客户使用的接口都应该是专用的，也就是不包含哪些他不用的功能职责。接口仅仅提供客户端需要的行为\n合成复用原则\n尽量使用对象组合,而不是继承来达到复用的目的。\n继承复用:实现简单,易于扩展。破坏系统的封装性;从基类继承而来的实现是静态的,不可能在运行时发生改变,没有足够的灵活性; 只能在有限的环境中使用。(“白箱”复用 )\n• 组合/聚合复用:耦合度相对较低,选择性地调用成员对象的操作;可以在运行时动态进行。 (“黑箱”复用 )\n迪米特法则\n一个软件实体应当尽可能少的与其他实体发生相互作用\n迪米特法则可分为狭义法则和广义法则。在狭义的迪米特法则中,如果两个类之间不必彼此直接通信,那么这两个类就不应当发生直接的相互作用,如果其中的一个类需要调用另一个类的某一个方法的话,可以通过第三者转发这个调用。\n可以降低类之间的耦合,但是会在系统中增加大量的小方法并散落在系统的各个角落,它可以使一个系统的局部设计简化,因为每一个局部都不会和远距离的对象有直接的关联,但是也会造成系统的不同模块之间的通信效率降低,使得系统的不同模块之间不容易协调。\n每一个类都应当尽量降低其成员变量和成员函数的访问权限\n在类的设计上,只要有可能,一个类型应当设计成不变类; •\n在对其他类的引用上,一个对象对其他对象的引用应当降到最低。\n">
+<meta name="twitter:description" content=" 软件系统设计 定义： 软件模式是将模式的一般概念应用于软件开发领域,即软件开发的总体指导思路或参照样板。\n设计模式(Design Pattern)是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结, 使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。\n设计模式的基本要素：模式名称，问题，解决方案，效果\n设计模式一般有如下几个基本要素:模式名称、问题、目的、解决方案、效果、实例代码和相关设计模式\n设计模式的分类\n根据其目的(模式是用来做什么的)可分为创建型(Creational),结构型(Structural)和行为型(Behavioral)三种:\n• 创建型模式主要用于创建对象。 • 结构型模式主要用于处理类或对象的组合。 • 行为型模式主要用于描述对类或对象怎样交互和怎样分配职责。 根据范围,即模式主要是用于处理类之间关系还是处理对象之间的关系,可分为类模式和对象模式两种:\n• 类模式处理类和子类之间的关系,这些关系通过继承建立, 在编译时刻就被确定下来,是属于静态的。 • 对象模式处理对象间的关系,这些关系在运行时刻变化,更具动态性。 目标:开闭原则•指导:最小知识原则•基础:单一职责原则、可变性封装原则•实现:依赖倒转原则、合成复用原则、里氏代换原则、接口隔离原则\n优缺点： 创建型模式-》客户端不用知道具体的构造过程，无需关心具体创建的细节，隔离了类的生成 是否违反开闭原则（灵活性，扩展性） 高内聚低耦合 隔离了什么和什么（解耦） 什么场景不适用，使用范围有局限性 在扩展时是否需要增加新的类，产生的是更多的小的对象 是否需要提供额外的函数 可重用性，透明性，可复用性 使用的类的数量 系统的复杂度和抽象性 子类是否可以动态指定 分层结构 对用户隐藏实现细节 分离抽象接口及其实现部分。 虚拟代理通过使用一个小对象来代表一个大对象,可以减少系统资源的消耗,对系统进行优化并提高运行速度 保护使用权限 面向对象的设计原则 原则 单一职责原则\n一个对象应该只包含单一的职责,并且该职责被完整地封装在一个类中。\n就一个类而言,应该仅有一个引起它变化的原因\n开闭原则\n一个软件实体应当对扩展开放,对修改关闭。也就是说在设计一个模块的时候,应当使这个模块可以在不被修改的前提下被扩展,即实现在不修改源代码的情况下改变这个模块的行为。\n抽象化是开闭原则的关键。 • 开闭原则还可以通过一个更加具体的“对可变性封装原则”来描述,对可变性封装原则(Principle of Encapsulation of Variation, EVP)要求找到系统的可变因素并将其封装起来。\n">
     </head>
     <body class="
     article-page
@@ -290,6 +290,15 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
+    <li><a href="#定义">定义：</a>
+      <ol>
+        <li>
+          <ol>
+            <li><a href="#优缺点">优缺点：</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
     <li><a href="#面向对象的设计原则">面向对象的设计原则</a>
       <ol>
         <li><a href="#原则">原则</a></li>
@@ -314,7 +323,114 @@
         <li><a href="#总结">总结</a></li>
       </ol>
     </li>
-    <li><a href="#策略模式">策略模式</a></li>
+    <li><a href="#设计模式">设计模式</a>
+      <ol>
+        <li><a href="#策略模式">策略模式</a></li>
+        <li><a href="#工厂模式">工厂模式</a>
+          <ol>
+            <li><a href="#简单工厂模式"><strong>简单工厂模式</strong></a></li>
+            <li><a href="#工厂模式-1"><strong>工厂模式</strong></a></li>
+            <li><a href="#抽象工厂模式-abstract-factory-pattern-java-实现">抽象工厂模式 (Abstract Factory Pattern) Java 实现</a></li>
+          </ol>
+        </li>
+        <li><a href="#建造者模式builder-pattern">建造者模式（Builder Pattern）</a></li>
+        <li><a href="#原型模式prototype-patern">原型模式（Prototype Patern）</a></li>
+        <li><a href="#适配器模式adapter-patern">适配器模式（Adapter Patern）</a></li>
+        <li><a href="#组合模式composite-patern">组合模式（Composite Patern）</a></li>
+        <li><a href="#桥接模式bridge-patern">桥接模式（Bridge Patern）</a></li>
+        <li><a href="#装饰器模式decorator-patern">装饰器模式（Decorator Patern）</a></li>
+        <li><a href="#状态模式state-patern">状态模式（State Patern）</a></li>
+        <li><a href="#命令模式command-pattern">命令模式（Command Pattern）</a></li>
+        <li><a href="#观察者模式observer-patern">观察者模式（Observer PAtern）</a></li>
+        <li><a href="#中介者模式mediator-patern">中介者模式（Mediator Patern）</a></li>
+        <li><a href="#模版方法模式template-method-patern">模版方法模式（Template Method Patern）</a></li>
+        <li><a href="#外观模式facade-patern">外观模式（Facade Patern）</a></li>
+        <li><a href="#享元模式flyweight-patern">享元模式（FlyWeight Patern）</a></li>
+        <li><a href="#代理模式proxy-patern">代理模式（Proxy Patern）</a></li>
+      </ol>
+    </li>
+  </ol>
+
+  <ol>
+    <li><a href="#其他知识点">其他知识点</a>
+      <ol>
+        <li><a href="#交流包含数据传播机制控制流">交流包含：数据传播机制+控制流</a></li>
+        <li><a href="#nfrs-includetbq">NFRs include:（TBQ）</a></li>
+        <li><a href="#-20172019描述-41-视图-describe-41-view-掌握绘图-答案如上">✅ 【2017】【2019】描述 4+1 视图 Describe 4+1 view( 掌握绘图 )：答案如上</a></li>
+      </ol>
+    </li>
+    <li><a href="#架构">架构</a>
+      <ol>
+        <li><a href="#软件架构是程序或计算系统的结构由软件元素这些元素外部可的属性这些元素的关系组成">软件架构是程序或计算系统的结构，由软件元素、这些元素外部可⻅的属性、这些元素的关系组成</a></li>
+        <li><a href="#架构活动">架构活动</a></li>
+        <li><a href="#-20152019软件架构来自哪里列举五种可能的软件架构的来源-where-do-software-architecture-come-from-list-five-possible-sources-of-software-architecture">✅ 【2015】【2019】软件架构来自哪里？列举五种可能的软件架构的来源 Where do software architecture come from? List five possible sources of software architecture.</a></li>
+        <li><a href="#-2019architecturestructure-和-design-的区别">✅ 【2019】Architecture，structure 和 Design 的区别？</a></li>
+        <li><a href="#what-does-a-software-architect-do">What does a software architect do?</a></li>
+        <li><a href="#20152017简要描述软件架构过程中的一般活动以及每个活动的主要输入和输出briefly-describe-the-general-activities-in-a-software-architecture-process-and-the-major-inputs-and-outputs-at-each-activity">✅【2015】【2017】简要描述软件架构过程中的一般活动，以及每个活动的主要输入和输出。Briefly describe the ==general activities in a software architecture process==, and the major inputs and outputs at each activity.</a></li>
+        <li><a href="#软件架构的lifecircle">软件架构的LifeCircle</a></li>
+      </ol>
+    </li>
+    <li><a href="#design-strategy">Design Strategy</a>
+      <ol>
+        <li><a href="#2017201920222023在设计软件时应用了哪些通用设计策略为每个策略提供一个带有软件架构的简明工作示例what-are-generic-design-strategies-applied-in-designing-software-give-a-concise-working-example-with-software-architecture-for-each-strategy">2017】【2019】【2022】【2023】在设计软件时应用了哪些<strong>通用设计策略</strong>？为每个策略提供一个带有软件架构的简明工作示例。What are ==generic design strategies== applied in designing software? Give a concise working example with software architecture for each strategy.</a></li>
+        <li><a href="#seven-categories-of-design-decisions-may-overlap">Seven ==categories of design decisions== (may overlap):</a></li>
+      </ol>
+    </li>
+    <li><a href="#quality-atributes">Quality Atributes</a>
+      <ol>
+        <li><a href="#20182022software-requirements-quality-attributes-asrs-的区别和联系">2018】【2022】Software requirements, Quality attributes, ASRs 的区别和联系</a></li>
+        <li><a href="#质量属性是由软件的业务目标所决定在功能性需求的基础上给整个系统提供的期望特性是非功能需求的一种体现">质量属性是由软件的业务目标所决定，在功能性需求的基础上给整个系统提供的期望特性，是非功能需求的一种体现。</a></li>
+        <li><a href="#功能需求规定了系统必须完成的任务并阐述了系统如何为利益相关者提供价值">功能需求规定了系统必须完成的任务，并阐述了系统如何为利益相关者提供价值。</a></li>
+        <li><a href="#约束是零自由度的预先制定的已经作出的决策zero-freedompre-specifiedalready-made">约束是零自由度的，预先制定的，已经作出的决策（zero-freedom,pre-specified,already made）</a></li>
+        <li><a href="#策略tactics是影响质量属性相应控制的设计决策比如冗余">策略（Tactics）：是影响质量属性相应控制的设计决策，比如冗余。</a></li>
+        <li><a href="#分类体系internalexternal"><strong>分类体系Internal/External</strong></a></li>
+        <li><a href="#场景主要分为两类">场景主要分为两类：</a></li>
+        <li><a href="#质量属性方案建模">质量属性方案建模</a></li>
+        <li><a href="#availablity">Availablity</a></li>
+        <li><a href="#introperablity">Introperablity</a></li>
+        <li><a href="#modifiability">Modifiability</a></li>
+        <li><a href="#performance">Performance</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#testability">Testability</a></li>
+        <li><a href="#usability">Usability</a></li>
+      </ol>
+    </li>
+    <li><a href="#架构模式">架构模式</a>
+      <ol>
+        <li><a href="#架构模式-1">架构模式</a></li>
+        <li><a href="#架构模式是一系列可复用的架构设计决策针对经常出现的特定设计问题并能通过参数化调该问题所处的不同软件开发语境">架构模式是一系列可复用的架构设计决策，针对经常出现的特定设计问题，并能通过参数化调该问题所处的不同软件开发语境。</a></li>
+        <li><a href="#layered-patern">Layered Patern</a></li>
+        <li><a href="#-20182023layered-pattern-和-multi-tier-pattern-的区别">✅ 【2018】【2023】Layered pattern 和 Multi-tier pattern 的区别</a></li>
+        <li><a href="#broker-pattern">Broker Pattern</a></li>
+        <li><a href="#20152019解释代理架构模式的上下文好处和局限性explain-the-context-benefits-and-limitations-of-broker-architecture-pattern">【2015】【2019】解释代理架构模式的上下文、好处和局限性。Explain the context, benefits and limitations of Broker Architecture Pattern.</a></li>
+        <li><a href="#mvc">MVC</a></li>
+        <li><a href="#pipe-and-filter-patern">Pipe And Filter Patern</a></li>
+        <li><a href="#client-server-pattern">Client-Server Pattern</a></li>
+        <li><a href="#peer-to-peer-pattern">Peer-to-Peer Pattern</a></li>
+        <li><a href="#service-oriented-patter">Service-Oriented Patter</a></li>
+        <li><a href="#1-什么是soa"><strong>1. 什么是SOA？</strong></a></li>
+        <li><a href="#2-soa的核心组成要素"><strong>2. SOA的核心组成要素</strong></a>
+          <ol>
+            <li><a href="#1-组件components"><strong>(1) 组件（Components）</strong></a></li>
+            <li><a href="#2-连接器connectors"><strong>(2) 连接器（Connectors）</strong></a></li>
+          </ol>
+        </li>
+        <li><a href="#3-soa的关键特性"><strong>3. SOA的关键特性</strong></a></li>
+        <li><a href="#4-soa的典型应用场景"><strong>4. SOA的典型应用场景</strong></a></li>
+        <li><a href="#5-soa的约束与弱点weaknesses"><strong>5. SOA的约束与弱点（Weaknesses）</strong></a></li>
+        <li><a href="#6-soa-vs-微服务microservices"><strong>6. SOA vs 微服务（Microservices）</strong></a></li>
+        <li><a href="#7-总结"><strong>7. 总结</strong></a></li>
+        <li><a href="#publish-subscribe-pattern">Publish-Subscribe Pattern</a></li>
+        <li><a href="#shared-data-pattern">Shared-Data Pattern</a></li>
+        <li><a href="#map-reduce-pattern">Map-Reduce Pattern</a></li>
+        <li><a href="#multi--tier-pattern-solution">Multi- Tier Pattern Solution</a></li>
+        <li><a href="#-20182023layered-pattern-和-multi-tier-pattern-的区别-1">✅ 【2018】【2023】Layered pattern 和 Multi-tier pattern 的区别</a></li>
+        <li><a href="#-2015描述架构设计中架构模式和tactics-之间的关系给出可以在架构设计过程中使用的任何四种决策的名称并描述每种决策的目的describe-the-relationships-between-architectual-patterns-and-tactics-in-architecture-design-give-name-of-any-four-tactics-that-can-be-used-during-architecture-design-and-describe-the-purpose-of-each-of-them">✅ 【2015】描述架构设计中架构模式和tactics 之间的关系。给出可以在架构设计过程中使用的任何四种决策的名称，并描述每种决策的目的。Describe the relationships between architectual patterns and tactics in architecture design. Give name of any four tactics that can be used during architecture design and describe the purpose of each of them.</a></li>
+        <li><a href="#-20172019什么是-asr列出提取和识别-asr-的四种来源和方法what-are-asr-list-four-sources-and-methods-for-extracting-and-identifying-asrs">✅ 【2017】【2019】什么是 ASR？列出提取和识别 ASR 的四种来源和方法。What are ASR? List four sources and methods for extracting and identifying ASRs.</a></li>
+        <li><a href="#架构driver">架构driver</a></li>
+        <li><a href="#addatribute-driven-design">ADD（Atribute Driven Design）</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -371,7 +487,7 @@
 
 
                 <time class="article-time--reading">
-                    1 minute read
+                    12 minute read
                 </time>
             </div>
         
@@ -393,7 +509,61 @@
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
 <h1 id="软件系统设计">软件系统设计
-</h1><h2 id="面向对象的设计原则">面向对象的设计原则
+</h1><h2 id="定义">定义：
+</h2><p>软件模式是将模式的一般概念应用于软件开发领域,即软件开发的总体指导思路或参照样板。</p>
+<hr>
+<p>设计模式(Design Pattern)是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结, 使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。</p>
+<p>设计模式的基本要素：模式名称，问题，解决方案，效果</p>
+<p>设计模式一般有如下几个基本要素:模式名称、问题、目的、解决方案、效果、实例代码和相关设计模式</p>
+<hr>
+<p>设计模式的分类</p>
+<p>根据其目的(模式是用来做什么的)可分为创建型(Creational),结构型(Structural)和行为型(Behavioral)三种:</p>
+<ul>
+<li>• 创建型模式主要用于创建对象。</li>
+<li>• 结构型模式主要用于处理类或对象的组合。</li>
+<li>• 行为型模式主要用于描述对类或对象怎样交互和怎样分配职责。</li>
+</ul>
+<p>根据范围,即模式主要是用于处理类之间关系还是处理对象之间的关系,可分为类模式和对象模式两种:</p>
+<ul>
+<li>• 类模式处理类和子类之间的关系,这些关系通过继承建立, 在编译时刻就被确定下来,是属于静态的。</li>
+<li>• 对象模式处理对象间的关系,这些关系在运行时刻变化,更具动态性。</li>
+</ul>
+<hr>
+<p>目标:开闭原则•指导:最小知识原则•基础:单一职责原则、可变性封装原则•实现:依赖倒转原则、合成复用原则、里氏代换原则、接口隔离原则</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611230338058.png"
+	width="2370"
+	height="1198"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611230338058_hu_87bbca29ea2667b1.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611230338058_hu_e64a5604bd6792d2.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611230338058"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="197"
+		data-flex-basis="474px"
+	
+></p>
+<h4 id="优缺点">优缺点：
+</h4><ul>
+<li>创建型模式-》客户端不用知道具体的构造过程，无需关心具体创建的细节，隔离了类的生成</li>
+<li>是否违反开闭原则（灵活性，扩展性）</li>
+<li>高内聚低耦合</li>
+<li>隔离了什么和什么（解耦）</li>
+<li>什么场景不适用，使用范围有局限性</li>
+<li>在扩展时是否需要增加新的类，产生的是更多的小的对象</li>
+<li>是否需要提供额外的函数</li>
+<li>可重用性，透明性，可复用性</li>
+<li>使用的类的数量</li>
+<li>系统的复杂度和抽象性</li>
+<li>子类是否可以动态指定</li>
+<li>分层结构</li>
+<li>对用户隐藏实现细节</li>
+<li>分离抽象接口及其实现部分。</li>
+<li>虚拟代理通过使用一个小对象来代表一个大对象,可以减少系统资源的消耗,对系统进行优化并提高运行速度</li>
+<li>保护使用权限</li>
+</ul>
+<h2 id="面向对象的设计原则">面向对象的设计原则
 </h2><h3 id="原则">原则
 </h3><ol>
 <li>
@@ -480,7 +650,7 @@
 <p>迪米特法则可分为狭义法则和广义法则。在狭义的迪米特法则中,如果两个类之间不必彼此直接通信,那么这两个类就不应当发生直接的相互作用,如果其中的一个类需要调用另一个类的某一个方法的话,可以通过第三者转发这个调用。</p>
 <p>可以降低类之间的耦合,但是会在系统中增加大量的小方法并散落在系统的各个角落,它可以使一个系统的局部设计简化,因为每一个局部都不会和远距离的对象有直接的关联,但是也会造成系统的不同模块之间的通信效率降低,使得系统的不同模块之间不容易协调。</p>
 <p>每一个类都应当尽量降低其成员变量和成员函数的访问权限</p>
-<p>在类的设计上,只要有可能,一个类型应当设计成不变类; •</p>
+<p>在类的设计上,只要有可能,一个类型应当设计成不变类;</p>
 <p>在对其他类的引用上,一个对象对其他对象的引用应当降到最低。</p>
 </li>
 </ol>
@@ -700,15 +870,2394 @@
 <li>基础:单一职责原则、可变性封装原则</li>
 <li>实现:依赖倒转原则、合成复用原则、里氏代换原则、接口隔离原</li>
 </ul>
-<h2 id="策略模式">策略模式
-</h2><p>在一系列的模式变换中：</p>
+<h2 id="设计模式">设计模式
+</h2><h3 id="策略模式">策略模式
+</h3><p>在一系列的模式变换中：</p>
 <ol>
 <li>将有一些子类有的，一些子类没有的能力抽象为接口</li>
 <li>同一个能力的不同表现也可以是抽象出一个抽象类</li>
+<li>一个行为也有着状态和方法，可以作为一个类</li>
+<li>比起继承的方式，更好的是使用合成复用原则</li>
+<li>使用合成复用原则和开闭原则（接口隔离）的法则以后，就可以实现动态绑定（里氏代换原则）</li>
 <li>分装变化</li>
 <li>面向接口编程</li>
-<li></li>
 </ol>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611203637951.png"
+	width="2600"
+	height="1010"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611203637951_hu_c82132469524174e.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611203637951_hu_413c4b85a62d5037.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611203637951"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="257"
+		data-flex-basis="617px"
+	
+></p>
+<p>==拥有策略抽象类==</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611203911187.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611203911187_hu_69dc638a34e926fb.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611203911187_hu_a99563dfd094d001.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611203911187"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p>在以下场景采用策略模式：</p>
+<ol>
+<li>
+<p>当多个相关类仅在行为表现上存在差异时，
+策略模式可提供多种行为配置方案</p>
+</li>
+<li>
+<p>需要算法不同变体时，
+例如需权衡时空复杂度的算法变体，
+可将这些变体实现为算法类层次结构</p>
+</li>
+<li>
+<p>当算法涉及客户端不应知晓的内部数据时，
+采用策略模式能避免暴露复杂的算法专用数据结构</p>
+</li>
+<li>
+<p>当某类的操作中存在大量条件分支语句时，
+应将相关条件分支重构为独立的策略类，
+而非保留多重条件判断</p>
+</li>
+</ol>
+<h3 id="工厂模式">工厂模式
+</h3><p>工厂模式主要有三种形式：</p>
+<ol>
+<li>
+<p><strong>简单工厂模式 (Simple Factory)</strong></p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611210629269.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611210629269_hu_91b1a510985a59e2.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611210629269_hu_213f4e197c552d5b.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611210629269"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611211121337.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611211121337_hu_427e6bcc543de21a.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611211121337_hu_6fcc835dfa38f8ea.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611211121337"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<ul>
+<li>也称为静态工厂方法模式</li>
+<li>类创建型模式</li>
+<li>通过一个工厂类根据传入的参数决定创建哪种产品类的实例</li>
+<li>使用if-else来选择不同的产品</li>
+</ul>
+</li>
+<li>
+<p><strong>工厂方法模式 (Factory Method)</strong></p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611212851879.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611212851879_hu_e9d0339a7d3fc6a7.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611212851879_hu_e93fc89ebd6e7963.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611212851879"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<ul>
+<li>定义一个创建对象的接口，但让子类决定实例化哪个类</li>
+<li>工厂方法让类的实例化推迟到子类</li>
+</ul>
+</li>
+<li>
+<p><strong>抽象工厂模式 (Abstract Factory)</strong></p>
+<ol>
+<li>对象创建型模式</li>
+<li>提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类</li>
+<li>我们需要一个工厂可以提供多个产品对象,而不是单一的产品对象。</li>
+<li>产品等级结构:产品等级结构即产品的继承结构,如一个抽象类是电视机,其子类有海尔电视机、海信电视机、TCL电视机,则抽象电视机与具体品牌的电视机之间构成了一个产品等级结构, 抽象电视机是父类,而具体品牌的电视机是其子类。</li>
+<li>产品族:在抽象工厂模式中,产品族是指由同一个工厂生产的,位于不同产品等级结构中的一组产品,如海尔电器工厂生产的海尔电视机、海尔电冰箱,海尔电视机位于电视机产品等级结构中,海尔电冰箱位于电冰箱产品等级结构中。</li>
+<li>当系统所提供的工厂所需生产的具体产品并不是一个简单的对象,而是多个位于不同产品等级结构中属于不同类型的具体产品时需要使用抽象工厂模式。</li>
+<li>抽象工厂模式与工厂方法模式最大的区别在于,工厂方法模式针对的是一个产品等级结构,而抽象工厂模式则需要面对多个产品等级结构,</li>
+</ol>
+</li>
+</ol>
+<h4 id="简单工厂模式"><strong>简单工厂模式</strong>
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">interface</span> <span class="nc">Product</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">use</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">ConcreteProductA</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Product</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">use</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Using Product A&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">ConcreteProductB</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Product</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">use</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Using Product B&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">SimpleFactory</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Product</span><span class="w"> </span><span class="nf">createProduct</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="s">&#34;A&#34;</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConcreteProductA</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="s">&#34;B&#34;</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConcreteProductB</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">default</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&#34;Unknown product type&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 客户端代码</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Client</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Product</span><span class="w"> </span><span class="n">product</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SimpleFactory</span><span class="p">.</span><span class="na">createProduct</span><span class="p">(</span><span class="s">&#34;A&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">product</span><span class="p">.</span><span class="na">use</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="工厂模式-1"><strong>工厂模式</strong>
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">interface</span> <span class="nc">Product</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">use</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">ConcreteProductA</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Product</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">use</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Using Product A&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">ConcreteProductB</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Product</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">use</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Using Product B&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Factory</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="n">Product</span><span class="w"> </span><span class="nf">createProduct</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Product</span><span class="w"> </span><span class="n">product</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createProduct</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">product</span><span class="p">.</span><span class="na">use</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">ConcreteFactoryA</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Factory</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Product</span><span class="w"> </span><span class="nf">createProduct</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConcreteProductA</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">ConcreteFactoryB</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Factory</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Product</span><span class="w"> </span><span class="nf">createProduct</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConcreteProductB</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 客户端代码</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Client</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Factory</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConcreteFactoryA</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">factory</span><span class="p">.</span><span class="na">doSomething</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="抽象工厂模式-abstract-factory-pattern-java-实现">抽象工厂模式 (Abstract Factory Pattern) Java 实现
+</h4><p>抽象工厂模式提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类。下面是一个完整的Java实现示例：</p>
+<h5 id="示例场景">示例场景
+</h5><p>假设我们有一个GUI应用程序，需要支持不同风格（如Windows和Mac）的按钮和复选框。</p>
+<h6 id="1-定义抽象产品接口">1. 定义抽象产品接口
+</h6><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 按钮接口</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">interface</span> <span class="nc">Button</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">render</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">onClick</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 复选框接口</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">interface</span> <span class="nc">Checkbox</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">render</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">onCheck</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h6 id="2-实现具体产品类">2. 实现具体产品类
+</h6><p><strong>Windows风格产品：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">WindowsButton</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Button</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">render</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;渲染一个Windows风格的按钮&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onClick</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Windows按钮点击事件处理&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">WindowsCheckbox</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Checkbox</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">render</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;渲染一个Windows风格的复选框&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onCheck</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Windows复选框选中状态改变&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Mac风格产品：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">MacButton</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Button</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">render</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;渲染一个Mac风格的按钮&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onClick</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Mac按钮点击事件处理&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">MacCheckbox</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Checkbox</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">render</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;渲染一个Mac风格的复选框&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onCheck</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Mac复选框选中状态改变&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h6 id="3-定义抽象工厂接口">3. 定义抽象工厂接口
+</h6><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">interface</span> <span class="nc">GUIFactory</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Button</span><span class="w"> </span><span class="nf">createButton</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Checkbox</span><span class="w"> </span><span class="nf">createCheckbox</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h6 id="4-实现具体工厂类">4. 实现具体工厂类
+</h6><p><strong>Windows工厂：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">WindowsFactory</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">GUIFactory</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Button</span><span class="w"> </span><span class="nf">createButton</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WindowsButton</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Checkbox</span><span class="w"> </span><span class="nf">createCheckbox</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WindowsCheckbox</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Mac工厂：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">MacFactory</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">GUIFactory</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Button</span><span class="w"> </span><span class="nf">createButton</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MacButton</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Checkbox</span><span class="w"> </span><span class="nf">createCheckbox</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MacCheckbox</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h6 id="5-客户端代码">5. 客户端代码
+</h6><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Application</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Button</span><span class="w"> </span><span class="n">button</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Checkbox</span><span class="w"> </span><span class="n">checkbox</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Application</span><span class="p">(</span><span class="n">GUIFactory</span><span class="w"> </span><span class="n">factory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="na">createButton</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">checkbox</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="na">createCheckbox</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">render</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">button</span><span class="p">.</span><span class="na">render</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">checkbox</span><span class="p">.</span><span class="na">render</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 根据配置或环境选择工厂</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">GUIFactory</span><span class="w"> </span><span class="n">factory</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">osName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">getProperty</span><span class="p">(</span><span class="s">&#34;os.name&#34;</span><span class="p">).</span><span class="na">toLowerCase</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">osName</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&#34;win&#34;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WindowsFactory</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MacFactory</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Application</span><span class="w"> </span><span class="n">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Application</span><span class="p">(</span><span class="n">factory</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">app</span><span class="p">.</span><span class="na">render</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 也可以手动指定</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Application</span><span class="w"> </span><span class="n">macApp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Application</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MacFactory</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">macApp</span><span class="p">.</span><span class="na">render</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h6 id="运行结果">运行结果
+</h6><p>当在Windows系统上运行时，输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">渲染一个Windows风格的按钮
+</span></span><span class="line"><span class="cl">渲染一个Windows风格的复选框
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当手动创建Mac风格应用时，输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">渲染一个Mac风格的按钮
+</span></span><span class="line"><span class="cl">渲染一个Mac风格的复选框
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h6 id="模式特点">模式特点
+</h6><ol>
+<li><strong>抽象工厂</strong>：声明一组创建产品的方法</li>
+<li><strong>具体工厂</strong>：实现抽象工厂接口，创建具体的产品</li>
+<li><strong>抽象产品</strong>：定义产品的接口</li>
+<li><strong>具体产品</strong>：实现产品接口的具体类</li>
+<li><strong>客户端</strong>：通过抽象工厂接口创建产品，无需关心具体实现</li>
+</ol>
+<p>抽象工厂模式特别适用于需要创建一系列相关或依赖对象的场景，能够保证这些对象之间的兼容性。</p>
+<h3 id="建造者模式builder-pattern">建造者模式（Builder Pattern）
+</h3><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611215219125.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611215219125_hu_9b9eae29f46e3696.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611215219125_hu_1f21700a80796619.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611215219125"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p>建造者模式的结构中还引入了一个指挥者类Director, 该类的作用主要有两个:一方面它隔离了客户与生产过程;另一方面它负责控制产品的生成过程。指挥者针对抽象建造者编程,客户端只需要知道具体建造者的类型, 即可通过指挥者类调用建造者的相关方法,返回一个完整的产品对象。</p>
+<h3 id="原型模式prototype-patern">原型模式（Prototype Patern）
+</h3><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611220103369.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611220103369_hu_f23c6cd8a384ee07.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611220103369_hu_10da78a8437c5188.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611220103369"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p>==自我复制==</p>
+<p>根据其成员对象是否也克隆,原型模式可以分为两种形式:深克隆和浅克隆。</p>
+<h3 id="适配器模式adapter-patern">适配器模式（Adapter Patern）
+</h3><p>类适配器：适配器类继承自目标类和适配者类</p>
+<p>对象适配器：适配器继承自目标类，但是组合了适配者</p>
+<p>双向适配器：适配器继承自目标类和适配者类，但是同时组合了两者</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155229619.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155229619_hu_fd66845ccf8c502d.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155229619_hu_dc606893eb23564a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250612155229619"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<h3 id="组合模式composite-patern">组合模式（Composite Patern）
+</h3><p>（递归调用）</p>
+<p>组合多个对象形成树形结构以表示“整体-部分”的结构层次</p>
+<p>子类组合了父类</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155310392.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155310392_hu_b649ce2b87205792.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155310392_hu_e2cbfbea87f8900d.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250612155310392"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<h3 id="桥接模式bridge-patern">桥接模式（Bridge Patern）
+</h3><p>抽象化(Abstraction)与实现化(Implementation)脱耦,使得二者可以独立地变化</p>
+<p>就是当变化有多个维度的时候，抽离出来一个维度作为主要的变化维度成为一个抽象类，使用继承的方式来实现，其他的变化维度都使用组合的方式来实现。</p>
+<p>对于存在两个独立变化维度的类可以将其分为抽象化和实现化两个角色</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155554774.png"
+	width="1522"
+	height="950"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155554774_hu_f4bf819144406a19.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155554774_hu_555dae309b70fc3c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250612155554774"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<h3 id="装饰器模式decorator-patern">装饰器模式（Decorator Patern）
+</h3><p>对客户透明的方式动态地给一个对象附加上更多的责任</p>
+<p>和组合模式类似，但是他的子类外面裹的是一层抽象装饰器，在抽象装饰器下面还有更多的具体装饰器。</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155334998.png"
+	width="1740"
+	height="1338"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155334998_hu_61378d3a472795a0.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155334998_hu_ec263bb5c6803cb0.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250612155334998"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="130"
+		data-flex-basis="312px"
+	
+></p>
+<h3 id="状态模式state-patern">状态模式（State Patern）
+</h3><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611220554418.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611220554418_hu_e614cf301043e85.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611220554418_hu_b99835ef367fcf5d.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611220554418"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p>==Context change State==</p>
+<h3 id="命令模式command-pattern">命令模式（Command Pattern）
+</h3><p>请求发送者与请求接收者消除彼此之间的耦合</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611221413636.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611221413636_hu_341aa785a139ff59.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611221413636_hu_563e0e2895bb0779.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611221413636"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p>==Invoker通过Command来给Receiver发送信息==</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611221708705.png"
+	width="1884"
+	height="1276"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611221708705_hu_f673f8b0ec525c32.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611221708705_hu_ec037ecab0cee3da.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611221708705"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="147"
+		data-flex-basis="354px"
+	
+></p>
+<h3 id="观察者模式observer-patern">观察者模式（Observer PAtern）
+</h3><p>定义对象间的一种一对多依赖关系,使得每当一个对象状态发生改变时,其相关依赖对象皆得到通知并被自动更新。观察者模式又叫做发布-订阅(Publish/Subscribe)模式、模型-视图(Model/View)模式、源-监听器(Source/Listener) 模式或从属者(Dependents)模式。观察者模式是一种对象行为型模式。</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611222157285.png"
+	width="1346"
+	height="1116"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611222157285_hu_7355abfec92de414.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611222157285_hu_355e9c02a4e37598.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611222157285"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="120"
+		data-flex-basis="289px"
+	
+></p>
+<p>==Concrete Object变化的时候通知所有的Concrete Observer==</p>
+<h3 id="中介者模式mediator-patern">中介者模式（Mediator Patern）
+</h3><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611222932670.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611222932670_hu_5146e41130cf69f0.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611222932670_hu_f21994e93bdc46a8.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611222932670"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p>==一个Concrete Mediator中存储多个Concrete Colleague，调节他们的交互，每一个Concrete Colleague存储他的Concrete Mediator==</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611223436256.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611223436256_hu_5316d040490c5476.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611223436256_hu_6d0c0e9d273db5bf.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611223436256"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<h3 id="模版方法模式template-method-patern">模版方法模式（Template Method Patern）
+</h3><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611224145073.png"
+	width="2880"
+	height="1800"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611224145073_hu_ae43630b96c72f84.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611224145073_hu_3adcf44fc6a52938.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611224145073"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p>==通过更改父类的一些方法来实现替换一个模版方法中一些流程的实现，父类实现一些固定的过程，由子类实现具体的可变行为==</p>
+<p>一个设计师负责给出一个算法的轮廓和骨架,另一些设计师则负责给出这个算法的各个逻辑 步 骤 。 实 现 这 些 具 体 逻 辑 步 骤 的 方 法 称 为 基 本 方 法(Primitive Method),而将这些基本法方法汇总起来的方法称为模板方法(Template Method),模板方法模式的名字从此而来。</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611224455649.png"
+	width="2352"
+	height="1374"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611224455649_hu_4d2df347b592da81.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611224455649_hu_49c91740787b7dcd.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250611224455649"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="171"
+		data-flex-basis="410px"
+	
+></p>
+<p>具体子类的基本方法将覆盖父类中定义的基本方法,子类的钩子方法也将覆盖父类的钩子方法,从而可以通过在子类中实现的钩子方法对父类方法的执行进行约束,实现子类对父类行为的反向控制。</p>
+<p>单一职责原则</p>
+<h3 id="外观模式facade-patern">外观模式（Facade Patern）
+</h3><p>外部与一个子系统的通信必须通过一个统一的外观对象进行,为子系统中的一组接口提供一个一致的界面</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155408845.png"
+	width="1840"
+	height="984"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155408845_hu_33d0926d115e1ed5.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155408845_hu_93b7936d68cb1892.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250612155408845"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="186"
+		data-flex-basis="448px"
+	
+></p>
+<h3 id="享元模式flyweight-patern">享元模式（FlyWeight Patern）
+</h3><p>在享元模式中可以共享的相同内容称为内部状态(Intrinsic State),而那些需要外部环境来设置的不能共享的内容称为外部状态(Extrinsic State)</p>
+<p>通常和工厂一起使用</p>
+<p>通过工厂来产生享元对象，将每一个享元对象记录在hashmap中，享元对象中分为共享的和非共享的；有外部状态的时候就是：每一个享元对象中拥有这个外部类对象；</p>
+<p>享元模式的核心在于享元工厂类,享元工厂类的作用在于提供一个用于存储享元对象的享元池,用户需要对象时,首先从享元池中获取,如果享元池中不存在, 则创建一个新的享元对象返回给用户,并在享元池中保存该新增对象。</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155426956.png"
+	width="1810"
+	height="846"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155426956_hu_7366c80cc6f36c94.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155426956_hu_fed1295dcb21043a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250612155426956"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="213"
+		data-flex-basis="513px"
+	
+></p>
+<h3 id="代理模式proxy-patern">代理模式（Proxy Patern）
+</h3><p>通过引入一个新的对象(如小图片和远程代理对象)来实现对真实对象的操作或者将新的对象作为真实对象的一个替身</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612153310393.png"
+	width="1618"
+	height="646"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612153310393_hu_1ca17850abcffc5e.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612153310393_hu_558d6e6bef1969d7.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250612153310393"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="250"
+		data-flex-basis="601px"
+	
+></p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155446477.png"
+	width="1802"
+	height="1088"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155446477_hu_b154096d84ea4907.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155446477_hu_c06dac50d26fb0d4.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250612155446477"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="165"
+		data-flex-basis="397px"
+	
+></p>
+<h1 id="软件架构">软件架构
+</h1><blockquote>
+<ol>
+<li>✅ 【==gao’p】如何进行质量属性方案建模？请使用&quot;刺激-相应&quot;图的格式进行建模 How to model quality attribute scenarios? Graphically model one quality attributes in “stimulus-response” format:==</li>
+<li>【2015】availiability and Performance</li>
+<li>【2017】【2018】availiability and modifiability</li>
+<li>【2019】interoperability and modifiability</li>
+<li>如何进行质量属性方案建模
+<ol>
+<li>刺激（Stimulus）：当其到达系统时需要考虑的状况。</li>
+<li>刺激源（Source of Stimulus）：产生刺激的实体（人，系统或任何其他触发），可能是输入、信息等，对当前的状态的一个变化。</li>
+<li>响应（Response）：刺激到来后工件开展的行为。</li>
+<li>响应度量（Response Measure）：对刺激的响应以某种方法进行测量，以便可以<strong>测试需求</strong>（比如多长时间系统有反馈）</li>
+<li>环境（Environment）：发生刺激时系统的状况，例如系统正常运行、系统过载、系统受到攻击、系统网络出现故障等。</li>
+<li>工件（Artifact）：完成需求的整个系统或者系统的一部分（软件制品）。</li>
+</ol>
+</li>
+</ol>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3.png"
+	width="1973"
+	height="1155"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3_hu_bb08faa8bbd6dada.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3_hu_d5ed330c9fbc0690.png 1024w"
+	loading="lazy"
+	
+		alt="img"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="170"
+		data-flex-basis="409px"
+	
+></p>
+<ol>
+<li>
+<p>✅ 【高频 2015 2017 2019 2022】为什么软件系统架构需要使用不同视图来文档化？给出 4 种示例视图的名称和目的。Why should a software architecture be documented using different differenet views? Give the name and purposes of 4 example views.</p>
+<ol>
+<li>原因
+<ol>
+<li>不同视图支持不同的目标和用户，突出不同的系统元素和关系</li>
+<li>不同视图将不同质量属性暴露出不同的程度</li>
+</ol>
+</li>
+<li>4 种视图 ( 了解 )：
+<ol>
+<li>模块视图 Module View：提供一组连贯职责的实现单元</li>
+<li>组件和连接器视图 C &amp; C View：显示运行时行为和交互的元素</li>
+<li>分配视图 Allocation View：描述了软件单元到环境元素的映射</li>
+<li>质量视图 Quality Views，安全视图、性能视图、可靠性视图、通信视图、异常（错误处理）视图</li>
+<li>组合视图：将上述视图进行组合</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>✅ 如何选择视图：</p>
+<ol>
+<li>构建涉众/视图表</li>
+<li>合并视图</li>
+<li>确定优先级和完成阶段</li>
+</ol>
+</li>
+<li>
+<p>✅ 【2017】【2019】描述 4+1 视图 Describe 4+1 view( 掌握绘图 )：答案如上</p>
+<p>LPPDA</p>
+<ol>
+<li>逻辑视图：描述了对架构而言重要的元素和他们之间的关系（功能需求）</li>
+<li>过程视图：描述了元素之间的交互。</li>
+<li>物理视图（部署视图）：描述了主要过程和组件是如何被映射到硬件上的。</li>
+<li>开发视图（实现视图）：描述实现系统功能的各个组件和模块是如何实现的</li>
+<li>用例场景（Use Case）：描述系统的参与者（用户）与系统功能用例的关系，与一个或多个特定视图相关。</li>
+</ol>
+</li>
+</ol>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/4.png"
+	width="624"
+	height="383"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/4_hu_e82cf348d3654c6d.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/4_hu_da3d3df4c65032f5.png 1024w"
+	loading="lazy"
+	
+		alt="img"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="162"
+		data-flex-basis="391px"
+	
+></p>
+<ol>
+<li>✅【高频 2015 2017 2018】什么区分了软件产品线架构和单个软件产品架构？What distinguishes an architecture for a software product line from an architecture for a single product?
+<ol>
+<li>产品线的目的：实现高可重用性、高修改性。而单个软件产品不需要很高的重用性和可拓展性</li>
+<li>产品线之所以有效是因为通过重用可以充分利用产品的共性。</li>
+<li>软件产品线架构倾向于采用更多的模块化和标准化设计，单一产品架构专注于<strong>满足单一产品的特定需求</strong>，因此模块化和标准化程度较低。</li>
+</ol>
+</li>
+<li>✅ 【高频 2015 2017 2023】将以下每个问题（左侧）与解决该问题的架构风格/视图（右侧）对应起来。列出每个样式类别的四个视图。Map each of the following questions (on the left) with the architectural style/view (on the right) that addresses the question. List four views of each category of style.
+<ol>
+<li>连线题
+<ol>
+<li>它是如何构建为一组实现单元的？How it is structed as a set of implementation of units(Module Styles)</li>
+<li>它是如何构建为一组具有运行时行为和交互的元素的？How it is structed as a set of elements that have runtime behavior and interactions?(Component-Connector Styles)</li>
+<li>它与环境中的非软件结构有何关系？How it relates to non-software structures in its environment?(Allocation Styles)</li>
+</ol>
+</li>
+<li>Module Styles：分解视图、使用视图、泛化视图、分层视图、领域视图、数据模型视图</li>
+<li>Component-Connector Styles：管道-过滤器视图、客户端-服务器视图、点对点视图、面向服务视图、发布-订阅视图</li>
+<li>Allocation Styles：部署视图、安装视图、工作分配视图、其他分配视图。</li>
+</ol>
+</li>
+<li>✅==【2015】【2017】简要描述软件架构过程中的一般活动，以及每个活动的主要输入和输出。Briefly describe the general activities in a software architecture process, and the major inputs and outputs at each activity.==
+<ol>
+<li>短答案 ( 背 )
+<ol>
+<li>识别 ASRs
+<ol>
+<li>输入：无</li>
+<li>输出：优先的质量属性场景</li>
+</ol>
+</li>
+<li>架构设计
+<ol>
+<li>输入：优先的质量属性场景、需求和约束、模式和决策</li>
+<li>输出：一组由模式决定的候选视图的草图</li>
+</ol>
+</li>
+<li>架构文档化
+<ol>
+<li>输入：一组由模式决定的候选视图的草图</li>
+<li>输出：View &amp; Beyond</li>
+</ol>
+</li>
+<li>架构评估
+<ol>
+<li>输入：View &amp; Beyond、优先的质量属性场景</li>
+<li>输出：View &amp; Beyond</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5.png"
+	width="1978"
+	height="641"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5_hu_574ed0cebdb66e68.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5_hu_b5f731d1bcd03799.png 1024w"
+	loading="lazy"
+	
+		alt="img"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="308"
+		data-flex-basis="740px"
+	
+></p>
+<ol>
+<li>
+<p>✅ 【2015】【2017】【2021】【2023】描述架构权衡分析方法 (ATAM) 过程的每个阶段生成的输出。Describe the outputs generated from each phase of Architecture Tradeoff Analysis Method(ATAM) process.</p>
+<ol>
+<li>阶段-0：准备和建立团队 ( 输入是架构设计文档 )
+<ol>
+<li>评估计划</li>
+</ol>
+</li>
+<li>阶段-1：评估-1
+<ol>
+<li>架构的简明介绍</li>
+<li>业务目标（驱动因素）的阐释</li>
+<li>作为场景实现的特定质量属性要求的优先级列表</li>
+<li>Utility Tree 质量属性效用树</li>
+<li>风险点和无风险点</li>
+<li>敏感点和权衡点</li>
+</ol>
+</li>
+<li>阶段-2：评估-2
+<ol>
+<li>涉众们的优先级场景列表</li>
+<li>风险主题和业务驱动因素各自受到的威胁</li>
+</ol>
+</li>
+<li>阶段-3：后续
+<ol>
+<li>最终的评估报告</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>【2019】描述在 ATAM 的每一个过程中 有哪些 Stack holder 和他们的职责</p>
+<ol>
+<li>阶段-0：准备和建立团队
+<ol>
+<li>参与者：评估团队领导和关键项目决策者</li>
+<li>职责：根据架构设计文档生成评估计划，包括谁参加评估、如何何时何地开展评估、最后评估报告会被呈递给谁。</li>
+</ol>
+</li>
+<li>阶段-1：评估-1
+<ol>
+<li>参与者：评估团队和项目决策者</li>
+<li>职责：
+<ol>
+<li>第一步，评估负责人介绍 ATAM 方法</li>
+<li>第二步，项目经理或客户从业务角度介绍业务驱动因素</li>
+<li>第三步，首席架构师介绍体系结构</li>
+<li>第四步，评估团队确定架构方法</li>
+<li>第五步，评估团队和项目决策者生成质量属性效用树 (Utiltiy Tree)</li>
+<li>第六步，评估团队分析架构方法</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>阶段-2：评估-2
+<ol>
+<li>参与者：评估团队、项目决策者和项目涉众</li>
+<li>职责：
+<ol>
+<li>第一步，评估负责人介绍 ATAM 方法和之前已经取得的成果</li>
+<li>第七步，涉众头脑风暴并确定场景优先级</li>
+<li>第八步，评估团队分析架构方法，类似第六步</li>
+<li>第九步，评估团队展示评估结果，并呈递给涉众</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>阶段-3：后续
+<ol>
+<li>参与者：评估团队、主要涉众</li>
+<li>职责：评估团队制作最终评估报告，发给主要涉众审核通过后，将报告呈递给委托评估的人。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>✅ ==【2015】【2019】软件架构来自哪里？列举五种可能的软件架构的来源 Where do software architecture come from? List five possible sources of software architecture.==</p>
+<p>（关功非业技）</p>
+<ol>
+<li>NFRs - 非功能性需求</li>
+<li>ASRs</li>
+<li>涉众</li>
+<li>技术环境</li>
+<li>业务目标</li>
+</ol>
+</li>
+<li>
+<p>✅ 【2015】【2019】解释代理架构模式的上下文、好处和局限性。Explain the context, benefits and limitations of Broker Architecture Pattern.</p>
+<ol>
+<li>上下文：多个<strong>同步或异步交互</strong>的<strong>远程对象组成的系统</strong>，broker协调多个客户机和服务器之间的通讯。</li>
+<li>好处：提高了 Client 和 Server 之间的交互性、提高可伸缩性和可扩展性、解决了单体应用的性能瓶颈、大规模集群的性能提高，但是单点性能会下降。</li>
+<li>局限性：代理增加了前期复杂度、可能成为通信的屏障、可能成为攻击的目标、难以测试。</li>
+<li>SOA 延续了 broker 的思想，查找服务和使用服务都要通过 broker，而 SOA 只在查找时通过 register，分散了 broker 的职责，降低了单点风险。</li>
+</ol>
+</li>
+<li>
+<p>✅ 【2018】【2023】Layered pattern 和 Multi-tier pattern 的区别</p>
+<ol>
+<li>Layered Pattern 是 Module Style，而 Multi-tier Pattern 是 Allocation Style</li>
+<li>Layered Pattern 是将任务拆解成一个个处于特定抽象级别的子层次，每层为上一层提供服务，核心是关注点分离。</li>
+<li>Multi-tier Patten 中的层是逻辑的组合，没有层次模式的强依赖关系，在不同部署环境中分层不同但是软件完成的内容一致。</li>
+</ol>
+</li>
+<li>
+<p>✅ 【2017】【2019】【2022】【2023】在设计软件时应用了哪些<strong>通用设计策略</strong>？为每个策略提供一个带有软件架构的简明工作示例。What are generic design strategies applied in designing software? Give a concise working example with software architecture for each strategy.</p>
+<ol>
+<li>抽象：关注本身结构而不关心实现，比如将系统抽象为组件和连接件或抽象为模块。</li>
+<li>分解：比如将整个系统分解或将某个模块分解。</li>
+<li>分而治之：将每个模块分别处理</li>
+<li>生成与测试：将一个特定的设计看作是一个假设；根据测试路径生成测试用例。</li>
+<li>迭代与细化：如 ADD 方法多次迭代直到满足所有 ASR</li>
+<li>复用元素：重用在设计过程中出现了可以复用的元素，重用现有架构</li>
+</ol>
+</li>
+<li>
+<p>✅ 【2017】【2019】什么是 ASR？列出提取和识别 ASR 的四种来源和方法。What are ASR? List four sources and methods for extracting and identifying ASRs.</p>
+<ol>
+<li>ASRs 架构攸关需求是对架构产生深远影响的需求</li>
+<li>四种来源和方法：
+<ol>
+<li>从需求文档中收集 ASR：MoScoW 方法和用户故事</li>
+<li>通过采访涉众来收集 ASR：质量属性工作坊 (QAW)Quality Attribute Workshop</li>
+<li>通过了解业务目标来收集 ASR：</li>
+<li>通过质量属性效用树 (Utility Tree) 来收集 ASR*：逐渐对质量属性进行分解细化，直到包含量化指标为止。*</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>✅ 【2017】【2019】典型的软件架构文档包中应该包含哪些内容？简要描述每个组件及其用途。What should be included in a typical software architecture documentation package? Briefly describe each component and its purpose.</p>
+<ol>
+<li><strong>包含 View 和 Beyond</strong></li>
+<li>Beyond 部分：
+<ol>
+<li>文档路线图：包含了范围和总结、简单摘要等。</li>
+<li>视图的文档组织方式：描述了本文档中视图是如何组织的。</li>
+<li>系统概述：从整体上描述了当前架构的简要说明、业务目标 ( 驱动因素 ) 等等。</li>
+<li>视图之间的映射关系：描述了不同视图之间的映射关系。</li>
+<li>系统原理：从整体上描述了当前架构的设计原理。</li>
+<li>目录-索引、词汇表、首字母缩略词表。</li>
+</ol>
+</li>
+<li>View 部分
+<ol>
+<li>styles and views( 体系结构风格和视图 )</li>
+<li>Structural views
+<ol>
+<li>module viwes</li>
+<li>C &amp; C views</li>
+<li>Allocation views</li>
+</ol>
+</li>
+<li>Quality Views</li>
+</ol>
+</li>
+<li>每一个 View 的内容
+<ol>
+<li>主要介绍：显示视图的元素和关系，以及图例</li>
+<li>元素介绍，详细介绍第一部分中描述的元素、元素属性、关系属性和元素接口和行为。</li>
+<li>上下文图：描述系统如何与环境相关</li>
+<li>可变性指导：告知视图中可能出现的变化</li>
+<li>基本原理：解释设计如何映射在视图中，以及其合理性。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>✅ 【2015】描述架构设计中架构模式和tactics 之间的关系。给出可以在架构设计过程中使用的任何四种决策的名称，并描述每种决策的目的。Describe the relationships between architectual patterns and tactics in architecture design. Give name of any four tactics that can be used during architecture design and describe the purpose of each of them.</p>
+<ol>
+<li>架构模式与tactics 之间的关系
+<ol>
+<li>tactics 比模式更简单，使有单一的结构或机制来应对单一的架构驱动</li>
+<li>tactics 是构成架构模式的重要组成部分</li>
+<li>架构模式通常将许多个tactics 组合在一起。</li>
+<li>大多数架构模式都包含不同的tactics ，这些tactics 可能有共同的目的或者常被用于实现不同的质量属性。</li>
+<li>tactics 和架构模式共同构成了软件设计时的工具。</li>
+</ol>
+</li>
+<li>四种决策的名称</li>
+</ol>
+</li>
+<li>
+<p>✅ 【2015】简要描述面向服务架构 (SOA) 的基本原则，并讨论 SOA 对互操作性、可伸缩性和安全性等质量属性的影响 Briefly describe the fundamental principles of Service Oriented Architecture(SOA) and discuss the impact of SOA on quality attributes like interoperability, scalability and security</p>
+<ol>
+<li>SOA 的基本原则
+<ol>
+<li>服务解耦：服务之间的关系最小化，只是相互知道接口</li>
+<li>服务契约:服务按照描述文档所定义的服务契约行事</li>
+<li>服务封装:除了服务契约所描述内容，服务将对外部隐藏实现逻辑</li>
+<li>服务重用:将逻辑分布在不同的服务中，以提高服务的重用性</li>
+<li>服务组合:一组服务可以协调工作，组合起来形成定制组合业务</li>
+<li>服务自治:服务对所封装的逻辑具有控制权</li>
+<li>服务无状态:服务将一个活动所需保存的资讯最小化</li>
+</ol>
+</li>
+<li>SOA 对互操作性的影响
+<ol>
+<li>SOA 具有更高的互操作性：符合开放标准，可以更好的重用服务</li>
+<li>支持服务的自动识别、发现、注册和调用等等</li>
+</ol>
+</li>
+<li>SOA 对可伸缩性的影响
+<ol>
+<li>SOA 具有更高的可伸缩性：服务自身高内聚、服务间松耦合，最小化维护的影响</li>
+<li>但是 SOA 也会带来系统复杂度较高的问题</li>
+</ol>
+</li>
+<li>SOA 对安全性的影响：
+<ol>
+<li>中间件可能会成为性能的瓶颈</li>
+<li>ESB 等中间件都可以成为被攻击的目标</li>
+<li>多服务导致攻击的跟踪、溯源和防御成为困难。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>✅ 【2019】【2023】微服务和 SOA 的区别，相同点</p>
+<ol>
+<li>相同点：微服务和 SOA 都是分布式架构，微服务架构可以看作是SOA的一种实现方式，适用于更小规模和更灵活的应用系统。都包含了服务契约、服务封装、服务重用、服务组合、服务自治和服务无状态等基本特点。</li>
+<li>微服务去掉了 SOA 架构中的 ESB(Enterprise Service Bus) 企业服务总线，采用轻量级通信机制 (HTTP、REST) 进行服务之间的通信。</li>
+<li>微服务引入了熔断器：避免出现服务失效或网络问题等导致的级联故障。</li>
+<li>部署和扩展：在SOA中，整个应用程序通常作为一个单元进行部署和扩展。而在微服务架构中，每个微服务可以独立部署和扩展，使得系统具有更好的弹性和可伸缩性。</li>
+<li>服务粒度：在SOA中，服务的粒度可以比较大，一个服务可能涵盖多个相关的业务功能。而在微服务架构中，服务的粒度更小，每个服务通常专注于一个特定的业务功能。</li>
+<li>组织和治理：SOA通常需要涉及企业范围内的中央治理和管理，**不能控制独立服务的演变。**而微服务架构强调团队的自治性，<strong>每个微服务可以由一个独立的团队进行开发和管理，更加注重服务的自治性和快速迭代</strong>。</li>
+</ol>
+</li>
+<li>
+<p>【2017】<strong>软件设计的三个变化维度，每个维度的变化点。不同的绑定时间如何影响可修改性和可测试性</strong>。</p>
+<ol>
+<li>三个变化维度：
+<ol>
+<li>面向对象 OOP，强调重用性、灵活性和扩展性。</li>
+<li>面向方面 AOP，满足扩展的需求，可以在程序中自由的扩展功能</li>
+<li>面向服务 SOA，是系统发布功能的一种方式，且基于这种方式下不同的系统之间可以有效的沟通、协作。</li>
+</ol>
+</li>
+<li>设计时，开发时，测试时，发布时，运行时：可修改性降低，可测试性升高</li>
+</ol>
+</li>
+<li>
+<p>✅【2018】<strong>软件架构的关注点有哪些</strong>？利益相关方有哪些？</p>
+<ol>
+<li>软件架构的关注点
+<ol>
+<li>利益相关者 Stakeholders addressed</li>
+<li>解决的问题 Concerns addressed</li>
+<li>语言，建模技巧 Language, modeling techniques</li>
+<li>策略，模式 Tactics, Pattern</li>
+</ol>
+</li>
+<li>利益相关方有哪些？
+<ol>
+<li>顾客 Customer</li>
+<li>用户 User</li>
+<li>架构师 Architect</li>
+<li>需求工程师 Requirements engineer</li>
+<li>设计师 Designer</li>
+<li>实施者 Implementer</li>
+<li>测试师，集成师 Tester, integrator</li>
+<li>维护者 Maintainer</li>
+<li>产品经理 Product manager</li>
+<li>质量保证人 Quality assurance people</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>✅ 【2018】【2022】Software requirements, Quality attributes, ASRs 的区别和联系</p>
+<ol>
+<li>软件需求包括功能性需求和非功能性需求（又称质量需求）</li>
+<li>质量属性是由软件的业务目标所决定，在功能性需求的基础上提供的整个系统的合乎需求的特性，是非功能需求的一种体现。</li>
+<li>ASRs 架构攸关需求是对于体系结构有着深远影响的需求，肯定是软件需求的一部分。</li>
+</ol>
+</li>
+<li>
+<p>✅ 【2018】描述 ADD 过程</p>
+<p><strong>输入</strong>：需求，<strong>输出</strong>：软件元素 - 角色 - 职责 - 属性 - 关系</p>
+<ol>
+<li>确定有足够的需求信息</li>
+<li>选择要分解的系统要素</li>
+<li>确定所选的元素的 ASR</li>
+<li>选择符合 ASR 的设计
+<ol>
+<li>找出设计问题</li>
+<li>列出子关注点替代模式/策略</li>
+<li>从清单中选择模式/策略</li>
+<li>确定模式/策略与 ASR 之间的关系</li>
+<li>记录初步的架构视图</li>
+<li>评估并解决不一致的问题</li>
+</ol>
+</li>
+<li>实例化架构元素并分配职责</li>
+<li>实例化元素定义接口</li>
+<li>验证和完善需求</li>
+<li>重复进行 2-7 步直到满足所有的 ASR</li>
+</ol>
+</li>
+<li>
+<p>✅ 【==2019】Architecture，structure 和 Design 的区别？==</p>
+<ol>
+<li>Design 包含 Architecture，Architecture 包含 Structure</li>
+<li>结构是静态的、逻辑的，是关于系统如何构成的</li>
+<li>Architecture除包含structure ，还会包含组件之间的相关的关系结构，并定义一些动态的行为。</li>
+<li>所有体系结构都是设计，但是不是所有的设计都是体系结构，体系结构是软件设计的一个部分</li>
+<li>架构的定义：
+<ul>
+<li>组件的接口</li>
+<li>组件之间的交流和依赖</li>
+<li>组件的职责</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>✅ 【2018】【2019】【2022】Risks，Senstivity Points，Trade-Off Points 分别是什么？各举一个例子。</p>
+<ol>
+<li>识别风险：发现可能对所需质量属性产生负面影响的架构决策，例如使用分层模式可能带来性能损耗。</li>
+<li>发现权衡：影响多个质量属性的架构决策，例如使用分层模式可能会带来性能损耗，但是增加系统的可修改性。</li>
+<li>发现敏感点：特定质量属性对其敏感的架构决策，比如在对性能敏感的系统中，决定使用缓存中间件。</li>
+</ol>
+</li>
+<li>
+<p>✅ 软件架构风格</p>
+<ol>
+<li>module Styles：认为体系结构是由模块组成。模块是实现单元的集合，它提供了一组一致的职责。</li>
+<li>C &amp; C Styles 认为体系结构是由组件 ( 主要的处理单元和数据存储 )、连接件 ( 组件之间的交互路径 ) 组成的。</li>
+<li>Allocation Styles 认为体系结构是由软件元素 ( 软件元素具有环境所需的属性 ) 和环境元素 ( 环境元素有提供给软件的属性 ) 组成的，展示了软件如何与环境关联。</li>
+</ol>
+</li>
+<li>
+<p>架构模式是：⼀个架构模式是⼀组架构设计决定，这些决定适用于重复出现的设计问题，并被参数化以考虑出现该问题的不同软件开发上下文。</p>
+</li>
+<li>
+<p>软件架构是程序或计算系统的结构，由软件元素、这些元素外部可⻅的属性、这些元素的关系组成</p>
+</li>
+<li>
+<p>架构模式：{问题，上下文} → 架构方法。架构风格具体到常见的问题和上下文，就叫做架构模式</p>
+</li>
+</ol></blockquote>
+<hr>
+<h2 id="其他知识点">其他知识点
+</h2><h3 id="交流包含数据传播机制控制流">交流包含：数据传播机制+控制流
+</h3><h3 id="nfrs-includetbq">NFRs include:（TBQ）
+</h3><p>• Technical constraints • Business constraints • Quality attribute</p>
+<h3 id="-20172019描述-41-视图-describe-41-view-掌握绘图-答案如上">✅ 【2017】【2019】描述 4+1 视图 Describe 4+1 view( 掌握绘图 )：答案如上
+</h3><p>LPPDA</p>
+<ol>
+<li>逻辑视图：描述了对架构而言重要的元素和他们之间的关系（功能需求）==重要元素+之间关系==</li>
+<li>过程视图：描述了元素之间的交互。==元素的交互==</li>
+<li>物理视图（部署视图）：描述了主要过程和组件是如何被映射到硬件上的。==过程组件映射硬件==</li>
+<li>开发视图（实现视图）：描述实现系统功能的各个组件和模块是如何实现的 ==组件模块如何实现==</li>
+<li>用例场景（Use Case）：描述系统的参与者（用户）与系统功能用例的关系，与一个或多个特定视图相关。 ==系统用户与系统功能用例的关系==</li>
+</ol>
+<h2 id="架构">架构
+</h2><h3 id="软件架构是程序或计算系统的结构由软件元素这些元素外部可的属性这些元素的关系组成">软件架构是程序或计算系统的结构，由软件元素、这些元素外部可⻅的属性、这些元素的关系组成
+</h3><h3 id="架构活动">架构活动
+</h3><ul>
+<li>创建bussness case</li>
+<li>理解需求</li>
+<li>创建架构</li>
+<li>交流架构</li>
+<li>评估架构</li>
+<li>实现架构</li>
+<li>确保架构一致性</li>
+</ul>
+<h3 id="-20152019软件架构来自哪里列举五种可能的软件架构的来源-where-do-software-architecture-come-from-list-five-possible-sources-of-software-architecture">✅ 【2015】【2019】软件架构来自哪里？列举五种可能的软件架构的来源 Where do software architecture come from? List five possible sources of software architecture.
+</h3><p>==（关功非业技）==</p>
+<ol>
+<li>NFRs - 非功能性需求</li>
+<li>ASRs</li>
+<li>涉众</li>
+<li>技术环境</li>
+<li>组织（Organization）</li>
+</ol>
+<h3 id="-2019architecturestructure-和-design-的区别">✅ 【2019】Architecture，structure 和 Design 的区别？
+</h3><ol>
+<li>Design 包含 Architecture，Architecture 包含 Structure</li>
+<li>结构是静态的、逻辑的，是关于系统如何构成的</li>
+<li>Architecture除包含structure ，还会包含组件之间的相关的关系结构，并定义一些动态的行为。</li>
+<li>所有体系结构都是设计，但是不是所有的设计都是体系结构，体系结构是软件设计的一个部分</li>
+<li>架构的定义：
+<ul>
+<li>组件的接口</li>
+<li>组件之间的交流和依赖</li>
+<li>组件的职责</li>
+</ul>
+</li>
+</ol>
+<h3 id="what-does-a-software-architect-do">What does a software architect do?
+</h3><p>Liaison,</p>
+<p>Software engineering,</p>
+<p>Tech. knowledge,</p>
+<p>Risk mgmt.</p>
+<p>==LSTR==</p>
+<h3 id="20152017简要描述软件架构过程中的一般活动以及每个活动的主要输入和输出briefly-describe-the-general-activities-in-a-software-architecture-process-and-the-major-inputs-and-outputs-at-each-activity">✅【2015】【2017】简要描述软件架构过程中的一般活动，以及每个活动的主要输入和输出。Briefly describe the ==general activities in a software architecture process==, and the major inputs and outputs at each activity.
+</h3><ol>
+<li>短答案 ( 背 )
+<ol>
+<li>识别 ASRs
+<ol>
+<li>输入：无</li>
+<li>输出：优先的质量属性场景</li>
+</ol>
+</li>
+<li>架构设计
+<ol>
+<li>输入：优先的质量属性场景、需求和约束、模式和决策</li>
+<li>输出：模式决定的候选视图的草图(PCVS)</li>
+</ol>
+</li>
+<li>架构文档化
+<ol>
+<li>输入：模式决定的候选视图的草图</li>
+<li>输出：View &amp; Beyond</li>
+</ol>
+</li>
+<li>架构评估
+<ol>
+<li>输入：View &amp; Beyond、优先的质量属性场景</li>
+<li>输出：View &amp; Beyond</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5.png"
+	width="1978"
+	height="641"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5_hu_574ed0cebdb66e68.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5_hu_b5f731d1bcd03799.png 1024w"
+	loading="lazy"
+	
+		alt="img"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="308"
+		data-flex-basis="740px"
+	
+></p>
+<h3 id="软件架构的lifecircle">软件架构的LifeCircle
+</h3><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612223110998.png"
+	width="2264"
+	height="1216"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612223110998_hu_e6521bee1fc8e7fa.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612223110998_hu_adc4bf2f1a6e8f6f.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250612223110998"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="186"
+		data-flex-basis="446px"
+	
+></p>
+<h2 id="design-strategy">Design Strategy
+</h2><h3 id="2017201920222023在设计软件时应用了哪些通用设计策略为每个策略提供一个带有软件架构的简明工作示例what-are-generic-design-strategies-applied-in-designing-software-give-a-concise-working-example-with-software-architecture-for-each-strategy">2017】【2019】【2022】【2023】在设计软件时应用了哪些<strong>通用设计策略</strong>？为每个策略提供一个带有软件架构的简明工作示例。What are ==generic design strategies== applied in designing software? Give a concise working example with software architecture for each strategy.
+</h3><ol>
+<li>抽象：关注本身结构而不关心实现，比如将系统抽象为组件和连接件或抽象为模块。</li>
+<li>分解：比如将整个系统分解或将某个模块分解。</li>
+<li>分而治之：将每个模块分别处理</li>
+<li>生成与测试：将一个特定的设计看作是一个假设；根据测试路径生成测试用例。</li>
+<li>迭代与细化：如 ADD 方法多次迭代直到满足所有 ASR</li>
+<li>复用元素：重用在设计过程中出现了可以复用的元素，重用现有架构</li>
+</ol>
+<p>Decomposition • Abstraction • Stepwise: &lsquo;Divid and Conquer&rsquo; • Generate and Test • Iteration: Incrementa Refinement • Reuseable elements</p>
+<p>==DASGIR==</p>
+<h3 id="seven-categories-of-design-decisions-may-overlap">Seven ==categories of design decisions== (may overlap):
+</h3><p>• Alocation of responsibilities</p>
+<p>• Coordination mode</p>
+<p>• Data model</p>
+<p>• Management of resources</p>
+<p>• Mapping among architecture elements</p>
+<p>• Binding time decisions</p>
+<p>• Choice of technology</p>
+<p>==ABCCDMM==</p>
+<h2 id="quality-atributes">Quality Atributes
+</h2><h3 id="20182022software-requirements-quality-attributes-asrs-的区别和联系">2018】【2022】Software requirements, Quality attributes, ASRs 的区别和联系
+</h3><ol>
+<li>软件需求包括功能性需求和非功能性需求（又称质量需求）</li>
+<li>质量属性是由软件的业务目标所决定，在功能性需求的基础上给整个系统提供的期望特性，是非功能需求的一种体现。</li>
+<li>ASRs 是对于体系结构有着深远影响的需求，是软件需求的一部分。</li>
+</ol>
+<h3 id="质量属性是由软件的业务目标所决定在功能性需求的基础上给整个系统提供的期望特性是非功能需求的一种体现">质量属性是由软件的业务目标所决定，在功能性需求的基础上给整个系统提供的期望特性，是非功能需求的一种体现。
+</h3><h3 id="功能需求规定了系统必须完成的任务并阐述了系统如何为利益相关者提供价值">功能需求规定了系统必须完成的任务，并阐述了系统如何为利益相关者提供价值。
+</h3><h3 id="约束是零自由度的预先制定的已经作出的决策zero-freedompre-specifiedalready-made">约束是零自由度的，预先制定的，已经作出的决策（zero-freedom,pre-specified,already made）
+</h3><h3 id="策略tactics是影响质量属性相应控制的设计决策比如冗余">策略（Tactics）：是影响质量属性相应控制的设计决策，比如冗余。
+</h3><h3 id="分类体系internalexternal"><strong>分类体系Internal/External</strong>
+</h3><p>• <strong>运行时可观测需求（外部质量）</strong></p>
+<p>How well system satisfied its performance requirements</p>
+<p>▸ 性能（performance）
+▸ 安全性（security）
+▸ 可用性（availability）
+▸ 易用性（usability）</p>
+<p>• <strong>运行时不可观测需求（内部质量）</strong></p>
+<p>how easy a system be maintained
+▸ 可修改性（modifiability）
+▸ 可移植性（portability）
+▸ 可复用性（reusability）
+▸ 可测试性（testability）</p>
+<h3 id="场景主要分为两类">场景主要分为两类：
+</h3><p>• 通用场景是与系统无关的场景，用于指导==质量属性需求==(QAR)的规范。</p>
+<p>• 具体场景是与特定系统相关的场景，用于指导特定系统的质量属性需求的规范。它们是通用场景的实例。</p>
+<h3 id="质量属性方案建模">质量属性方案建模
+</h3><p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613153057877.png"
+	width="2124"
+	height="888"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613153057877_hu_d594a43bc514c357.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613153057877_hu_4f06b36df400566c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250613153057877"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="239"
+		data-flex-basis="574px"
+	
+></p>
+<p>刺激：当到达系统时需要考虑的条件。
+• 刺激源：产生刺激的实体（人、系统或任何执行器）。
+• 响应：刺激到达后所采取的活动。
+• 响应度量：对刺激的响应应以某种方式可测量，以便需求可测试。
+• 环境：刺激发生时系统的状态，例如过载、运行等。
+• 工件：完成需求的整个系统或者系统的一部分（软件制品）</p>
+<p>==STUMPI==</p>
+<h3 id="availablity">Availablity
+</h3><p>==多少时间比例中系统是可用的==</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613155653161.png"
+	width="1616"
+	height="1316"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613155653161_hu_6d93d3e61c46831c.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613155653161_hu_847b390e061e8017.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250613155653161"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="122"
+		data-flex-basis="294px"
+	
+></p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613155705779.png"
+	width="1714"
+	height="896"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613155705779_hu_22f7905eb0247154.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613155705779_hu_d1561245897574f4.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250613155705779"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="191"
+		data-flex-basis="459px"
+	
+></p>
+<p>==系统不相应，进程的回应，衡量关机时间==</p>
+<ol>
+<li>
+<p>Ping/Echo</p>
+</li>
+<li>
+<p>Hearbeat</p>
+</li>
+<li>
+<p>Rollback</p>
+</li>
+<li>
+<p>Voting</p>
+</li>
+<li>
+<p>Redundancy</p>
+</li>
+<li>
+<p>Shadow Operation</p>
+</li>
+<li>
+<p>Spare</p>
+</li>
+<li>
+<p>Transaction</p>
+</li>
+<li>
+<p>Process Monitor</p>
+</li>
+</ol>
+<h3 id="introperablity">Introperablity
+</h3><p>在特定的Context下两个系统交换有用信息的程度（正确性）</p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613161941976.png"
+	width="1876"
+	height="1106"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613161941976_hu_f71115ead355a508.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613161941976_hu_855adf4389d94134.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250613161941976"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="169"
+		data-flex-basis="407px"
+	
+></p>
+<p><img src="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613162113239.png"
+	width="1798"
+	height="1000"
+	srcset="/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613162113239_hu_cf69ab5b355b5c14.png 480w, /huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613162113239_hu_895cabfcdd02152c.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250613162113239"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="179"
+		data-flex-basis="431px"
+	
+></p>
+<p>==两个系统交互，有多少信息被正确交换==</p>
+<ol>
+<li>定位服务</li>
+<li>管理接口</li>
+</ol>
+<h3 id="modifiability">Modifiability
+</h3><p>==作出修改需要付出的代价==</p>
+<p>N x Cost of making the change without the mechanism s Cost of installing the mechanism + (N x Cost of making the change using the mechanism).</p>
+<p><img src="/huyang/image-20250613172134719.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613172134719"
+	
+	
+></p>
+<p><img src="/huyang/image-20250613172150078.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613172150078"
+	
+	
+></p>
+<p>==开发者修改代码的时间是多少==</p>
+<ul>
+<li>模块划分</li>
+<li>高内聚低耦合</li>
+<li>封装</li>
+<li>延迟绑定</li>
+</ul>
+<h3 id="performance">Performance
+</h3><p>==系统满足时效性的能力==</p>
+<ul>
+<li>处理时间</li>
+<li>阻塞时间</li>
+</ul>
+<p><img src="/huyang/image-20250613173120253.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613173120253"
+	
+	
+></p>
+<p>==系统内外部发送事件到系统组件从而处理事件，计算延迟/deadline/吞吐量==</p>
+<p><img src="/huyang/image-20250613173648619.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613173648619"
+	
+	
+></p>
+<p>==系统处理用户事物的平均时延==</p>
+<ul>
+<li>增加资源</li>
+<li>引入并发，冗余</li>
+<li>限流</li>
+<li>区分优先级</li>
+<li>缓存</li>
+</ul>
+<h3 id="security">Security
+</h3><p>==衡量系统如何保护数据/阻止未授权行为+确保授权人员正常访问数据==</p>
+<ul>
+<li>Confidentiality</li>
+<li>Itergrity</li>
+<li>Availablity</li>
+</ul>
+<p>CIA</p>
+<p><img src="/huyang/image-20250613194120963.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613194120963"
+	
+	
+></p>
+<p>==未授权人员向在线系统发送访问请求被拒绝衡量抵制了多少次的攻击==</p>
+<p><img src="/huyang/image-20250613194353335.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613194353335"
+	
+	
+></p>
+<p>==衡量恢复的正确数据量==</p>
+<ul>
+<li>服务拒绝</li>
+<li>checksum保证一致性</li>
+<li>验证身份</li>
+<li>授权行为</li>
+<li>撤销权限</li>
+<li>限制权限和攻击部位</li>
+</ul>
+<h3 id="testability">Testability
+</h3><p>==系统可以通过测试来证明故障的难易程度==</p>
+<p><img src="/huyang/image-20250613195025913.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613195025913"
+	
+	
+></p>
+<p><img src="/huyang/image-20250613195036992.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613195036992"
+	
+	
+></p>
+<p>==测试人员使用单元测试测试部分系统返回测试结果，结果是覆盖了多少的代码路径==</p>
+<ul>
+<li>控制和观察系统状态</li>
+<li>限制复杂度</li>
+</ul>
+<h3 id="usability">Usability
+</h3><p>==用户有多容易能够使用系统完成工作==</p>
+<p><img src="/huyang/image-20250613200733969.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613200733969"
+	
+	
+></p>
+<p><img src="/huyang/image-20250613200743533.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613200743533"
+	
+	
+></p>
+<p>==用户使用系统干一件事情获得了结果，衡量使用了多少时间完成了多少的事==</p>
+<ul>
+<li>cancel/undo/pause/resume</li>
+<li>task model/user model/system model</li>
+</ul>
+<h2 id="架构模式">架构模式
+</h2><h3 id="架构模式-1">架构模式
+</h3><ol>
+<li>背景、上下文（Context）：世界上经常发生问题的场景。</li>
+<li>问题（Problem）：在给定上下文中概括的问题。</li>
+<li>解决方案（Element + Relations + Constraints）：针对问题的成功架构解决方案，是经过抽象的</li>
+</ol>
+<p>Context，Problem，Solution</p>
+<h3 id="架构模式是一系列可复用的架构设计决策针对经常出现的特定设计问题并能通过参数化调该问题所处的不同软件开发语境">架构模式是一系列可复用的架构设计决策，针对经常出现的特定设计问题，并能通过参数化调该问题所处的不同软件开发语境。
+</h3><h3 id="layered-patern">Layered Patern
+</h3><ol>
+<li>
+<h3 id="-20182023layered-pattern-和-multi-tier-pattern-的区别">✅ 【2018】【2023】Layered pattern 和 Multi-tier pattern 的区别
+</h3><ol>
+<li>Layered Pattern 是 Module Style，而 Multi-tier Pattern 是 Allocation Style</li>
+<li>Layered Pattern 是将任务拆解成一个个处于特定抽象级别的子层次，每层为上一层提供服务，核心是关注点分离。</li>
+<li>Multi-tier Patten 中的层是逻辑的组合，没有层次模式的强依赖关系，在不同部署环境中分层不同但是软件完成的内容一致。</li>
+</ol>
+</li>
+</ol>
+<p><img src="/huyang/image-20250613211039848.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613211039848"
+	
+	
+></p>
+<ul>
+<li>复杂度和前期成本</li>
+<li>性能损失</li>
+</ul>
+<p><img src="/huyang/image-20250613210650835.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613210650835"
+	
+	
+></p>
+<h3 id="broker-pattern">Broker Pattern
+</h3><h3 id="20152019解释代理架构模式的上下文好处和局限性explain-the-context-benefits-and-limitations-of-broker-architecture-pattern">【2015】【2019】解释代理架构模式的上下文、好处和局限性。Explain the context, benefits and limitations of Broker Architecture Pattern.
+</h3><ol>
+<li>上下文：多个<strong>同步或异步交互</strong>的<strong>远程对象组成的系统</strong>，broker协调多个客户机和服务器之间的通讯。</li>
+<li>好处：提高了 Client 和 Server 之间的交互性、提高可伸缩性和可扩展性、解决了单体应用的性能瓶颈、大规模集群的性能提高，但是单点性能会下降。</li>
+<li>局限性：代理增加了前期复杂度、可能成为通信的屏障、可能成为攻击的目标、难以测试。</li>
+<li>SOA 延续了 broker 的思想，查找服务和使用服务都要通过 broker，而 SOA 只在查找时通过 register，分散了 broker 的职责，降低了单点风险。</li>
+</ol>
+<p><img src="/huyang/image-20250613211648910.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613211648910"
+	
+	
+></p>
+<ul>
+<li>延迟/性能损失</li>
+<li>单点故障</li>
+<li>复杂度</li>
+<li>攻击目标</li>
+<li>难以测试</li>
+</ul>
+<p><img src="/huyang/image-20250613212057715.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613212057715"
+	
+	
+></p>
+<h3 id="mvc">MVC
+</h3><p><img src="/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="未命名"
+	
+	
+></p>
+<ul>
+<li>简单用户界面的复杂性</li>
+<li>可能不适用一些用户界面工具</li>
+</ul>
+<p><img src="/huyang/image-20250613213552234.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613213552234"
+	
+	
+></p>
+<p>Context：MVC 模式适用于需要清晰分离用户界面、业务逻辑和数据管理的应用系统。</p>
+<p>职责分离清晰</p>
+<h3 id="pipe-and-filter-patern">Pipe And Filter Patern
+</h3><p><img src="/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9822238.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="未命名"
+	
+	
+></p>
+<ul>
+<li>不适用于交互式系统</li>
+<li>带来计算开销</li>
+<li>不适合长时间运行的计算任务</li>
+</ul>
+<p>Context：需要对于数据进行一系列处理的过程</p>
+<p>好处：模块化，清晰易懂，可以支持并行处理</p>
+<p><img src="/huyang/image-20250613215038556.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613215038556"
+	
+	
+></p>
+<h3 id="client-server-pattern">Client-Server Pattern
+</h3><p><img src="/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9822707.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="未命名"
+	
+	
+></p>
+<ul>
+<li>服务器成为性能瓶颈</li>
+<li>服务器成为单点故障</li>
+<li>更改服务器的成本很高</li>
+</ul>
+<p><img src="/huyang/image-20250613222259912.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613222259912"
+	
+	
+></p>
+<h3 id="peer-to-peer-pattern">Peer-to-Peer Pattern
+</h3><p><img src="/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9824916.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="未命名"
+	
+	
+></p>
+<ul>
+<li>数据一致性</li>
+<li>管理安全性</li>
+<li>备份工作的复杂性</li>
+<li>性能/可用性</li>
+<li>小型的点对点系统无法实现</li>
+</ul>
+<p><img src="/huyang/image-20250613223828582.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613223828582"
+	
+	
+></p>
+<h3 id="service-oriented-patter">Service-Oriented Patter
+</h3><p><img src="/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9825552.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="未命名"
+	
+	
+></p>
+<ul>
+<li>性能损失</li>
+<li>构建复杂</li>
+</ul>
+<p>你提供的文本描述的是 <strong>面向服务的架构（Service-Oriented Architecture, SOA）</strong> 的核心概念、组成要素、优缺点以及实现方式。以下是详细解析：</p>
+<hr>
+<h3 id="1-什么是soa"><strong>1. 什么是SOA？</strong>
+</h3><p><strong>SOA（面向服务的架构）</strong> 是一种软件设计范式，通过<strong>松耦合的服务</strong>（Service）组合实现业务功能。</p>
+<ul>
+<li><strong>核心思想</strong>：将系统功能拆分为独立的、可复用的服务，通过标准协议（如HTTP/SOAP）交互。</li>
+<li><strong>类比</strong>：像“点外卖”——你（消费者）通过平台（ESB）调用餐厅（服务提供者）的功能，无需关心厨房如何做菜。</li>
+</ul>
+<hr>
+<h3 id="2-soa的核心组成要素"><strong>2. SOA的核心组成要素</strong>
+</h3><h4 id="1-组件components"><strong>(1) 组件（Components）</strong>
+</h4><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th><strong>角色</strong></th>
+          <th><strong>功能</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Service Provider</strong></td>
+          <td>提供服务（如支付服务、用户认证），通过接口（API）暴露功能。需关注性能、授权、成本等。</td>
+      </tr>
+      <tr>
+          <td><strong>Service Consumer</strong></td>
+          <td>调用服务的客户端（如电商网站调用支付服务）。</td>
+      </tr>
+      <tr>
+          <td><strong>ESB（企业服务总线）</strong></td>
+          <td>中介层，负责路由、转换消息（如将XML转JSON），解耦服务提供者与消费者。</td>
+      </tr>
+      <tr>
+          <td><strong>Registry</strong></td>
+          <td>服务注册中心（如UDDI），供服务注册和发现（类似“电话簿”）。</td>
+      </tr>
+      <tr>
+          <td><strong>Orchestration Server</strong></td>
+          <td>流程编排服务器（如BPEL引擎），协调多个服务按业务流程执行（如“下单→支付→物流”）。</td>
+      </tr>
+  </tbody>
+</table></div>
+<h4 id="2-连接器connectors"><strong>(2) 连接器（Connectors）</strong>
+</h4><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th><strong>类型</strong></th>
+          <th><strong>协议/技术</strong></th>
+          <th><strong>特点</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>SOAP Connector</strong></td>
+          <td>SOAP over HTTP</td>
+          <td>基于XML，强类型，适合企业级集成（如银行系统）。</td>
+      </tr>
+      <tr>
+          <td><strong>REST Connector</strong></td>
+          <td>HTTP (GET/POST/PUT/DELETE)</td>
+          <td>轻量级，JSON格式，广泛用于Web API。</td>
+      </tr>
+      <tr>
+          <td><strong>Asynchronous Messaging</strong></td>
+          <td>消息队列（如RabbitMQ、Kafka）</td>
+          <td>支持异步通信，解耦生产者和消费者。</td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<h3 id="3-soa的关键特性"><strong>3. SOA的关键特性</strong>
+</h3><p>✅ <strong>松耦合</strong>：服务独立演进，通过接口交互，内部实现不影响调用方。
+✅ <strong>复用性</strong>：同一服务可被多个系统调用（如用户认证服务复用）。
+✅ <strong>可组合性</strong>：通过<strong>工作流语言</strong>（如BPEL）编排多个服务实现复杂业务逻辑。</p>
+<hr>
+<h3 id="4-soa的典型应用场景"><strong>4. SOA的典型应用场景</strong>
+</h3><ul>
+<li><strong>企业系统集成</strong>：整合遗留系统（如ERP、CRM）到统一平台。</li>
+<li><strong>跨部门协作</strong>：不同团队开发的服务通过ESB互联（如电商的订单、库存、物流服务）。</li>
+<li><strong>云计算</strong>：AWS/Azure的微服务架构（如Lambda函数）本质是SOA的进化版。</li>
+</ul>
+<hr>
+<h3 id="5-soa的约束与弱点weaknesses"><strong>5. SOA的约束与弱点（Weaknesses）</strong>
+</h3><p>⚠️ <strong>复杂性高</strong>：需设计服务契约、注册中心、ESB等中间件，开发成本高。
+⚠️ <strong>性能开销</strong>：XML/SOAP协议臃肿，ESB可能成为瓶颈（对比REST更轻量）。
+⚠️ <strong>演化失控</strong>：服务由不同团队维护，版本兼容性难保证（如V1接口废弃影响消费者）。
+⚠️ <strong>无性能保证</strong>：服务提供者不承诺SLA（服务等级协议）时，延迟和可用性不稳定。</p>
+<hr>
+<h3 id="6-soa-vs-微服务microservices"><strong>6. SOA vs 微服务（Microservices）</strong>
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th><strong>对比维度</strong></th>
+          <th><strong>SOA</strong></th>
+          <th><strong>微服务</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>通信协议</strong></td>
+          <td>主要用SOAP/ESB</td>
+          <td>主要用REST/gRPC</td>
+      </tr>
+      <tr>
+          <td><strong>粒度</strong></td>
+          <td>粗粒度（如“订单服务”）</td>
+          <td>细粒度（如“支付服务中的退款子功能”）</td>
+      </tr>
+      <tr>
+          <td><strong>部署</strong></td>
+          <td>通常集中式（单体应用+ESB）</td>
+          <td>完全分布式，独立部署</td>
+      </tr>
+      <tr>
+          <td><strong>技术栈</strong></td>
+          <td>强依赖中间件（如WebLogic）</td>
+          <td>轻量级（如Spring Cloud）</td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<h3 id="7-总结"><strong>7. 总结</strong>
+</h3><ul>
+<li><strong>SOA适合</strong>：大型企业需要整合异构系统、强调标准化和复用的场景。</li>
+<li><strong>不适用场景</strong>：小型敏捷项目（过度设计）、高性能实时系统（中间件延迟高）。</li>
+</ul>
+<p>如果需要具体案例（如“如何使用BPEL编排服务”）或技术细节（如ESB实现原理），可以进一步探讨！ 🛠️</p>
+<p><img src="/huyang/image-20250613224901896.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613224901896"
+	
+	
+></p>
+<h3 id="publish-subscribe-pattern">Publish-Subscribe Pattern
+</h3><p><img src="/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9826337.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="未命名"
+	
+	
+></p>
+<ul>
+<li>延迟</li>
+<li>对可扩展性和可预测性有影响</li>
+<li>不能够控制消息的发送次序，消息的传递无法保证</li>
+</ul>
+<p><img src="/huyang/image-20250613225943279.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613225943279"
+	
+	
+></p>
+<h3 id="shared-data-pattern">Shared-Data Pattern
+</h3><p><img src="/huyang/image-20250613230116410.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613230116410"
+	
+	
+></p>
+<p><img src="/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9826901.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="未命名"
+	
+	
+></p>
+<ul>
+<li>性能瓶颈</li>
+<li>单点故障</li>
+<li>联系过于紧密</li>
+</ul>
+<h3 id="map-reduce-pattern">Map-Reduce Pattern
+</h3><p><img src="/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9827204.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="未命名"
+	
+	
+></p>
+<ul>
+<li>没有庞大数据集就不值得</li>
+<li>如果数据集无法划分，就不能够使用并行化</li>
+<li>多次规约难以协调</li>
+</ul>
+<p><img src="/huyang/image-20250613231342412.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250613231342412"
+	
+	
+></p>
+<h3 id="multi--tier-pattern-solution">Multi- Tier Pattern Solution
+</h3><p><img src="/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9827685.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="未命名"
+	
+	
+></p>
+<ul>
+<li>前期的成本巨大</li>
+<li>复杂度高</li>
+</ul>
+<p><strong>层间关系与约束</strong></p>
+<ul>
+<li><strong>通信方向</strong>：通常严格<strong>单向调用</strong>（如展示层→业务层→数据层），避免跨层直接访问。</li>
+<li><strong>组件归属</strong>：一个组件<strong>仅属于一个层</strong>（如“用户认证组件”必须明确归业务层或数据层）。</li>
+<li><strong>技术隔离</strong>：不同层可使用不同技术栈（如展示层用JavaScript，业务层用Java）。</li>
+</ul>
+<hr>
+<p><strong>分层架构的优势</strong></p>
+<p>✅ <strong>模块化</strong>：每层可独立开发、测试和部署。
+✅ <strong>可维护性</strong>：修改一层时不影响其他层（如更换数据库只需调整数据层）。
+✅ <strong>安全性</strong>：通过分层隔离敏感操作（如数据库访问不暴露给展示层）。
+✅ <strong>可扩展性</strong>：可针对特定层扩展（如业务层横向扩容应对高并发）。</p>
+<h3 id="-20182023layered-pattern-和-multi-tier-pattern-的区别-1">✅ 【2018】【2023】Layered pattern 和 Multi-tier pattern 的区别
+</h3><ol>
+<li>Layered Pattern 是 Module Style，而 Multi-tier Pattern 是 Allocation Style</li>
+<li>Layered Pattern 是将任务拆解成一个个处于特定抽象级别的子层次，每层为上一层提供服务，核心是关注点分离。</li>
+<li>Multi-tier Patten 中的层是逻辑的组合，没有层次模式的强依赖关系，在不同部署环境中分层不同但是软件完成的内容一致。</li>
+</ol>
+<h3 id="-2015描述架构设计中架构模式和tactics-之间的关系给出可以在架构设计过程中使用的任何四种决策的名称并描述每种决策的目的describe-the-relationships-between-architectual-patterns-and-tactics-in-architecture-design-give-name-of-any-four-tactics-that-can-be-used-during-architecture-design-and-describe-the-purpose-of-each-of-them">✅ 【2015】描述架构设计中架构模式和tactics 之间的关系。给出可以在架构设计过程中使用的任何四种决策的名称，并描述每种决策的目的。Describe the relationships between architectual patterns and tactics in architecture design. Give name of any four tactics that can be used during architecture design and describe the purpose of each of them.
+</h3><ol>
+<li>架构模式与tactics 之间的关系
+<ol>
+<li>tactics 比模式更简单，使用单一的机制来解决单一的架构驱动</li>
+<li>tactics 是构成架构模式的重要组成部分</li>
+<li>架构模式通常将许多个tactics 组合在一起。</li>
+<li>大多数架构模式都包含不同的tactics ，这些tactics 可能有共同的目的或者常被用于实现不同的质量属性。</li>
+<li>tactics 和架构模式共同构成了软件设计时的工具。</li>
+</ol>
+</li>
+<li>四种决策的名称
+<ol>
+<li>主动冗余</li>
+<li>被动冗余</li>
+<li>影子模式</li>
+<li>Heart Beat</li>
+<li>Ping/Echo</li>
+<li>进程监控</li>
+<li>空闲</li>
+</ol>
+</li>
+</ol>
+<h3 id="-20172019什么是-asr列出提取和识别-asr-的四种来源和方法what-are-asr-list-four-sources-and-methods-for-extracting-and-identifying-asrs">✅ 【2017】【2019】什么是 ASR？列出提取和识别 ASR 的四种来源和方法。What are ASR? List four sources and methods for extracting and identifying ASRs.
+</h3><ol>
+<li>ASRs 是对架构产生深远影响的需求</li>
+<li>四种来源和方法：
+<ol>
+<li>从需求文档中收集 ASR：MoScoW 方法和用户故事</li>
+<li>通过采访涉众来收集 ASR：质量属性工作坊 (QAW)Quality Attribute Workshop</li>
+<li>通过了解业务目标来收集 ASR：</li>
+<li>通过质量属性效用树 (Utility Tree) （QAUT）来收集 ASR*：逐渐对质量属性进行分解细化，直到包含量化指标为止。*</li>
+</ol>
+</li>
+</ol>
+<h3 id="架构driver">架构driver
+</h3><p>Functional requirements</p>
+<p>•Quality attribute requirements</p>
+<p>•Constraints</p>
+<p>Type of system that is being designed</p>
+<p>•Design objectives</p>
+<p>•Concerns</p>
+<p>==DFCCTQ==</p>
+<h3 id="addatribute-driven-design">ADD（Atribute Driven Design）
+</h3><p><img src="/huyang/image-20250614160702087.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250614160702087"
+	
+	
+></p>
+<p><strong>输入：</strong></p>
+<p>DFCCTQ（没有Q）+架构设计</p>
+<p>输出：</p>
+<p>Refined 软件架构设计</p>
+<ol>
+<li>Review Input</li>
+<li>Establish Iteration goal  by selecting drivers</li>
+<li>chose oen more system elements to refine</li>
+<li>chose one more design concept satisfied drivers
+<ol>
+<li>indentify design concept</li>
+<li>select design concept</li>
+</ol>
+</li>
+<li>instantiate architectual element &amp;Allocate responsiability&amp; define interface</li>
+<li>Sketch view&amp;record design decision</li>
+<li>perform analysis of current design &amp; review iteration goal and design purpose</li>
+</ol>
+<p>重复2-7步直到：</p>
+<ul>
+<li>设计目标达成</li>
+<li>技术风险消除</li>
+<li>时间用尽</li>
+</ul>
 
 </section>
 
