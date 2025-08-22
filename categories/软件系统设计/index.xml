@@ -1,0 +1,2973 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>软件系统设计 on Hu Yang&#39;s Blog</title>
+        <link>https://114514yangyi.github.io/huyang/categories/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</link>
+        <description>Recent content in 软件系统设计 on Hu Yang&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>Hu Yang</copyright>
+        <lastBuildDate>Sat, 07 Jun 2025 21:40:16 +0800</lastBuildDate><atom:link href="https://114514yangyi.github.io/huyang/categories/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>软件系统设计</title>
+        <link>https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</link>
+        <pubDate>Sat, 07 Jun 2025 21:40:16 +0800</pubDate>
+        
+        <guid>https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</guid>
+        <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;//cdn.jsdelivr.net/npm/katex/dist/katex.min.css&#34;&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/math-code.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/katex.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;h1 id=&#34;软件系统设计&#34;&gt;软件系统设计
+&lt;/h1&gt;&lt;h2 id=&#34;定义&#34;&gt;定义
+&lt;/h2&gt;&lt;p&gt;软件模式是将模式的一般概念应用于软件开发领域,即软件开发的总体指导思路或参照样板。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;设计模式(Design Pattern)是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结, 使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。&lt;/p&gt;
+&lt;p&gt;设计模式的基本要素：模式名称，问题，解决方案，效果&lt;/p&gt;
+&lt;p&gt;设计模式一般有如下几个基本要素:模式名称、问题、目的、解决方案、效果、实例代码和相关设计模式&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;设计模式的分类&lt;/p&gt;
+&lt;p&gt;根据其目的(模式是用来做什么的)可分为创建型(Creational),结构型(Structural)和行为型(Behavioral)三种:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;• 创建型模式主要用于创建对象。&lt;/li&gt;
+&lt;li&gt;• 结构型模式主要用于处理类或对象的组合。&lt;/li&gt;
+&lt;li&gt;• 行为型模式主要用于描述对类或对象怎样交互和怎样分配职责。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;根据范围,即模式主要是用于处理类之间关系还是处理对象之间的关系,可分为类模式和对象模式两种:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;• 类模式处理类和子类之间的关系,这些关系通过继承建立, 在编译时刻就被确定下来,是属于静态的。&lt;/li&gt;
+&lt;li&gt;• 对象模式处理对象间的关系,这些关系在运行时刻变化,更具动态性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;目标:开闭原则•指导:最小知识原则•基础:单一职责原则、可变性封装原则•实现:依赖倒转原则、合成复用原则、里氏代换原则、接口隔离原则&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611230338058.png&#34;
+	width=&#34;2370&#34;
+	height=&#34;1198&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611230338058_hu_87bbca29ea2667b1.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611230338058_hu_e64a5604bd6792d2.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611230338058&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;197&#34;
+		data-flex-basis=&#34;474px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;优缺点&#34;&gt;优缺点
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;创建型模式-》客户端不用知道具体的构造过程，无需关心具体创建的细节，隔离了类的生成，对于用户隐藏了细节（透明性）&lt;/li&gt;
+&lt;li&gt;创建效率高，深拷贝保存对象状态，动态增减产品类&lt;/li&gt;
+&lt;li&gt;是否违反开闭原则（灵活性，扩展性）&lt;/li&gt;
+&lt;li&gt;高内聚低耦合&lt;/li&gt;
+&lt;li&gt;隔离了什么和什么（解耦）&lt;/li&gt;
+&lt;li&gt;当什么场景不适用，使用范围有局限性&lt;/li&gt;
+&lt;li&gt;在扩展时是否需要增加新的类，产生的是更多的小的对象，增加额外的函数&lt;/li&gt;
+&lt;li&gt;分离抽象接口及其实现部分&lt;/li&gt;
+&lt;li&gt;可重用性，透明性，复用性，扩展性，&lt;/li&gt;
+&lt;li&gt;系统的复杂度和抽象性，设计难度和理解难度&lt;/li&gt;
+&lt;li&gt;提升性能节约空间&lt;/li&gt;
+&lt;li&gt;分层结构&lt;/li&gt;
+&lt;li&gt;保护代理可以控制对真实对象的使用权限  虚拟代理减少资源消耗,提高运行速度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;面向对象的设计原则&#34;&gt;面向对象的设计原则
+&lt;/h2&gt;&lt;h3 id=&#34;原则&#34;&gt;原则
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;单一职责原则&lt;/p&gt;
+&lt;p&gt;一个对象应该只包含单一的职责,并且该职责被完整地封装在一个类中。&lt;/p&gt;
+&lt;p&gt;就一个类而言,应该仅有一个引起它变化的原因&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220045446.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220045446_hu_91845475b6ad8880.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220045446_hu_d5458a711d6bf87a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607220045446&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;开闭原则&lt;/p&gt;
+&lt;p&gt;一个软件实体应当对扩展开放,对修改关闭。也就是说在设计一个模块的时候,应当使这个模块可以在不被修改的前提下被扩展,即实现在不修改源代码的情况下改变这个模块的行为。&lt;/p&gt;
+&lt;p&gt;抽象化是开闭原则的关键。
+• 开闭原则还可以通过一个更加具体的“对可变性封装原则”来描述,对可变性封装原则(Principle of Encapsulation of Variation, EVP)要求找到系统的可变因素并将其封装起来。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;里氏代换原则&lt;/p&gt;
+&lt;p&gt;如果对每一个类型为S的对象o1,都有类型为T的对象o2,使得以T定义的所有程序P在所有的对象o2都代换成o1时,程序P的行为没有变化,那么类型S是类型T的子类型。&lt;/p&gt;
+&lt;p&gt;所有引用基类(父类)的地方必须能透明地使用其子类的对象&lt;/p&gt;
+&lt;p&gt;里氏代换原则是实现开闭原则的重要方式之一,由于使用基类对象的地方都可以使用子类对象,因此在程序中尽量使用基类类型来对对象进行定义,而在运行时再确定其子类类型,用子类对象来替换父类对象。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;依赖倒转原则&lt;/p&gt;
+&lt;p&gt;高层模块不应该依赖低层模块,它们都应该依赖抽象。抽象不应该依赖于细节,细节应该依赖于抽象。&lt;/p&gt;
+&lt;p&gt;也就是所有的东西都依赖于抽象，要针对接口（抽象）编程,不要针对实现编程&lt;/p&gt;
+&lt;p&gt;实现开闭原则的关键是&lt;strong&gt;抽象化&lt;/strong&gt;,并且从抽象化导出具体化实现,如果说&lt;strong&gt;开闭原则是面向对象设计的目标的话,那么依赖倒转原则就是面向对象设计的主要手段&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;接口隔离原则&lt;/p&gt;
+&lt;p&gt;客户端不应该依赖那些它不需要的接口，每一个接口应该承担一种相对独立的角色&lt;/p&gt;
+&lt;p&gt;一旦一个接口太大,则需要将它分割成一些更细小的接口, 使用该接口的客户端仅需知道与之相关的方法即可（将大接口划分为小接口）&lt;/p&gt;
+&lt;p&gt;每一个客户使用的接口都应该是专用的，也就是不包含哪些他不用的功能职责。接口仅仅提供客户端需要的行为&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;合成复用原则&lt;/p&gt;
+&lt;p&gt;尽量使用对象组合,而不是继承来达到复用的目的。&lt;/p&gt;
+&lt;p&gt;继承复用:实现简单,易于扩展。破坏系统的封装性;从基类继承而来的实现是静态的,不可能在运行时发生改变,没有足够的灵活性; 只能在有限的环境中使用。(“白箱”复用 )&lt;/p&gt;
+&lt;p&gt;• 组合/聚合复用:耦合度相对较低,选择性地调用成员对象的操作;可以在运行时动态进行。
+(“黑箱”复用 )&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;迪米特法则&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223545469.png&#34;
+	width=&#34;2494&#34;
+	height=&#34;888&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223545469_hu_102cb5341aab0eb3.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223545469_hu_3f7b0457abdf8628.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607223545469&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;280&#34;
+		data-flex-basis=&#34;674px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;一个软件实体应当尽可能少的与其他实体发生相互作用&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223718069.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223718069_hu_8f77c73965d361da.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223718069_hu_8db01be97b49017.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607223718069&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;迪米特法则可分为狭义法则和广义法则。在狭义的迪米特法则中,如果两个类之间不必彼此直接通信,那么这两个类就不应当发生直接的相互作用,如果其中的一个类需要调用另一个类的某一个方法的话,可以通过第三者转发这个调用。&lt;/p&gt;
+&lt;p&gt;可以降低类之间的耦合,但是会在系统中增加大量的小方法并散落在系统的各个角落,它可以使一个系统的局部设计简化,因为每一个局部都不会和远距离的对象有直接的关联,但是也会造成系统的不同模块之间的通信效率降低,使得系统的不同模块之间不容易协调。&lt;/p&gt;
+&lt;p&gt;每一个类都应当尽量降低其成员变量和成员函数的访问权限&lt;/p&gt;
+&lt;p&gt;在类的设计上,只要有可能,一个类型应当设计成不变类;&lt;/p&gt;
+&lt;p&gt;在对其他类的引用上,一个对象对其他对象的引用应当降到最低。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607214824793.png&#34;
+	width=&#34;2660&#34;
+	height=&#34;1198&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607214824793_hu_eb9c57c657c489ae.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607214824793_hu_8c35eaac4898e97e.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607214824793&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;222&#34;
+		data-flex-basis=&#34;532px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;其他主题导入概念&#34;&gt;其他主题导入概念
+&lt;/h3&gt;&lt;h4 id=&#34;可维护性较低的原因&#34;&gt;可维护性较低的原因
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;过于脆弱&lt;/li&gt;
+&lt;li&gt;粘度过高&lt;/li&gt;
+&lt;li&gt;复用性低&lt;/li&gt;
+&lt;li&gt;过于僵硬&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;好的系统的特征&#34;&gt;好的系统的特征
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;可扩展性&lt;/li&gt;
+&lt;li&gt;可插入性&lt;/li&gt;
+&lt;li&gt;灵活性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;重构&#34;&gt;重构
+&lt;/h4&gt;&lt;p&gt;重构(Refactoring)是在不改变软件现有功能的基础上,通过调整程序代码改善软件的质量、性能,使其程序的设计模式和架构更趋合理,提高软件的扩展性和维护性。&lt;/p&gt;
+&lt;h3 id=&#34;原则的实战使用分析&#34;&gt;原则的实战使用分析
+&lt;/h3&gt;&lt;h4 id=&#34;单一职责原则&#34;&gt;单一职责原则
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220232248.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220232248_hu_10bdf2c39caebe76.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220232248_hu_d389305fcdf25e76.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607220232248&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在这里里面我们需要将一个登录功能划分到不同的类中，使得能够划分为User的数据，DB的连接（这个是直接涉及到数据库而不是我们的Login），和界面的展示（也就是功能职责）。&lt;/p&gt;
+&lt;p&gt;这里直接使用聚合的方式是因为合成复用原则。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h4 id=&#34;开闭原则&#34;&gt;开闭原则
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220833877.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220833877_hu_cc1662f219a5fb3c.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607220833877_hu_6b02af7b1b7d7d61.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607220833877&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;开闭原则就是当我们需要对系统的功能（类）进行扩展的时候，只需添加代码而不修改原有的代码；这里主要体现在我们对于多个同一类型的类写一个抽象类，然后其他的子类都继承这个父类。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h4 id=&#34;里氏代换原则&#34;&gt;里氏代换原则
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607221337825.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607221337825_hu_8d9ff1b08efca6d8.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607221337825_hu_d84990f2f125a6d5.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607221337825&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在所有能够使用基类的地方都能够使用子类进行替代，也就是说我们在每一个函数接受的参数中都使用基类，然后在运行时开始使用子类进行替代&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h4 id=&#34;依赖倒转原则&#34;&gt;依赖倒转原则
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222149375.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222149375_hu_d75507e51cef56af.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222149375_hu_b1b2068b80a53fd5.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607222149375&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在代码中使用抽象类,而将具体类放在配置文件中&lt;/p&gt;
+&lt;p&gt;也就是对于不同的来源和变换使用抽象类，使得底层（具体的source）和高层（main）都依赖于抽象，面对接口编程。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222107159.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222107159_hu_a77ee70e789e1da1.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222107159_hu_4e329fc8aacaefa1.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607222107159&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h4 id=&#34;接口隔离原则&#34;&gt;接口隔离原则
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222822622.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222822622_hu_3a6f4c82866281e4.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222822622_hu_d909b79a8aca519.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607222822622&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222833099.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222833099_hu_df8ab921551ed58f.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607222833099_hu_31c6a1105e101513.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607222833099&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;为不同的客户端提供宽窄不同的接口&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h4 id=&#34;合成复用原则&#34;&gt;合成复用原则
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223213787.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223213787_hu_aad37da7127069c1.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223213787_hu_ca939573ec9f3a19.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607223213787&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223309075.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223309075_hu_b84b309d868c0c5f.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607223309075_hu_afffdf72fffb0742.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607223309075&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这里我们可以看到合成复用：将原来对于DB的继承替换成了聚合，因为这里的DB和具体的DAO是无关的，所以我们需要降低他们的耦合，将原来的DB使用合成复用原则，并且这里面将原来的DB替换成了抽象类，使用了开闭原则（依赖倒转原则），使得能够使用不同的DB进行初始化&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h4 id=&#34;迪米特法则&#34;&gt;迪米特法则
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607224050488.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607224050488_hu_2cb45c62ba59bcef.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607224050488_hu_e3a4029947636b21.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607224050488&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607224101769.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607224101769_hu_2a312f815d9f5ab.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250607224101769_hu_bacb94789878e223.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250607224101769&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这里使用迪米特法则的特征是：降低一个类能够访问其他类的数量&lt;/p&gt;
+&lt;p&gt;并且假如B是A的朋友，C是B的朋友，A想要调用C，那么就需要在B中写一个小方法专门用于调用C的方法。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h3 id=&#34;总结&#34;&gt;总结
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;目标:开闭原则&lt;/li&gt;
+&lt;li&gt;指导:最小知识原则&lt;/li&gt;
+&lt;li&gt;基础:单一职责原则、可变性封装原则&lt;/li&gt;
+&lt;li&gt;实现:依赖倒转原则、合成复用原则、里氏代换原则、接口隔离原&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;设计模式&#34;&gt;设计模式
+&lt;/h2&gt;&lt;h3 id=&#34;策略模式&#34;&gt;策略模式
+&lt;/h3&gt;&lt;p&gt;在一系列的模式变换中：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;将有一些子类有的，一些子类没有的能力抽象为接口&lt;/li&gt;
+&lt;li&gt;同一个能力的不同表现也可以是抽象出一个抽象类&lt;/li&gt;
+&lt;li&gt;一个行为也有着状态和方法，可以作为一个类&lt;/li&gt;
+&lt;li&gt;比起继承的方式，更好的是使用合成复用原则&lt;/li&gt;
+&lt;li&gt;使用合成复用原则和开闭原则（接口隔离）的法则以后，就可以实现动态绑定（里氏代换原则）&lt;/li&gt;
+&lt;li&gt;分装变化&lt;/li&gt;
+&lt;li&gt;面向接口编程&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611203637951.png&#34;
+	width=&#34;2600&#34;
+	height=&#34;1010&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611203637951_hu_c82132469524174e.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611203637951_hu_413c4b85a62d5037.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611203637951&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;257&#34;
+		data-flex-basis=&#34;617px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==拥有策略抽象类==&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611203911187.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611203911187_hu_69dc638a34e926fb.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611203911187_hu_a99563dfd094d001.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611203911187&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;在以下场景采用策略模式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;当多个相关类仅在行为表现上存在差异时，
+策略模式可提供多种行为配置方案&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;需要算法不同变体时，
+例如需权衡时空复杂度的算法变体，
+可将这些变体实现为算法类层次结构&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;当算法涉及客户端不应知晓的内部数据时，
+采用策略模式能避免暴露复杂的算法专用数据结构&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;当某类的操作中存在大量条件分支语句时，
+应将相关条件分支重构为独立的策略类，
+而非保留多重条件判断&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;工厂模式&#34;&gt;工厂模式
+&lt;/h3&gt;&lt;p&gt;工厂模式主要有三种形式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;简单工厂模式 (Simple Factory)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611210629269.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611210629269_hu_91b1a510985a59e2.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611210629269_hu_213f4e197c552d5b.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611210629269&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611211121337.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611211121337_hu_427e6bcc543de21a.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611211121337_hu_6fcc835dfa38f8ea.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611211121337&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;也称为静态工厂方法模式&lt;/li&gt;
+&lt;li&gt;类创建型模式&lt;/li&gt;
+&lt;li&gt;通过一个工厂类根据传入的参数决定创建哪种产品类的实例&lt;/li&gt;
+&lt;li&gt;使用if-else来选择不同的产品&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;工厂方法模式 (Factory Method)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611212851879.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611212851879_hu_e9d0339a7d3fc6a7.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611212851879_hu_e93fc89ebd6e7963.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611212851879&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;定义一个创建对象的接口，但让子类决定实例化哪个类&lt;/li&gt;
+&lt;li&gt;工厂方法让类的实例化推迟到子类&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;抽象工厂模式 (Abstract Factory)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;对象创建型模式&lt;/li&gt;
+&lt;li&gt;提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类&lt;/li&gt;
+&lt;li&gt;我们需要一个工厂可以提供多个产品对象,而不是单一的产品对象。&lt;/li&gt;
+&lt;li&gt;产品等级结构:产品等级结构即产品的继承结构,如一个抽象类是电视机,其子类有海尔电视机、海信电视机、TCL电视机,则抽象电视机与具体品牌的电视机之间构成了一个产品等级结构, 抽象电视机是父类,而具体品牌的电视机是其子类。&lt;/li&gt;
+&lt;li&gt;产品族:在抽象工厂模式中,产品族是指由同一个工厂生产的,位于不同产品等级结构中的一组产品,如海尔电器工厂生产的海尔电视机、海尔电冰箱,海尔电视机位于电视机产品等级结构中,海尔电冰箱位于电冰箱产品等级结构中。&lt;/li&gt;
+&lt;li&gt;当系统所提供的工厂所需生产的具体产品并不是一个简单的对象,而是多个位于不同产品等级结构中属于不同类型的具体产品时需要使用抽象工厂模式。&lt;/li&gt;
+&lt;li&gt;抽象工厂模式与工厂方法模式最大的区别在于,工厂方法模式针对的是一个产品等级结构,而抽象工厂模式则需要面对多个产品等级结构,&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;简单工厂模式&#34;&gt;&lt;strong&gt;简单工厂模式&lt;/strong&gt;
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Product&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;use&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;ConcreteProductA&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;implements&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Product&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;use&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Using Product A&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;ConcreteProductB&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;implements&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Product&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;use&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Using Product B&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;SimpleFactory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Product&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;createProduct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;switch&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;case&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;A&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;                &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ConcreteProductA&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;case&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;B&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;                &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ConcreteProductB&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;default&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;                &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;throw&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;IllegalArgumentException&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Unknown product type&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// 客户端代码&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Client&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Product&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;product&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;SimpleFactory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;createProduct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;A&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;product&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;use&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;工厂模式-1&#34;&gt;&lt;strong&gt;工厂模式&lt;/strong&gt;
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Product&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;use&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;ConcreteProductA&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;implements&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Product&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;use&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Using Product A&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;ConcreteProductB&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;implements&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Product&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;use&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Using Product B&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;abstract&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Factory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;abstract&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Product&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;createProduct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;doSomething&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Product&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;product&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;createProduct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;product&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;use&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;ConcreteFactoryA&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;extends&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Factory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Product&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;createProduct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ConcreteProductA&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;ConcreteFactoryB&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;extends&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Factory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Product&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;createProduct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ConcreteProductB&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// 客户端代码&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Client&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Factory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;factory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ConcreteFactoryA&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;factory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;doSomething&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;抽象工厂模式-abstract-factory-pattern-java-实现&#34;&gt;抽象工厂模式 (Abstract Factory Pattern) Java 实现
+&lt;/h4&gt;&lt;p&gt;抽象工厂模式提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类。下面是一个完整的Java实现示例：&lt;/p&gt;
+&lt;h5 id=&#34;示例场景&#34;&gt;示例场景
+&lt;/h5&gt;&lt;p&gt;假设我们有一个GUI应用程序，需要支持不同风格（如Windows和Mac）的按钮和复选框。&lt;/p&gt;
+&lt;h6 id=&#34;1-定义抽象产品接口&#34;&gt;1. 定义抽象产品接口
+&lt;/h6&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 按钮接口&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Button&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;render&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;onClick&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// 复选框接口&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Checkbox&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;render&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;onCheck&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h6 id=&#34;2-实现具体产品类&#34;&gt;2. 实现具体产品类
+&lt;/h6&gt;&lt;p&gt;&lt;strong&gt;Windows风格产品：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;WindowsButton&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;implements&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Button&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;render&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;渲染一个Windows风格的按钮&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;onClick&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Windows按钮点击事件处理&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;WindowsCheckbox&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;implements&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Checkbox&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;render&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;渲染一个Windows风格的复选框&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;onCheck&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Windows复选框选中状态改变&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Mac风格产品：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;MacButton&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;implements&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Button&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;render&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;渲染一个Mac风格的按钮&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;onClick&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Mac按钮点击事件处理&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;MacCheckbox&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;implements&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Checkbox&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;render&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;渲染一个Mac风格的复选框&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;onCheck&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Mac复选框选中状态改变&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h6 id=&#34;3-定义抽象工厂接口&#34;&gt;3. 定义抽象工厂接口
+&lt;/h6&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;GUIFactory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Button&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;createButton&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Checkbox&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;createCheckbox&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h6 id=&#34;4-实现具体工厂类&#34;&gt;4. 实现具体工厂类
+&lt;/h6&gt;&lt;p&gt;&lt;strong&gt;Windows工厂：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;WindowsFactory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;implements&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GUIFactory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Button&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;createButton&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;WindowsButton&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Checkbox&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;createCheckbox&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;WindowsCheckbox&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Mac工厂：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;MacFactory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;implements&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GUIFactory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Button&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;createButton&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MacButton&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Checkbox&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;createCheckbox&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MacCheckbox&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h6 id=&#34;5-客户端代码&#34;&gt;5. 客户端代码
+&lt;/h6&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Application&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Button&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;button&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Checkbox&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;checkbox&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;Application&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GUIFactory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;factory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;button&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;factory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;createButton&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;checkbox&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;factory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;createCheckbox&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;render&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;button&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;render&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;checkbox&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;render&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// 根据配置或环境选择工厂&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GUIFactory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;factory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;osName&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;getProperty&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;os.name&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;toLowerCase&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;osName&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;contains&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;win&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;factory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;WindowsFactory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;factory&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MacFactory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Application&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Application&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;factory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;render&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// 也可以手动指定&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Application&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;macApp&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Application&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MacFactory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;());&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;macApp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;render&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h6 id=&#34;运行结果&#34;&gt;运行结果
+&lt;/h6&gt;&lt;p&gt;当在Windows系统上运行时，输出：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;渲染一个Windows风格的按钮
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;渲染一个Windows风格的复选框
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;当手动创建Mac风格应用时，输出：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;渲染一个Mac风格的按钮
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;渲染一个Mac风格的复选框
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h6 id=&#34;模式特点&#34;&gt;模式特点
+&lt;/h6&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;抽象工厂&lt;/strong&gt;：声明一组创建产品的方法&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;具体工厂&lt;/strong&gt;：实现抽象工厂接口，创建具体的产品&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;抽象产品&lt;/strong&gt;：定义产品的接口&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;具体产品&lt;/strong&gt;：实现产品接口的具体类&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;客户端&lt;/strong&gt;：通过抽象工厂接口创建产品，无需关心具体实现&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;抽象工厂模式特别适用于需要创建一系列相关或依赖对象的场景，能够保证这些对象之间的兼容性。&lt;/p&gt;
+&lt;h3 id=&#34;建造者模式builder-pattern&#34;&gt;建造者模式（Builder Pattern）
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611215219125.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611215219125_hu_9b9eae29f46e3696.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611215219125_hu_1f21700a80796619.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611215219125&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;建造者模式的结构中还引入了一个指挥者类Director, 该类的作用主要有两个:一方面它隔离了客户与生产过程;另一方面它负责控制产品的生成过程。指挥者针对抽象建造者编程,客户端只需要知道具体建造者的类型, 即可通过指挥者类调用建造者的相关方法,返回一个完整的产品对象。&lt;/p&gt;
+&lt;h3 id=&#34;原型模式prototype-patern&#34;&gt;原型模式（Prototype Patern）
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611220103369.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611220103369_hu_f23c6cd8a384ee07.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611220103369_hu_10da78a8437c5188.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611220103369&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==自我复制==&lt;/p&gt;
+&lt;p&gt;根据其成员对象是否也克隆,原型模式可以分为两种形式:深克隆和浅克隆。&lt;/p&gt;
+&lt;h3 id=&#34;适配器模式adapter-patern&#34;&gt;适配器模式（Adapter Patern）
+&lt;/h3&gt;&lt;p&gt;类适配器：适配器类继承自目标类和适配者类&lt;/p&gt;
+&lt;p&gt;对象适配器：适配器继承自目标类，但是组合了适配者&lt;/p&gt;
+&lt;p&gt;双向适配器：适配器继承自目标类和适配者类，但是同时组合了两者&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155229619.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155229619_hu_fd66845ccf8c502d.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155229619_hu_dc606893eb23564a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250612155229619&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;组合模式composite-patern&#34;&gt;组合模式（Composite Patern）
+&lt;/h3&gt;&lt;p&gt;（递归调用）&lt;/p&gt;
+&lt;p&gt;组合多个对象形成树形结构以表示“整体-部分”的结构层次&lt;/p&gt;
+&lt;p&gt;子类组合了父类&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155310392.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155310392_hu_b649ce2b87205792.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155310392_hu_e2cbfbea87f8900d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250612155310392&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;桥接模式bridge-patern&#34;&gt;桥接模式（Bridge Patern）
+&lt;/h3&gt;&lt;p&gt;抽象化(Abstraction)与实现化(Implementation)脱耦,使得二者可以独立地变化&lt;/p&gt;
+&lt;p&gt;就是当变化有多个维度的时候，抽离出来一个维度作为主要的变化维度成为一个抽象类，使用继承的方式来实现，其他的变化维度都使用组合的方式来实现。&lt;/p&gt;
+&lt;p&gt;对于存在两个独立变化维度的类可以将其分为抽象化和实现化两个角色&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155554774.png&#34;
+	width=&#34;1522&#34;
+	height=&#34;950&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155554774_hu_f4bf819144406a19.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155554774_hu_555dae309b70fc3c.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250612155554774&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;装饰器模式decorator-patern&#34;&gt;装饰器模式（Decorator Patern）
+&lt;/h3&gt;&lt;p&gt;对客户透明的方式动态地给一个对象附加上更多的责任&lt;/p&gt;
+&lt;p&gt;和组合模式类似，但是他的子类外面裹的是一层抽象装饰器，在抽象装饰器下面还有更多的具体装饰器。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155334998.png&#34;
+	width=&#34;1740&#34;
+	height=&#34;1338&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155334998_hu_61378d3a472795a0.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155334998_hu_ec263bb5c6803cb0.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250612155334998&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;312px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;状态模式state-patern&#34;&gt;状态模式（State Patern）
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611220554418.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611220554418_hu_e614cf301043e85.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611220554418_hu_b99835ef367fcf5d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611220554418&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==Context change State==&lt;/p&gt;
+&lt;h3 id=&#34;命令模式command-pattern&#34;&gt;命令模式（Command Pattern）
+&lt;/h3&gt;&lt;p&gt;请求发送者与请求接收者消除彼此之间的耦合&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611221413636.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611221413636_hu_341aa785a139ff59.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611221413636_hu_563e0e2895bb0779.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611221413636&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==Invoker通过Command来给Receiver发送信息==&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611221708705.png&#34;
+	width=&#34;1884&#34;
+	height=&#34;1276&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611221708705_hu_f673f8b0ec525c32.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611221708705_hu_ec037ecab0cee3da.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611221708705&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;147&#34;
+		data-flex-basis=&#34;354px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;观察者模式observer-patern&#34;&gt;观察者模式（Observer PAtern）
+&lt;/h3&gt;&lt;p&gt;定义对象间的一种一对多依赖关系,使得每当一个对象状态发生改变时,其相关依赖对象皆得到通知并被自动更新。观察者模式又叫做发布-订阅(Publish/Subscribe)模式、模型-视图(Model/View)模式、源-监听器(Source/Listener) 模式或从属者(Dependents)模式。观察者模式是一种对象行为型模式。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611222157285.png&#34;
+	width=&#34;1346&#34;
+	height=&#34;1116&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611222157285_hu_7355abfec92de414.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611222157285_hu_355e9c02a4e37598.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611222157285&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;120&#34;
+		data-flex-basis=&#34;289px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==Concrete Object变化的时候通知所有的Concrete Observer==&lt;/p&gt;
+&lt;h3 id=&#34;中介者模式mediator-patern&#34;&gt;中介者模式（Mediator Patern）
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611222932670.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611222932670_hu_5146e41130cf69f0.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611222932670_hu_f21994e93bdc46a8.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611222932670&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==一个Concrete Mediator中存储多个Concrete Colleague，调节他们的交互，每一个Concrete Colleague存储他的Concrete Mediator==&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611223436256.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611223436256_hu_5316d040490c5476.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611223436256_hu_6d0c0e9d273db5bf.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611223436256&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;模版方法模式template-method-patern&#34;&gt;模版方法模式（Template Method Patern）
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611224145073.png&#34;
+	width=&#34;2880&#34;
+	height=&#34;1800&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611224145073_hu_ae43630b96c72f84.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611224145073_hu_3adcf44fc6a52938.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611224145073&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==通过更改父类的一些方法来实现替换一个模版方法中一些流程的实现，父类实现一些固定的过程，由子类实现具体的可变行为==&lt;/p&gt;
+&lt;p&gt;一个设计师负责给出一个算法的轮廓和骨架,另一些设计师则负责给出这个算法的各个逻辑 步 骤 。 实 现 这 些 具 体 逻 辑 步 骤 的 方 法 称 为 基 本 方 法(Primitive Method),而将这些基本法方法汇总起来的方法称为模板方法(Template Method),模板方法模式的名字从此而来。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611224455649.png&#34;
+	width=&#34;2352&#34;
+	height=&#34;1374&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611224455649_hu_4d2df347b592da81.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250611224455649_hu_49c91740787b7dcd.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250611224455649&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;171&#34;
+		data-flex-basis=&#34;410px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;具体子类的基本方法将覆盖父类中定义的基本方法,子类的钩子方法也将覆盖父类的钩子方法,从而可以通过在子类中实现的钩子方法对父类方法的执行进行约束,实现子类对父类行为的反向控制。&lt;/p&gt;
+&lt;p&gt;单一职责原则&lt;/p&gt;
+&lt;h3 id=&#34;外观模式facade-patern&#34;&gt;外观模式（Facade Patern）
+&lt;/h3&gt;&lt;p&gt;外部与一个子系统的通信必须通过一个统一的外观对象进行,为子系统中的一组接口提供一个一致的界面&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155408845.png&#34;
+	width=&#34;1840&#34;
+	height=&#34;984&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155408845_hu_33d0926d115e1ed5.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155408845_hu_93b7936d68cb1892.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250612155408845&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;186&#34;
+		data-flex-basis=&#34;448px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;享元模式flyweight-patern&#34;&gt;享元模式（FlyWeight Patern）
+&lt;/h3&gt;&lt;p&gt;在享元模式中可以共享的相同内容称为内部状态(Intrinsic State),而那些需要外部环境来设置的不能共享的内容称为外部状态(Extrinsic State)&lt;/p&gt;
+&lt;p&gt;通常和工厂一起使用&lt;/p&gt;
+&lt;p&gt;通过工厂来产生享元对象，将每一个享元对象记录在hashmap中，享元对象中分为共享的和非共享的；有外部状态的时候就是：每一个享元对象中拥有这个外部类对象；&lt;/p&gt;
+&lt;p&gt;享元模式的核心在于享元工厂类,享元工厂类的作用在于提供一个用于存储享元对象的享元池,用户需要对象时,首先从享元池中获取,如果享元池中不存在, 则创建一个新的享元对象返回给用户,并在享元池中保存该新增对象。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155426956.png&#34;
+	width=&#34;1810&#34;
+	height=&#34;846&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155426956_hu_7366c80cc6f36c94.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155426956_hu_fed1295dcb21043a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250612155426956&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;213&#34;
+		data-flex-basis=&#34;513px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;代理模式proxy-patern&#34;&gt;代理模式（Proxy Patern）
+&lt;/h3&gt;&lt;p&gt;通过引入一个新的对象(如小图片和远程代理对象)来实现对真实对象的操作或者将新的对象作为真实对象的一个替身&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612153310393.png&#34;
+	width=&#34;1618&#34;
+	height=&#34;646&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612153310393_hu_1ca17850abcffc5e.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612153310393_hu_558d6e6bef1969d7.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250612153310393&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;250&#34;
+		data-flex-basis=&#34;601px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155446477.png&#34;
+	width=&#34;1802&#34;
+	height=&#34;1088&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155446477_hu_b154096d84ea4907.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612155446477_hu_c06dac50d26fb0d4.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250612155446477&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;165&#34;
+		data-flex-basis=&#34;397px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;软件架构&#34;&gt;软件架构
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;✅ 【==gao’p】如何进行质量属性方案建模？请使用&amp;quot;刺激-相应&amp;quot;图的格式进行建模 How to model quality attribute scenarios? Graphically model one quality attributes in “stimulus-response” format:==&lt;/li&gt;
+&lt;li&gt;【2015】availiability and Performance&lt;/li&gt;
+&lt;li&gt;【2017】【2018】availiability and modifiability&lt;/li&gt;
+&lt;li&gt;【2019】interoperability and modifiability&lt;/li&gt;
+&lt;li&gt;如何进行质量属性方案建模
+&lt;ol&gt;
+&lt;li&gt;刺激（Stimulus）：当其到达系统时需要考虑的状况。&lt;/li&gt;
+&lt;li&gt;刺激源（Source of Stimulus）：产生刺激的实体（人，系统或任何其他触发），可能是输入、信息等，对当前的状态的一个变化。&lt;/li&gt;
+&lt;li&gt;响应（Response）：刺激到来后工件开展的行为。&lt;/li&gt;
+&lt;li&gt;响应度量（Response Measure）：对刺激的响应以某种方法进行测量，以便可以&lt;strong&gt;测试需求&lt;/strong&gt;（比如多长时间系统有反馈）&lt;/li&gt;
+&lt;li&gt;环境（Environment）：发生刺激时系统的状况，例如系统正常运行、系统过载、系统受到攻击、系统网络出现故障等。&lt;/li&gt;
+&lt;li&gt;工件（Artifact）：完成需求的整个系统或者系统的一部分（软件制品）。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3.png&#34;
+	width=&#34;1973&#34;
+	height=&#34;1155&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3_hu_bb08faa8bbd6dada.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/3_hu_d5ed330c9fbc0690.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;170&#34;
+		data-flex-basis=&#34;409px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【高频 2015 2017 2019 2022】为什么软件系统架构需要使用不同视图来文档化？给出 4 种示例视图的名称和目的。Why should a software architecture be documented using different differenet views? Give the name and purposes of 4 example views.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;原因
+&lt;ol&gt;
+&lt;li&gt;不同视图支持不同的目标和用户，突出不同的系统元素和关系&lt;/li&gt;
+&lt;li&gt;不同视图将不同质量属性暴露出不同的程度&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;4 种视图 ( 了解 )：
+&lt;ol&gt;
+&lt;li&gt;模块视图 Module View：提供一组连贯职责的实现单元&lt;/li&gt;
+&lt;li&gt;组件和连接器视图 C &amp;amp; C View：显示运行时行为和交互的元素&lt;/li&gt;
+&lt;li&gt;分配视图 Allocation View：描述了软件单元到环境元素的映射&lt;/li&gt;
+&lt;li&gt;质量视图 Quality Views，安全视图、性能视图、可靠性视图、通信视图、异常（错误处理）视图&lt;/li&gt;
+&lt;li&gt;组合视图：将上述视图进行组合&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 如何选择视图：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;构建涉众/视图表&lt;/li&gt;
+&lt;li&gt;合并视图&lt;/li&gt;
+&lt;li&gt;确定优先级和完成阶段&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【2017】【2019】描述 4+1 视图 Describe 4+1 view( 掌握绘图 )：答案如上&lt;/p&gt;
+&lt;p&gt;LPPDA&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;逻辑视图：描述了对架构而言重要的元素和他们之间的关系（功能需求）&lt;/li&gt;
+&lt;li&gt;过程视图：描述了元素之间的交互。&lt;/li&gt;
+&lt;li&gt;物理视图（部署视图）：描述了主要过程和组件是如何被映射到硬件上的。&lt;/li&gt;
+&lt;li&gt;开发视图（实现视图）：描述实现系统功能的各个组件和模块是如何实现的&lt;/li&gt;
+&lt;li&gt;用例场景（Use Case）：描述系统的参与者（用户）与系统功能用例的关系，与一个或多个特定视图相关。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/4.png&#34;
+	width=&#34;624&#34;
+	height=&#34;383&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/4_hu_e82cf348d3654c6d.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/4_hu_da3d3df4c65032f5.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;162&#34;
+		data-flex-basis=&#34;391px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;✅【高频 2015 2017 2018】什么区分了软件产品线架构和单个软件产品架构？What distinguishes an architecture for a software product line from an architecture for a single product?
+&lt;ol&gt;
+&lt;li&gt;产品线的目的：实现高可重用性、高修改性。而单个软件产品不需要很高的重用性和可拓展性&lt;/li&gt;
+&lt;li&gt;产品线之所以有效是因为通过重用可以充分利用产品的共性。&lt;/li&gt;
+&lt;li&gt;软件产品线架构倾向于采用更多的模块化和标准化设计，单一产品架构专注于&lt;strong&gt;满足单一产品的特定需求&lt;/strong&gt;，因此模块化和标准化程度较低。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;✅ 【高频 2015 2017 2023】将以下每个问题（左侧）与解决该问题的架构风格/视图（右侧）对应起来。列出每个样式类别的四个视图。Map each of the following questions (on the left) with the architectural style/view (on the right) that addresses the question. List four views of each category of style.
+&lt;ol&gt;
+&lt;li&gt;连线题
+&lt;ol&gt;
+&lt;li&gt;它是如何构建为一组实现单元的？How it is structed as a set of implementation of units(Module Styles)&lt;/li&gt;
+&lt;li&gt;它是如何构建为一组具有运行时行为和交互的元素的？How it is structed as a set of elements that have runtime behavior and interactions?(Component-Connector Styles)&lt;/li&gt;
+&lt;li&gt;它与环境中的非软件结构有何关系？How it relates to non-software structures in its environment?(Allocation Styles)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Module Styles：分解视图、使用视图、泛化视图、分层视图、领域视图、数据模型视图&lt;/li&gt;
+&lt;li&gt;Component-Connector Styles：管道-过滤器视图、客户端-服务器视图、点对点视图、面向服务视图、发布-订阅视图&lt;/li&gt;
+&lt;li&gt;Allocation Styles：部署视图、安装视图、工作分配视图、其他分配视图。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;✅==【2015】【2017】简要描述软件架构过程中的一般活动，以及每个活动的主要输入和输出。Briefly describe the general activities in a software architecture process, and the major inputs and outputs at each activity.==
+&lt;ol&gt;
+&lt;li&gt;短答案 ( 背 )
+&lt;ol&gt;
+&lt;li&gt;识别 ASRs
+&lt;ol&gt;
+&lt;li&gt;输入：无&lt;/li&gt;
+&lt;li&gt;输出：优先的质量属性场景&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;架构设计
+&lt;ol&gt;
+&lt;li&gt;输入：优先的质量属性场景、需求和约束、模式和决策&lt;/li&gt;
+&lt;li&gt;输出：一组由模式决定的候选视图的草图&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;架构文档化
+&lt;ol&gt;
+&lt;li&gt;输入：一组由模式决定的候选视图的草图&lt;/li&gt;
+&lt;li&gt;输出：View &amp;amp; Beyond&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;架构评估
+&lt;ol&gt;
+&lt;li&gt;输入：View &amp;amp; Beyond、优先的质量属性场景&lt;/li&gt;
+&lt;li&gt;输出：View &amp;amp; Beyond&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5.png&#34;
+	width=&#34;1978&#34;
+	height=&#34;641&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5_hu_574ed0cebdb66e68.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5_hu_b5f731d1bcd03799.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;308&#34;
+		data-flex-basis=&#34;740px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【2015】【2017】【2021】【2023】描述架构权衡分析方法 (ATAM) 过程的每个阶段生成的输出。Describe the outputs generated from each phase of Architecture Tradeoff Analysis Method(ATAM) process.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;阶段-0：准备和建立团队 ( 输入是架构设计文档 )
+&lt;ol&gt;
+&lt;li&gt;评估计划&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;阶段-1：评估-1
+&lt;ol&gt;
+&lt;li&gt;架构的简明介绍&lt;/li&gt;
+&lt;li&gt;业务目标（驱动因素）的阐释&lt;/li&gt;
+&lt;li&gt;作为场景实现的特定质量属性要求的优先级列表&lt;/li&gt;
+&lt;li&gt;Utility Tree 质量属性效用树&lt;/li&gt;
+&lt;li&gt;风险点和无风险点&lt;/li&gt;
+&lt;li&gt;敏感点和权衡点&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;阶段-2：评估-2
+&lt;ol&gt;
+&lt;li&gt;涉众们的优先级场景列表&lt;/li&gt;
+&lt;li&gt;风险主题和业务驱动因素各自受到的威胁&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;阶段-3：后续
+&lt;ol&gt;
+&lt;li&gt;最终的评估报告&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;【2019】描述在 ATAM 的每一个过程中 有哪些 Stack holder 和他们的职责&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;阶段-0：准备和建立团队
+&lt;ol&gt;
+&lt;li&gt;参与者：评估团队领导和关键项目决策者&lt;/li&gt;
+&lt;li&gt;职责：根据架构设计文档生成评估计划，包括谁参加评估、如何何时何地开展评估、最后评估报告会被呈递给谁。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;阶段-1：评估-1
+&lt;ol&gt;
+&lt;li&gt;参与者：评估团队和项目决策者&lt;/li&gt;
+&lt;li&gt;职责：
+&lt;ol&gt;
+&lt;li&gt;第一步，评估负责人介绍 ATAM 方法&lt;/li&gt;
+&lt;li&gt;第二步，项目经理或客户从业务角度介绍业务驱动因素&lt;/li&gt;
+&lt;li&gt;第三步，首席架构师介绍体系结构&lt;/li&gt;
+&lt;li&gt;第四步，评估团队确定架构方法&lt;/li&gt;
+&lt;li&gt;第五步，评估团队和项目决策者生成质量属性效用树 (Utiltiy Tree)&lt;/li&gt;
+&lt;li&gt;第六步，评估团队分析架构方法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;阶段-2：评估-2
+&lt;ol&gt;
+&lt;li&gt;参与者：评估团队、项目决策者和项目涉众&lt;/li&gt;
+&lt;li&gt;职责：
+&lt;ol&gt;
+&lt;li&gt;第一步，评估负责人介绍 ATAM 方法和之前已经取得的成果&lt;/li&gt;
+&lt;li&gt;第七步，涉众头脑风暴并确定场景优先级&lt;/li&gt;
+&lt;li&gt;第八步，评估团队分析架构方法，类似第六步&lt;/li&gt;
+&lt;li&gt;第九步，评估团队展示评估结果，并呈递给涉众&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;阶段-3：后续
+&lt;ol&gt;
+&lt;li&gt;参与者：评估团队、主要涉众&lt;/li&gt;
+&lt;li&gt;职责：评估团队制作最终评估报告，发给主要涉众审核通过后，将报告呈递给委托评估的人。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ ==【2015】【2019】软件架构来自哪里？列举五种可能的软件架构的来源 Where do software architecture come from? List five possible sources of software architecture.==&lt;/p&gt;
+&lt;p&gt;（关功非业技）&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;NFRs - 非功能性需求&lt;/li&gt;
+&lt;li&gt;ASRs&lt;/li&gt;
+&lt;li&gt;涉众&lt;/li&gt;
+&lt;li&gt;技术环境&lt;/li&gt;
+&lt;li&gt;业务目标&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【2015】【2019】解释代理架构模式的上下文、好处和局限性。Explain the context, benefits and limitations of Broker Architecture Pattern.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;上下文：多个&lt;strong&gt;同步或异步交互&lt;/strong&gt;的&lt;strong&gt;远程对象组成的系统&lt;/strong&gt;，broker协调多个客户机和服务器之间的通讯。&lt;/li&gt;
+&lt;li&gt;好处：提高了 Client 和 Server 之间的交互性、提高可伸缩性和可扩展性、解决了单体应用的性能瓶颈、大规模集群的性能提高，但是单点性能会下降。&lt;/li&gt;
+&lt;li&gt;局限性：代理增加了前期复杂度、可能成为通信的屏障、可能成为攻击的目标、难以测试。&lt;/li&gt;
+&lt;li&gt;SOA 延续了 broker 的思想，查找服务和使用服务都要通过 broker，而 SOA 只在查找时通过 register，分散了 broker 的职责，降低了单点风险。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【2018】【2023】Layered pattern 和 Multi-tier pattern 的区别&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Layered Pattern 是 Module Style，而 Multi-tier Pattern 是 Allocation Style&lt;/li&gt;
+&lt;li&gt;Layered Pattern 是将任务拆解成一个个处于特定抽象级别的子层次，每层为上一层提供服务，核心是关注点分离。&lt;/li&gt;
+&lt;li&gt;Multi-tier Patten 中的层是逻辑的组合，没有层次模式的强依赖关系，在不同部署环境中分层不同但是软件完成的内容一致。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【2017】【2019】【2022】【2023】在设计软件时应用了哪些&lt;strong&gt;通用设计策略&lt;/strong&gt;？为每个策略提供一个带有软件架构的简明工作示例。What are generic design strategies applied in designing software? Give a concise working example with software architecture for each strategy.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;抽象：关注本身结构而不关心实现，比如将系统抽象为组件和连接件或抽象为模块。&lt;/li&gt;
+&lt;li&gt;分解：比如将整个系统分解或将某个模块分解。&lt;/li&gt;
+&lt;li&gt;分而治之：将每个模块分别处理&lt;/li&gt;
+&lt;li&gt;生成与测试：将一个特定的设计看作是一个假设；根据测试路径生成测试用例。&lt;/li&gt;
+&lt;li&gt;迭代与细化：如 ADD 方法多次迭代直到满足所有 ASR&lt;/li&gt;
+&lt;li&gt;复用元素：重用在设计过程中出现了可以复用的元素，重用现有架构&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【2017】【2019】什么是 ASR？列出提取和识别 ASR 的四种来源和方法。What are ASR? List four sources and methods for extracting and identifying ASRs.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;ASRs 架构攸关需求是对架构产生深远影响的需求&lt;/li&gt;
+&lt;li&gt;四种来源和方法：
+&lt;ol&gt;
+&lt;li&gt;从需求文档中收集 ASR：MoScoW 方法和用户故事&lt;/li&gt;
+&lt;li&gt;通过采访涉众来收集 ASR：质量属性工作坊 (QAW)Quality Attribute Workshop&lt;/li&gt;
+&lt;li&gt;通过了解业务目标来收集 ASR：&lt;/li&gt;
+&lt;li&gt;通过质量属性效用树 (Utility Tree) 来收集 ASR*：逐渐对质量属性进行分解细化，直到包含量化指标为止。*&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【2017】【2019】典型的软件架构文档包中应该包含哪些内容？简要描述每个组件及其用途。What should be included in a typical software architecture documentation package? Briefly describe each component and its purpose.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;包含 View 和 Beyond&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Beyond 部分：
+&lt;ol&gt;
+&lt;li&gt;文档路线图：包含了范围和总结、简单摘要等。&lt;/li&gt;
+&lt;li&gt;视图的文档组织方式：描述了本文档中视图是如何组织的。&lt;/li&gt;
+&lt;li&gt;系统概述：从整体上描述了当前架构的简要说明、业务目标 ( 驱动因素 ) 等等。&lt;/li&gt;
+&lt;li&gt;视图之间的映射关系：描述了不同视图之间的映射关系。&lt;/li&gt;
+&lt;li&gt;系统原理：从整体上描述了当前架构的设计原理。&lt;/li&gt;
+&lt;li&gt;目录-索引、词汇表、首字母缩略词表。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;View 部分
+&lt;ol&gt;
+&lt;li&gt;styles and views( 体系结构风格和视图 )&lt;/li&gt;
+&lt;li&gt;Structural views
+&lt;ol&gt;
+&lt;li&gt;module viwes&lt;/li&gt;
+&lt;li&gt;C &amp;amp; C views&lt;/li&gt;
+&lt;li&gt;Allocation views&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Quality Views&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;每一个 View 的内容
+&lt;ol&gt;
+&lt;li&gt;主要介绍：显示视图的元素和关系，以及图例&lt;/li&gt;
+&lt;li&gt;元素介绍，详细介绍第一部分中描述的元素、元素属性、关系属性和元素接口和行为。&lt;/li&gt;
+&lt;li&gt;上下文图：描述系统如何与环境相关&lt;/li&gt;
+&lt;li&gt;可变性指导：告知视图中可能出现的变化&lt;/li&gt;
+&lt;li&gt;基本原理：解释设计如何映射在视图中，以及其合理性。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【2015】描述架构设计中架构模式和tactics 之间的关系。给出可以在架构设计过程中使用的任何四种决策的名称，并描述每种决策的目的。Describe the relationships between architectual patterns and tactics in architecture design. Give name of any four tactics that can be used during architecture design and describe the purpose of each of them.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;架构模式与tactics 之间的关系
+&lt;ol&gt;
+&lt;li&gt;tactics 比模式更简单，使有单一的结构或机制来应对单一的架构驱动&lt;/li&gt;
+&lt;li&gt;tactics 是构成架构模式的重要组成部分&lt;/li&gt;
+&lt;li&gt;架构模式通常将许多个tactics 组合在一起。&lt;/li&gt;
+&lt;li&gt;大多数架构模式都包含不同的tactics ，这些tactics 可能有共同的目的或者常被用于实现不同的质量属性。&lt;/li&gt;
+&lt;li&gt;tactics 和架构模式共同构成了软件设计时的工具。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;四种决策的名称&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【2015】简要描述面向服务架构 (SOA) 的基本原则，并讨论 SOA 对互操作性、可伸缩性和安全性等质量属性的影响 Briefly describe the fundamental principles of Service Oriented Architecture(SOA) and discuss the impact of SOA on quality attributes like interoperability, scalability and security&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;SOA 的基本原则
+&lt;ol&gt;
+&lt;li&gt;服务解耦：服务之间的关系最小化，只是相互知道接口&lt;/li&gt;
+&lt;li&gt;服务契约:服务按照描述文档所定义的服务契约行事&lt;/li&gt;
+&lt;li&gt;服务封装:除了服务契约所描述内容，服务将对外部隐藏实现逻辑&lt;/li&gt;
+&lt;li&gt;服务重用:将逻辑分布在不同的服务中，以提高服务的重用性&lt;/li&gt;
+&lt;li&gt;服务组合:一组服务可以协调工作，组合起来形成定制组合业务&lt;/li&gt;
+&lt;li&gt;服务自治:服务对所封装的逻辑具有控制权&lt;/li&gt;
+&lt;li&gt;服务无状态:服务将一个活动所需保存的资讯最小化&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;SOA 对互操作性的影响
+&lt;ol&gt;
+&lt;li&gt;SOA 具有更高的互操作性：符合开放标准，可以更好的重用服务&lt;/li&gt;
+&lt;li&gt;支持服务的自动识别、发现、注册和调用等等&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;SOA 对可伸缩性的影响
+&lt;ol&gt;
+&lt;li&gt;SOA 具有更高的可伸缩性：服务自身高内聚、服务间松耦合，最小化维护的影响&lt;/li&gt;
+&lt;li&gt;但是 SOA 也会带来系统复杂度较高的问题&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;SOA 对安全性的影响：
+&lt;ol&gt;
+&lt;li&gt;中间件可能会成为性能的瓶颈&lt;/li&gt;
+&lt;li&gt;ESB 等中间件都可以成为被攻击的目标&lt;/li&gt;
+&lt;li&gt;多服务导致攻击的跟踪、溯源和防御成为困难。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【2019】【2023】微服务和 SOA 的区别，相同点&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;相同点：微服务和 SOA 都是分布式架构，微服务架构可以看作是SOA的一种实现方式，适用于更小规模和更灵活的应用系统。都包含了服务契约、服务封装、服务重用、服务组合、服务自治和服务无状态等基本特点。&lt;/li&gt;
+&lt;li&gt;微服务去掉了 SOA 架构中的 ESB(Enterprise Service Bus) 企业服务总线，采用轻量级通信机制 (HTTP、REST) 进行服务之间的通信。&lt;/li&gt;
+&lt;li&gt;微服务引入了熔断器：避免出现服务失效或网络问题等导致的级联故障。&lt;/li&gt;
+&lt;li&gt;部署和扩展：在SOA中，整个应用程序通常作为一个单元进行部署和扩展。而在微服务架构中，每个微服务可以独立部署和扩展，使得系统具有更好的弹性和可伸缩性。&lt;/li&gt;
+&lt;li&gt;服务粒度：在SOA中，服务的粒度可以比较大，一个服务可能涵盖多个相关的业务功能。而在微服务架构中，服务的粒度更小，每个服务通常专注于一个特定的业务功能。&lt;/li&gt;
+&lt;li&gt;组织和治理：SOA通常需要涉及企业范围内的中央治理和管理，**不能控制独立服务的演变。**而微服务架构强调团队的自治性，&lt;strong&gt;每个微服务可以由一个独立的团队进行开发和管理，更加注重服务的自治性和快速迭代&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;【2017】&lt;strong&gt;软件设计的三个变化维度，每个维度的变化点。不同的绑定时间如何影响可修改性和可测试性&lt;/strong&gt;。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;三个变化维度：
+&lt;ol&gt;
+&lt;li&gt;面向对象 OOP，强调重用性、灵活性和扩展性。&lt;/li&gt;
+&lt;li&gt;面向方面 AOP，满足扩展的需求，可以在程序中自由的扩展功能&lt;/li&gt;
+&lt;li&gt;面向服务 SOA，是系统发布功能的一种方式，且基于这种方式下不同的系统之间可以有效的沟通、协作。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;设计时，开发时，测试时，发布时，运行时：可修改性降低，可测试性升高&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅【2018】&lt;strong&gt;软件架构的关注点有哪些&lt;/strong&gt;？利益相关方有哪些？&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;软件架构的关注点
+&lt;ol&gt;
+&lt;li&gt;利益相关者 Stakeholders addressed&lt;/li&gt;
+&lt;li&gt;解决的问题 Concerns addressed&lt;/li&gt;
+&lt;li&gt;语言，建模技巧 Language, modeling techniques&lt;/li&gt;
+&lt;li&gt;策略，模式 Tactics, Pattern&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;利益相关方有哪些？
+&lt;ol&gt;
+&lt;li&gt;顾客 Customer&lt;/li&gt;
+&lt;li&gt;用户 User&lt;/li&gt;
+&lt;li&gt;架构师 Architect&lt;/li&gt;
+&lt;li&gt;需求工程师 Requirements engineer&lt;/li&gt;
+&lt;li&gt;设计师 Designer&lt;/li&gt;
+&lt;li&gt;实施者 Implementer&lt;/li&gt;
+&lt;li&gt;测试师，集成师 Tester, integrator&lt;/li&gt;
+&lt;li&gt;维护者 Maintainer&lt;/li&gt;
+&lt;li&gt;产品经理 Product manager&lt;/li&gt;
+&lt;li&gt;质量保证人 Quality assurance people&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【2018】【2022】Software requirements, Quality attributes, ASRs 的区别和联系&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;软件需求包括功能性需求和非功能性需求（又称质量需求）&lt;/li&gt;
+&lt;li&gt;质量属性是由软件的业务目标所决定，在功能性需求的基础上提供的整个系统的合乎需求的特性，是非功能需求的一种体现。&lt;/li&gt;
+&lt;li&gt;ASRs 架构攸关需求是对于体系结构有着深远影响的需求，肯定是软件需求的一部分。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【2018】描述 ADD 过程&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;输入&lt;/strong&gt;：需求，&lt;strong&gt;输出&lt;/strong&gt;：软件元素 - 角色 - 职责 - 属性 - 关系&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;确定有足够的需求信息&lt;/li&gt;
+&lt;li&gt;选择要分解的系统要素&lt;/li&gt;
+&lt;li&gt;确定所选的元素的 ASR&lt;/li&gt;
+&lt;li&gt;选择符合 ASR 的设计
+&lt;ol&gt;
+&lt;li&gt;找出设计问题&lt;/li&gt;
+&lt;li&gt;列出子关注点替代模式/策略&lt;/li&gt;
+&lt;li&gt;从清单中选择模式/策略&lt;/li&gt;
+&lt;li&gt;确定模式/策略与 ASR 之间的关系&lt;/li&gt;
+&lt;li&gt;记录初步的架构视图&lt;/li&gt;
+&lt;li&gt;评估并解决不一致的问题&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;实例化架构元素并分配职责&lt;/li&gt;
+&lt;li&gt;实例化元素定义接口&lt;/li&gt;
+&lt;li&gt;验证和完善需求&lt;/li&gt;
+&lt;li&gt;重复进行 2-7 步直到满足所有的 ASR&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【==2019】Architecture，structure 和 Design 的区别？==&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Design 包含 Architecture，Architecture 包含 Structure&lt;/li&gt;
+&lt;li&gt;结构是静态的、逻辑的，是关于系统如何构成的&lt;/li&gt;
+&lt;li&gt;Architecture除包含structure ，还会包含组件之间的相关的关系结构，并定义一些动态的行为。&lt;/li&gt;
+&lt;li&gt;所有体系结构都是设计，但是不是所有的设计都是体系结构，体系结构是软件设计的一个部分&lt;/li&gt;
+&lt;li&gt;架构的定义：
+&lt;ul&gt;
+&lt;li&gt;组件的接口&lt;/li&gt;
+&lt;li&gt;组件之间的交流和依赖&lt;/li&gt;
+&lt;li&gt;组件的职责&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 【2018】【2019】【2022】Risks，Senstivity Points，Trade-Off Points 分别是什么？各举一个例子。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;识别风险：发现可能对所需质量属性产生负面影响的架构决策，例如使用分层模式可能带来性能损耗。&lt;/li&gt;
+&lt;li&gt;发现权衡：影响多个质量属性的架构决策，例如使用分层模式可能会带来性能损耗，但是增加系统的可修改性。&lt;/li&gt;
+&lt;li&gt;发现敏感点：特定质量属性对其敏感的架构决策，比如在对性能敏感的系统中，决定使用缓存中间件。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✅ 软件架构风格&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;module Styles：认为体系结构是由模块组成。模块是实现单元的集合，它提供了一组一致的职责。&lt;/li&gt;
+&lt;li&gt;C &amp;amp; C Styles 认为体系结构是由组件 ( 主要的处理单元和数据存储 )、连接件 ( 组件之间的交互路径 ) 组成的。&lt;/li&gt;
+&lt;li&gt;Allocation Styles 认为体系结构是由软件元素 ( 软件元素具有环境所需的属性 ) 和环境元素 ( 环境元素有提供给软件的属性 ) 组成的，展示了软件如何与环境关联。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;架构模式是：⼀个架构模式是⼀组架构设计决定，这些决定适用于重复出现的设计问题，并被参数化以考虑出现该问题的不同软件开发上下文。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;软件架构是程序或计算系统的结构，由软件元素、这些元素外部可⻅的属性、这些元素的关系组成&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;架构模式：{问题，上下文} → 架构方法。架构风格具体到常见的问题和上下文，就叫做架构模式&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;其他知识点&#34;&gt;其他知识点
+&lt;/h2&gt;&lt;h3 id=&#34;交流包含数据传播机制控制流&#34;&gt;交流包含：数据传播机制+控制流
+&lt;/h3&gt;&lt;h3 id=&#34;nfrs-includetbq&#34;&gt;NFRs include:（TBQ）
+&lt;/h3&gt;&lt;p&gt;• Technical constraints • Business constraints • Quality attribute&lt;/p&gt;
+&lt;h3 id=&#34;-20172019描述-41-视图-describe-41-view-掌握绘图-答案如上&#34;&gt;✅ 【2017】【2019】描述 4+1 视图 Describe 4+1 view( 掌握绘图 )：答案如上
+&lt;/h3&gt;&lt;p&gt;LPPDA&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;逻辑视图：描述了对架构而言重要的元素和他们之间的关系（功能需求）==重要元素+之间关系==&lt;/li&gt;
+&lt;li&gt;过程视图：描述了元素之间的交互。==元素的交互==&lt;/li&gt;
+&lt;li&gt;物理视图（部署视图）：描述了主要过程和组件是如何被映射到硬件上的。==过程组件映射硬件==&lt;/li&gt;
+&lt;li&gt;开发视图（实现视图）：描述实现系统功能的各个组件和模块是如何实现的 ==组件模块如何实现==&lt;/li&gt;
+&lt;li&gt;用例场景（Use Case）：描述系统的参与者（用户）与系统功能用例的关系，与一个或多个特定视图相关。 ==系统用户与系统功能用例的关系==&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;架构&#34;&gt;架构
+&lt;/h2&gt;&lt;h3 id=&#34;软件架构是程序或计算系统的结构由软件元素这些元素外部可的属性这些元素的关系组成&#34;&gt;软件架构是程序或计算系统的结构，由软件元素、这些元素外部可⻅的属性、这些元素的关系组成
+&lt;/h3&gt;&lt;h3 id=&#34;架构活动&#34;&gt;架构活动
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;创建bussness case&lt;/li&gt;
+&lt;li&gt;理解需求&lt;/li&gt;
+&lt;li&gt;创建架构&lt;/li&gt;
+&lt;li&gt;交流架构&lt;/li&gt;
+&lt;li&gt;评估架构&lt;/li&gt;
+&lt;li&gt;实现架构&lt;/li&gt;
+&lt;li&gt;确保架构一致性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-20152019软件架构来自哪里列举五种可能的软件架构的来源-where-do-software-architecture-come-from-list-five-possible-sources-of-software-architecture&#34;&gt;✅ 【2015】【2019】软件架构来自哪里？列举五种可能的软件架构的来源 Where do software architecture come from? List five possible sources of software architecture
+&lt;/h3&gt;&lt;p&gt;==（关功非业技）==&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;NFRs - 非功能性需求&lt;/li&gt;
+&lt;li&gt;ASRs&lt;/li&gt;
+&lt;li&gt;涉众&lt;/li&gt;
+&lt;li&gt;技术环境&lt;/li&gt;
+&lt;li&gt;组织（Organization）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;-2019architecturestructure-和-design-的区别&#34;&gt;✅ 【2019】Architecture，structure 和 Design 的区别？
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Design 包含 Architecture，Architecture 包含 Structure&lt;/li&gt;
+&lt;li&gt;结构是静态的、逻辑的，是关于系统如何构成的&lt;/li&gt;
+&lt;li&gt;Architecture除包含structure ，还会包含组件之间的相关的关系结构，并定义一些动态的行为。&lt;/li&gt;
+&lt;li&gt;所有体系结构都是设计，但是不是所有的设计都是体系结构，体系结构是软件设计的一个部分&lt;/li&gt;
+&lt;li&gt;架构的定义：
+&lt;ul&gt;
+&lt;li&gt;组件的接口&lt;/li&gt;
+&lt;li&gt;组件之间的交流和依赖&lt;/li&gt;
+&lt;li&gt;组件的职责&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;what-does-a-software-architect-do&#34;&gt;What does a software architect do?
+&lt;/h3&gt;&lt;p&gt;Liaison,&lt;/p&gt;
+&lt;p&gt;Software engineering,&lt;/p&gt;
+&lt;p&gt;Tech. knowledge,&lt;/p&gt;
+&lt;p&gt;Risk mgmt.&lt;/p&gt;
+&lt;p&gt;==LSTR==&lt;/p&gt;
+&lt;h3 id=&#34;20152017简要描述软件架构过程中的一般活动以及每个活动的主要输入和输出briefly-describe-the-general-activities-in-a-software-architecture-process-and-the-major-inputs-and-outputs-at-each-activity&#34;&gt;✅【2015】【2017】简要描述软件架构过程中的一般活动，以及每个活动的主要输入和输出。Briefly describe the ==general activities in a software architecture process==, and the major inputs and outputs at each activity
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;短答案 ( 背 )
+&lt;ol&gt;
+&lt;li&gt;识别 ASRs
+&lt;ol&gt;
+&lt;li&gt;输入：无&lt;/li&gt;
+&lt;li&gt;输出：优先的质量属性场景&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;架构设计
+&lt;ol&gt;
+&lt;li&gt;输入：优先的质量属性场景、需求和约束、模式和决策&lt;/li&gt;
+&lt;li&gt;输出：模式决定的候选视图的草图(PCVS)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;架构文档化
+&lt;ol&gt;
+&lt;li&gt;输入：模式决定的候选视图的草图&lt;/li&gt;
+&lt;li&gt;输出：View &amp;amp; Beyond&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;架构评估
+&lt;ol&gt;
+&lt;li&gt;输入：View &amp;amp; Beyond、优先的质量属性场景&lt;/li&gt;
+&lt;li&gt;输出：View &amp;amp; Beyond&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5.png&#34;
+	width=&#34;1978&#34;
+	height=&#34;641&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5_hu_574ed0cebdb66e68.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/5_hu_b5f731d1bcd03799.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;308&#34;
+		data-flex-basis=&#34;740px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;软件架构的lifecircle&#34;&gt;软件架构的LifeCircle
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612223110998.png&#34;
+	width=&#34;2264&#34;
+	height=&#34;1216&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612223110998_hu_e6521bee1fc8e7fa.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250612223110998_hu_adc4bf2f1a6e8f6f.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250612223110998&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;186&#34;
+		data-flex-basis=&#34;446px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;design-strategy&#34;&gt;Design Strategy
+&lt;/h2&gt;&lt;h3 id=&#34;2017201920222023在设计软件时应用了哪些通用设计策略为每个策略提供一个带有软件架构的简明工作示例what-are-generic-design-strategies-applied-in-designing-software-give-a-concise-working-example-with-software-architecture-for-each-strategy&#34;&gt;2017】【2019】【2022】【2023】在设计软件时应用了哪些&lt;strong&gt;通用设计策略&lt;/strong&gt;？为每个策略提供一个带有软件架构的简明工作示例。What are ==generic design strategies== applied in designing software? Give a concise working example with software architecture for each strategy
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;抽象：关注本身结构而不关心实现，比如将系统抽象为组件和连接件或抽象为模块。&lt;/li&gt;
+&lt;li&gt;分解：比如将整个系统分解或将某个模块分解。&lt;/li&gt;
+&lt;li&gt;分而治之：将每个模块分别处理&lt;/li&gt;
+&lt;li&gt;生成与测试：将一个特定的设计看作是一个假设；根据测试路径生成测试用例。&lt;/li&gt;
+&lt;li&gt;迭代与细化：如 ADD 方法多次迭代直到满足所有 ASR&lt;/li&gt;
+&lt;li&gt;复用元素：重用在设计过程中出现了可以复用的元素，重用现有架构&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Decomposition • Abstraction • Stepwise: &amp;lsquo;Divid and Conquer&amp;rsquo; • Generate and Test • Iteration: Incrementa Refinement • Reuseable elements&lt;/p&gt;
+&lt;p&gt;==DASGIR==&lt;/p&gt;
+&lt;h3 id=&#34;seven-categories-of-design-decisions-may-overlap&#34;&gt;Seven ==categories of design decisions== (may overlap)
+&lt;/h3&gt;&lt;p&gt;• Alocation of responsibilities&lt;/p&gt;
+&lt;p&gt;• Coordination mode&lt;/p&gt;
+&lt;p&gt;• Data model&lt;/p&gt;
+&lt;p&gt;• Management of resources&lt;/p&gt;
+&lt;p&gt;• Mapping among architecture elements&lt;/p&gt;
+&lt;p&gt;• Binding time decisions&lt;/p&gt;
+&lt;p&gt;• Choice of technology&lt;/p&gt;
+&lt;p&gt;==ABCCDMM==&lt;/p&gt;
+&lt;h2 id=&#34;quality-atributes&#34;&gt;Quality Atributes
+&lt;/h2&gt;&lt;h3 id=&#34;20182022software-requirements-quality-attributes-asrs-的区别和联系&#34;&gt;2018】【2022】Software requirements, Quality attributes, ASRs 的区别和联系
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;软件需求包括功能性需求和非功能性需求（又称质量需求）&lt;/li&gt;
+&lt;li&gt;质量属性是由软件的业务目标所决定，在功能性需求的基础上给整个系统提供的期望特性，是非功能需求的一种体现。&lt;/li&gt;
+&lt;li&gt;ASRs 是对于体系结构有着深远影响的需求，是软件需求的一部分。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;质量属性是由软件的业务目标所决定在功能性需求的基础上给整个系统提供的期望特性是非功能需求的一种体现&#34;&gt;质量属性是由软件的业务目标所决定，在功能性需求的基础上给整个系统提供的期望特性，是非功能需求的一种体现
+&lt;/h3&gt;&lt;h3 id=&#34;功能需求规定了系统必须完成的任务并阐述了系统如何为利益相关者提供价值&#34;&gt;功能需求规定了系统必须完成的任务，并阐述了系统如何为利益相关者提供价值
+&lt;/h3&gt;&lt;h3 id=&#34;约束是零自由度的预先制定的已经作出的决策zero-freedompre-specifiedalready-made&#34;&gt;约束是零自由度的，预先制定的，已经作出的决策（zero-freedom,pre-specified,already made）
+&lt;/h3&gt;&lt;h3 id=&#34;策略tactics是影响质量属性相应控制的设计决策比如冗余&#34;&gt;策略（Tactics）：是影响质量属性相应控制的设计决策，比如冗余
+&lt;/h3&gt;&lt;h3 id=&#34;分类体系internalexternal&#34;&gt;&lt;strong&gt;分类体系Internal/External&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;• &lt;strong&gt;运行时可观测需求（外部质量）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;How well system satisfied its performance requirements&lt;/p&gt;
+&lt;p&gt;▸ 性能（performance）
+▸ 安全性（security）
+▸ 可用性（availability）
+▸ 易用性（usability）&lt;/p&gt;
+&lt;p&gt;• &lt;strong&gt;运行时不可观测需求（内部质量）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;how easy a system be maintained
+▸ 可修改性（modifiability）
+▸ 可移植性（portability）
+▸ 可复用性（reusability）
+▸ 可测试性（testability）&lt;/p&gt;
+&lt;h3 id=&#34;场景主要分为两类&#34;&gt;场景主要分为两类
+&lt;/h3&gt;&lt;p&gt;• 通用场景是与系统无关的场景，用于指导==质量属性需求==(QAR)的规范。&lt;/p&gt;
+&lt;p&gt;• 具体场景是与特定系统相关的场景，用于指导特定系统的质量属性需求的规范。它们是通用场景的实例。&lt;/p&gt;
+&lt;h3 id=&#34;质量属性方案建模&#34;&gt;质量属性方案建模
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613153057877.png&#34;
+	width=&#34;2124&#34;
+	height=&#34;888&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613153057877_hu_d594a43bc514c357.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613153057877_hu_4f06b36df400566c.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613153057877&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;239&#34;
+		data-flex-basis=&#34;574px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;刺激：当到达系统时需要考虑的条件。
+• 刺激源：产生刺激的实体（人、系统或任何执行器）。
+• 响应：刺激到达后所采取的活动。
+• 响应度量：对刺激的响应应以某种方式可测量，以便需求可测试。
+• 环境：刺激发生时系统的状态，例如过载、运行等。
+• 工件：完成需求的整个系统或者系统的一部分（软件制品）&lt;/p&gt;
+&lt;p&gt;==STUMPI==&lt;/p&gt;
+&lt;h3 id=&#34;availablity&#34;&gt;Availablity
+&lt;/h3&gt;&lt;p&gt;==多少时间比例中系统是可用的==&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613155653161.png&#34;
+	width=&#34;1616&#34;
+	height=&#34;1316&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613155653161_hu_6d93d3e61c46831c.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613155653161_hu_847b390e061e8017.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613155653161&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;122&#34;
+		data-flex-basis=&#34;294px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613155705779.png&#34;
+	width=&#34;1714&#34;
+	height=&#34;896&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613155705779_hu_22f7905eb0247154.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613155705779_hu_d1561245897574f4.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613155705779&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;191&#34;
+		data-flex-basis=&#34;459px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==系统不相应，进程的回应，衡量关机时间==&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Ping/Echo&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Hearbeat&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Rollback&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Voting&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Redundancy&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Shadow Operation&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Spare&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Transaction&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Process Monitor&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;introperablity&#34;&gt;Introperablity
+&lt;/h3&gt;&lt;p&gt;在特定的Context下两个系统交换有用信息的程度（正确性）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613161941976.png&#34;
+	width=&#34;1876&#34;
+	height=&#34;1106&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613161941976_hu_f71115ead355a508.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613161941976_hu_855adf4389d94134.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613161941976&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;169&#34;
+		data-flex-basis=&#34;407px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613162113239.png&#34;
+	width=&#34;1798&#34;
+	height=&#34;1000&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613162113239_hu_cf69ab5b355b5c14.png 480w, https://114514yangyi.github.io/huyang/p/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20250613162113239_hu_895cabfcdd02152c.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613162113239&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;431px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==两个系统交互，有多少信息被正确交换==&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;定位服务&lt;/li&gt;
+&lt;li&gt;管理接口&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;modifiability&#34;&gt;Modifiability
+&lt;/h3&gt;&lt;p&gt;==作出修改需要付出的代价==&lt;/p&gt;
+&lt;p&gt;N x Cost of making the change without the mechanism s Cost of installing the mechanism + (N x Cost of making the change using the mechanism).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613172134719.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613172134719&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613172150078.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613172150078&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==开发者修改代码的时间是多少==&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;模块划分&lt;/li&gt;
+&lt;li&gt;高内聚低耦合&lt;/li&gt;
+&lt;li&gt;封装&lt;/li&gt;
+&lt;li&gt;延迟绑定&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;performance&#34;&gt;Performance
+&lt;/h3&gt;&lt;p&gt;==系统满足时效性的能力==&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;处理时间&lt;/li&gt;
+&lt;li&gt;阻塞时间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613173120253.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613173120253&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==系统内外部发送事件到系统组件从而处理事件，计算延迟/deadline/吞吐量==&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613173648619.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613173648619&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==系统处理用户事物的平均时延==&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;增加资源&lt;/li&gt;
+&lt;li&gt;引入并发，冗余&lt;/li&gt;
+&lt;li&gt;限流&lt;/li&gt;
+&lt;li&gt;区分优先级&lt;/li&gt;
+&lt;li&gt;缓存&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;security&#34;&gt;Security
+&lt;/h3&gt;&lt;p&gt;==衡量系统如何保护数据/阻止未授权行为+确保授权人员正常访问数据==&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Confidentiality&lt;/li&gt;
+&lt;li&gt;Itergrity&lt;/li&gt;
+&lt;li&gt;Availablity&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;CIA&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613194120963.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613194120963&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==未授权人员向在线系统发送访问请求被拒绝衡量抵制了多少次的攻击==&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613194353335.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613194353335&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==衡量恢复的正确数据量==&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;服务拒绝&lt;/li&gt;
+&lt;li&gt;checksum保证一致性&lt;/li&gt;
+&lt;li&gt;验证身份&lt;/li&gt;
+&lt;li&gt;授权行为&lt;/li&gt;
+&lt;li&gt;撤销权限&lt;/li&gt;
+&lt;li&gt;限制权限和攻击部位&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;testability&#34;&gt;Testability
+&lt;/h3&gt;&lt;p&gt;==系统可以通过测试来证明故障的难易程度==&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613195025913.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613195025913&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613195036992.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613195036992&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==测试人员使用单元测试测试部分系统返回测试结果，结果是覆盖了多少的代码路径==&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;控制和观察系统状态&lt;/li&gt;
+&lt;li&gt;限制复杂度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;usability&#34;&gt;Usability
+&lt;/h3&gt;&lt;p&gt;==用户有多容易能够使用系统完成工作==&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613200733969.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613200733969&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613200743533.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613200743533&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;==用户使用系统干一件事情获得了结果，衡量使用了多少时间完成了多少的事==&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;cancel/undo/pause/resume&lt;/li&gt;
+&lt;li&gt;task model/user model/system model&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;架构模式&#34;&gt;架构模式
+&lt;/h2&gt;&lt;h3 id=&#34;架构模式-1&#34;&gt;架构模式
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;背景、上下文（Context）：世界上经常发生问题的场景。&lt;/li&gt;
+&lt;li&gt;问题（Problem）：在给定上下文中概括的问题。&lt;/li&gt;
+&lt;li&gt;解决方案（Element + Relations + Constraints）：针对问题的成功架构解决方案，是经过抽象的&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Context，Problem，Solution&lt;/p&gt;
+&lt;h3 id=&#34;架构模式是一系列可复用的架构设计决策针对经常出现的特定设计问题并能通过参数化调该问题所处的不同软件开发语境&#34;&gt;架构模式是一系列可复用的架构设计决策，针对经常出现的特定设计问题，并能通过参数化调该问题所处的不同软件开发语境
+&lt;/h3&gt;&lt;h3 id=&#34;layered-patern&#34;&gt;Layered Patern
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;h3 id=&#34;-20182023layered-pattern-和-multi-tier-pattern-的区别&#34;&gt;✅ 【2018】【2023】Layered pattern 和 Multi-tier pattern 的区别
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Layered Pattern 是 Module Style，而 Multi-tier Pattern 是 Allocation Style&lt;/li&gt;
+&lt;li&gt;Layered Pattern 是将任务拆解成一个个处于特定抽象级别的子层次，每层为上一层提供服务，核心是关注点分离。&lt;/li&gt;
+&lt;li&gt;Multi-tier Patten 中的层是逻辑的组合，没有层次模式的强依赖关系，在不同部署环境中分层不同但是软件完成的内容一致。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613211039848.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613211039848&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;复杂度和前期成本&lt;/li&gt;
+&lt;li&gt;性能损失&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613210650835.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613210650835&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;broker-pattern&#34;&gt;Broker Pattern
+&lt;/h3&gt;&lt;h3 id=&#34;20152019解释代理架构模式的上下文好处和局限性explain-the-context-benefits-and-limitations-of-broker-architecture-pattern&#34;&gt;【2015】【2019】解释代理架构模式的上下文、好处和局限性。Explain the context, benefits and limitations of Broker Architecture Pattern
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;上下文：多个&lt;strong&gt;同步或异步交互&lt;/strong&gt;的&lt;strong&gt;远程对象组成的系统&lt;/strong&gt;，broker协调多个客户机和服务器之间的通讯。&lt;/li&gt;
+&lt;li&gt;好处：提高了 Client 和 Server 之间的交互性、提高可伸缩性和可扩展性、解决了单体应用的性能瓶颈、大规模集群的性能提高，但是单点性能会下降。&lt;/li&gt;
+&lt;li&gt;局限性：代理增加了前期复杂度、可能成为通信的屏障、可能成为攻击的目标、难以测试。&lt;/li&gt;
+&lt;li&gt;SOA 延续了 broker 的思想，查找服务和使用服务都要通过 broker，而 SOA 只在查找时通过 register，分散了 broker 的职责，降低了单点风险。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613211648910.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613211648910&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;延迟/性能损失&lt;/li&gt;
+&lt;li&gt;单点故障&lt;/li&gt;
+&lt;li&gt;复杂度&lt;/li&gt;
+&lt;li&gt;攻击目标&lt;/li&gt;
+&lt;li&gt;难以测试&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613212057715.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613212057715&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mvc&#34;&gt;MVC
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;未命名&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;简单用户界面的复杂性&lt;/li&gt;
+&lt;li&gt;可能不适用一些用户界面工具&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613213552234.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613213552234&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Context：MVC 模式适用于需要清晰分离用户界面、业务逻辑和数据管理的应用系统。&lt;/p&gt;
+&lt;p&gt;职责分离清晰&lt;/p&gt;
+&lt;h3 id=&#34;pipe-and-filter-patern&#34;&gt;Pipe And Filter Patern
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9822238.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;未命名&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不适用于交互式系统&lt;/li&gt;
+&lt;li&gt;带来计算开销&lt;/li&gt;
+&lt;li&gt;不适合长时间运行的计算任务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Context：需要对于数据进行一系列处理的过程&lt;/p&gt;
+&lt;p&gt;好处：模块化，清晰易懂，可以支持并行处理&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613215038556.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613215038556&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;client-server-pattern&#34;&gt;Client-Server Pattern
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9822707.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;未命名&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;服务器成为性能瓶颈&lt;/li&gt;
+&lt;li&gt;服务器成为单点故障&lt;/li&gt;
+&lt;li&gt;更改服务器的成本很高&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613222259912.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613222259912&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;peer-to-peer-pattern&#34;&gt;Peer-to-Peer Pattern
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9824916.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;未命名&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;数据一致性&lt;/li&gt;
+&lt;li&gt;管理安全性&lt;/li&gt;
+&lt;li&gt;备份工作的复杂性&lt;/li&gt;
+&lt;li&gt;性能/可用性&lt;/li&gt;
+&lt;li&gt;小型的点对点系统无法实现&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613223828582.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613223828582&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;service-oriented-patter&#34;&gt;Service-Oriented Patter
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9825552.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;未命名&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;性能损失&lt;/li&gt;
+&lt;li&gt;构建复杂&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;你提供的文本描述的是 &lt;strong&gt;面向服务的架构（Service-Oriented Architecture, SOA）&lt;/strong&gt; 的核心概念、组成要素、优缺点以及实现方式。以下是详细解析：&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;1-什么是soa&#34;&gt;&lt;strong&gt;1. 什么是SOA？&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;SOA（面向服务的架构）&lt;/strong&gt; 是一种软件设计范式，通过&lt;strong&gt;松耦合的服务&lt;/strong&gt;（Service）组合实现业务功能。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;核心思想&lt;/strong&gt;：将系统功能拆分为独立的、可复用的服务，通过标准协议（如HTTP/SOAP）交互。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;类比&lt;/strong&gt;：像“点外卖”——你（消费者）通过平台（ESB）调用餐厅（服务提供者）的功能，无需关心厨房如何做菜。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;2-soa的核心组成要素&#34;&gt;&lt;strong&gt;2. SOA的核心组成要素&lt;/strong&gt;
+&lt;/h3&gt;&lt;h4 id=&#34;1-组件components&#34;&gt;&lt;strong&gt;(1) 组件（Components）&lt;/strong&gt;
+&lt;/h4&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;strong&gt;角色&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;strong&gt;功能&lt;/strong&gt;&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Service Provider&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;提供服务（如支付服务、用户认证），通过接口（API）暴露功能。需关注性能、授权、成本等。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Service Consumer&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;调用服务的客户端（如电商网站调用支付服务）。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;ESB（企业服务总线）&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;中介层，负责路由、转换消息（如将XML转JSON），解耦服务提供者与消费者。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Registry&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;服务注册中心（如UDDI），供服务注册和发现（类似“电话簿”）。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Orchestration Server&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;流程编排服务器（如BPEL引擎），协调多个服务按业务流程执行（如“下单→支付→物流”）。&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&#34;2-连接器connectors&#34;&gt;&lt;strong&gt;(2) 连接器（Connectors）&lt;/strong&gt;
+&lt;/h4&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;strong&gt;类型&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;strong&gt;协议/技术&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;strong&gt;特点&lt;/strong&gt;&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;SOAP Connector&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;SOAP over HTTP&lt;/td&gt;
+          &lt;td&gt;基于XML，强类型，适合企业级集成（如银行系统）。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;REST Connector&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;HTTP (GET/POST/PUT/DELETE)&lt;/td&gt;
+          &lt;td&gt;轻量级，JSON格式，广泛用于Web API。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Asynchronous Messaging&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;消息队列（如RabbitMQ、Kafka）&lt;/td&gt;
+          &lt;td&gt;支持异步通信，解耦生产者和消费者。&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;3-soa的关键特性&#34;&gt;&lt;strong&gt;3. SOA的关键特性&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;✅ &lt;strong&gt;松耦合&lt;/strong&gt;：服务独立演进，通过接口交互，内部实现不影响调用方。
+✅ &lt;strong&gt;复用性&lt;/strong&gt;：同一服务可被多个系统调用（如用户认证服务复用）。
+✅ &lt;strong&gt;可组合性&lt;/strong&gt;：通过&lt;strong&gt;工作流语言&lt;/strong&gt;（如BPEL）编排多个服务实现复杂业务逻辑。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;4-soa的典型应用场景&#34;&gt;&lt;strong&gt;4. SOA的典型应用场景&lt;/strong&gt;
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;企业系统集成&lt;/strong&gt;：整合遗留系统（如ERP、CRM）到统一平台。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;跨部门协作&lt;/strong&gt;：不同团队开发的服务通过ESB互联（如电商的订单、库存、物流服务）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;云计算&lt;/strong&gt;：AWS/Azure的微服务架构（如Lambda函数）本质是SOA的进化版。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;5-soa的约束与弱点weaknesses&#34;&gt;&lt;strong&gt;5. SOA的约束与弱点（Weaknesses）&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;⚠️ &lt;strong&gt;复杂性高&lt;/strong&gt;：需设计服务契约、注册中心、ESB等中间件，开发成本高。
+⚠️ &lt;strong&gt;性能开销&lt;/strong&gt;：XML/SOAP协议臃肿，ESB可能成为瓶颈（对比REST更轻量）。
+⚠️ &lt;strong&gt;演化失控&lt;/strong&gt;：服务由不同团队维护，版本兼容性难保证（如V1接口废弃影响消费者）。
+⚠️ &lt;strong&gt;无性能保证&lt;/strong&gt;：服务提供者不承诺SLA（服务等级协议）时，延迟和可用性不稳定。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;6-soa-vs-微服务microservices&#34;&gt;&lt;strong&gt;6. SOA vs 微服务（Microservices）&lt;/strong&gt;
+&lt;/h3&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;strong&gt;对比维度&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;strong&gt;SOA&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;strong&gt;微服务&lt;/strong&gt;&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;通信协议&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;主要用SOAP/ESB&lt;/td&gt;
+          &lt;td&gt;主要用REST/gRPC&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;粒度&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;粗粒度（如“订单服务”）&lt;/td&gt;
+          &lt;td&gt;细粒度（如“支付服务中的退款子功能”）&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;部署&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;通常集中式（单体应用+ESB）&lt;/td&gt;
+          &lt;td&gt;完全分布式，独立部署&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;技术栈&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;强依赖中间件（如WebLogic）&lt;/td&gt;
+          &lt;td&gt;轻量级（如Spring Cloud）&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;7-总结&#34;&gt;&lt;strong&gt;7. 总结&lt;/strong&gt;
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;SOA适合&lt;/strong&gt;：大型企业需要整合异构系统、强调标准化和复用的场景。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;不适用场景&lt;/strong&gt;：小型敏捷项目（过度设计）、高性能实时系统（中间件延迟高）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果需要具体案例（如“如何使用BPEL编排服务”）或技术细节（如ESB实现原理），可以进一步探讨！ 🛠️&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613224901896.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613224901896&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;publish-subscribe-pattern&#34;&gt;Publish-Subscribe Pattern
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9826337.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;未命名&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;延迟&lt;/li&gt;
+&lt;li&gt;对可扩展性和可预测性有影响&lt;/li&gt;
+&lt;li&gt;不能够控制消息的发送次序，消息的传递无法保证&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613225943279.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613225943279&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;shared-data-pattern&#34;&gt;Shared-Data Pattern
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613230116410.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613230116410&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9826901.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;未命名&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;性能瓶颈&lt;/li&gt;
+&lt;li&gt;单点故障&lt;/li&gt;
+&lt;li&gt;联系过于紧密&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;map-reduce-pattern&#34;&gt;Map-Reduce Pattern
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9827204.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;未命名&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;没有庞大数据集就不值得&lt;/li&gt;
+&lt;li&gt;如果数据集无法划分，就不能够使用并行化&lt;/li&gt;
+&lt;li&gt;多次规约难以协调&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250613231342412.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250613231342412&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;multi--tier-pattern-solution&#34;&gt;Multi- Tier Pattern Solution
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/%E6%9C%AA%E5%91%BD%E5%90%8D-9827685.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;未命名&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;前期的成本巨大&lt;/li&gt;
+&lt;li&gt;复杂度高&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;层间关系与约束&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;通信方向&lt;/strong&gt;：通常严格&lt;strong&gt;单向调用&lt;/strong&gt;（如展示层→业务层→数据层），避免跨层直接访问。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;组件归属&lt;/strong&gt;：一个组件&lt;strong&gt;仅属于一个层&lt;/strong&gt;（如“用户认证组件”必须明确归业务层或数据层）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;技术隔离&lt;/strong&gt;：不同层可使用不同技术栈（如展示层用JavaScript，业务层用Java）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;分层架构的优势&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;模块化&lt;/strong&gt;：每层可独立开发、测试和部署。
+✅ &lt;strong&gt;可维护性&lt;/strong&gt;：修改一层时不影响其他层（如更换数据库只需调整数据层）。
+✅ &lt;strong&gt;安全性&lt;/strong&gt;：通过分层隔离敏感操作（如数据库访问不暴露给展示层）。
+✅ &lt;strong&gt;可扩展性&lt;/strong&gt;：可针对特定层扩展（如业务层横向扩容应对高并发）。&lt;/p&gt;
+&lt;h3 id=&#34;-20182023layered-pattern-和-multi-tier-pattern-的区别-1&#34;&gt;✅ 【2018】【2023】Layered pattern 和 Multi-tier pattern 的区别
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Layered Pattern 是 Module Style，而 Multi-tier Pattern 是 Allocation Style&lt;/li&gt;
+&lt;li&gt;Layered Pattern 是将任务拆解成一个个处于特定抽象级别的子层次，每层为上一层提供服务，核心是关注点分离。&lt;/li&gt;
+&lt;li&gt;Multi-tier Patten 中的层是逻辑的组合，没有层次模式的强依赖关系，在不同部署环境中分层不同但是软件完成的内容一致。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;-2015描述架构设计中架构模式和tactics-之间的关系给出可以在架构设计过程中使用的任何四种决策的名称并描述每种决策的目的describe-the-relationships-between-architectual-patterns-and-tactics-in-architecture-design-give-name-of-any-four-tactics-that-can-be-used-during-architecture-design-and-describe-the-purpose-of-each-of-them&#34;&gt;✅ 【2015】描述架构设计中架构模式和tactics 之间的关系。给出可以在架构设计过程中使用的任何四种决策的名称，并描述每种决策的目的。Describe the relationships between architectual patterns and tactics in architecture design. Give name of any four tactics that can be used during architecture design and describe the purpose of each of them
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;架构模式与tactics 之间的关系
+&lt;ol&gt;
+&lt;li&gt;tactics 比模式更简单，使用单一的机制来解决单一的架构驱动&lt;/li&gt;
+&lt;li&gt;tactics 是构成架构模式的重要组成部分&lt;/li&gt;
+&lt;li&gt;架构模式通常将许多个tactics 组合在一起。&lt;/li&gt;
+&lt;li&gt;大多数架构模式都包含不同的tactics ，这些tactics 可能有共同的目的或者常被用于实现不同的质量属性。&lt;/li&gt;
+&lt;li&gt;tactics 和架构模式共同构成了软件设计时的工具。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;四种决策的名称
+&lt;ol&gt;
+&lt;li&gt;主动冗余&lt;/li&gt;
+&lt;li&gt;被动冗余&lt;/li&gt;
+&lt;li&gt;影子模式&lt;/li&gt;
+&lt;li&gt;Heart Beat&lt;/li&gt;
+&lt;li&gt;Ping/Echo&lt;/li&gt;
+&lt;li&gt;进程监控&lt;/li&gt;
+&lt;li&gt;空闲&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;-20172019什么是-asr列出提取和识别-asr-的四种来源和方法what-are-asr-list-four-sources-and-methods-for-extracting-and-identifying-asrs&#34;&gt;✅ 【2017】【2019】什么是 ASR？列出提取和识别 ASR 的四种来源和方法。What are ASR? List four sources and methods for extracting and identifying ASRs
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;ASRs 是对架构产生深远影响的需求&lt;/li&gt;
+&lt;li&gt;四种来源和方法：
+&lt;ol&gt;
+&lt;li&gt;从需求文档中收集 ASR：MoScoW 方法和用户故事&lt;/li&gt;
+&lt;li&gt;通过采访涉众来收集 ASR：质量属性工作坊 (QAW)Quality Attribute Workshop&lt;/li&gt;
+&lt;li&gt;通过了解业务目标来收集 ASR：&lt;/li&gt;
+&lt;li&gt;通过质量属性效用树 (Utility Tree) （QAUT）来收集 ASR*：逐渐对质量属性进行分解细化，直到包含量化指标为止。*&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;架构driver&#34;&gt;架构driver
+&lt;/h3&gt;&lt;p&gt;Functional requirements&lt;/p&gt;
+&lt;p&gt;•Quality attribute requirements&lt;/p&gt;
+&lt;p&gt;•Constraints&lt;/p&gt;
+&lt;p&gt;Type of system that is being designed&lt;/p&gt;
+&lt;p&gt;•Design objectives&lt;/p&gt;
+&lt;p&gt;•Concerns&lt;/p&gt;
+&lt;p&gt;==DFCCTQ==&lt;/p&gt;
+&lt;h3 id=&#34;addatribute-driven-design&#34;&gt;ADD（Atribute Driven Design）
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250614160702087.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250614160702087&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;输入：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;DFCCTQ（没有Q）+架构设计&lt;/p&gt;
+&lt;p&gt;输出：&lt;/p&gt;
+&lt;p&gt;Refined 软件架构设计&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Review Input&lt;/li&gt;
+&lt;li&gt;Establish Iteration goal  by selecting drivers&lt;/li&gt;
+&lt;li&gt;chose oen more system elements to refine&lt;/li&gt;
+&lt;li&gt;chose one more design concept satisfied drivers
+&lt;ol&gt;
+&lt;li&gt;indentify design concept&lt;/li&gt;
+&lt;li&gt;select design concept&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;instantiate architectual element &amp;amp;Allocate responsiability&amp;amp; define interface&lt;/li&gt;
+&lt;li&gt;Sketch view&amp;amp;record design decision&lt;/li&gt;
+&lt;li&gt;perform analysis of current design &amp;amp; review iteration goal and design purpose&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;重复2-7步直到：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;设计目标达成&lt;/li&gt;
+&lt;li&gt;技术风险消除&lt;/li&gt;
+&lt;li&gt;时间用尽&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;view将软件架构划分为一系列有趣的可管理的系统表现形式&#34;&gt;View将软件架构划分为一系列有趣的，可管理的系统表现形式
+&lt;/h3&gt;&lt;h3 id=&#34;-20172019典型的软件架构文档包中应该包含哪些内容简要描述每个组件及其用途what-should-be-included-in-a-typical-software-architecture-documentation-package-briefly-describe-each-component-and-its-purpose&#34;&gt;✅ 【2017】【2019】典型的软件架构文档包中应该包含哪些内容？简要描述每个组件及其用途。What should be included in a typical software architecture documentation package? Briefly describe each component and its purpose
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;包含 View 和 Beyond&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Beyond 部分：
+&lt;ol&gt;
+&lt;li&gt;文档路线图：包含了范围和总结、简单摘要等。&lt;/li&gt;
+&lt;li&gt;视图的文档组织方式：描述了本文档中视图是如何组织的。&lt;/li&gt;
+&lt;li&gt;系统概述：从整体上描述了当前架构的简要说明、业务目标 ( 驱动因素 ) 等等。&lt;/li&gt;
+&lt;li&gt;视图之间的映射关系：描述了不同视图之间的映射关系。&lt;/li&gt;
+&lt;li&gt;系统原理：从整体上描述了当前架构的设计原理。&lt;/li&gt;
+&lt;li&gt;目录-索引、词汇表、首字母缩略词表。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;系统概述&lt;/p&gt;
+&lt;p&gt;目录&lt;/p&gt;
+&lt;p&gt;文档路线图&lt;/p&gt;
+&lt;p&gt;系统原理&lt;/p&gt;
+&lt;p&gt;视图的文档组织方式&lt;/p&gt;
+&lt;p&gt;视图的映射关系&lt;/p&gt;&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;View 部分
+&lt;ol&gt;
+&lt;li&gt;styles patern views( 体系结构风格和视图 )&lt;/li&gt;
+&lt;li&gt;Structural views
+&lt;ol&gt;
+&lt;li&gt;module viwes&lt;/li&gt;
+&lt;li&gt;C &amp;amp; C views&lt;/li&gt;
+&lt;li&gt;Allocation views&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Quality Views&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;每一个 View 的内容
+&lt;ol&gt;
+&lt;li&gt;主要介绍：显示视图的元素和关系，以及图例&lt;/li&gt;
+&lt;li&gt;元素介绍，详细介绍第一部分中描述的元素、元素属性、关系属性和元素接口和行为。&lt;/li&gt;
+&lt;li&gt;上下文图：描述系统如何与环境相关&lt;/li&gt;
+&lt;li&gt;可变性指导：告知视图中可能出现的变化&lt;/li&gt;
+&lt;li&gt;基本原理：解释设计如何映射在视图中，以及其合理性。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;-高频-2015-2017-2019-2022为什么软件系统架构需要使用不同视图来文档化给出-4-种示例视图的名称和目的why-should-a-software-architecture-be-documented-using-different-differenet-views-give-the-name-and-purposes-of-4-example-views&#34;&gt;✅ 【高频 2015 2017 2019 2022】为什么软件系统架构需要使用不同视图来文档化？给出 4 种示例视图的名称和目的。Why should a software architecture be documented using different differenet views? Give the name and purposes of 4 example views
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;原因
+&lt;ol&gt;
+&lt;li&gt;不同视图支持不同的目标和用户，突出不同的系统元素和关系&lt;/li&gt;
+&lt;li&gt;不同视图将不同质量属性暴露出不同的程度&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;4 种视图 ( 了解 )：
+&lt;ol&gt;
+&lt;li&gt;模块视图 Module View：提供一组连贯职责的实现单元&lt;/li&gt;
+&lt;li&gt;组件和连接器视图 C &amp;amp; C View：显示运行时行为和交互的元素&lt;/li&gt;
+&lt;li&gt;分配视图 Allocation View：描述了软件单元到环境元素的映射&lt;/li&gt;
+&lt;li&gt;质量视图 Quality Views，安全视图、性能视图、可靠性视图、通信视图、异常（错误处理）视图&lt;/li&gt;
+&lt;li&gt;组合视图：将上述视图进行组合&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;架构文档的三种用途&#34;&gt;架构文档的三种用途
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;教育&lt;/li&gt;
+&lt;li&gt;stackholder交流的工具&lt;/li&gt;
+&lt;li&gt;系统分析和建造的基础&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;-软件架构风格&#34;&gt;✅ 软件架构风格
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;module Styles：认为体系结构是由模块组成。模块是实现单元的集合，它提供了一组一致的职责。（layered）&lt;/li&gt;
+&lt;li&gt;C &amp;amp; C Styles 认为体系结构是由组件 ( 主要的处理单元和数据存储 )、连接件 ( 组件之间的交互路径 ) 组成的。&lt;/li&gt;
+&lt;li&gt;Allocation Styles 认为体系结构是由软件元素 ( 软件元素具有环境所需的属性 ) 和环境元素 ( 环境元素有提供给软件的属性 ) 组成的，展示了软件如何与环境关联。（map and reduce&amp;amp;tier）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;如何选择视图&#34;&gt;如何选择视图
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;构建涉众/视图表&lt;/li&gt;
+&lt;li&gt;合并视图&lt;/li&gt;
+&lt;li&gt;确定优先级和完成阶段&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;-2015简要描述面向服务架构-soa-的基本原则并讨论-soa-对互操作性可伸缩性和安全性等质量属性的影响-briefly-describe-the-fundamental-principles-of-service-oriented-architecturesoa-and-discuss-the-impact-of-soa-on-quality-attributes-like-interoperability-scalability-and-security&#34;&gt;✅ 【2015】简要描述面向服务架构 (SOA) 的基本原则，并讨论 SOA 对互操作性、可伸缩性和安全性等质量属性的影响 Briefly describe the fundamental principles of Service Oriented Architecture(SOA) and discuss the impact of SOA on quality attributes like interoperability, scalability and security
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;SOA 的基本原则（==DECCARS==）SOA DECCARS原则
+&lt;ol&gt;
+&lt;li&gt;服务解耦：服务之间的关系最小化，只是相互知道接口&lt;/li&gt;
+&lt;li&gt;服务契约:服务按照描述文档所定义的服务契约行事&lt;/li&gt;
+&lt;li&gt;服务封装:除了服务契约所描述内容，服务将对外部隐藏实现逻辑&lt;/li&gt;
+&lt;li&gt;服务重用:将逻辑分布在不同的服务中，以提高服务的重用性&lt;/li&gt;
+&lt;li&gt;服务组合:一组服务可以协调工作，组合起来形成定制组合业务&lt;/li&gt;
+&lt;li&gt;服务自治:服务对所封装的逻辑具有控制权&lt;/li&gt;
+&lt;li&gt;服务无状态:服务将一个活动所需保存的资讯最小化&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;SOA 对互操作性的影响
+&lt;ol&gt;
+&lt;li&gt;SOA 具有更高的互操作性：符合开放标准，可以更好的重用服务&lt;/li&gt;
+&lt;li&gt;支持服务的自动识别、发现、注册和调用等等&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;SOA 对可伸缩性的影响
+&lt;ol&gt;
+&lt;li&gt;SOA 具有更高的可伸缩性：服务自身高内聚、服务间松耦合，最小化维护的影响&lt;/li&gt;
+&lt;li&gt;但是 SOA 也会带来系统复杂度较高的问题&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;SOA 对安全性的影响：
+&lt;ol&gt;
+&lt;li&gt;中间件可能会成为性能的瓶颈&lt;/li&gt;
+&lt;li&gt;ESB 等中间件都可以成为被攻击的目标&lt;/li&gt;
+&lt;li&gt;多服务导致攻击的跟踪、溯源和防御成为困难。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;soa分布式组件的集合&#34;&gt;SOA（分布式组件的集合）
+&lt;/h2&gt;&lt;h3 id=&#34;-20192023微服务和-soa-的区别相同点&#34;&gt;✅ 【2019】【2023】微服务和 SOA 的区别，相同点
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;相同点：微服务和 SOA 都是分布式架构，微服务架构可以看作是SOA的一种实现方式，适用于更小规模和更灵活的应用系统。都包含了服务契约、服务封装、服务重用、服务组合、服务自治和服务无状态等基本特点。&lt;/li&gt;
+&lt;li&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250614221355344.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250614221355344&#34;
+	
+	
+&gt;&lt;/li&gt;
+&lt;li&gt;微服务去掉了 SOA 架构中的 ESB(Enterprise Service Bus) 企业服务总线，采用轻量级通信机制 (HTTP、REST) 进行服务之间的通信。&lt;/li&gt;
+&lt;li&gt;微服务引入了熔断器：避免出现服务失效或网络问题等导致的级联故障。&lt;/li&gt;
+&lt;li&gt;部署和扩展：在SOA中，整个应用程序通常作为一个单元进行部署和扩展。而在微服务架构中，每个微服务可以独立部署和扩展，使得系统具有更好的弹性和可伸缩性。&lt;/li&gt;
+&lt;li&gt;服务粒度：在SOA中，服务的粒度可以比较大，一个服务可能涵盖多个相关的业务功能。而在微服务架构中，服务的粒度更小，每个服务通常专注于一个特定的业务功能。&lt;/li&gt;
+&lt;li&gt;组织和治理：SOA通常需要涉及企业范围内的中央治理和管理，**不能控制独立服务的演变。**而微服务架构强调团队的自治性，&lt;strong&gt;每个微服务可以由一个独立的团队进行开发和管理，更加注重服务的自治性和快速迭代&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;soa是一个分布式组件的集合这些组件为其它组件提供服务provider或者消费其它组件所提供的服务consumer-而无需知道其它组件的实现细节&#34;&gt;SOA是一个分布式组件的集合,这些组件为其它组件提供服务(provider),或者消费其它组件所提供的服务(consumer), 而无需知道其它组件的实现细节
+&lt;/h3&gt;&lt;h3 id=&#34;微服务架构是把应用程序功能性分解为一组服务的架构风格每一个服务都是由一组专注内聚的功能职责组成&#34;&gt;微服务架构是把应用程序功能性分解为一组服务的架构风格,每一个服务都是由一组专注、内聚的功能职责组成
+&lt;/h3&gt;&lt;h3 id=&#34;微服务架构的特征&#34;&gt;微服务架构的特征
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;通过服务组件化&lt;/li&gt;
+&lt;li&gt;围绕业务能力组织&lt;/li&gt;
+&lt;li&gt;内聚和解耦&lt;/li&gt;
+&lt;li&gt;去中心化&lt;/li&gt;
+&lt;li&gt;基础设施自动化&lt;/li&gt;
+&lt;li&gt;服务设计与演进&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;挑战问题&#34;&gt;挑战问题
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;服务的拆分和定义&lt;/li&gt;
+&lt;li&gt;分布式系统带来的复杂性&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;模式针对特定上下文中发生的问题的可重用解决方案&#34;&gt;模式:针对特定上下文中发生的问题的可重用解决方案
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;context&lt;/li&gt;
+&lt;li&gt;problem&lt;/li&gt;
+&lt;li&gt;solution&lt;/li&gt;
+&lt;li&gt;结果&lt;/li&gt;
+&lt;li&gt;相关模式&lt;/li&gt;
+&lt;li&gt;focus&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;模式语言一组模式&#34;&gt;模式语言（一组模式）
+&lt;/h3&gt;&lt;p&gt;帮助解决微服务架构设计问题&lt;/p&gt;
+&lt;h3 id=&#34;微服务拆分模式&#34;&gt;微服务拆分模式
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/image-20250614225009334.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250614225009334&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;重构策略：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;将新功能实现为微服务&lt;/li&gt;
+&lt;li&gt;提取业务能力到服务中&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;关键步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;定义系统操作&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;创建领域模型&lt;/li&gt;
+&lt;li&gt;确定系统操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;定义微服务&lt;/p&gt;
+&lt;p&gt;可以根据业务能力、子域、动静态调用关系拆分&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;定义服务API和协作方式&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;将系统操作分配给服务&lt;/li&gt;
+&lt;li&gt;确定支持协作的API&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;还有通信模式、部署模式、运维模式、可观测性模式、断路器模式、平台层服务发现模式、应用层服务发现模式、API Gateway模式&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

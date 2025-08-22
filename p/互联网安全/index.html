@@ -345,7 +345,54 @@
         </li>
       </ol>
     </li>
-    <li><a href="#ike">IKE</a></li>
+    <li><a href="#ike">IKE</a>
+      <ol>
+        <li><a href="#数字签名的生成过程详解"><strong>数字签名的生成过程详解</strong></a></li>
+      </ol>
+    </li>
+    <li><a href="#1-数字签名的生成过程"><strong>1. 数字签名的生成过程</strong></a>
+      <ol>
+        <li><a href="#步骤-1准备原始数据"><strong>步骤 1：准备原始数据</strong></a></li>
+        <li><a href="#步骤-2计算消息的哈希值"><strong>步骤 2：计算消息的哈希值</strong></a></li>
+        <li><a href="#步骤-3使用私钥加密哈希值"><strong>步骤 3：使用私钥加密哈希值</strong></a></li>
+        <li><a href="#步骤-4发送原始消息和签名"><strong>步骤 4：发送原始消息和签名</strong></a></li>
+      </ol>
+    </li>
+    <li><a href="#2-数字签名的验证过程"><strong>2. 数字签名的验证过程</strong></a>
+      <ol>
+        <li><a href="#步骤-1计算收到消息的哈希值"><strong>步骤 1：计算收到消息的哈希值</strong></a></li>
+        <li><a href="#步骤-2用公钥解密签名"><strong>步骤 2：用公钥解密签名</strong></a></li>
+        <li><a href="#步骤-3比对哈希值"><strong>步骤 3：比对哈希值</strong></a></li>
+      </ol>
+    </li>
+    <li><a href="#3-数字签名的关键特点"><strong>3. 数字签名的关键特点</strong></a></li>
+    <li><a href="#4-数字签名-vs-加密"><strong>4. 数字签名 vs. 加密</strong></a></li>
+    <li><a href="#5-实际应用场景"><strong>5. 实际应用场景</strong></a></li>
+    <li><a href="#6-代码示例python-使用-rsa-签名"><strong>6. 代码示例（Python 使用 RSA 签名）</strong></a></li>
+    <li><a href="#总结"><strong>总结</strong></a>
+      <ol>
+        <li><a href="#详细说明用私钥加密哈希值生成数字签名"><strong>详细说明：用私钥加密哈希值生成数字签名</strong></a></li>
+      </ol>
+    </li>
+    <li><a href="#1-为什么说用私钥加密哈希不够准确"><strong>1. 为什么说“用私钥加密哈希”不够准确？</strong></a></li>
+    <li><a href="#2-具体生成过程以-rsa-签名为例"><strong>2. 具体生成过程（以 RSA 签名为例）</strong></a>
+      <ol>
+        <li><a href="#步骤-1计算消息的哈希值"><strong>步骤 1：计算消息的哈希值</strong></a></li>
+        <li><a href="#步骤-2对哈希值进行填充padding"><strong>步骤 2：对哈希值进行填充（Padding）</strong></a></li>
+        <li><a href="#步骤-3用私钥对填充后的数据签名"><strong>步骤 3：用私钥对填充后的数据签名</strong></a></li>
+        <li><a href="#步骤-4发送原始消息和签名-1"><strong>步骤 4：发送原始消息和签名</strong></a></li>
+      </ol>
+    </li>
+    <li><a href="#3-数学本质签名是加密吗"><strong>3. 数学本质：签名是“加密”吗？</strong></a></li>
+    <li><a href="#4-其他签名算法的实现方式"><strong>4. 其他签名算法的实现方式</strong></a>
+      <ol>
+        <li><a href="#1ecdsa椭圆曲线数字签名"><strong>（1）ECDSA（椭圆曲线数字签名）</strong></a></li>
+        <li><a href="#2eddsaedwards-curve-dsa"><strong>（2）EdDSA（Edwards-curve DSA）</strong></a></li>
+      </ol>
+    </li>
+    <li><a href="#5-为什么必须用哈希值签名"><strong>5. 为什么必须用哈希值签名？</strong></a></li>
+    <li><a href="#6-代码示例python-使用-rsa-签名-1"><strong>6. 代码示例（Python 使用 RSA 签名）</strong></a></li>
+    <li><a href="#7-关键总结"><strong>7. 关键总结</strong></a></li>
   </ol>
 </nav>
         </div>
@@ -410,7 +457,7 @@
 
 
                 <time class="article-time--reading">
-                    2 minute read
+                    5 minute read
                 </time>
             </div>
         
@@ -755,6 +802,499 @@
 </ol>
 <p>综上所述，IKE的基本原理是通过一系列协议步骤来实现安全的密钥交换和虚拟网络的安全关联建立。它通过特定的身份验证机制和安全参数协商来确保网络通信的安全性和可靠性。</p>
 <p>钥交换和虚拟网络的安全关联建立。它通过特定的身份验证机制和安全参数协商来确保网络通信的安全性和可靠性。</p>
+<h3 id="数字签名的生成过程详解"><strong>数字签名的生成过程详解</strong>
+</h3><p>数字签名（Digital Signature）是一种基于公钥密码学的技术，用于验证数据的<strong>完整性</strong>、<strong>真实性</strong>和<strong>不可否认性</strong>。其核心流程分为 <strong>签名生成</strong> 和 <strong>签名验证</strong> 两部分。以下是详细步骤：</p>
+<hr>
+<h2 id="1-数字签名的生成过程"><strong>1. 数字签名的生成过程</strong>
+</h2><p>假设 <strong>发送方（Alice）</strong> 要对一份文档签名，并发送给 <strong>接收方（Bob）</strong>。</p>
+<h3 id="步骤-1准备原始数据"><strong>步骤 1：准备原始数据</strong>
+</h3><ul>
+<li>Alice 有一份需要签名的消息（Message），例如：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Message = &#34;Transfer $100 to Bob&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="步骤-2计算消息的哈希值"><strong>步骤 2：计算消息的哈希值</strong>
+</h3><ul>
+<li>使用 <strong>哈希函数（如 SHA-256）</strong> 对消息生成固定长度的摘要（Digest）：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Hash = SHA-256(Message) 
+</span></span></code></pre></td></tr></table>
+</div>
+</div>例如：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Hash = &#34;a591a6d40bf420404a011733...&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>哈希的作用</strong>：将任意长度的数据转换为固定长度的唯一值，确保数据完整性。</li>
+</ul>
+</li>
+</ul>
+<h3 id="步骤-3使用私钥加密哈希值"><strong>步骤 3：使用私钥加密哈希值</strong>
+</h3><ul>
+<li>Alice 用自己的 <strong>私钥（Private Key）</strong> 对哈希值进行加密，生成数字签名：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Signature = Encrypt(Hash, Alice&#39;s Private Key)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>加密算法</strong>：通常使用 <strong>RSA</strong> 或 <strong>ECDSA</strong>（椭圆曲线数字签名算法）。</li>
+<li><strong>私钥的作用</strong>：只有 Alice 拥有私钥，因此签名无法伪造。</li>
+</ul>
+</li>
+</ul>
+<h3 id="步骤-4发送原始消息和签名"><strong>步骤 4：发送原始消息和签名</strong>
+</h3><ul>
+<li>Alice 将 <strong>原始消息（Message）</strong> 和 <strong>签名（Signature）</strong> 一起发送给 Bob：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Send: (Message, Signature)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h2 id="2-数字签名的验证过程"><strong>2. 数字签名的验证过程</strong>
+</h2><p>Bob 收到消息后，需要验证签名是否确实来自 Alice，且消息未被篡改。</p>
+<h3 id="步骤-1计算收到消息的哈希值"><strong>步骤 1：计算收到消息的哈希值</strong>
+</h3><ul>
+<li>Bob 对收到的 <code>Message</code> 用相同的哈希函数（SHA-256）计算哈希：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Hash_received = SHA-256(Message)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="步骤-2用公钥解密签名"><strong>步骤 2：用公钥解密签名</strong>
+</h3><ul>
+<li>Bob 使用 Alice 的 <strong>公钥（Public Key）</strong> 解密 <code>Signature</code>，得到原始哈希值：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Hash_decrypted = Decrypt(Signature, Alice&#39;s Public Key)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="步骤-3比对哈希值"><strong>步骤 3：比对哈希值</strong>
+</h3><ul>
+<li>比较 <code>Hash_received</code>（Bob 计算的）和 <code>Hash_decrypted</code>（从签名解密的）：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">if Hash_received == Hash_decrypted:
+</span></span><span class="line"><span class="cl">    签名验证成功（消息未被篡改，且来自 Alice）
+</span></span><span class="line"><span class="cl">else:
+</span></span><span class="line"><span class="cl">    签名验证失败（消息可能被篡改或签名无效）
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h2 id="3-数字签名的关键特点"><strong>3. 数字签名的关键特点</strong>
+</h2><ol>
+<li>
+<p><strong>完整性（Integrity）</strong></p>
+<ul>
+<li>如果消息被篡改，哈希值会变化，验证失败。</li>
+</ul>
+</li>
+<li>
+<p><strong>真实性（Authenticity）</strong></p>
+<ul>
+<li>只有私钥持有者（Alice）能生成有效签名，确保来源可信。</li>
+</ul>
+</li>
+<li>
+<p><strong>不可否认性（Non-repudiation）</strong></p>
+<ul>
+<li>Alice 无法抵赖她签名的消息，因为只有她的私钥能生成该签名。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="4-数字签名-vs-加密"><strong>4. 数字签名 vs. 加密</strong>
+</h2><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th><strong>特性</strong></th>
+          <th><strong>数字签名</strong></th>
+          <th><strong>加密</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>目的</strong></td>
+          <td>验证身份和完整性</td>
+          <td>保护数据机密性</td>
+      </tr>
+      <tr>
+          <td><strong>使用的密钥</strong></td>
+          <td>私钥签名，公钥验证</td>
+          <td>公钥加密，私钥解密</td>
+      </tr>
+      <tr>
+          <td><strong>算法示例</strong></td>
+          <td>RSA-PSS, ECDSA, EdDSA</td>
+          <td>RSA-OAEP, AES, ChaCha20</td>
+      </tr>
+      <tr>
+          <td><strong>输出结果</strong></td>
+          <td>固定长度的签名</td>
+          <td>密文</td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<h2 id="5-实际应用场景"><strong>5. 实际应用场景</strong>
+</h2><ul>
+<li><strong>SSL/TLS 证书</strong>：网站用私钥签名，浏览器用公钥验证。</li>
+<li><strong>Git Commit</strong>：开发者用 GPG 签名提交代码。</li>
+<li><strong>区块链交易</strong>：比特币用 ECDSA 签名交易。</li>
+<li><strong>软件分发</strong>：微软用数字签名确保驱动未被篡改。</li>
+</ul>
+<hr>
+<h2 id="6-代码示例python-使用-rsa-签名"><strong>6. 代码示例（Python 使用 RSA 签名）</strong>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">hashes</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">padding</span><span class="p">,</span> <span class="n">rsa</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.serialization</span> <span class="kn">import</span> <span class="n">Encoding</span><span class="p">,</span> <span class="n">PublicFormat</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 1. Alice 生成密钥对</span>
+</span></span><span class="line"><span class="cl"><span class="n">private_key</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">generate_private_key</span><span class="p">(</span><span class="n">public_exponent</span><span class="o">=</span><span class="mi">65537</span><span class="p">,</span> <span class="n">key_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">public_key</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">public_key</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. Alice 签名消息</span>
+</span></span><span class="line"><span class="cl"><span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;Transfer $100 to Bob&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">signature</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">message</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">salt_length</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="o">.</span><span class="n">MAX_LENGTH</span>
+</span></span><span class="line"><span class="cl">    <span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. Bob 验证签名</span>
+</span></span><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public_key</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">signature</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">message</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
+</span></span><span class="line"><span class="cl">            <span class="n">salt_length</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="o">.</span><span class="n">MAX_LENGTH</span>
+</span></span><span class="line"><span class="cl">        <span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;签名验证成功！&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;签名验证失败！&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="总结"><strong>总结</strong>
+</h2><ul>
+<li><strong>签名生成</strong>：哈希消息 → 私钥加密哈希 → 发送 (消息 + 签名)。</li>
+<li><strong>签名验证</strong>：计算消息哈希 → 公钥解密签名 → 比对哈希。</li>
+<li><strong>核心安全依赖</strong>：私钥保密性 + 哈希函数抗碰撞性。</li>
+</ul>
+<p>数字签名是现代网络安全（如 HTTPS、区块链）的基石，确保数据在传输和存储中的可信性。</p>
+<h3 id="详细说明用私钥加密哈希值生成数字签名"><strong>详细说明：用私钥加密哈希值生成数字签名</strong>
+</h3><p>数字签名生成的核心步骤是 <strong>“用私钥加密哈希值”</strong>，但严格来说，这里的“加密”并不是传统意义上的加密（如 RSA 加密数据），而是一个 <strong>“签名生成”</strong> 的数学过程。以下是深入解析：</p>
+<hr>
+<h2 id="1-为什么说用私钥加密哈希不够准确"><strong>1. 为什么说“用私钥加密哈希”不够准确？</strong>
+</h2><ul>
+<li><strong>传统加密（如 RSA 加密）</strong>：
+公钥加密 → 私钥解密（目的是保密）。</li>
+<li><strong>数字签名</strong>：
+私钥“签名” → 公钥“验证”（目的是证明身份和完整性）。</li>
+</ul>
+<p>实际上，数字签名是通过 <strong>私钥对哈希值进行数学运算</strong>（如模幂运算），生成一个独特的 <strong>签名值</strong>，而非直接“加密”。</p>
+<hr>
+<h2 id="2-具体生成过程以-rsa-签名为例"><strong>2. 具体生成过程（以 RSA 签名为例）</strong>
+</h2><p>假设 Alice 使用 <strong>RSA-PSS</strong> 算法签名，步骤如下：</p>
+<h3 id="步骤-1计算消息的哈希值"><strong>步骤 1：计算消息的哈希值</strong>
+</h3><ul>
+<li>原始消息：<code>&quot;Transfer $100 to Bob&quot;</code></li>
+<li>哈希算法：SHA-256</li>
+<li>哈希值（H）：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">H = SHA-256(&#34;Transfer $100 to Bob&#34;) = a591a6d40bf420...
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="步骤-2对哈希值进行填充padding"><strong>步骤 2：对哈希值进行填充（Padding）</strong>
+</h3><ul>
+<li>直接对哈希值签名可能存在安全风险（如哈希碰撞攻击），因此需要填充。</li>
+<li><strong>RSA-PSS 填充流程</strong>：
+<ol>
+<li>在哈希值前添加固定前缀和随机盐（Salt）。</li>
+<li>对填充后的数据再次哈希。</li>
+<li>生成一个固定长度的待签名数据块（EM）。</li>
+</ol>
+</li>
+</ul>
+<h3 id="步骤-3用私钥对填充后的数据签名"><strong>步骤 3：用私钥对填充后的数据签名</strong>
+</h3><ul>
+<li>Alice 的 <strong>RSA 私钥</strong> 是一对数字 <code>(d, n)</code>，其中：
+<ul>
+<li><code>n</code>：大整数模数（公钥和私钥共用）。</li>
+<li><code>d</code>：私钥指数（保密）。</li>
+</ul>
+</li>
+<li><strong>签名计算</strong>：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">签名 S = EM^d mod n
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>这是一个 <strong>模幂运算</strong>，结果是唯一的签名值。</li>
+</ul>
+</li>
+</ul>
+<h3 id="步骤-4发送原始消息和签名-1"><strong>步骤 4：发送原始消息和签名</strong>
+</h3><p>Alice 发送给 Bob：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">(Message=&#34;Transfer $100 to Bob&#34;, Signature=S)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="3-数学本质签名是加密吗"><strong>3. 数学本质：签名是“加密”吗？</strong>
+</h2><ul>
+<li><strong>传统 RSA 加密</strong>：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">密文 = 明文^e mod n  （公钥加密）
+</span></span><span class="line"><span class="cl">明文 = 密文^d mod n  （私钥解密）
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><strong>RSA 签名</strong>：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">签名 = 哈希^d mod n  （私钥“签名”）
+</span></span><span class="line"><span class="cl">验证 = 签名^e mod n == 哈希  （公钥“验证”）
+</span></span></code></pre></td></tr></table>
+</div>
+</div>虽然数学形式类似，但目的完全不同：
+<ul>
+<li><strong>加密</strong>：保护数据机密性（公钥加密，私钥解密）。</li>
+<li><strong>签名</strong>：证明身份和完整性（私钥签名，公钥验证）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="4-其他签名算法的实现方式"><strong>4. 其他签名算法的实现方式</strong>
+</h2><h3 id="1ecdsa椭圆曲线数字签名"><strong>（1）ECDSA（椭圆曲线数字签名）</strong>
+</h3><ul>
+<li>基于椭圆曲线离散对数问题。</li>
+<li>签名生成：
+<ol>
+<li>选择一个随机数 <code>k</code>。</li>
+<li>计算椭圆曲线点 <code>(x, y) = k * G</code>（G 是基点）。</li>
+<li>签名 <code>(r, s)</code>，其中 <code>r = x mod n</code>，<code>s = k⁻¹(H + r*d) mod n</code>（<code>d</code> 是私钥）。</li>
+</ol>
+</li>
+</ul>
+<h3 id="2eddsaedwards-curve-dsa"><strong>（2）EdDSA（Edwards-curve DSA）</strong>
+</h3><ul>
+<li>更高效的椭圆曲线签名（如 Ed25519）。</li>
+<li>直接对哈希值和私钥进行确定性计算生成签名。</li>
+</ul>
+<hr>
+<h2 id="5-为什么必须用哈希值签名"><strong>5. 为什么必须用哈希值签名？</strong>
+</h2><ol>
+<li><strong>效率</strong>：
+<ul>
+<li>直接对大消息签名计算量极大（如 RSA 对 1GB 文件签名）。</li>
+<li>哈希将任意长度数据压缩为固定长度（如 SHA-256 输出 256 位）。</li>
+</ul>
+</li>
+<li><strong>安全性</strong>：
+<ul>
+<li>避免 <strong>“选择明文攻击”</strong>（如果直接签名消息，攻击者可能构造特殊消息伪造签名）。</li>
+<li>哈希函数具有抗碰撞性，确保唯一性。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="6-代码示例python-使用-rsa-签名-1"><strong>6. 代码示例（Python 使用 RSA 签名）</strong>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">hashes</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">padding</span><span class="p">,</span> <span class="n">rsa</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">cryptography.exceptions</span> <span class="kn">import</span> <span class="n">InvalidSignature</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 1. 生成密钥对</span>
+</span></span><span class="line"><span class="cl"><span class="n">private_key</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">generate_private_key</span><span class="p">(</span><span class="n">public_exponent</span><span class="o">=</span><span class="mi">65537</span><span class="p">,</span> <span class="n">key_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">public_key</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">public_key</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. 签名消息</span>
+</span></span><span class="line"><span class="cl"><span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;Transfer $100 to Bob&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">signature</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">message</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">salt_length</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="o">.</span><span class="n">MAX_LENGTH</span>
+</span></span><span class="line"><span class="cl">    <span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. 验证签名</span>
+</span></span><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public_key</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">signature</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">message</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
+</span></span><span class="line"><span class="cl">            <span class="n">salt_length</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="o">.</span><span class="n">MAX_LENGTH</span>
+</span></span><span class="line"><span class="cl">        <span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;签名验证成功！&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span> <span class="n">InvalidSignature</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;签名验证失败！&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="7-关键总结"><strong>7. 关键总结</strong>
+</h2><ol>
+<li><strong>“私钥加密哈希”实质是数学签名运算</strong>（如 RSA 的 <code>S = H^d mod n</code>）。</li>
+<li><strong>必须对哈希值签名</strong>，而非原始消息（效率 + 安全性）。</li>
+<li><strong>填充（Padding）是必要的</strong>（如 RSA-PSS 防止攻击）。</li>
+<li><strong>签名 ≠ 加密</strong>：前者用于认证，后者用于保密。</li>
+</ol>
+<p>数字签名的安全性依赖于：</p>
+<ul>
+<li>私钥的保密性。</li>
+<li>哈希函数的抗碰撞性（如 SHA-256）。</li>
+<li>数学难题（如 RSA 的因数分解、ECDSA 的椭圆曲线离散对数）。</li>
+</ul>
 
 </section>
 
@@ -830,12 +1370,12 @@
             
                 
 <article class="">
-    <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/">
+    <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">传输层</h2>
+            <h2 class="article-title">传输层核心协议：TCP与UDP深度解析</h2>
         </div>
     </a>
 </article>

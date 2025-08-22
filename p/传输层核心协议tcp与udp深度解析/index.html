@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="传输层协议深度解析 套接字与端口机制 套接字(Socket) 套接字是操作系统提供的网络编程接口，充当应用进程与传输层之间的通信桥梁。它抽象了底层网络细节，为应用程序提供统一的网络访问方式。\n传输层地址标识： 每个套接字由二元组 &lt;主机IP地址, 端口号&gt; 唯一标识，构成完整的传输层端点地址。\n端口(Port) 端口是16位数字标识符（0-65535），用于区分同一主机上的不同应用程序：\n网络数据包头部包含源端口号和目的端口号 网络设备依据端口号识别和路由到正确的应用程序 知名端口：0-1023（如HTTP-80、HTTPS-443） 注册端口：1024-49151 动态端口：49152-65535 多路复用与分解机制 UDP协议特性 无连接协议：仅根据目的IP和端口进行报文分配 轻量级传输：无序列号、重传和流控制机制 尽力而为服务：不保证可靠交付 典型应用：DNS查询、流媒体、实时通信 UDP头部结构（8字节） 1 2 3 4 5 6 0 7 8 15 16 23 24 31 +--------+--------+--------+--------+ | 源端口号 | 目的端口号 | +--------+--------+--------+--------+ | 长度 | 校验和 | +--------+--------+--------+--------+ 长度字段：UDP报文总长度（首部+数据） 校验和字段：检测数据传输错误的校验码 校验和计算机制 将每16位作为加数求和（包括伪首部、UDP首部和数据），进位回加到个位，最后取反码作为校验和。\nTCP协议特性 面向连接：基于四元组&lt;源IP, 源端口, 目的IP, 目的端口&gt;分配套接字 可靠传输：提供有序、可靠的字节流服务 流量控制：动态调整发送速率避免拥塞 TCP头部结构（20字节+选项） 1 2 3 4 5 6 7 8 9 0 1 2 3 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 +---------------+---------------+---------------+---------------+ | 源端口号 | 目的端口号 | 序列号 | +---------------+---------------+---------------+---------------+ | 确认号 | 数据偏移|保留| 控制标志 | 窗口大小 | +---------------+---------------+---------------+---------------+ | 校验和 | 紧急指针 | 选项 | +---------------+---------------+---------------+---------------+ 关键字段详解：\n">
+<title>传输层核心协议：TCP与UDP深度解析</title>
+
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/'>
+
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="传输层核心协议：TCP与UDP深度解析">
+<meta property='og:description' content="传输层协议深度解析 套接字与端口机制 套接字(Socket) 套接字是操作系统提供的网络编程接口，充当应用进程与传输层之间的通信桥梁。它抽象了底层网络细节，为应用程序提供统一的网络访问方式。\n传输层地址标识： 每个套接字由二元组 &lt;主机IP地址, 端口号&gt; 唯一标识，构成完整的传输层端点地址。\n端口(Port) 端口是16位数字标识符（0-65535），用于区分同一主机上的不同应用程序：\n网络数据包头部包含源端口号和目的端口号 网络设备依据端口号识别和路由到正确的应用程序 知名端口：0-1023（如HTTP-80、HTTPS-443） 注册端口：1024-49151 动态端口：49152-65535 多路复用与分解机制 UDP协议特性 无连接协议：仅根据目的IP和端口进行报文分配 轻量级传输：无序列号、重传和流控制机制 尽力而为服务：不保证可靠交付 典型应用：DNS查询、流媒体、实时通信 UDP头部结构（8字节） 1 2 3 4 5 6 0 7 8 15 16 23 24 31 +--------+--------+--------+--------+ | 源端口号 | 目的端口号 | +--------+--------+--------+--------+ | 长度 | 校验和 | +--------+--------+--------+--------+ 长度字段：UDP报文总长度（首部+数据） 校验和字段：检测数据传输错误的校验码 校验和计算机制 将每16位作为加数求和（包括伪首部、UDP首部和数据），进位回加到个位，最后取反码作为校验和。\nTCP协议特性 面向连接：基于四元组&lt;源IP, 源端口, 目的IP, 目的端口&gt;分配套接字 可靠传输：提供有序、可靠的字节流服务 流量控制：动态调整发送速率避免拥塞 TCP头部结构（20字节+选项） 1 2 3 4 5 6 7 8 9 0 1 2 3 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 +---------------+---------------+---------------+---------------+ | 源端口号 | 目的端口号 | 序列号 | +---------------+---------------+---------------+---------------+ | 确认号 | 数据偏移|保留| 控制标志 | 窗口大小 | +---------------+---------------+---------------+---------------+ | 校验和 | 紧急指针 | 选项 | +---------------+---------------+---------------+---------------+ 关键字段详解：\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/'>
+<meta property='og:site_name' content='Hu Yang&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/>
+<meta name="twitter:title" content="传输层核心协议：TCP与UDP深度解析">
+<meta name="twitter:description" content="传输层协议深度解析 套接字与端口机制 套接字(Socket) 套接字是操作系统提供的网络编程接口，充当应用进程与传输层之间的通信桥梁。它抽象了底层网络细节，为应用程序提供统一的网络访问方式。\n传输层地址标识： 每个套接字由二元组 &lt;主机IP地址, 端口号&gt; 唯一标识，构成完整的传输层端点地址。\n端口(Port) 端口是16位数字标识符（0-65535），用于区分同一主机上的不同应用程序：\n网络数据包头部包含源端口号和目的端口号 网络设备依据端口号识别和路由到正确的应用程序 知名端口：0-1023（如HTTP-80、HTTPS-443） 注册端口：1024-49151 动态端口：49152-65535 多路复用与分解机制 UDP协议特性 无连接协议：仅根据目的IP和端口进行报文分配 轻量级传输：无序列号、重传和流控制机制 尽力而为服务：不保证可靠交付 典型应用：DNS查询、流媒体、实时通信 UDP头部结构（8字节） 1 2 3 4 5 6 0 7 8 15 16 23 24 31 +--------+--------+--------+--------+ | 源端口号 | 目的端口号 | +--------+--------+--------+--------+ | 长度 | 校验和 | +--------+--------+--------+--------+ 长度字段：UDP报文总长度（首部+数据） 校验和字段：检测数据传输错误的校验码 校验和计算机制 将每16位作为加数求和（包括伪首部、UDP首部和数据），进位回加到个位，最后取反码作为校验和。\nTCP协议特性 面向连接：基于四元组&lt;源IP, 源端口, 目的IP, 目的端口&gt;分配套接字 可靠传输：提供有序、可靠的字节流服务 流量控制：动态调整发送速率避免拥塞 TCP头部结构（20字节+选项） 1 2 3 4 5 6 7 8 9 0 1 2 3 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 +---------------+---------------+---------------+---------------+ | 源端口号 | 目的端口号 | 序列号 | +---------------+---------------+---------------+---------------+ | 确认号 | 数据偏移|保留| 控制标志 | 窗口大小 | +---------------+---------------+---------------+---------------+ | 校验和 | 紧急指针 | 选项 | +---------------+---------------+---------------+---------------+ 关键字段详解：\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/huyang/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/huyang/img/logo-transparent_hu_2593eda3cf734d42.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/huyang">Hu Yang&#39;s Blog</a></h1>
+            <h2 class="site-description">Blog</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://114514yangyi.github.io/huyang/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='2416572689@qq.com'
+                        target="_blank"
+                        title="QQ"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/huyang/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#套接字与端口机制">套接字与端口机制</a>
+      <ol>
+        <li><a href="#套接字socket"><strong>套接字(Socket)</strong></a></li>
+        <li><a href="#端口port"><strong>端口(Port)</strong></a></li>
+      </ol>
+    </li>
+    <li><a href="#多路复用与分解机制">多路复用与分解机制</a>
+      <ol>
+        <li><a href="#udp协议特性">UDP协议特性</a>
+          <ol>
+            <li><a href="#udp头部结构8字节">UDP头部结构（8字节）</a></li>
+            <li><a href="#校验和计算机制">校验和计算机制</a></li>
+          </ol>
+        </li>
+        <li><a href="#tcp协议特性">TCP协议特性</a>
+          <ol>
+            <li><a href="#tcp头部结构20字节选项">TCP头部结构（20字节+选项）</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#tcp连接管理">TCP连接管理</a>
+      <ol>
+        <li><a href="#三次握手建立连接">三次握手建立连接</a></li>
+        <li><a href="#四次挥手释放连接">四次挥手释放连接</a></li>
+        <li><a href="#连接状态变迁">连接状态变迁</a></li>
+      </ol>
+    </li>
+    <li><a href="#可靠数据传输机制">可靠数据传输机制</a>
+      <ol>
+        <li><a href="#传输层与数据链路层对比">传输层与数据链路层对比</a></li>
+        <li><a href="#传输错误类型及处理">传输错误类型及处理</a></li>
+        <li><a href="#传输协议类型">传输协议类型</a>
+          <ol>
+            <li><a href="#停等协议stop-and-wait">停等协议（Stop-and-Wait）</a></li>
+            <li><a href="#流水线传输pipelining">流水线传输（Pipelining）</a></li>
+          </ol>
+        </li>
+        <li><a href="#滑动窗口协议类型">滑动窗口协议类型</a>
+          <ol>
+            <li><a href="#gbn协议回退n帧">GBN协议（回退N帧）</a></li>
+            <li><a href="#sr协议选择重传">SR协议（选择重传）</a></li>
+          </ol>
+        </li>
+        <li><a href="#tcp快速重传机制">TCP快速重传机制</a></li>
+      </ol>
+    </li>
+    <li><a href="#超时时间计算">超时时间计算</a></li>
+    <li><a href="#tcp流量与拥塞控制">TCP流量与拥塞控制</a>
+      <ol>
+        <li><a href="#流量控制接收端主导">流量控制（接收端主导）</a></li>
+        <li><a href="#拥塞控制发送端主导">拥塞控制（发送端主导）</a>
+          <ol>
+            <li><a href="#1-慢启动slow-start">1. 慢启动（Slow Start）</a></li>
+            <li><a href="#2-拥塞避免aimd">2. 拥塞避免（AIMD）</a></li>
+            <li><a href="#3-快速恢复与快速重传协同">3. 快速恢复（与快速重传协同）</a></li>
+          </ol>
+        </li>
+        <li><a href="#tcp变种协议对比">TCP变种协议对比</a></li>
+      </ol>
+    </li>
+    <li><a href="#可靠数据传输协议演进">可靠数据传输协议演进</a>
+      <ol>
+        <li><a href="#rdt-10理想信道">RDT 1.0：理想信道</a></li>
+        <li><a href="#rdt-20比特差错信道">RDT 2.0：比特差错信道</a></li>
+        <li><a href="#rdt-2122序列号机制">RDT 2.1/2.2：序列号机制</a></li>
+        <li><a href="#rdt-30丢包信道">RDT 3.0：丢包信道</a></li>
+      </ol>
+    </li>
+    <li><a href="#容量单位规范">容量单位规范</a>
+      <ol>
+        <li><a href="#二进制基数210--1024">二进制基数（$2^{10}$ = 1024）</a></li>
+        <li><a href="#十进制基数103--1000">十进制基数（$10^{3}$ = 1000）</a></li>
+        <li><a href="#实际应用注意">实际应用注意</a></li>
+      </ol>
+    </li>
+    <li><a href="#性能指标计算">性能指标计算</a>
+      <ol>
+        <li><a href="#吞吐量公式">吞吐量公式</a></li>
+        <li><a href="#有效载荷率">有效载荷率</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/huyang/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="background-color: #2a9d8f; color: #fff;">
+                计算机网络
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/">传输层核心协议：TCP与UDP深度解析</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 20, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="传输层协议深度解析">传输层协议深度解析
+</h1><h2 id="套接字与端口机制">套接字与端口机制
+</h2><h3 id="套接字socket"><strong>套接字(Socket)</strong>
+</h3><p>套接字是操作系统提供的网络编程接口，充当应用进程与传输层之间的通信桥梁。它抽象了底层网络细节，为应用程序提供统一的网络访问方式。</p>
+<p><strong>传输层地址标识</strong>：
+每个套接字由二元组 <code>&lt;主机IP地址, 端口号&gt;</code> 唯一标识，构成完整的传输层端点地址。</p>
+<h3 id="端口port"><strong>端口(Port)</strong>
+</h3><p>端口是16位数字标识符（0-65535），用于区分同一主机上的不同应用程序：</p>
+<ul>
+<li>网络数据包头部包含源端口号和目的端口号</li>
+<li>网络设备依据端口号识别和路由到正确的应用程序</li>
+<li>知名端口：0-1023（如HTTP-80、HTTPS-443）</li>
+<li>注册端口：1024-49151</li>
+<li>动态端口：49152-65535</li>
+</ul>
+<h2 id="多路复用与分解机制">多路复用与分解机制
+</h2><h3 id="udp协议特性">UDP协议特性
+</h3><ol>
+<li><strong>无连接协议</strong>：仅根据目的IP和端口进行报文分配</li>
+<li><strong>轻量级传输</strong>：无序列号、重传和流控制机制</li>
+<li><strong>尽力而为服务</strong>：不保证可靠交付</li>
+<li><strong>典型应用</strong>：DNS查询、流媒体、实时通信</li>
+</ol>
+<h4 id="udp头部结构8字节">UDP头部结构（8字节）
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> 0      7 8     15 16    23 24    31
+</span></span><span class="line"><span class="cl">+--------+--------+--------+--------+
+</span></span><span class="line"><span class="cl">|   源端口号   |   目的端口号    |
+</span></span><span class="line"><span class="cl">+--------+--------+--------+--------+
+</span></span><span class="line"><span class="cl">|     长度     |     校验和     |
+</span></span><span class="line"><span class="cl">+--------+--------+--------+--------+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>长度字段</strong>：UDP报文总长度（首部+数据）</li>
+<li><strong>校验和字段</strong>：检测数据传输错误的校验码</li>
+</ul>
+<h4 id="校验和计算机制">校验和计算机制
+</h4><p>将每16位作为加数求和（包括伪首部、UDP首部和数据），进位回加到个位，最后取反码作为校验和。</p>
+<h3 id="tcp协议特性">TCP协议特性
+</h3><ol>
+<li><strong>面向连接</strong>：基于四元组&lt;源IP, 源端口, 目的IP, 目的端口&gt;分配套接字</li>
+<li><strong>可靠传输</strong>：提供有序、可靠的字节流服务</li>
+<li><strong>流量控制</strong>：动态调整发送速率避免拥塞</li>
+</ol>
+<h4 id="tcp头部结构20字节选项">TCP头部结构（20字节+选项）
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> 0                   1                   2                   3
+</span></span><span class="line"><span class="cl"> 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+</span></span><span class="line"><span class="cl">+---------------+---------------+---------------+---------------+
+</span></span><span class="line"><span class="cl">|      源端口号       |      目的端口号       |       序列号         |
+</span></span><span class="line"><span class="cl">+---------------+---------------+---------------+---------------+
+</span></span><span class="line"><span class="cl">|       确认号        | 数据偏移|保留| 控制标志 |     窗口大小       |
+</span></span><span class="line"><span class="cl">+---------------+---------------+---------------+---------------+
+</span></span><span class="line"><span class="cl">|      校验和        |       紧急指针        |       选项          |
+</span></span><span class="line"><span class="cl">+---------------+---------------+---------------+---------------+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>关键字段详解</strong>：</p>
+<ul>
+<li><strong>序列号(32位)</strong>：本报文段第一个字节的序号</li>
+<li><strong>确认号(32位)</strong>：期望收到的下一个字节序号</li>
+<li><strong>数据偏移(4位)</strong>：TCP首部长度（以4字节为单位）</li>
+<li><strong>控制标志(6位)</strong>：
+<ul>
+<li><strong>URG</strong>：紧急指针有效</li>
+<li><strong>ACK</strong>：确认字段有效</li>
+<li><strong>PSH</strong>：推送功能，立即交付</li>
+<li><strong>RST</strong>：连接复位</li>
+<li><strong>SYN</strong>：同步序列号，建立连接</li>
+<li><strong>FIN</strong>：终止连接</li>
+</ul>
+</li>
+<li><strong>窗口大小(16位)</strong>：接收窗口大小，用于流量控制</li>
+<li><strong>校验和(16位)</strong>：首部和数据的校验和</li>
+<li><strong>紧急指针(16位)</strong>：紧急数据末尾位置（URG=1时有效）</li>
+</ul>
+<h2 id="tcp连接管理">TCP连接管理
+</h2><h3 id="三次握手建立连接">三次握手建立连接
+</h3><ol>
+<li>
+<p><strong>SYN发送</strong>（客户端→服务端）</p>
+<ul>
+<li>发送：SYN=1, Seq=ISN_A, ACK=0</li>
+<li>状态：CLIENT→SYN_SENT</li>
+<li>消耗一个序列号</li>
+</ul>
+</li>
+<li>
+<p><strong>SYN-ACK响应</strong>（服务端→客户端）</p>
+<ul>
+<li>发送：SYN=1, ACK=1, Seq=ISN_B, Ack=ISN_A+1</li>
+<li>状态：SERVER→SYN_RECEIVED</li>
+<li>消耗一个序列号</li>
+</ul>
+</li>
+<li>
+<p><strong>ACK确认</strong>（客户端→服务端）</p>
+<ul>
+<li>发送：ACK=1, Seq=ISN_A+1, Ack=ISN_B+1</li>
+<li>状态：双方→ESTABLISHED</li>
+<li>可携带数据，不消耗序列号</li>
+</ul>
+</li>
+</ol>
+<p><img src="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/image-20240610111432241.png"
+	width="1358"
+	height="755"
+	srcset="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/image-20240610111432241_hu_e0b0f71c1d34067d.png 480w, /huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/image-20240610111432241_hu_fb367c4814f765c4.png 1024w"
+	loading="lazy"
+	
+		alt="TCP三次握手示意图"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="179"
+		data-flex-basis="431px"
+	
+></p>
+<h3 id="四次挥手释放连接">四次挥手释放连接
+</h3><ol>
+<li>
+<p><strong>FIN发送</strong>（主动方→被动方）</p>
+<ul>
+<li>发送：FIN=1, Seq=K</li>
+<li>状态：主动方→FIN_WAIT_1</li>
+</ul>
+</li>
+<li>
+<p><strong>ACK确认</strong>（被动方→主动方）</p>
+<ul>
+<li>发送：ACK=1, Ack=K+1</li>
+<li>状态：被动方→CLOSE_WAIT</li>
+<li>主动方→FIN_WAIT_2</li>
+</ul>
+</li>
+<li>
+<p><strong>FIN发送</strong>（被动方→主动方）</p>
+<ul>
+<li>发送：FIN=1, Seq=L</li>
+<li>状态：被动方→LAST_ACK</li>
+</ul>
+</li>
+<li>
+<p><strong>ACK确认</strong>（主动方→被动方）</p>
+<ul>
+<li>发送：ACK=1, Ack=L+1</li>
+<li>状态：主动方→TIME_WAIT（2MSL）</li>
+<li>最终：双方→CLOSED</li>
+</ul>
+</li>
+</ol>
+<p><img src="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/image-20240610112313249.png"
+	width="937"
+	height="565"
+	srcset="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/image-20240610112313249_hu_115812ce13867d38.png 480w, /huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/image-20240610112313249_hu_5dbcd473e6aa9662.png 1024w"
+	loading="lazy"
+	
+		alt="TCP四次挥手示意图"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="165"
+		data-flex-basis="398px"
+	
+></p>
+<h3 id="连接状态变迁">连接状态变迁
+</h3><p><strong>客户端状态流</strong>：CLOSED → SYN_SENT → ESTABLISHED → FIN_WAIT_1 → FIN_WAIT_2 → TIME_WAIT → CLOSED</p>
+<p><strong>服务端状态流</strong>：CLOSED → LISTEN → SYN_RCVD → ESTABLISHED → CLOSE_WAIT → LAST_ACK → CLOSED</p>
+<h2 id="可靠数据传输机制">可靠数据传输机制
+</h2><h3 id="传输层与数据链路层对比">传输层与数据链路层对比
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>特性</th>
+          <th>传输层(TCP)</th>
+          <th>数据链路层</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>控制范围</td>
+          <td>端到端（进程间）</td>
+          <td>点到点（节点间）</td>
+      </tr>
+      <tr>
+          <td>窗口大小</td>
+          <td>动态可调整</td>
+          <td>固定大小</td>
+      </tr>
+      <tr>
+          <td>应用场景</td>
+          <td>网络层不可靠</td>
+          <td>物理链路可靠</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><strong>注</strong>：TCP窗口大小通常按 $2^{10}$（1024）计算</p>
+<h3 id="传输错误类型及处理">传输错误类型及处理
+</h3><ol>
+<li><strong>比特错误</strong>：通过校验和检测，自动重传</li>
+<li><strong>分组丢失</strong>：超时重传机制保障</li>
+<li><strong>分组延迟</strong>：动态调整发送速率</li>
+<li><strong>分组乱序</strong>：序列号重新排序</li>
+<li><strong>分组重复</strong>：序列号检测丢弃</li>
+</ol>
+<h3 id="传输协议类型">传输协议类型
+</h3><h4 id="停等协议stop-and-wait">停等协议（Stop-and-Wait）
+</h4><ul>
+<li>发送窗口=1，接收窗口=1</li>
+<li>每发送一帧等待确认后再发下一帧</li>
+<li>简单但效率低下</li>
+</ul>
+<p><img src="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/image-20240609214612545.png"
+	width="498"
+	height="152"
+	srcset="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/image-20240609214612545_hu_76aa74b08f300bad.png 480w, /huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/image-20240609214612545_hu_914244a51daa0c7d.png 1024w"
+	loading="lazy"
+	
+		alt="停等协议示意图"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="327"
+		data-flex-basis="786px"
+	
+></p>
+<h4 id="流水线传输pipelining">流水线传输（Pipelining）
+</h4><ul>
+<li>滑动窗口技术</li>
+<li>连续发送多个分组后再等待确认</li>
+<li>大大提高信道利用率</li>
+</ul>
+<h3 id="滑动窗口协议类型">滑动窗口协议类型
+</h3><h4 id="gbn协议回退n帧">GBN协议（回退N帧）
+</h4><ul>
+<li><strong>发送方</strong>：窗口大小&gt;1，累计确认</li>
+<li><strong>接收方</strong>：窗口大小=1，按序接收</li>
+<li><strong>重传策略</strong>：超时重传所有已发送未确认帧</li>
+</ul>
+<h4 id="sr协议选择重传">SR协议（选择重传）
+</h4><ul>
+<li><strong>发送方</strong>：为每个分组单独设置定时器</li>
+<li><strong>接收方</strong>：窗口大小&gt;1，可缓存乱序帧</li>
+<li><strong>重传策略</strong>：仅重传丢失或错误的分组</li>
+</ul>
+<h3 id="tcp快速重传机制">TCP快速重传机制
+</h3><p>当收到3个重复ACK时，推断分组丢失并立即重传：</p>
+<ul>
+<li>条件：连续收到4个相同ACK（1正常+3冗余）</li>
+<li>优势：避免等待超时，提高传输效率</li>
+<li>实现：接收方缓存乱序分组，发送方快速重传</li>
+</ul>
+<h2 id="超时时间计算">超时时间计算
+</h2><p>TCP使用自适应超时重传时间（RTO）计算：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">EstimatedRTT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">α</span><span class="p">)</span><span class="err">×</span><span class="n">EstimatedRTT</span> <span class="o">+</span> <span class="n">α</span><span class="err">×</span><span class="n">SampleRTT</span>
+</span></span><span class="line"><span class="cl"><span class="n">DevRTT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">β</span><span class="p">)</span><span class="err">×</span><span class="n">DevRTT</span> <span class="o">+</span> <span class="n">β</span><span class="err">×</span><span class="o">|</span><span class="n">SampleRTT</span> <span class="o">-</span> <span class="n">EstimatedRTT</span><span class="o">|</span>
+</span></span><span class="line"><span class="cl"><span class="n">RTO</span> <span class="o">=</span> <span class="n">EstimatedRTT</span> <span class="o">+</span> <span class="mi">4</span><span class="err">×</span><span class="n">DevRTT</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中典型值：α=0.125, β=0.25</p>
+<h2 id="tcp流量与拥塞控制">TCP流量与拥塞控制
+</h2><h3 id="流量控制接收端主导">流量控制（接收端主导）
+</h3><p>防止发送方overrun接收方缓冲区：</p>
+<ul>
+<li><strong>RWND</strong>（接收窗口）：接收方空闲缓冲区大小</li>
+<li><strong>AWND</strong>（通告窗口）：接收方在ACK中通告的可用窗口</li>
+<li>发送窗口 = min(CWND, RWND)</li>
+</ul>
+<p><strong>滑动窗口机制</strong>：</p>
+<ul>
+<li>接收方通过ACK携带窗口通告信息</li>
+<li>发送方根据通告窗口调整发送速率</li>
+</ul>
+<p><img src="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/image-20240610144923197.png"
+	width="1299"
+	height="814"
+	srcset="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/image-20240610144923197_hu_2780576969e680b0.png 480w, /huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/image-20240610144923197_hu_454493a05ae44ad4.png 1024w"
+	loading="lazy"
+	
+		alt="流量控制示意图"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="159"
+		data-flex-basis="382px"
+	
+></p>
+<h3 id="拥塞控制发送端主导">拥塞控制（发送端主导）
+</h3><p>基于网络拥塞状况动态调整发送速率：</p>
+<h4 id="1-慢启动slow-start">1. 慢启动（Slow Start）
+</h4><ul>
+<li>初始：CWND = 1 MSS</li>
+<li>每RTT：CWND倍增（每ACK：CWND += 1）</li>
+<li>终止条件：CWND ≥ ssthresh</li>
+</ul>
+<h4 id="2-拥塞避免aimd">2. 拥塞避免（AIMD）
+</h4><ul>
+<li>每RTT：CWND += 1 MSS（每ACK：CWND += 1/CWND）</li>
+<li>乘法减小：发生拥塞时 ssthresh = max(CWND/2, 2)</li>
+</ul>
+<h4 id="3-快速恢复与快速重传协同">3. 快速恢复（与快速重传协同）
+</h4><ul>
+<li>收到3个重复ACK：ssthresh = CWND/2, CWND = ssthresh + 3</li>
+<li>每收到重复ACK：CWND += 1 MSS</li>
+<li>收到新数据ACK：CWND = ssthresh</li>
+</ul>
+<h3 id="tcp变种协议对比">TCP变种协议对比
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>协议类型</th>
+          <th>超时处理</th>
+          <th>重复ACK处理</th>
+          <th>特点</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>TCP-Tahoe</td>
+          <td>CWND=1</td>
+          <td>CWND=1</td>
+          <td>基础版本，无快速恢复</td>
+      </tr>
+      <tr>
+          <td>TCP-Reno</td>
+          <td>CWND=1</td>
+          <td>CWND=CWND/2</td>
+          <td>引入快速恢复</td>
+      </tr>
+      <tr>
+          <td>TCP-NewReno</td>
+          <td>CWND=1</td>
+          <td>改进的快速恢复</td>
+          <td>增强恢复性能</td>
+      </tr>
+      <tr>
+          <td>TCP-SACK</td>
+          <td>选择性确认</td>
+          <td>选择性重传</td>
+          <td>高效处理多个丢包</td>
+      </tr>
+  </tbody>
+</table></div>
+<h2 id="可靠数据传输协议演进">可靠数据传输协议演进
+</h2><h3 id="rdt-10理想信道">RDT 1.0：理想信道
+</h3><ul>
+<li>假设：无差错、按序到达</li>
+<li>机制：简单发送-接收模型</li>
+</ul>
+<h3 id="rdt-20比特差错信道">RDT 2.0：比特差错信道
+</h3><ul>
+<li>新增：校验和检测、ACK/NACK反馈</li>
+<li>机制：出错重传</li>
+</ul>
+<h3 id="rdt-2122序列号机制">RDT 2.1/2.2：序列号机制
+</h3><ul>
+<li>新增：分组序列号（0/1交替）</li>
+<li>解决：ACK/NACK混淆问题</li>
+</ul>
+<h3 id="rdt-30丢包信道">RDT 3.0：丢包信道
+</h3><ul>
+<li>新增：超时重传计时器</li>
+<li>机制：停等ARQ协议</li>
+</ul>
+<h2 id="容量单位规范">容量单位规范
+</h2><h3 id="二进制基数210--1024">二进制基数（$2^{10}$ = 1024）
+</h3><p>适用场景：</p>
+<ul>
+<li>计算机内存容量（RAM）</li>
+<li>文件存储大小</li>
+<li>网络协议字段（如TCP窗口大小）</li>
+<li>操作系统显示单位</li>
+</ul>
+<p>标记方式：KiB、MiB、GiB（IEC标准）</p>
+<h3 id="十进制基数103--1000">十进制基数（$10^{3}$ = 1000）
+</h3><p>适用场景：</p>
+<ul>
+<li>存储设备标称容量（HDD/SSD）</li>
+<li>网络带宽（bps）</li>
+<li>数据传输速率</li>
+<li>国际标准单位</li>
+</ul>
+<p>标记方式：KB、MB、GB（SI标准）</p>
+<h3 id="实际应用注意">实际应用注意
+</h3><ul>
+<li>存储设备：厂商使用十进制，系统使用二进制显示</li>
+<li>网络协议：带宽用十进制，数据量用二进制</li>
+<li>计算吞吐量时需明确单位基准</li>
+</ul>
+<h2 id="性能指标计算">性能指标计算
+</h2><h3 id="吞吐量公式">吞吐量公式
+</h3>$$
+\text{吞吐量} = \frac{\text{传输数据量}}{\text{传输时间}} \leq \text{信道带宽}
+$$<h3 id="有效载荷率">有效载荷率
+</h3>$$
+\text{效率} = \frac{\text{MSS}}{\text{MSS + TCP头开销}} \times \text{带宽利用率}
+$$<hr>
+<p><strong>版权声明</strong>：本文部分内容参考网络资料，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。</p>
+<p><strong>参考链接</strong>：</p>
+<ul>
+<li><a class="link" href="https://blog.csdn.net/m0_56649557/article/details/119492899"  target="_blank" rel="noopener"
+    >简单理解TCP三次握手四次挥手</a></li>
+<li><a class="link" href="https://blog.csdn.net/qq_35812205/article/details/108693965"  target="_blank" rel="noopener"
+    >GBN协议详解</a></li>
+<li><a class="link" href="https://blog.csdn.net/whgtheone/article/details/80983882"  target="_blank" rel="noopener"
+    >TCP快速重传机制</a></li>
+<li><a class="link" href="https://blog.csdn.net/qq_42214953/article/details/105832303"  target="_blank" rel="noopener"
+    >TCP拥塞控制算法</a></li>
+<li><a class="link" href="https://blog.csdn.net/qq_46631497/article/details/137252874"  target="_blank" rel="noopener"
+    >TCP流量控制原理</a></li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">网络层</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网安全</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%A6%81%E7%82%B9/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网要点</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">互联网计算简洁</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E5%BA%94%E7%94%A8%E5%B1%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">应用层</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Hu Yang
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
+
+    </body>
+</html>

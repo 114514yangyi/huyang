@@ -344,6 +344,7 @@
         <li><a href="#icmpinternet-control-message-protocol">ICMP:internet control message protocol</a></li>
         <li><a href="#网络管理">网络管理:</a>
           <ol>
+            <li><a href="#ip数据包传输过程">IP数据包传输过程</a></li>
             <li><a href="#snmp">SNMP</a></li>
           </ol>
         </li>
@@ -943,6 +944,15 @@
 <li>数据</li>
 <li>网络管理协议</li>
 </ol>
+<h4 id="ip数据包传输过程">IP数据包传输过程
+</h4><ul>
+<li>子网掩码按位与，判断目标IP是否在子网中</li>
+<li>使用ARP包获得网关的MAC地址</li>
+<li>使用MAC地址封装帧，发送到网关</li>
+<li>网关解析帧为IP分组，根据目的IP进行路由转发</li>
+<li>网管使用ARP包获得下一跳的MAC地址</li>
+<li>网关将IP分组分装成新的帧，进行转发</li>
+</ul>
 <h4 id="snmp">SNMP
 </h4><p>SNMP（Simple Network Management Protocol，简单网络管理协议）是一种<code>管理服务器和代管理服务器执行的代理之间传递网络管理信息报文的协议</code></p>
 <h5 id="功能和工作原理">功能和工作原理：
@@ -1048,12 +1058,12 @@
             
                 
 <article class="">
-    <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/">
+    <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">传输层</h2>
+            <h2 class="article-title">传输层核心协议：TCP与UDP深度解析</h2>
         </div>
     </a>
 </article>

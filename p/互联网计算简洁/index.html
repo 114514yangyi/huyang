@@ -532,6 +532,7 @@
 <p><strong>关键在于流水线效应：</strong> 第一个分组到达后，后续分组相继到达，减少了等待。</p>
 <p><strong>特点:</strong> 分组流水线传输，比报文交换高效，但仍有排队时延。</p>
 <p>分组计算的方式如下：</p>
+<p>==源主机传输整个文件的时间+中间路由器的数量✖️单个分组的传输时延+总的传播时延+总的处理时延==</p>
 <p>假设有k条路，每条路的传播时延为i，中间节点有k-1个，处理时延为m，传输速率为b，分组有n个，每个分组的大小是r，则总的时延为：</p>
 <ol>
 <li>传输时延：（源主机传输时延）（n*r）/b+(每一个中间节点的传输时延)(（k-1）*(r/b))</li>
@@ -703,12 +704,12 @@
             
                 
 <article class="">
-    <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/">
+    <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">传输层</h2>
+            <h2 class="article-title">传输层核心协议：TCP与UDP深度解析</h2>
         </div>
     </a>
 </article>

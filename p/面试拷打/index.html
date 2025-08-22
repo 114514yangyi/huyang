@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 项目拷打 RAG项目 我们制作的这个rag项目是一个面向求职招聘的带有rag问答的问答系统.我们可以向AI去询问我们想要求职的岗位,以及面试的技巧之类的,接受类似于pdf数据,markdown数据的上传,在后端使用mysql数据库和milvous向量数据库进行查询岗位信息和面试要点信息,然后将信息作为context传递给AI大模型生成回复.其中主要涉及的技术是RAG流程的的搭建,使用的技术栈是前端REACT,后端使用Python的fastapi模块.除了一个关于求职的AI的问答系统,我们还搭建了一系列的和求职相关的功能性平台,比如说AI面试官,职业性格测试,简历生成之类的附属功能.\n其中主要实现的rag问答功能模块主要是建立了下面的分层形势:\nAPIServer层,主要使用uvicorn运行异步python web应用,然后配置host和端口;使用fastapi模块构建一个具有REASFUL API的WEB应用,对前端的请求使用Pandatic里面的basemodel来将json数据转换为python类型并且进行json的数据格式验证,并且调用后续相应的RAG检索链进行处理返回结果.使用CORS配置跨域处理请求 RAG检索链层,是这个层级中主要处理了对于每一个RAG问答请求,对其中每一个请求都配置一个检索链,使用相应的配置文件去配置在一次的rag请求链中应该使用那些模块.其中主要设计的模块是VectorDatabese模块,WeSearch模块,Format模块,Translation模块,PDF文件解析模块,Prompt模块,Extractor模块,主要的检索链的过程是首先使用Extractor提取请求数据中的history历史信息,使用format模块构造历史信息为合适的可以作为大模型context的string.再将query信息进过Translation模块翻译为英文,使用原始的query进过WebSearch模块查询出网络上的求职信息;将上传的pdf文件提取其中的关键信息,使用Extractor模块提取query中的关键字,将经过翻译的query和关键字传递给VectorDatabase模块,检索相应的top_k数量的求职记录信息,将上面所有的信息都作为Context交给Prompt模块请求使用langchain包Deepseek大模型来给出求职建议. VectorDatabase主要涉及到两个数据库:mysql和milvous向量数据库的信息检索.在进入vectordatabase之前首先会进行query的意图识别,识别query是询问求职岗位信息还是想面试技巧或者是和求职无关信息的询问,然后分别请求不同的mysql数据库表,使用python库mysql.connector连接数据库,然后里面存储这两张表的数据,一个是jobdetail存储所有求职岗位信息,一个jobcontent存储这面试技巧之类的信息.在表中有一个字段是blob二进制类型的,在python中读取后将其转换为numpy向量.然后使用sentencetransformer将英文的queryembedding为numpy向量,然后对于numpy向量进行余弦相似度的求解,排序相似度选出top_k个向量所对应的数据填充到context中.对于milvous向量数据库使用pymilvous库,就是建立docid,text明文,embedding向量的表,然后对于embedding使用L2欧氏距离查询top_k相似的text作为context. 我们的后端前端和数据库都是放到我们当时买的100块的小型Ubuntu服务器,然后接上校园网进行部署的,使用了南大校园内网的gitlab进行gitci,实现了基本的CICD, 对于AI请求呢,我们使用的是ragas库中的prompt模块,也就是pandaticprompt类,使用prompt去引导AI对于我们给定的输入格式,给出我要求格式的输出. 名词解释 fastapi:\n是Python的简单高性能的Web 框架,实现了一系列的REASTFU API.\nuvicorn:\nuvicorn是一个ASGI服务器,用于运行pythonweb应用.\n什么是跨域 跨域指的是当一个网页尝试访问不同网源的资源的时候,就会因为浏览器的同源策略的限制导致跨域的问题,一般来说浏览器要求域名,端口,协议三者完全一致才算是同源.一般解决跨域问题使用的方法是代理服务器,CORS,WebScoket等,我在项目中配置的就是CORS跨域,允许前端的IP地址和端口可以进来,没有限制header和cookie.\nwebsocket WebSocket 是一种在单个 TCP 连接上进行全双工通信的协议，它允许服务器和客户端在建立连接后双向实时传输数据，而不需要像传统 HTTP 请求那样每次通信都要重新建立连接。WebSocket 协议通过 HTTP/HTTPS 的 101 状态码完成初始握手后，升级为一个持久连接\n前后端连接 使用像XMLHTTPRequest,AXios,fetch来配置请求的URL连接,请求header,HTTP body数据.\n怎么做CICD的 修改.git里面的pre-push文件,修改里面的bash命令,建立一个在git push之前的本地集成测试,在所有的测试通过以后,本地的git命令将项目使用ssh.https推送到远程仓库中.远程仓库中触发hook钩子,根据根目录中的gitlab-ci.yam文件来构建流水线,将流水线任务推送到runner服务器中,执行gitlab-ci里面的不同阶段的脚本,完成前后端的构建,单元测试,集成测试,端到端测试,然后将构建信息传递给gitlab,将服务器中构建产物消除(在我们实践中是直接将构建产物部署到服务器中运行的),gitlab在流水线成功部署以后就将代码拼接到分支上.其中我们服务器中数据库是直接部署在数据库的,不在CICD流程中的.\nC++QT项目 以下是一个基于Qt框架，与您描述的课程项目要求相符的&quot;类异形工厂&quot;游戏实现思路：\n1. 游戏架构与核心类\nGameState 类:\n该类是游戏的核心，负责管理游戏状态和逻辑。 [cite_start]在主循环（main 函数中的 while 循环）中，通过调用 update() 函数来更新所有游戏对象的状态，例如设备的运行、物品的移动、任务的进度等 [cite: 11, 44, 52]。 [cite_start]GameState 应该包含 Map、Device 和 Mine 对象，以及当前游戏任务、金币数量和全局强化状态等信息 [cite: 24, 28, 60, 65, 83, 84]。 Engine 类 (继承自 QWidget 或 QMainWindow):\n">
+<title>面试拷打</title>
+
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93/'>
+
+<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="面试拷打">
+<meta property='og:description' content=" 项目拷打 RAG项目 我们制作的这个rag项目是一个面向求职招聘的带有rag问答的问答系统.我们可以向AI去询问我们想要求职的岗位,以及面试的技巧之类的,接受类似于pdf数据,markdown数据的上传,在后端使用mysql数据库和milvous向量数据库进行查询岗位信息和面试要点信息,然后将信息作为context传递给AI大模型生成回复.其中主要涉及的技术是RAG流程的的搭建,使用的技术栈是前端REACT,后端使用Python的fastapi模块.除了一个关于求职的AI的问答系统,我们还搭建了一系列的和求职相关的功能性平台,比如说AI面试官,职业性格测试,简历生成之类的附属功能.\n其中主要实现的rag问答功能模块主要是建立了下面的分层形势:\nAPIServer层,主要使用uvicorn运行异步python web应用,然后配置host和端口;使用fastapi模块构建一个具有REASFUL API的WEB应用,对前端的请求使用Pandatic里面的basemodel来将json数据转换为python类型并且进行json的数据格式验证,并且调用后续相应的RAG检索链进行处理返回结果.使用CORS配置跨域处理请求 RAG检索链层,是这个层级中主要处理了对于每一个RAG问答请求,对其中每一个请求都配置一个检索链,使用相应的配置文件去配置在一次的rag请求链中应该使用那些模块.其中主要设计的模块是VectorDatabese模块,WeSearch模块,Format模块,Translation模块,PDF文件解析模块,Prompt模块,Extractor模块,主要的检索链的过程是首先使用Extractor提取请求数据中的history历史信息,使用format模块构造历史信息为合适的可以作为大模型context的string.再将query信息进过Translation模块翻译为英文,使用原始的query进过WebSearch模块查询出网络上的求职信息;将上传的pdf文件提取其中的关键信息,使用Extractor模块提取query中的关键字,将经过翻译的query和关键字传递给VectorDatabase模块,检索相应的top_k数量的求职记录信息,将上面所有的信息都作为Context交给Prompt模块请求使用langchain包Deepseek大模型来给出求职建议. VectorDatabase主要涉及到两个数据库:mysql和milvous向量数据库的信息检索.在进入vectordatabase之前首先会进行query的意图识别,识别query是询问求职岗位信息还是想面试技巧或者是和求职无关信息的询问,然后分别请求不同的mysql数据库表,使用python库mysql.connector连接数据库,然后里面存储这两张表的数据,一个是jobdetail存储所有求职岗位信息,一个jobcontent存储这面试技巧之类的信息.在表中有一个字段是blob二进制类型的,在python中读取后将其转换为numpy向量.然后使用sentencetransformer将英文的queryembedding为numpy向量,然后对于numpy向量进行余弦相似度的求解,排序相似度选出top_k个向量所对应的数据填充到context中.对于milvous向量数据库使用pymilvous库,就是建立docid,text明文,embedding向量的表,然后对于embedding使用L2欧氏距离查询top_k相似的text作为context. 我们的后端前端和数据库都是放到我们当时买的100块的小型Ubuntu服务器,然后接上校园网进行部署的,使用了南大校园内网的gitlab进行gitci,实现了基本的CICD, 对于AI请求呢,我们使用的是ragas库中的prompt模块,也就是pandaticprompt类,使用prompt去引导AI对于我们给定的输入格式,给出我要求格式的输出. 名词解释 fastapi:\n是Python的简单高性能的Web 框架,实现了一系列的REASTFU API.\nuvicorn:\nuvicorn是一个ASGI服务器,用于运行pythonweb应用.\n什么是跨域 跨域指的是当一个网页尝试访问不同网源的资源的时候,就会因为浏览器的同源策略的限制导致跨域的问题,一般来说浏览器要求域名,端口,协议三者完全一致才算是同源.一般解决跨域问题使用的方法是代理服务器,CORS,WebScoket等,我在项目中配置的就是CORS跨域,允许前端的IP地址和端口可以进来,没有限制header和cookie.\nwebsocket WebSocket 是一种在单个 TCP 连接上进行全双工通信的协议，它允许服务器和客户端在建立连接后双向实时传输数据，而不需要像传统 HTTP 请求那样每次通信都要重新建立连接。WebSocket 协议通过 HTTP/HTTPS 的 101 状态码完成初始握手后，升级为一个持久连接\n前后端连接 使用像XMLHTTPRequest,AXios,fetch来配置请求的URL连接,请求header,HTTP body数据.\n怎么做CICD的 修改.git里面的pre-push文件,修改里面的bash命令,建立一个在git push之前的本地集成测试,在所有的测试通过以后,本地的git命令将项目使用ssh.https推送到远程仓库中.远程仓库中触发hook钩子,根据根目录中的gitlab-ci.yam文件来构建流水线,将流水线任务推送到runner服务器中,执行gitlab-ci里面的不同阶段的脚本,完成前后端的构建,单元测试,集成测试,端到端测试,然后将构建信息传递给gitlab,将服务器中构建产物消除(在我们实践中是直接将构建产物部署到服务器中运行的),gitlab在流水线成功部署以后就将代码拼接到分支上.其中我们服务器中数据库是直接部署在数据库的,不在CICD流程中的.\nC++QT项目 以下是一个基于Qt框架，与您描述的课程项目要求相符的&quot;类异形工厂&quot;游戏实现思路：\n1. 游戏架构与核心类\nGameState 类:\n该类是游戏的核心，负责管理游戏状态和逻辑。 [cite_start]在主循环（main 函数中的 while 循环）中，通过调用 update() 函数来更新所有游戏对象的状态，例如设备的运行、物品的移动、任务的进度等 [cite: 11, 44, 52]。 [cite_start]GameState 应该包含 Map、Device 和 Mine 对象，以及当前游戏任务、金币数量和全局强化状态等信息 [cite: 24, 28, 60, 65, 83, 84]。 Engine 类 (继承自 QWidget 或 QMainWindow):\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93/'>
+<meta property='og:site_name' content='Hu Yang&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-08-23T01:37:58&#43;08:00'/><meta property='article:modified_time' content='2025-08-23T01:37:58&#43;08:00'/>
+<meta name="twitter:title" content="面试拷打">
+<meta name="twitter:description" content=" 项目拷打 RAG项目 我们制作的这个rag项目是一个面向求职招聘的带有rag问答的问答系统.我们可以向AI去询问我们想要求职的岗位,以及面试的技巧之类的,接受类似于pdf数据,markdown数据的上传,在后端使用mysql数据库和milvous向量数据库进行查询岗位信息和面试要点信息,然后将信息作为context传递给AI大模型生成回复.其中主要涉及的技术是RAG流程的的搭建,使用的技术栈是前端REACT,后端使用Python的fastapi模块.除了一个关于求职的AI的问答系统,我们还搭建了一系列的和求职相关的功能性平台,比如说AI面试官,职业性格测试,简历生成之类的附属功能.\n其中主要实现的rag问答功能模块主要是建立了下面的分层形势:\nAPIServer层,主要使用uvicorn运行异步python web应用,然后配置host和端口;使用fastapi模块构建一个具有REASFUL API的WEB应用,对前端的请求使用Pandatic里面的basemodel来将json数据转换为python类型并且进行json的数据格式验证,并且调用后续相应的RAG检索链进行处理返回结果.使用CORS配置跨域处理请求 RAG检索链层,是这个层级中主要处理了对于每一个RAG问答请求,对其中每一个请求都配置一个检索链,使用相应的配置文件去配置在一次的rag请求链中应该使用那些模块.其中主要设计的模块是VectorDatabese模块,WeSearch模块,Format模块,Translation模块,PDF文件解析模块,Prompt模块,Extractor模块,主要的检索链的过程是首先使用Extractor提取请求数据中的history历史信息,使用format模块构造历史信息为合适的可以作为大模型context的string.再将query信息进过Translation模块翻译为英文,使用原始的query进过WebSearch模块查询出网络上的求职信息;将上传的pdf文件提取其中的关键信息,使用Extractor模块提取query中的关键字,将经过翻译的query和关键字传递给VectorDatabase模块,检索相应的top_k数量的求职记录信息,将上面所有的信息都作为Context交给Prompt模块请求使用langchain包Deepseek大模型来给出求职建议. VectorDatabase主要涉及到两个数据库:mysql和milvous向量数据库的信息检索.在进入vectordatabase之前首先会进行query的意图识别,识别query是询问求职岗位信息还是想面试技巧或者是和求职无关信息的询问,然后分别请求不同的mysql数据库表,使用python库mysql.connector连接数据库,然后里面存储这两张表的数据,一个是jobdetail存储所有求职岗位信息,一个jobcontent存储这面试技巧之类的信息.在表中有一个字段是blob二进制类型的,在python中读取后将其转换为numpy向量.然后使用sentencetransformer将英文的queryembedding为numpy向量,然后对于numpy向量进行余弦相似度的求解,排序相似度选出top_k个向量所对应的数据填充到context中.对于milvous向量数据库使用pymilvous库,就是建立docid,text明文,embedding向量的表,然后对于embedding使用L2欧氏距离查询top_k相似的text作为context. 我们的后端前端和数据库都是放到我们当时买的100块的小型Ubuntu服务器,然后接上校园网进行部署的,使用了南大校园内网的gitlab进行gitci,实现了基本的CICD, 对于AI请求呢,我们使用的是ragas库中的prompt模块,也就是pandaticprompt类,使用prompt去引导AI对于我们给定的输入格式,给出我要求格式的输出. 名词解释 fastapi:\n是Python的简单高性能的Web 框架,实现了一系列的REASTFU API.\nuvicorn:\nuvicorn是一个ASGI服务器,用于运行pythonweb应用.\n什么是跨域 跨域指的是当一个网页尝试访问不同网源的资源的时候,就会因为浏览器的同源策略的限制导致跨域的问题,一般来说浏览器要求域名,端口,协议三者完全一致才算是同源.一般解决跨域问题使用的方法是代理服务器,CORS,WebScoket等,我在项目中配置的就是CORS跨域,允许前端的IP地址和端口可以进来,没有限制header和cookie.\nwebsocket WebSocket 是一种在单个 TCP 连接上进行全双工通信的协议，它允许服务器和客户端在建立连接后双向实时传输数据，而不需要像传统 HTTP 请求那样每次通信都要重新建立连接。WebSocket 协议通过 HTTP/HTTPS 的 101 状态码完成初始握手后，升级为一个持久连接\n前后端连接 使用像XMLHTTPRequest,AXios,fetch来配置请求的URL连接,请求header,HTTP body数据.\n怎么做CICD的 修改.git里面的pre-push文件,修改里面的bash命令,建立一个在git push之前的本地集成测试,在所有的测试通过以后,本地的git命令将项目使用ssh.https推送到远程仓库中.远程仓库中触发hook钩子,根据根目录中的gitlab-ci.yam文件来构建流水线,将流水线任务推送到runner服务器中,执行gitlab-ci里面的不同阶段的脚本,完成前后端的构建,单元测试,集成测试,端到端测试,然后将构建信息传递给gitlab,将服务器中构建产物消除(在我们实践中是直接将构建产物部署到服务器中运行的),gitlab在流水线成功部署以后就将代码拼接到分支上.其中我们服务器中数据库是直接部署在数据库的,不在CICD流程中的.\nC++QT项目 以下是一个基于Qt框架，与您描述的课程项目要求相符的&quot;类异形工厂&quot;游戏实现思路：\n1. 游戏架构与核心类\nGameState 类:\n该类是游戏的核心，负责管理游戏状态和逻辑。 [cite_start]在主循环（main 函数中的 while 循环）中，通过调用 update() 函数来更新所有游戏对象的状态，例如设备的运行、物品的移动、任务的进度等 [cite: 11, 44, 52]。 [cite_start]GameState 应该包含 Map、Device 和 Mine 对象，以及当前游戏任务、金币数量和全局强化状态等信息 [cite: 24, 28, 60, 65, 83, 84]。 Engine 类 (继承自 QWidget 或 QMainWindow):\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/huyang/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/huyang/img/logo-transparent_hu_2593eda3cf734d42.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/huyang">Hu Yang&#39;s Blog</a></h1>
+            <h2 class="site-description">Blog</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://114514yangyi.github.io/huyang/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='2416572689@qq.com'
+                        target="_blank"
+                        title="QQ"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/huyang/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#rag项目">RAG项目</a>
+      <ol>
+        <li><a href="#名词解释">名词解释</a></li>
+        <li><a href="#什么是跨域">什么是跨域</a></li>
+        <li><a href="#websocket">websocket</a></li>
+        <li><a href="#前后端连接">前后端连接</a></li>
+        <li><a href="#怎么做cicd的">怎么做CICD的</a></li>
+      </ol>
+    </li>
+    <li><a href="#cqt项目">C++QT项目</a></li>
+  </ol>
+
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#关于-gamestate-和主循环">关于 <code>GameState</code> 和主循环</a></li>
+        <li><a href="#关于设备和物品的连接与传递">关于设备和物品的连接与传递</a></li>
+        <li><a href="#关于地图数据的存储">关于地图数据的存储</a></li>
+        <li><a href="#关于面向对象和泛型编程">关于面向对象和泛型编程</a></li>
+        <li><a href="#关于-qt-的应用">关于 Qt 的应用</a></li>
+        <li><a href="#关于信号与槽机制">关于信号与槽机制</a></li>
+        <li><a href="#综合能力问题">综合能力问题</a></li>
+        <li><a href="#物品传递逻辑阻塞处理实现方案">物品传递逻辑阻塞处理实现方案</a></li>
+        <li><a href="#1-设备状态管理">1. 设备状态管理</a></li>
+        <li><a href="#2-传递物品逻辑">2. 传递物品逻辑</a></li>
+        <li><a href="#3-接收物品逻辑">3. 接收物品逻辑</a></li>
+        <li><a href="#4-动画与速率的关联">4. 动画与速率的关联</a></li>
+        <li><a href="#c-高级特性与内存管理">C++ 高级特性与内存管理</a></li>
+        <li><a href="#软件工程与设计模式">软件工程与设计模式</a></li>
+        <li><a href="#游戏设计与性能优化">游戏设计与性能优化</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/huyang/categories/%E9%9D%A2%E8%AF%95/" style="background-color: #2a9d8f; color: #fff;">
+                面试
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/huyang/p/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93/">面试拷打</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 23, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/math-code.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+<h1 id="项目拷打">项目拷打
+</h1><h2 id="rag项目">RAG项目
+</h2><p>我们制作的这个rag项目是一个面向求职招聘的带有rag问答的问答系统.我们可以向AI去询问我们想要求职的岗位,以及面试的技巧之类的,接受类似于pdf数据,markdown数据的上传,在后端使用mysql数据库和milvous向量数据库进行查询岗位信息和面试要点信息,然后将信息作为context传递给AI大模型生成回复.其中主要涉及的技术是RAG流程的的搭建,使用的技术栈是前端REACT,后端使用Python的fastapi模块.除了一个关于求职的AI的问答系统,我们还搭建了一系列的和求职相关的功能性平台,比如说AI面试官,职业性格测试,简历生成之类的附属功能.</p>
+<p>其中主要实现的rag问答功能模块主要是建立了下面的分层形势:</p>
+<ol>
+<li>APIServer层,主要使用uvicorn运行异步python web应用,然后配置host和端口;使用fastapi模块构建一个具有REASFUL API的WEB应用,对前端的请求使用Pandatic里面的basemodel来将json数据转换为python类型并且进行json的数据格式验证,并且调用后续相应的RAG检索链进行处理返回结果.使用CORS配置跨域处理请求</li>
+<li>RAG检索链层,是这个层级中主要处理了对于每一个RAG问答请求,对其中每一个请求都配置一个检索链,使用相应的配置文件去配置在一次的rag请求链中应该使用那些模块.其中主要设计的模块是VectorDatabese模块,WeSearch模块,Format模块,Translation模块,PDF文件解析模块,Prompt模块,Extractor模块,主要的检索链的过程是首先使用Extractor提取请求数据中的history历史信息,使用format模块构造历史信息为合适的可以作为大模型context的string.再将query信息进过Translation模块翻译为英文,使用原始的query进过WebSearch模块查询出网络上的求职信息;将上传的pdf文件提取其中的关键信息,使用Extractor模块提取query中的关键字,将经过翻译的query和关键字传递给VectorDatabase模块,检索相应的top_k数量的求职记录信息,将上面所有的信息都作为Context交给Prompt模块请求使用langchain包Deepseek大模型来给出求职建议.</li>
+<li>VectorDatabase主要涉及到两个数据库:mysql和milvous向量数据库的信息检索.在进入vectordatabase之前首先会进行query的意图识别,识别query是询问求职岗位信息还是想面试技巧或者是和求职无关信息的询问,然后分别请求不同的mysql数据库表,使用python库mysql.connector连接数据库,然后里面存储这两张表的数据,一个是jobdetail存储所有求职岗位信息,一个jobcontent存储这面试技巧之类的信息.在表中有一个字段是blob二进制类型的,在python中读取后将其转换为numpy向量.然后使用sentencetransformer将英文的queryembedding为numpy向量,然后对于numpy向量进行余弦相似度的求解,排序相似度选出top_k个向量所对应的数据填充到context中.对于milvous向量数据库使用pymilvous库,就是建立docid,text明文,embedding向量的表,然后对于embedding使用L2欧氏距离查询top_k相似的text作为context.</li>
+<li>我们的后端前端和数据库都是放到我们当时买的100块的小型Ubuntu服务器,然后接上校园网进行部署的,使用了南大校园内网的gitlab进行gitci,实现了基本的CICD,</li>
+<li>对于AI请求呢,我们使用的是ragas库中的prompt模块,也就是pandaticprompt类,使用prompt去引导AI对于我们给定的输入格式,给出我要求格式的输出.</li>
+</ol>
+<h3 id="名词解释">名词解释
+</h3><p>fastapi:</p>
+<p>是Python的简单高性能的Web 框架,实现了一系列的REASTFU API.</p>
+<p>uvicorn:</p>
+<p>uvicorn是一个ASGI服务器,用于运行pythonweb应用.</p>
+<h3 id="什么是跨域">什么是跨域
+</h3><p>跨域指的是当一个网页尝试访问不同网源的资源的时候,就会因为浏览器的同源策略的限制导致跨域的问题,一般来说浏览器要求域名,端口,协议三者完全一致才算是同源.一般解决跨域问题使用的方法是代理服务器,CORS,WebScoket等,我在项目中配置的就是CORS跨域,允许前端的IP地址和端口可以进来,没有限制header和cookie.</p>
+<h3 id="websocket">websocket
+</h3><p>WebSocket 是一种在单个 TCP 连接上进行全双工通信的协议，它允许服务器和客户端在建立连接后双向实时传输数据，而不需要像传统 HTTP 请求那样每次通信都要重新建立连接。WebSocket 协议通过 HTTP/HTTPS 的 101 状态码完成初始握手后，升级为一个持久连接</p>
+<h3 id="前后端连接">前后端连接
+</h3><p>使用像XMLHTTPRequest,AXios,fetch来配置请求的URL连接,请求header,HTTP body数据.</p>
+<h3 id="怎么做cicd的">怎么做CICD的
+</h3><p>修改.git里面的pre-push文件,修改里面的bash命令,建立一个在git push之前的本地集成测试,在所有的测试通过以后,本地的git命令将项目使用ssh.https推送到远程仓库中.远程仓库中触发hook钩子,根据根目录中的gitlab-ci.yam文件来构建流水线,将流水线任务推送到runner服务器中,执行gitlab-ci里面的不同阶段的脚本,完成前后端的构建,单元测试,集成测试,端到端测试,然后将构建信息传递给gitlab,将服务器中构建产物消除(在我们实践中是直接将构建产物部署到服务器中运行的),gitlab在流水线成功部署以后就将代码拼接到分支上.其中我们服务器中数据库是直接部署在数据库的,不在CICD流程中的.</p>
+<h2 id="cqt项目">C++QT项目
+</h2><p>以下是一个基于Qt框架，与您描述的课程项目要求相符的&quot;类异形工厂&quot;游戏实现思路：</p>
+<p><strong>1. 游戏架构与核心类</strong></p>
+<ul>
+<li>
+<p><strong><code>GameState</code> 类:</strong></p>
+<ul>
+<li>该类是游戏的核心，负责管理游戏状态和逻辑。</li>
+<li>[cite_start]在主循环（<code>main</code> 函数中的 <code>while</code> 循环）中，通过调用 <code>update()</code> 函数来更新所有游戏对象的状态，例如设备的运行、物品的移动、任务的进度等 [cite: 11, 44, 52]。</li>
+<li>[cite_start]<code>GameState</code> 应该包含 <code>Map</code>、<code>Device</code> 和 <code>Mine</code> 对象，以及当前游戏任务、金币数量和全局强化状态等信息 [cite: 24, 28, 60, 65, 83, 84]。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>Engine</code> 类 (继承自 <code>QWidget</code> 或 <code>QMainWindow</code>)</strong>:</p>
+<ul>
+<li>[cite_start]该类负责游戏的渲染和用户交互，作为游戏窗口 [cite: 12]。</li>
+<li>[cite_start]它将处理鼠标和键盘事件，例如放置设备、拖动地图和缩放视图 [cite: 33]。</li>
+<li>[cite_start]使用 Qt 的绘图功能 (<code>QPainter</code>) 在窗口上绘制游戏地图、设备和物品 [cite: 12]。</li>
+<li>可以通过 Qt 的信号与槽机制 (<code>signal/slot</code>) 将用户输入（例如鼠标点击）传递给 <code>GameState</code>，并接收来自 <code>GameState</code> 的更新通知以重新绘制界面。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>Map</code> 类:</strong></p>
+<ul>
+<li>[cite_start]逻辑上表示一个 <code>m x n</code> 的矩形地图，可以用一个二维数组或 <code>std::vector&lt;std::vector&lt;int&gt;&gt;</code> 来存储每个地块的信息 [cite: 24]。</li>
+<li>[cite_start]地图的布局可以从一个独立的文本文件（<code>.txt</code>）中加载，文件中记录了各种设备的位置和类型 [cite: 24]。</li>
+<li>每个地块都应存储一个指向其上放置的设备的指针或ID。</li>
+<li>[cite_start]<code>Map</code> 类还应包含一个 <code>DeliveryCenter</code> 对象，它是一个至少 <code>2x2</code> 的矩阵，负责接收交付的物品 [cite: 25, 27]。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>Device</code> 抽象基类:</strong></p>
+<ul>
+<li>[cite_start]定义所有设备共有的基本属性和行为，例如速率 (<code>rate</code>)、位置 (<code>position</code>) 和方向 (<code>direction</code>) [cite: 33, 34, 35, 36]。</li>
+<li>[cite_start]包含用于连接其他设备和处理物品的虚函数，例如 <code>processItem()</code> 和 <code>receiveItem()</code> [cite: 33]。</li>
+<li>派生类将实现具体的设备功能。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>Mine</code> 抽象基类:</strong></p>
+<ul>
+<li>[cite_start]代表待开采的产物，拥有一个价值属性 [cite: 27, 28]。</li>
+<li>[cite_start]定义了不同矿物种类的共同属性，例如形状和方向 [cite: 4]。</li>
+<li>可以包含虚函数来处理切割操作。</li>
+</ul>
+</li>
+</ul>
+<p><strong>2. 设备派生类</strong></p>
+<ul>
+<li>
+<p><strong><code>Miner</code> 类 (继承自 <code>Device</code>):</strong></p>
+<ul>
+<li>[cite_start]代表开采器，放置在地块上进行开采 [cite: 34]。</li>
+<li>[cite_start]有一个输出方向，可以将开采出的物品输出到相邻的设备 [cite: 34]。</li>
+<li>在 <code>update()</code> 函数中根据速率生产矿物。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>Conveyor</code> 类 (继承自 <code>Device</code>):</strong></p>
+<ul>
+<li>[cite_start]代表传送带，用于运送物品 [cite: 35]。</li>
+<li>[cite_start]有一个传送方向 [cite: 35]。</li>
+<li>在 <code>update()</code> 函数中将接收到的物品沿传送方向传递给下一个设备。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>Cutter</code> 类 (继承自 <code>Device</code>):</strong></p>
+<ul>
+<li>[cite_start]代表切割机，占据两个地块 [cite: 37]。</li>
+<li>[cite_start]将物品纵向切割，并分别从两个输出方向输出 [cite: 36]。</li>
+<li>[cite_start]如果只需一半的图形，另一半需要被垃圾桶清除，否则切割机将停止工作 [cite: 36]。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>TrashCan</code> 类 (继承自 <code>Device</code>):</strong></p>
+<ul>
+<li>[cite_start]代表垃圾桶，可以从四个方向接收物品并永久清除它们 [cite: 40]。</li>
+</ul>
+</li>
+</ul>
+<p><strong>3. 物品与动画</strong></p>
+<ul>
+<li><strong><code>ShapeItem</code> 派生类 (继承自 <code>Mine</code>):</strong>
+<ul>
+<li>[cite_start]代表游戏中的具体矿物，例如圆形、方形、三角形等 [cite: 4]。</li>
+<li>[cite_start]存储物品的方向以及被切割后的新类型 [cite: 31]。</li>
+<li>[cite_start]Qt 的 <code>QPropertyAnimation</code> 可以用于实现物品在传送带上传输的平滑动画效果 [cite: 93]。</li>
+<li>[cite_start]当设备停止工作时，可以停止 <code>QPropertyAnimation</code>，使物品停滞在传送带上，实现视觉上的停顿效果 [cite: 94]。</li>
+</ul>
+</li>
+</ul>
+<p><strong>4. 游戏功能</strong></p>
+<ul>
+<li>
+<p><strong>存档系统:</strong></p>
+<ul>
+<li>[cite_start]设计一个自定义的文本文件格式（例如 JSON 或简单的键值对）来保存游戏状态 [cite: 72, 74]。</li>
+<li>[cite_start]保存的内容包括全局强化状态、地图上设备的位置和类型、物品在传送带上的位置、以及任务进度等 [cite: 72, 74]。</li>
+<li>[cite_start]实现 <code>save()</code> 和 <code>load()</code> 函数来导入和导出存档 [cite: 72, 77]。</li>
+</ul>
+</li>
+<li>
+<p><strong>局部强化系统:</strong></p>
+<ul>
+<li>[cite_start]在 <code>GameState</code> 中定义任务目标，例如&quot;成功交付20个物品1&quot; [cite: 61]。</li>
+<li>[cite_start]当玩家完成任务时，可以升级开采器、传送带或切割机的速率 [cite: 61, 63]。</li>
+<li>[cite_start]这个强化效果应在当前游戏局结束时消失 [cite: 64]。</li>
+</ul>
+</li>
+<li>
+<p><strong>全局强化系统:</strong></p>
+<ul>
+<li>[cite_start]通过消耗游戏中收集的金币，可以永久性地强化交付中心的大小、可开采地块的数量等 [cite: 67, 68, 70]。</li>
+<li>[cite_start]这些强化数据应该保存在存档文件中 [cite: 72]。</li>
+</ul>
+</li>
+<li>
+<p><strong>可视化:</strong></p>
+<ul>
+<li>[cite_start]在 <code>Engine</code> 类中，通过 <code>QPainter</code> 绘制地图、设备和物品 [cite: 12, 102]。</li>
+<li>[cite_start]使用 Qt 的动画库实现物品在传送带上的移动效果 [cite: 93]。</li>
+<li>[cite_start]为每个设备绘制一个可视化的朝向指示，例如箭头 [cite: 96]。</li>
+<li>地图的拖动和缩放可以通过重写 <code>mousePressEvent()</code>、<code>mouseMoveEvent()</code> 和 <code>wheelEvent()</code> 来实现。</li>
+</ul>
+</li>
+</ul>
+<h1 id="">
+</h1><h3 id="关于-gamestate-和主循环">关于 <code>GameState</code> 和主循环
+</h3><p><strong>问题：</strong> 您的项目描述中提到，在 <code>main</code> 函数中有一个 <code>while</code> 循环来调用 <code>GameState</code> 的 <code>update</code> 函数。请详细解释一下，这个 <code>update</code> 函数具体做了哪些事情？它如何协调不同设备（如开采器、传送带、切割机）的运行？</p>
+<p><strong>回答：</strong>
+<code>update()</code> 函数是游戏的核心逻辑驱动。在每个游戏帧，它会遍历地图上的所有设备 [cite:87]。对于开采器，它会检查是否达到速率阈值，如果可以，就生成一个新的矿物实例并尝试将其输出到连接的传送带上 [cite:87]。对于传送带，它会检查是否有物品在上面，如果有，就根据传送带的速率和方向，计算物品的下一个位置，并将其传递给下一个设备 [cite:87]。切割机则会检查输入端是否有可切割的物品，如果满足条件，就会执行切割操作，并把切割后的新物品输出到不同的方向 [cite:87]。这种集中式的 <code>update</code> 模式可以确保所有设备在每个游戏周期内都能同步更新，从而模拟出工厂的持续运转 [cite:87]。</p>
+<h3 id="关于设备和物品的连接与传递">关于设备和物品的连接与传递
+</h3><p><strong>问题：</strong> 您提到设备类中记录了&quot;各个连接状态&quot;。请具体说明，您是如何设计设备之间的连接逻辑的？当一个设备将物品传递给另一个设备时，这个过程是如何实现的？</p>
+<p><strong>回答：</strong>
+我为 <code>Device</code> 抽象基类设计了输入和输出接口 [cite:87]。每个设备实例都包含一个指向相邻设备的指针或ID的集合，表示它的输入和输出连接 [cite:87]。例如，一个传送带的输出连接会指向它前方地块上的另一个设备 [cite:87]。当一个设备（比如开采器）完成工作并需要输出物品时，它会调用其输出连接指向的设备的 <code>receiveItem()</code> 方法，并将物品作为参数传递过去 [cite:87]。这种设计使得设备之间的逻辑解耦，每个设备只需要关注如何处理自己的输入和输出，而不需要了解整个工厂的全局结构 [cite:87]。</p>
+<h3 id="关于地图数据的存储">关于地图数据的存储
+</h3><p><strong>问题：</strong> 您使用了 <code>n*m</code> 的二维数字来表示地图，并且数据存储在独立的 <code>.txt</code> 文件中。您是如何解析这个文件，并将其中的数字转化为对应的设备实例的？</p>
+<p><strong>回答：</strong>
+我编写了一个 <code>MapLoader</code> 类，负责读取和解析 <code>.txt</code> 文件 [cite:87]。该文件中的每个数字都代表一种特定的设备或地块类型 [cite:87]。例如，<code>0</code> 可能代表空地，<code>1</code> 代表开采器，<code>2</code> 代表传送带，依此类推 [cite:87]。
+<code>MapLoader</code> 会逐行读取文件内容，将数字转换为整数，并根据这些整数，使用工厂模式动态地创建相应的设备实例，然后将这些实例放置到 <code>Map</code> 类的二维数据结构中 [cite:87]。这种方式使得游戏地图的配置和修改变得非常灵活，无需修改代码就可以创建新的地图布局 [cite:87]。</p>
+<h3 id="关于面向对象和泛型编程">关于面向对象和泛型编程
+</h3><p><strong>问题：</strong> 您在简历中提到了熟练掌握 C++ 面向对象和泛型编程范式 [cite:87]。请举例说明您在项目中是如何应用这两种范式的，具体是哪些类和模块？</p>
+<p><strong>回答：</strong></p>
+<ul>
+<li>
+<p><strong>面向对象：</strong> 我使用了面向对象来构建游戏的整体架构 [cite:87]。
+<code>Device</code> 和 <code>Mine</code> 是两个重要的抽象基类 [cite:87]。所有具体的设备（如 <code>Miner</code>, <code>Cutter</code>, <code>Conveyor</code>）都继承自 <code>Device</code> 类，并重写虚函数来实现各自的功能 [cite:87]。这使得我可以统一管理所有设备，并轻松地添加新的设备类型 [cite:87]。同样，不同的矿物类型也继承自 <code>Mine</code> 基类 [cite:87]。</p>
+</li>
+<li>
+<p><strong>泛型编程：</strong> 我广泛使用了 C++ 标准模板库（STL）中的泛型容器来管理游戏数据 [cite:87]。
+例如，我使用 <code>std::vector&lt;std::vector&lt;Device*&gt;&gt;</code> 来存储地图上的设备，使用 <code>std::queue&lt;Mine*&gt;</code> 来模拟传送带上物品的流动，使用 <code>std::map</code> 来存储设备和矿物的信息，并使用 <code>std::set</code> 来避免重复 [cite:87]。这些泛型容器大大提高了代码的效率和可读性 [cite:87]。</p>
+</li>
+</ul>
+<h3 id="关于-qt-的应用">关于 Qt 的应用
+</h3><p><strong>问题：</strong> 您提到使用了 Qt 的 <code>QAnimation</code> 库来实现物品传递的动画效果。请详细描述一下您是如何实现的？</p>
+<p><strong>回答：</strong>
+对于物品在传送带上的平滑移动，我使用了 Qt 的 <code>QPropertyAnimation</code> [cite:87]。我为每个物品创建了一个 <code>QGraphicsItem</code>，并将其添加到 <code>QGraphicsScene</code> 中 [cite:87]。
+然后，我创建了一个 <code>QPropertyAnimation</code> 实例，将其目标对象设置为物品的 <code>QGraphicsItem</code>，并设置动画的属性为 <code>pos</code> (位置) [cite:87]。动画的起始值是物品在传送带上的当前位置，结束值是下一个地块的位置 [cite:87]。通过设置动画的持续时间来控制物品移动的速率 [cite:87]。
+当一个物品被设备接收后，我会为它启动一个新的动画，从而实现从一个设备到另一个设备的连续平滑移动 [cite:87]。</p>
+<h3 id="关于信号与槽机制">关于信号与槽机制
+</h3><p><strong>问题：</strong> 您在描述中提到了使用了 Qt 的 <code>signal</code> 和 <code>slot</code> 机制。请举例说明，您在项目中具体在哪些场景下使用了它？这种机制带来了什么好处？</p>
+<p><strong>回答：</strong></p>
+<ul>
+<li>
+<p><strong>场景1：</strong> 用户交互。当用户通过鼠标点击地图来放置设备时，<code>Engine</code> 类的 <code>mousePressEvent()</code> 函数会发出一个自定义的信号，例如 <code>devicePlaced(QPoint pos, DeviceType type)</code>。这个信号会连接到 <code>GameState</code> 类的槽函数，如 <code>handleDevicePlacement(QPoint pos, DeviceType type)</code>。<code>GameState</code> 收到信号后，就会在指定的位置创建并放置相应的设备实例 [cite:87]。</p>
+</li>
+<li>
+<p><strong>场景2：</strong> 游戏状态更新。当游戏任务完成或金币数量改变时，<code>GameState</code> 可以发出一个信号，例如 <code>goldUpdated(int newGold)</code>。<code>Engine</code> 类中的 UI 组件，如一个显示金币数量的标签，可以连接到这个信号，并在槽函数中更新显示内容 [cite:87]。</p>
+</li>
+<li>
+<p><strong>好处：</strong> 信号与槽机制实现了对象之间的松散耦合 [cite:87]。<code>Engine</code> 不需要知道 <code>GameState</code> 的内部实现细节，它只负责发出信号；同样，<code>GameState</code> 也不需要直接调用 <code>Engine</code> 的 UI 更新方法 [cite:87]。这种设计使得程序架构更加清晰，易于维护和扩展 [cite:87]。</p>
+</li>
+</ul>
+<h3 id="综合能力问题">综合能力问题
+</h3><p><strong>问题：</strong> 在这个项目的开发过程中，您遇到的最大的技术挑战是什么？您是如何解决的？</p>
+<p><strong>回答：</strong>
+最大的挑战是如何在逻辑更新和图形渲染之间保持同步，并确保动画效果的平滑性 [cite:87]。
+刚开始我尝试将所有逻辑和渲染都放在主循环中，但这导致了明显的卡顿 [cite:87]。
+我通过将核心游戏逻辑（在 <code>GameState</code> 中）和渲染逻辑（在 <code>Engine</code> 中）分离来解决这个问题 [cite:87]。
+游戏逻辑在一个独立的线程中进行，而渲染则利用 Qt 的事件循环进行异步更新 [cite:87]。
+通过使用 Qt 的 <code>QTimer</code> 定时器来周期性地触发 <code>GameState</code> 的 <code>update</code> 函数，并使用信号与槽机制将需要渲染的物品状态变化通知给 <code>Engine</code>，从而实现了流畅的动画和稳定的游戏帧率 [cite:87]。</p>
+<p><strong>问题：</strong> 您认为这个项目还有哪些可以改进或扩展的地方？</p>
+<p><strong>回答：</strong></p>
+<ul>
+<li><strong>扩展新设备：</strong> 可以增加新的设备，比如旋转器，可以将物品旋转90度；或者分路器，可以将物品分流到不同的传送带上 [cite:260]。</li>
+<li><strong>增加音效和动画：</strong> 可以为设备的运行和物品的交付添加适当的音效，并为切割机和开采器添加更酷炫的动画效果，以提升用户体验 [cite:258,259]。</li>
+<li><strong>性能优化：</strong> 当地图变得非常大、设备数量增多时，可以考虑使用更高效的数据结构或算法，比如四叉树或空间哈希，来优化物品的查询和碰撞检测，而不是简单地遍历整个地图 [cite:87]。</li>
+</ul>
+<h3 id="物品传递逻辑阻塞处理实现方案">物品传递逻辑阻塞处理实现方案
+</h3><h3 id="1-设备状态管理">1. 设备状态管理
+</h3><p>在 <code>Device</code> 基类中，添加一个布尔类型的成员变量，例如 <code>isBlocked</code>，初始值为 <code>false</code>。这个变量用于表示设备是否因为下游设备无法接收物品而停止工作。</p>
+<h3 id="2-传递物品逻辑">2. 传递物品逻辑
+</h3><ul>
+<li>在 <code>Device</code> 的 <code>update()</code> 函数或专门的 <code>processItem()</code> 函数中，当设备想要将物品传递给下一个连接的设备时，首先会检查下一个设备的状态。</li>
+<li>例如，一个传送带在将物品从A地块传递到B地块时，会先检查B地块上的设备是否能够接收物品。这个检查可以封装在一个函数中，比如 <code>nextDevice-&gt;canReceiveItem()</code>。</li>
+<li>如果 <code>canReceiveItem()</code> 返回 <code>true</code>，则开始物品传递的动画，并将其传递给下一个设备。</li>
+<li>如果 <code>canReceiveItem()</code> 返回 <code>false</code>，则说明下游设备被阻塞。此时，当前设备（即A地块上的传送带）将保持 <code>isBlocked</code> 为 <code>true</code>，物品会停留在当前地块上，动画也会停止或暂停。</li>
+</ul>
+<h3 id="3-接收物品逻辑">3. 接收物品逻辑
+</h3><ul>
+<li>在 <code>Device</code> 基类中，实现一个 <code>canReceiveItem()</code> 函数，该函数返回一个布尔值，用于指示该设备是否可以接收新物品。</li>
+<li>对于大多数设备，<code>canReceiveItem()</code> 应该检查其内部的物品队列或存储空间是否已满。例如，一个传送带在同一时间只能处理一个物品，如果它上面已经有一个物品在运输中，那么 <code>canReceiveItem()</code> 就应该返回 <code>false</code>。</li>
+<li>对于垃圾桶，因为它可以随时接收物品，所以 <code>canReceiveItem()</code> 应该始终返回 <code>true</code>。</li>
+<li>[cite_start]对于切割机，如果它的一条输出路径被下游设备阻塞，那么它应该将 <code>isBlocked</code> 设为 <code>true</code>，并停止工作，直到阻塞解除 [cite: 36]。</li>
+</ul>
+<h3 id="4-动画与速率的关联">4. 动画与速率的关联
+</h3><ul>
+<li>使用Qt的 <code>QPropertyAnimation</code> 来控制物品传递的动画。</li>
+<li>当一个设备开始传递物品时，创建一个 <code>QPropertyAnimation</code> 实例，并根据设备的速率属性来设置动画的持续时间。例如，速率越高，持续时间越短，物品移动得越快。</li>
+<li>[cite_start]当设备因为下游设备阻塞而无法传递物品时，停止或暂停相关的 <code>QPropertyAnimation</code>。<code>isBlocked</code> 状态为 <code>true</code> 时，物品将停止移动，从而在视觉上体现出停滞效果 [cite: 94]。</li>
+</ul>
+<p>[cite_start]通过这种方式，您可以使用 <code>isBlocked</code> 状态来协调物品的传递和设备的运行，当一个设备正拥有一个物品并且无法将其传递给下游设备时，它会停止工作并等待，直到下游设备能够接收为止 [cite: 36, 94]。</p>
+<p>是的，您记得很对。在 Qt 的动画库中，可以使用 <code>QAbstractAnimation::finished()</code> 信号来实现这个逻辑。当一个动画完成时，<code>finished()</code> 信号就会被发射，您可以将这个信号连接到一个槽函数来处理后续的逻辑。</p>
+<p><strong>具体实现思路：</strong></p>
+<ol>
+<li>
+<p><strong>连接信号与槽：</strong> 在您的 <code>Device</code> 类中，为物品的传递动画 (<code>QPropertyAnimation</code>) 创建一个槽函数，例如 <code>onAnimationFinished()</code>。</p>
+<ul>
+<li>当您启动一个物品传递动画时，将该动画实例的 <code>finished()</code> 信号连接到当前设备实例的 <code>onAnimationFinished()</code> 槽函数。</li>
+</ul>
+<p>C++</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">connect(animation, &amp;QPropertyAnimation::finished, this, &amp;Device::onAnimationFinished);
+</span></span><span class="line"><span class="cl">animation-&gt;start();
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>槽函数逻辑：</strong> 在 <code>onAnimationFinished()</code> 槽函数中，执行以下操作：</p>
+<ul>
+<li><strong>更新物品状态：</strong> 确认物品已经到达了下一个设备的位置。</li>
+<li><strong>释放当前设备：</strong> 将当前设备的物品持有状态更新为“空”，例如将一个 <code>held_item</code> 指针设为 <code>nullptr</code>。</li>
+<li><strong>解除阻塞状态：</strong> 将当前设备的 <code>isBlocked</code> 状态设为 <code>false</code>，从而允许它处理下一个物品。</li>
+<li><strong>通知下一个设备：</strong> 调用下一个设备的 <code>receiveItem()</code> 方法，正式将物品的所有权转移给它。</li>
+</ul>
+</li>
+</ol>
+<p><strong>这个机制带来的好处：</strong></p>
+<ul>
+<li><strong>解耦：</strong> 动画和游戏逻辑之间实现了分离。动画库只负责完成动画效果，而 <code>Device</code> 类则负责在动画结束后更新游戏状态。</li>
+<li><strong>同步：</strong> 确保游戏状态的更新（例如物品所有权的转移和设备阻塞状态的解除）与动画的完成精确同步。这避免了物品在逻辑上已经转移但视觉上还在旧位置的潜在问题。</li>
+<li><strong>事件驱动：</strong> 这种基于事件（<code>finished()</code> 信号）的机制比在主循环中不断轮询动画状态更高效、更优雅。</li>
+</ul>
+<p>为了应对更深入和更全面的面试，以下是您可能被问到的更多问题，涵盖了游戏设计、C++高级特性、内存管理、以及软件工程实践等多个方面。</p>
+<h3 id="c-高级特性与内存管理">C++ 高级特性与内存管理
+</h3><ul>
+<li><strong>问题：</strong> 您在项目中使用 <code>std::vector</code> 和 <code>std::queue</code> 等 STL 容器。当您动态创建 <code>Device</code> 和 <code>Mine</code> 对象时，您是如何管理它们的生命周期的？例如，当您将 <code>new Device</code> 出来的指针放入 <code>std::vector</code> 时，如何确保它们被正确释放以避免内存泄漏？
+<ul>
+<li><strong>回答：</strong> 我会使用 C++11 引入的智能指针来管理动态分配的内存，例如 <code>std::unique_ptr</code> 或 <code>std::shared_ptr</code>。如果一个 <code>Device</code> 的所有权是唯一的，我会使用 <code>std::unique_ptr&lt;Device&gt;</code> 来存储它。当 <code>std::vector</code> 被销毁时，<code>std::unique_ptr</code> 会自动调用 <code>delete</code>，从而避免内存泄漏。如果一个 <code>Mine</code> 对象需要在多个设备之间共享（例如，一个 <code>Conveyor</code> 和一个 <code>Cutter</code> 都需要访问同一个 <code>Mine</code> 对象），我会使用 <code>std::shared_ptr&lt;Mine&gt;</code>，它会通过引用计数来管理对象的生命周期。</li>
+</ul>
+</li>
+<li><strong>问题：</strong> 您提到 <code>Device</code> 抽象基类和派生类。在多态调用中，您是如何确保正确调用派生类的虚函数？例如，<code>processItem()</code> 函数，您在基类中是如何定义的？
+<ul>
+<li><strong>回答：</strong> 在 <code>Device</code> 基类中，我会将 <code>processItem()</code> 定义为一个纯虚函数：<code>virtual void processItem() = 0;</code>。这使得 <code>Device</code> 成为一个抽象基类，无法直接实例化。每个派生类（如 <code>Miner</code>, <code>Cutter</code>）都必须实现自己的 <code>processItem()</code> 函数。在主循环中，当遍历 <code>std::vector&lt;std::unique_ptr&lt;Device&gt;&gt;</code> 并调用 <code>device-&gt;processItem()</code> 时，C++ 的虚函数机制会确保正确地调用到实际对象（如 <code>Miner</code> 或 <code>Cutter</code>）的 <code>processItem()</code> 实现。</li>
+</ul>
+</li>
+<li><strong>问题：</strong> 垃圾桶 <code>TrashCan</code> 可以从四个方向输入物品。这在您的 <code>receiveItem()</code> 函数中是如何体现的？
+<ul>
+<li><strong>回答：</strong> 在 <code>TrashCan</code> 类的 <code>receiveItem()</code> 函数中，我不需要关心物品是从哪个方向来的。这个函数的唯一作用就是接收物品并将其“销毁”，即释放内存并从游戏中移除。由于垃圾桶没有下游设备，它永远不会被阻塞，所以它的 <code>canReceiveItem()</code> 函数会始终返回 <code>true</code>。这种设计简化了垃圾桶的实现，体现了其功能特性。</li>
+</ul>
+</li>
+</ul>
+<h3 id="软件工程与设计模式">软件工程与设计模式
+</h3><ul>
+<li><strong>问题：</strong> 您在简历中提到项目架构清晰可扩展。请问您在项目设计中应用了哪些设计模式？
+<ul>
+<li><strong>回答：</strong>
+<ul>
+<li><strong>工厂模式（Factory Pattern）：</strong> 在加载地图数据时，我使用了工厂模式。<code>MapLoader</code> 类会根据 <code>.txt</code> 文件中的数字来动态创建不同的 <code>Device</code> 派生类实例。这避免了在 <code>MapLoader</code> 中使用大量的 <code>if-else</code> 或 <code>switch</code> 语句，使代码更易于扩展和维护。</li>
+<li><strong>单例模式（Singleton Pattern）：</strong> 游戏中的某些全局对象，例如资源管理器或配置管理器，可以设计为单例模式，以确保整个程序中只有一个实例。</li>
+<li><strong>观察者模式（Observer Pattern）：</strong> Qt 的信号与槽机制本质上就是观察者模式的一种实现。它让对象（观察者）可以订阅感兴趣的事件（信号），当事件发生时，它们会得到通知并执行相应的操作。这使得游戏核心逻辑和 GUI 之间的通信变得解耦。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>问题：</strong> 您的项目中有地图、设备、物品等多个模块。您是如何组织这些代码文件的，遵循了哪些软件工程实践？
+<ul>
+<li><strong>回答：</strong> 我将不同的类放在各自的头文件（<code>.h</code>）和源文件（<code>.cpp</code>）中，以实现模块化。例如，<code>Map.h</code> 和 <code>Map.cpp</code>、<code>Device.h</code> 和 <code>Device.cpp</code> 等。我会使用 <code>include guards</code> 或 <code>#pragma once</code> 来防止头文件被重复包含。在代码风格方面，我遵循了团队或个人的编码规范，使用了 <code>clang-format</code> 来保持代码格式一致。同时，我也使用了 <code>git</code> 进行版本控制，并定期提交代码，以便追踪修改和协同开发。</li>
+</ul>
+</li>
+</ul>
+<h3 id="游戏设计与性能优化">游戏设计与性能优化
+</h3><ul>
+<li><strong>问题：</strong> 您如何处理不同设备速率（<code>rate</code>）的体现？例如，一个开采器的速率比传送带的速率快，这在游戏逻辑中是如何表现的？
+<ul>
+<li><strong>回答：</strong> 速率可以通过一个计时器或计数器来体现。在 <code>Device::update()</code> 函数中，我可以累加一个时间差（<code>delta_time</code>），当累加值达到设备速率所需要的时间时，才执行一次操作。例如，如果一个开采器的速率是每秒1个，那么每当 <code>delta_time</code> 累加到1秒时，它就会开采出一个新物品。如果开采器比传送带快，那么开采器可能会在传送带无法接收物品时被阻塞，从而在游戏玩法上体现出速率差异。</li>
+</ul>
+</li>
+<li><strong>问题：</strong> 您的游戏地图是 <code>m x n</code> 的矩形。当地图非常大时，您如何优化渲染性能？
+<ul>
+<li><strong>回答：</strong> 对于大型地图的渲染，全屏重绘效率低下。我会考虑以下优化：
+<ul>
+<li><strong>局部重绘：</strong> 只重绘发生变化的区域，例如有物品移动或设备放置的格子。Qt 的 <code>QWidget::update(const QRect &amp;rect)</code> 方法可以实现局部重绘。</li>
+<li><strong>脏矩形（Dirty Rectangles）：</strong> 维护一个“脏矩形”列表，记录所有需要重绘的区域。在每一帧的渲染循环中，只绘制这些脏矩形内的内容。</li>
+<li><strong>视锥剔除（Frustum Culling）：</strong> 只渲染当前摄像机视野范围内的部分地图。通过计算可见区域，可以跳过对屏幕外的设备和物品的绘制。</li>
+<li><strong>图层渲染：</strong> 将地图背景、设备和物品分成不同的图层进行渲染，当只有物品移动时，只需要更新物品图层，而无需重新绘制背景和设备。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>好的，根据您的描述，这是一种典型的 Qt 事件处理和信号与槽机制的应用，用于实现“拖放”设备到地图上的功能。这个过程可以分解为以下几个关键步骤：</p>
+<ol>
+<li>
+<p><strong>准备设备图标（Label）：</strong></p>
+<ul>
+<li>
+<p>首先，您为每个可放置的设备（如开采器、传送带）创建了一个</p>
+<p><code>QLabel</code> 或其他类似的 Qt 小部件，并设置其显示的图片（<code>QPixmap</code>）为对应的设备图标 11。</p>
+</li>
+<li>
+<p>为了能够监听鼠标点击事件，您需要让这些</p>
+<p><code>QLabel</code> 变得可点击。可以通过重写 <code>mousePressEvent</code> 或安装事件过滤器来实现 2。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>鼠标点击事件处理（<code>mousePressEvent</code>）：</strong></p>
+<ul>
+<li>
+<p>当用户点击某个设备图标的</p>
+<p><code>QLabel</code> 时，会触发其 <code>mousePressEvent</code> 3。</p>
+</li>
+<li>
+<p>在这个事件处理函数中，您需要做以下事情：</p>
+<ul>
+<li>
+<p>记录被选中的设备类型（例如，通过一个枚举或字符串来标识是“开采器”还是“传送带”） 4。</p>
+</li>
+<li>
+<p>创建一个新的</p>
+<p><code>QLabel</code> 实例作为“跟随鼠标”的设备图像 55。这个</p>
+<p><code>QLabel</code> 应该具有透明背景，并且其 <code>QPixmap</code> 应该设置为所选设备的图标 66。</p>
+</li>
+<li>
+<p>将这个新的</p>
+<p><code>QLabel</code> 设置为不显示在屏幕上，但已准备好跟随鼠标移动 77。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>鼠标移动事件处理（<code>mouseMoveEvent</code>）：</strong></p>
+<ul>
+<li>
+<p>当鼠标在游戏窗口上移动时，会触发</p>
+<p><code>mouseMoveEvent</code> 8。</p>
+</li>
+<li>
+<p>在这个事件处理函数中，您需要不断更新“跟随鼠标”的 <code>QLabel</code> 的位置，使其始终位于鼠标光标的下方或旁边。</p>
+</li>
+<li>
+<p>您还需要处理地图的拖动和缩放。您可以通过记录鼠标的初始位置，并计算当前的鼠标位置与初始位置的差值，来更新地图的绘制偏移量，从而实现地图的拖动效果 9。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>放置设备和更新地图状态（<code>mouseReleaseEvent</code>）：</strong></p>
+<ul>
+<li>
+<p>当用户在地图的某个具体位置释放鼠标左键时，会触发</p>
+<p><code>mouseReleaseEvent</code> 10。</p>
+</li>
+<li>
+<p>在这个事件处理函数中，您需要执行核心的游戏逻辑：</p>
+<ul>
+<li>
+<p>将“跟随鼠标”的</p>
+<p><code>QLabel</code> 隐藏或销毁 1111。</p>
+</li>
+<li>
+<p>将鼠标的屏幕坐标转换为游戏地图的逻辑坐标。这通常涉及到减去地图的偏移量和除以每个格子的尺寸 12。</p>
+</li>
+<li>
+<p>使用信号与槽机制通知游戏的核心逻辑 (</p>
+<p><code>GameState</code>) 来更新地图状态。您可以发射一个自定义信号，例如 <code>devicePlaced(int x, int y, DeviceType type)</code>，并将其连接到 <code>GameState</code> 的一个槽函数 13。</p>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>   `GameState` 的槽函数在接收到信号后，会根据传入的坐标和设备类型，在地图的二维数组中放置新的设备实例，并更新游戏状态 14。
+</code></pre>
+<ol start="5">
+<li>
+<p><strong>信号与槽机制在其中的作用：</strong></p>
+<ul>
+<li>
+<p>解耦**：信号与槽机制将用户交互（在 <code>Engine</code> 类中处理）与游戏核心逻辑（在 <code>GameState</code> 类中处理）分离开来 151515。</p>
+<p><code>Engine</code> 不需要知道 <code>GameState</code> 的内部实现，它只需要发出一个表示“某个位置放置了一个设备”的信号 16。</p>
+</li>
+<li>
+<p><strong>事件驱动</strong>：当事件（如鼠标点击）发生时，信号被发射，然后连接的槽函数被自动调用 17。这比在主循环中不断检查鼠标状态要高效得多 18。</p>
+</li>
+<li>
+<p><strong>方便扩展</strong>：如果您想添加新的设备，您只需要在 UI 上添加一个新的 <code>QLabel</code>，并确保其点击事件能够发射正确的信号 19。游戏逻辑部分可以保持不变，只要 <code>GameState</code> 的槽函数能够处理新的设备类型即可20.</p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="真实项目拷打内容">真实项目拷打内容
+</h1>
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/huyang/p/%E5%85%AB%E8%82%A1%E6%96%87/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">八股文</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Hu Yang
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
+
+    </body>
+</html>

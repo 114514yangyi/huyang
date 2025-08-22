@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="链路层协议 节点:运行链路层协议的任何设备 链路:连接两个节点的通信信道 点对点传输 流量控制 流量控制就是限制发送方的传输速率，以免超过接受方的接受能力，造成帧丢失\n在OSI体系中链路层是有流量控制的，而在TCP/IP体系中流量控制在传输层实现。\n链路层提供的服务 成帧 链路接入 可靠交付 比特差错检验和纠正 链路层在何处实现 是在网络适配器的芯片上实现的,结合了软件硬件\n唯一标识每一个接口:MAC地址\n链路层协议包括比特错误的检测和纠正,流量控制\n半双工通道:可以支持端点相互传输数据,但是同时只能够有一个端点在传送消息 全双工通道:能够有两端同时向对方传输信息 错误检查和纠正 错误分为位错（帧中的几个数据位出现错误）和帧错（帧丢失，顺序错误，帧重复）\n（在OSI中认为链路层应该提供可靠的传输，所以提供了原本应该是传输层的作用：帧的重传，确认，标号）\n使用奇偶校验:\n对于n位的数据位来说：\n奇检验码是在数据位后面添一个位数使得所有位数中“1”的个数为奇数； 偶检验码是在数据位后面添加一个位数使得所有位数中“1”的个数为偶数； 一维的奇偶校验,只能够检测出一位的错误,但是不能纠正错误,需要1bit冗余 二维的奇偶校验,可以检测一位的错误,可以纠正一位的错误,需要2n bit的冗余\n使用校验和: 将每16位相加最终结果取反\n使用循环冗余校验法: 先决定R位的冗余位,再确定生成的G(R+1位)生成码,使用数据$D\\times 2^R$（在D的后面添加R个0）来异或除G,最终得到R位的异或余数,为最终的冗余位.\n多路访问链路(Multiple access links) 类型:\n端到端 广播 解释:多个端同时地发送数据,可能会相互干扰而导致碰撞\n是否会产生碰撞主要看节点在传输帧的时候,会不会接收到其他节点传输的帧\n即:$d_{prop}&lt;\\frac{L}{R}$\n方式:\n按照频率和时间片来划分 TDMA:时分复用 将时间划分为同等长度的时隙,每次每一个时隙都划分给一个端,每一个时隙都可以传输一个帧 FDMA:频分复用 将频率划分为不同的部分,给端使用 TDM比FDM的优点如下：\n当发生拥塞等网络问题时，TDM中的数据丢失可能只会是一部分，而FDM中就可能 是大部分或全部。 TDM适合数字信号传输，而FDM适合模拟信号传输，因为现在通信网络多是传输数 字信号，所以TDM比FDM好。 因为频分复用连接建立后，当中途没有数据传输时，他所占有的频段带宽不能被其 他连接使用，故可能存在空置，而在时分复用的统计时分模式下，连接建立后，当某 个连接暂时不用传输数据时可以少分时间片或者不分，即其时隙的分配时“按需分 配”，这样就让出了相应的传输时间给其他连接。 随机发送协议 Slotted ALOHA 每一个端想要传输信息就直接传输,使用两种协议来处理碰撞,同样将每一个时间段都划分成ALOHA时隙,假如传输没有碰撞则当前节点继续在下一个时隙传输,否则就在下面的每一个时隙中以概率p传输.-&gt;最大的传输效率是$\\frac{1}{e}$\u200b\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="链路层协议 节点:运行链路层协议的任何设备 链路:连接两个节点的通信信道 点对点传输 流量控制与可靠传输 流量控制就是限制发送方的传输速率，以免超过接受方的接受能力，造成帧丢失\n在OSI体系中链路层是有流量控制的，而在TCP/IP体系中流量控制在传输层实现。\n停等协议 W_t=1，W_r=1，接受饭接收到了帧发送确认帧\nGBN 发送方维持一个&gt;1的滑动窗口发送信息帧，为整个滑动窗口设置一个计时器，超时就全部重传，超时就重发这个超时帧包括后面一系列的滑动窗口的帧；接受方维持一个W=1的滑动窗口，按顺序接收帧，超出范围的帧丢弃，使用累计确认的方式返回确认信息，ACKn。\nSR 选择重传协议 发送方维持一个W&gt;1的滑动窗口，为每一个帧都设置一个单独的计时器；接受方维持一个窗口&gt;1的窗口，缓存窗口内的帧，对每一个帧单独发送ACK，为错误帧发送NAK。\n链路层提供的服务 成帧 链路接入 可靠交付 比特差错检验和纠正 链路层在何处实现 是在网络适配器的芯片上实现的,结合了软件硬件\n唯一标识每一个接口:MAC地址\n链路层协议包括比特错误的检测和纠正,流量控制\n半双工通道:可以支持端点相互传输数据,但是同时只能够有一个端点在传送消息 全双工通道:能够有两端同时向对方传输信息 错误检查和纠正 错误分为位错（帧中的几个数据位出现错误）和帧错（帧丢失，顺序错误，帧重复）\n（在OSI中认为链路层应该提供可靠的传输，所以提供了原本应该是传输层的作用：帧的重传，确认，标号）\n使用奇偶校验:\n对于n位的数据位来说：\n奇检验码是在数据位后面添一个位数使得所有位数中“1”的个数为奇数； 偶检验码是在数据位后面添加一个位数使得所有位数中“1”的个数为偶数； 一维的奇偶校验,只能够检测出一位的错误,但是不能纠正错误,需要1bit冗余 二维的奇偶校验,可以检测一位的错误,可以纠正一位的错误,需要2n bit的冗余\n使用校验和: 将每16位相加最终结果取反\n使用循环冗余校验法: 先决定R位的冗余位,再确定生成的G(R+1位)生成码,使用数据$D\\times 2^R$（在D的后面添加R个0）来异或除G,最终得到R位的异或余数,为最终的冗余位.\n循环冗余校验码(CRC)详解 问题1：计算CRC过程 题目要求 给定数据串：1101011011 (10位) 生成多项式：10011 (G(x)=x⁴+x+1)\n计算步骤 确定多项式阶数：\n生成多项式10011是4阶(r=4) 需要在数据后附加4个0 → 11010110110000 模2除法计算：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 11010110110000 (被除数) ⊕ 10011 (除数) ------------ 01001110110000 ⊕ 10011 ------------ 0000010110000 ⊕ 10011 ------------ 001110000 ⊕ 10011 ------------ 01101000 ⊕ 10011 ------------ 0101000 ⊕ 10011 ------------ 001110 ⊕ 10011 ------------ 01101 → 余数(CRC码) 最终结果：\n">
 <title>链路层</title>
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/'>
 
 <link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="链路层">
-<meta property='og:description' content="链路层协议 节点:运行链路层协议的任何设备 链路:连接两个节点的通信信道 点对点传输 流量控制 流量控制就是限制发送方的传输速率，以免超过接受方的接受能力，造成帧丢失\n在OSI体系中链路层是有流量控制的，而在TCP/IP体系中流量控制在传输层实现。\n链路层提供的服务 成帧 链路接入 可靠交付 比特差错检验和纠正 链路层在何处实现 是在网络适配器的芯片上实现的,结合了软件硬件\n唯一标识每一个接口:MAC地址\n链路层协议包括比特错误的检测和纠正,流量控制\n半双工通道:可以支持端点相互传输数据,但是同时只能够有一个端点在传送消息 全双工通道:能够有两端同时向对方传输信息 错误检查和纠正 错误分为位错（帧中的几个数据位出现错误）和帧错（帧丢失，顺序错误，帧重复）\n（在OSI中认为链路层应该提供可靠的传输，所以提供了原本应该是传输层的作用：帧的重传，确认，标号）\n使用奇偶校验:\n对于n位的数据位来说：\n奇检验码是在数据位后面添一个位数使得所有位数中“1”的个数为奇数； 偶检验码是在数据位后面添加一个位数使得所有位数中“1”的个数为偶数； 一维的奇偶校验,只能够检测出一位的错误,但是不能纠正错误,需要1bit冗余 二维的奇偶校验,可以检测一位的错误,可以纠正一位的错误,需要2n bit的冗余\n使用校验和: 将每16位相加最终结果取反\n使用循环冗余校验法: 先决定R位的冗余位,再确定生成的G(R+1位)生成码,使用数据$D\\times 2^R$（在D的后面添加R个0）来异或除G,最终得到R位的异或余数,为最终的冗余位.\n多路访问链路(Multiple access links) 类型:\n端到端 广播 解释:多个端同时地发送数据,可能会相互干扰而导致碰撞\n是否会产生碰撞主要看节点在传输帧的时候,会不会接收到其他节点传输的帧\n即:$d_{prop}&lt;\\frac{L}{R}$\n方式:\n按照频率和时间片来划分 TDMA:时分复用 将时间划分为同等长度的时隙,每次每一个时隙都划分给一个端,每一个时隙都可以传输一个帧 FDMA:频分复用 将频率划分为不同的部分,给端使用 TDM比FDM的优点如下：\n当发生拥塞等网络问题时，TDM中的数据丢失可能只会是一部分，而FDM中就可能 是大部分或全部。 TDM适合数字信号传输，而FDM适合模拟信号传输，因为现在通信网络多是传输数 字信号，所以TDM比FDM好。 因为频分复用连接建立后，当中途没有数据传输时，他所占有的频段带宽不能被其 他连接使用，故可能存在空置，而在时分复用的统计时分模式下，连接建立后，当某 个连接暂时不用传输数据时可以少分时间片或者不分，即其时隙的分配时“按需分 配”，这样就让出了相应的传输时间给其他连接。 随机发送协议 Slotted ALOHA 每一个端想要传输信息就直接传输,使用两种协议来处理碰撞,同样将每一个时间段都划分成ALOHA时隙,假如传输没有碰撞则当前节点继续在下一个时隙传输,否则就在下面的每一个时隙中以概率p传输.-&gt;最大的传输效率是$\\frac{1}{e}$\u200b\n">
+<meta property='og:description' content="链路层协议 节点:运行链路层协议的任何设备 链路:连接两个节点的通信信道 点对点传输 流量控制与可靠传输 流量控制就是限制发送方的传输速率，以免超过接受方的接受能力，造成帧丢失\n在OSI体系中链路层是有流量控制的，而在TCP/IP体系中流量控制在传输层实现。\n停等协议 W_t=1，W_r=1，接受饭接收到了帧发送确认帧\nGBN 发送方维持一个&gt;1的滑动窗口发送信息帧，为整个滑动窗口设置一个计时器，超时就全部重传，超时就重发这个超时帧包括后面一系列的滑动窗口的帧；接受方维持一个W=1的滑动窗口，按顺序接收帧，超出范围的帧丢弃，使用累计确认的方式返回确认信息，ACKn。\nSR 选择重传协议 发送方维持一个W&gt;1的滑动窗口，为每一个帧都设置一个单独的计时器；接受方维持一个窗口&gt;1的窗口，缓存窗口内的帧，对每一个帧单独发送ACK，为错误帧发送NAK。\n链路层提供的服务 成帧 链路接入 可靠交付 比特差错检验和纠正 链路层在何处实现 是在网络适配器的芯片上实现的,结合了软件硬件\n唯一标识每一个接口:MAC地址\n链路层协议包括比特错误的检测和纠正,流量控制\n半双工通道:可以支持端点相互传输数据,但是同时只能够有一个端点在传送消息 全双工通道:能够有两端同时向对方传输信息 错误检查和纠正 错误分为位错（帧中的几个数据位出现错误）和帧错（帧丢失，顺序错误，帧重复）\n（在OSI中认为链路层应该提供可靠的传输，所以提供了原本应该是传输层的作用：帧的重传，确认，标号）\n使用奇偶校验:\n对于n位的数据位来说：\n奇检验码是在数据位后面添一个位数使得所有位数中“1”的个数为奇数； 偶检验码是在数据位后面添加一个位数使得所有位数中“1”的个数为偶数； 一维的奇偶校验,只能够检测出一位的错误,但是不能纠正错误,需要1bit冗余 二维的奇偶校验,可以检测一位的错误,可以纠正一位的错误,需要2n bit的冗余\n使用校验和: 将每16位相加最终结果取反\n使用循环冗余校验法: 先决定R位的冗余位,再确定生成的G(R+1位)生成码,使用数据$D\\times 2^R$（在D的后面添加R个0）来异或除G,最终得到R位的异或余数,为最终的冗余位.\n循环冗余校验码(CRC)详解 问题1：计算CRC过程 题目要求 给定数据串：1101011011 (10位) 生成多项式：10011 (G(x)=x⁴+x+1)\n计算步骤 确定多项式阶数：\n生成多项式10011是4阶(r=4) 需要在数据后附加4个0 → 11010110110000 模2除法计算：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 11010110110000 (被除数) ⊕ 10011 (除数) ------------ 01001110110000 ⊕ 10011 ------------ 0000010110000 ⊕ 10011 ------------ 001110000 ⊕ 10011 ------------ 01101000 ⊕ 10011 ------------ 0101000 ⊕ 10011 ------------ 001110 ⊕ 10011 ------------ 01101 → 余数(CRC码) 最终结果：\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/>
 <meta name="twitter:title" content="链路层">
-<meta name="twitter:description" content="链路层协议 节点:运行链路层协议的任何设备 链路:连接两个节点的通信信道 点对点传输 流量控制 流量控制就是限制发送方的传输速率，以免超过接受方的接受能力，造成帧丢失\n在OSI体系中链路层是有流量控制的，而在TCP/IP体系中流量控制在传输层实现。\n链路层提供的服务 成帧 链路接入 可靠交付 比特差错检验和纠正 链路层在何处实现 是在网络适配器的芯片上实现的,结合了软件硬件\n唯一标识每一个接口:MAC地址\n链路层协议包括比特错误的检测和纠正,流量控制\n半双工通道:可以支持端点相互传输数据,但是同时只能够有一个端点在传送消息 全双工通道:能够有两端同时向对方传输信息 错误检查和纠正 错误分为位错（帧中的几个数据位出现错误）和帧错（帧丢失，顺序错误，帧重复）\n（在OSI中认为链路层应该提供可靠的传输，所以提供了原本应该是传输层的作用：帧的重传，确认，标号）\n使用奇偶校验:\n对于n位的数据位来说：\n奇检验码是在数据位后面添一个位数使得所有位数中“1”的个数为奇数； 偶检验码是在数据位后面添加一个位数使得所有位数中“1”的个数为偶数； 一维的奇偶校验,只能够检测出一位的错误,但是不能纠正错误,需要1bit冗余 二维的奇偶校验,可以检测一位的错误,可以纠正一位的错误,需要2n bit的冗余\n使用校验和: 将每16位相加最终结果取反\n使用循环冗余校验法: 先决定R位的冗余位,再确定生成的G(R+1位)生成码,使用数据$D\\times 2^R$（在D的后面添加R个0）来异或除G,最终得到R位的异或余数,为最终的冗余位.\n多路访问链路(Multiple access links) 类型:\n端到端 广播 解释:多个端同时地发送数据,可能会相互干扰而导致碰撞\n是否会产生碰撞主要看节点在传输帧的时候,会不会接收到其他节点传输的帧\n即:$d_{prop}&lt;\\frac{L}{R}$\n方式:\n按照频率和时间片来划分 TDMA:时分复用 将时间划分为同等长度的时隙,每次每一个时隙都划分给一个端,每一个时隙都可以传输一个帧 FDMA:频分复用 将频率划分为不同的部分,给端使用 TDM比FDM的优点如下：\n当发生拥塞等网络问题时，TDM中的数据丢失可能只会是一部分，而FDM中就可能 是大部分或全部。 TDM适合数字信号传输，而FDM适合模拟信号传输，因为现在通信网络多是传输数 字信号，所以TDM比FDM好。 因为频分复用连接建立后，当中途没有数据传输时，他所占有的频段带宽不能被其 他连接使用，故可能存在空置，而在时分复用的统计时分模式下，连接建立后，当某 个连接暂时不用传输数据时可以少分时间片或者不分，即其时隙的分配时“按需分 配”，这样就让出了相应的传输时间给其他连接。 随机发送协议 Slotted ALOHA 每一个端想要传输信息就直接传输,使用两种协议来处理碰撞,同样将每一个时间段都划分成ALOHA时隙,假如传输没有碰撞则当前节点继续在下一个时隙传输,否则就在下面的每一个时隙中以概率p传输.-&gt;最大的传输效率是$\\frac{1}{e}$\u200b\n">
+<meta name="twitter:description" content="链路层协议 节点:运行链路层协议的任何设备 链路:连接两个节点的通信信道 点对点传输 流量控制与可靠传输 流量控制就是限制发送方的传输速率，以免超过接受方的接受能力，造成帧丢失\n在OSI体系中链路层是有流量控制的，而在TCP/IP体系中流量控制在传输层实现。\n停等协议 W_t=1，W_r=1，接受饭接收到了帧发送确认帧\nGBN 发送方维持一个&gt;1的滑动窗口发送信息帧，为整个滑动窗口设置一个计时器，超时就全部重传，超时就重发这个超时帧包括后面一系列的滑动窗口的帧；接受方维持一个W=1的滑动窗口，按顺序接收帧，超出范围的帧丢弃，使用累计确认的方式返回确认信息，ACKn。\nSR 选择重传协议 发送方维持一个W&gt;1的滑动窗口，为每一个帧都设置一个单独的计时器；接受方维持一个窗口&gt;1的窗口，缓存窗口内的帧，对每一个帧单独发送ACK，为错误帧发送NAK。\n链路层提供的服务 成帧 链路接入 可靠交付 比特差错检验和纠正 链路层在何处实现 是在网络适配器的芯片上实现的,结合了软件硬件\n唯一标识每一个接口:MAC地址\n链路层协议包括比特错误的检测和纠正,流量控制\n半双工通道:可以支持端点相互传输数据,但是同时只能够有一个端点在传送消息 全双工通道:能够有两端同时向对方传输信息 错误检查和纠正 错误分为位错（帧中的几个数据位出现错误）和帧错（帧丢失，顺序错误，帧重复）\n（在OSI中认为链路层应该提供可靠的传输，所以提供了原本应该是传输层的作用：帧的重传，确认，标号）\n使用奇偶校验:\n对于n位的数据位来说：\n奇检验码是在数据位后面添一个位数使得所有位数中“1”的个数为奇数； 偶检验码是在数据位后面添加一个位数使得所有位数中“1”的个数为偶数； 一维的奇偶校验,只能够检测出一位的错误,但是不能纠正错误,需要1bit冗余 二维的奇偶校验,可以检测一位的错误,可以纠正一位的错误,需要2n bit的冗余\n使用校验和: 将每16位相加最终结果取反\n使用循环冗余校验法: 先决定R位的冗余位,再确定生成的G(R+1位)生成码,使用数据$D\\times 2^R$（在D的后面添加R个0）来异或除G,最终得到R位的异或余数,为最终的冗余位.\n循环冗余校验码(CRC)详解 问题1：计算CRC过程 题目要求 给定数据串：1101011011 (10位) 生成多项式：10011 (G(x)=x⁴+x+1)\n计算步骤 确定多项式阶数：\n生成多项式10011是4阶(r=4) 需要在数据后附加4个0 → 11010110110000 模2除法计算：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 11010110110000 (被除数) ⊕ 10011 (除数) ------------ 01001110110000 ⊕ 10011 ------------ 0000010110000 ⊕ 10011 ------------ 001110000 ⊕ 10011 ------------ 01101000 ⊕ 10011 ------------ 0101000 ⊕ 10011 ------------ 001110 ⊕ 10011 ------------ 01101 → 余数(CRC码) 最终结果：\n">
     </head>
     <body class="
     article-page
@@ -290,16 +290,52 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#流量控制">流量控制</a></li>
+    <li><a href="#流量控制与可靠传输">流量控制与可靠传输</a>
+      <ol>
+        <li>
+          <ol>
+            <li><a href="#停等协议">停等协议</a></li>
+            <li><a href="#gbn">GBN</a></li>
+            <li><a href="#sr-选择重传协议">SR 选择重传协议</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
     <li><a href="#链路层提供的服务">链路层提供的服务</a></li>
     <li><a href="#链路层在何处实现">链路层在何处实现</a></li>
     <li><a href="#错误检查和纠正">错误检查和纠正</a></li>
-    <li><a href="#多路访问链路multiple-access-links">多路访问链路(Multiple access links)</a>
+  </ol>
+
+  <ol>
+    <li><a href="#问题1计算crc过程">问题1：计算CRC过程</a>
+      <ol>
+        <li><a href="#题目要求">题目要求</a></li>
+        <li><a href="#计算步骤">计算步骤</a></li>
+      </ol>
+    </li>
+    <li><a href="#问题2错误检测能力分析">问题2：错误检测能力分析</a>
+      <ol>
+        <li><a href="#给定多项式">给定多项式</a></li>
+        <li><a href="#错误检测能力">错误检测能力</a></li>
+        <li><a href="#理论依据">理论依据</a></li>
+      </ol>
+    </li>
+    <li><a href="#问题3crc-12的奇数位错误检测">问题3：CRC-12的奇数位错误检测</a>
+      <ol>
+        <li><a href="#crc-12多项式">CRC-12多项式</a></li>
+        <li><a href="#奇数位错误检测原理">奇数位错误检测原理</a></li>
+        <li><a href="#示例验证">示例验证</a></li>
+      </ol>
+    </li>
+    <li><a href="#关键概念总结">关键概念总结</a></li>
+    <li><a href="#实际应用提示">实际应用提示</a></li>
+    <li><a href="#多路访问链路multiple-access-links信道划分">多路访问链路(Multiple access links)信道划分</a>
       <ol>
         <li>
           <ol>
             <li><a href="#按照频率和时间片来划分"><strong>按照频率和时间片来划分</strong></a></li>
             <li><a href="#随机发送协议"><strong>随机发送协议</strong></a></li>
+            <li><a href="#aloha">ALOHA</a></li>
             <li><a href="#轮流方式"><strong>轮流方式</strong></a></li>
           </ol>
         </li>
@@ -389,7 +425,7 @@
 
 
                 <time class="article-time--reading">
-                    1 minute read
+                    3 minute read
                 </time>
             </div>
         
@@ -410,9 +446,15 @@
 <li><strong>链路</strong>:连接两个节点的通信信道</li>
 <li>点对点传输</li>
 </ol>
-<h2 id="流量控制">流量控制
+<h2 id="流量控制与可靠传输">流量控制与可靠传输
 </h2><p><strong>流量控制就是限制发送方的传输速率，以免超过接受方的接受能力，造成帧丢失</strong></p>
 <p>在OSI体系中链路层是有流量控制的，而在TCP/IP体系中流量控制在传输层实现。</p>
+<h4 id="停等协议">停等协议
+</h4><p>W_t=1，W_r=1，接受饭接收到了帧发送确认帧</p>
+<h4 id="gbn">GBN
+</h4><p>发送方维持一个&gt;1的滑动窗口发送信息帧，为整个滑动窗口设置一个计时器，超时就全部重传，超时就重发这个超时帧包括后面一系列的滑动窗口的帧；接受方维持一个W=1的滑动窗口，按顺序接收帧，超出范围的帧丢弃，使用累计确认的方式返回确认信息，ACKn。</p>
+<h4 id="sr-选择重传协议">SR 选择重传协议
+</h4><p>发送方维持一个W&gt;1的滑动窗口，为每一个帧都设置一个单独的计时器；接受方维持一个窗口&gt;1的窗口，缓存窗口内的帧，对每一个帧单独发送ACK，为错误帧发送NAK。</p>
 <h2 id="链路层提供的服务">链路层提供的服务
 </h2><ol>
 <li>成帧</li>
@@ -463,9 +505,237 @@
 		data-flex-basis="429px"
 	
 ></p>
+<h1 id="循环冗余校验码crc详解">循环冗余校验码(CRC)详解
+</h1><h2 id="问题1计算crc过程">问题1：计算CRC过程
+</h2><h3 id="题目要求">题目要求
+</h3><p>给定数据串：<code>1101011011</code> (10位)
+生成多项式：<code>10011</code> (G(x)=x⁴+x+1)</p>
+<h3 id="计算步骤">计算步骤
+</h3><ol>
+<li>
+<p><strong>确定多项式阶数</strong>：</p>
+<ul>
+<li>生成多项式<code>10011</code>是4阶(r=4)</li>
+<li>需要在数据后附加4个0 → <code>11010110110000</code></li>
+</ul>
+</li>
+<li>
+<p><strong>模2除法计算</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">11010110110000 (被除数)
+</span></span><span class="line"><span class="cl">⊕ 10011        (除数)
+</span></span><span class="line"><span class="cl">------------
+</span></span><span class="line"><span class="cl"> 01001110110000
+</span></span><span class="line"><span class="cl">⊕  10011
+</span></span><span class="line"><span class="cl">------------
+</span></span><span class="line"><span class="cl">  0000010110000
+</span></span><span class="line"><span class="cl">⊕      10011
+</span></span><span class="line"><span class="cl">------------
+</span></span><span class="line"><span class="cl">     001110000
+</span></span><span class="line"><span class="cl">⊕      10011
+</span></span><span class="line"><span class="cl">------------
+</span></span><span class="line"><span class="cl">      01101000
+</span></span><span class="line"><span class="cl">⊕     10011
+</span></span><span class="line"><span class="cl">------------
+</span></span><span class="line"><span class="cl">       0101000
+</span></span><span class="line"><span class="cl">⊕      10011
+</span></span><span class="line"><span class="cl">------------
+</span></span><span class="line"><span class="cl">        001110
+</span></span><span class="line"><span class="cl">⊕       10011
+</span></span><span class="line"><span class="cl">------------
+</span></span><span class="line"><span class="cl">         01101 → 余数(CRC码)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>最终结果</strong>：</p>
+<ul>
+<li>原始数据：<code>1101011011</code></li>
+<li>CRC校验码：<code>1101</code></li>
+<li>完整传输帧：<code>11010110111101</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="问题2错误检测能力分析">问题2：错误检测能力分析
+</h2><h3 id="给定多项式">给定多项式
+</h3><p>G(x) = x⁴ + x + 1 → <code>10011</code> (5位)</p>
+<h3 id="错误检测能力">错误检测能力
+</h3><ol>
+<li><strong>单比特错误</strong>：可以100%检测</li>
+<li><strong>双比特错误</strong>：可以100%检测</li>
+<li><strong>奇数位错误</strong>：可以100%检测</li>
+<li><strong>突发错误</strong>：
+<ul>
+<li>能检测长度≤r(4位)的突发错误</li>
+<li>检测长度=r+1(5位)的突发错误，概率1-2^(-r)=93.75%</li>
+<li>检测长度&gt;r+1的突发错误，概率1-2^(-r)</li>
+</ul>
+</li>
+</ol>
+<h3 id="理论依据">理论依据
+</h3><ul>
+<li>生成多项式含有(x+1)因子时，可检测所有奇数位错误</li>
+<li><code>10011</code>可分解为<code>(x+1)(x³+x²+1)</code>，满足条件</li>
+<li>最高可检测<strong>4位连续错误</strong></li>
+</ul>
+<h2 id="问题3crc-12的奇数位错误检测">问题3：CRC-12的奇数位错误检测
+</h2><h3 id="crc-12多项式">CRC-12多项式
+</h3><p>典型CRC-12多项式：<code>x¹² + x¹¹ + x³ + x² + x + 1</code> (1100000001111)</p>
+<h3 id="奇数位错误检测原理">奇数位错误检测原理
+</h3><ol>
+<li>
+<p><strong>数学基础</strong>：</p>
+<ul>
+<li>任何含有(x+1)因子的生成多项式可检测所有奇数位错误</li>
+<li>因为错误多项式E(x)有奇数个项时，E(1)=1</li>
+<li>而G(1)=0（因含x+1因子），故E(x) mod G(x) ≠ 0</li>
+</ul>
+</li>
+<li>
+<p><strong>CRC-12分解</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">x¹² + x¹¹ + x³ + x² + x + 1
+</span></span><span class="line"><span class="cl">= (x+1)(x¹¹ + x² + 1)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>明确包含(x+1)因子</p>
+</li>
+<li>
+<p><strong>检测保证</strong>：</p>
+<ul>
+<li>设错误位数为k(奇数)</li>
+<li>错误多项式E(x)有k个非零项</li>
+<li>E(1)=1 (模2加法)</li>
+<li>因为G(1)=0，所以E(x)不是G(x)的倍数</li>
+<li>余数不为零，错误可被检测</li>
+</ul>
+</li>
+</ol>
+<h3 id="示例验证">示例验证
+</h3><p>假设12位数据<code>111111111111</code>出现3位错误：</p>
+<ul>
+<li>错误模式：<code>101010111111</code> (第2,4,6位翻转)</li>
+<li>错误多项式：E(x) = x¹¹ + x⁹ + x⁷</li>
+<li>E(1) = 1 + 1 + 1 = 1 (模2)</li>
+<li>计算E(x) mod G(x) ≠ 0 → 错误被检测</li>
+</ul>
+<h2 id="关键概念总结">关键概念总结
+</h2><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>概念</th>
+          <th>说明</th>
+          <th>数学基础</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>模2除法</td>
+          <td>无借位减法，等价于异或运算</td>
+          <td>伽罗华域GF(2)</td>
+      </tr>
+      <tr>
+          <td>生成多项式</td>
+          <td>决定CRC的检错能力</td>
+          <td>不可约多项式性质</td>
+      </tr>
+      <tr>
+          <td>错误检测</td>
+          <td>依赖E(x) mod G(x) ≠ 0</td>
+          <td>多项式整除性</td>
+      </tr>
+      <tr>
+          <td>(x+1)因子</td>
+          <td>保证奇数错误检测</td>
+          <td>E(1)=1, G(1)=0</td>
+      </tr>
+  </tbody>
+</table></div>
+<h2 id="实际应用提示">实际应用提示
+</h2><ol>
+<li>
+<p><strong>常见CRC多项式</strong>：</p>
+<ul>
+<li>CRC-16-CCITT: <code>x¹⁶ + x¹² + x⁵ + 1</code></li>
+<li>CRC-32: <code>x³² + x²⁶ + x²³ + x²² + x¹⁶ + ... + 1</code></li>
+</ul>
+</li>
+<li>
+<p><strong>硬件实现</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="c1">// 简单的CRC-4实现示例
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">module</span> <span class="n">crc4</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="k">input</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">data</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">crc</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">  <span class="n">crc</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span> <span class="o">^</span> <span class="n">data</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">^</span> <span class="n">crc</span><span class="p">[</span><span class="mh">3</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="n">crc</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span> <span class="o">^</span> <span class="n">data</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">crc</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">^</span> <span class="n">crc</span><span class="p">[</span><span class="mh">3</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="n">crc</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span> <span class="o">^</span> <span class="n">crc</span><span class="p">[</span><span class="mh">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="n">crc</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span> <span class="o">^</span> <span class="n">crc</span><span class="p">[</span><span class="mh">2</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>性能权衡</strong>：</p>
+<ul>
+<li>校验位越多，检测能力越强，但开销越大</li>
+<li>选择多项式需考虑错误类型特征</li>
+</ul>
+</li>
+</ol>
 </li>
 </ul>
-<h2 id="多路访问链路multiple-access-links">多路访问链路(Multiple access links)
+<h2 id="多路访问链路multiple-access-links信道划分">多路访问链路(Multiple access links)信道划分
 </h2><p>类型:</p>
 <ul>
 <li>端到端</li>
@@ -477,10 +747,18 @@
 <p>方式:</p>
 <h4 id="按照频率和时间片来划分"><strong>按照频率和时间片来划分</strong>
 </h4><ul>
-<li>TDMA:时分复用
-将时间划分为同等长度的时隙,每次每一个时隙都划分给一个端,每一个时隙都可以传输一个帧</li>
-<li>FDMA:频分复用
-将频率划分为不同的部分,给端使用</li>
+<li>
+<p>TDMA:时分复用
+将时间划分为同等长度的时隙,每次每一个时隙都划分给一个端,每一个时隙都可以传输一个帧</p>
+</li>
+<li>
+<p>FDMA:频分复用
+将频率划分为不同的部分,给端使用</p>
+</li>
+<li>
+<p>CDM：码分复用</p>
+<p>每一个站使用一个相互正交的码片来标识为一个信号1，反码标识0，也就是使用一个向量表示一个bit；每一个站点之间的向量是正交的，并且向量的自内积是1，S$\times$$\bar{S}$=-1；</p>
+</li>
 </ul>
 <p>TDM比FDM的优点如下：</p>
 <ol>
@@ -494,20 +772,52 @@
 <code>配”</code>，这样就让出了相应的传输时间给其他连接。</li>
 </ol>
 <h4 id="随机发送协议"><strong>随机发送协议</strong>
-</h4><h5 id="slotted-aloha">Slotted ALOHA
+</h4><h4 id="aloha">ALOHA
+</h4><p>任意的站点以任意的方式在任何时候发送帧，当检测到帧冲突时，就停止发送并且随机时延后重新发送。</p>
+<h5 id="slotted-aloha">Slotted ALOHA
 </h5><p>每一个端想要传输信息就直接传输,使用两种协议来处理碰撞,同样将每一个时间段都划分成ALOHA时隙,假如传输没有碰撞则当前节点继续在下一个时隙传输,否则就在下面的每一个时隙中以概率p传输.-&gt;最大的传输效率是$\frac{1}{e}$​</p>
 <h5 id="csma">CSMA
 </h5><p>CSMA:carrier sense multiple access
 ​			在发送之前先听信道中是否空闲,加入空闲则传输,否则就抑制传输,直到信道空闲</p>
+<p><strong>先听后发</strong></p>
+<p>分为多种监听方式</p>
 <ul>
-<li>CSMA/CD:碰撞检测-&gt;在Ethernet中使用
+<li>
+<p>CSMA/CD:碰撞检测-&gt;在Ethernet中使用</p>
+<p>先听后发，边发边听，碰撞停止，随机重发。</p>
 <ul>
 <li>假如当前的信道空闲则监听96bit时间后发送信息
 否则一直抑制传输,直到信道空闲</li>
-<li>在传输中监听到了碰撞,则立刻停止传输,并且持续发送48bit时间的干扰信号(jamming Signal).发送完以后就开始选取随机的退避时间(指数回退),在第m次的碰撞中,从{$0,1,2,3,,,,2^{m}-1$}中随机选择一个k,则回避512bit$\times$k的比特时间,重新开始监听信道并且准备重新发送帧.</li>
+<li>假如在发送过程中没有检测到碰撞则一定发送成功（因为最小帧长）</li>
+<li>否则在传输中监听到了碰撞,则立刻停止传输,并且持续发送48bit时间的干扰信号(jamming Signal).发送完以后就开始选取随机的退避时间(指数回退),在第m次的碰撞中,从{$0,1,2,3,,,,2^{m}-1$}中随机选择一个k,则回避512bit$\times$k的比特时间,重新开始监听信道并且准备重新发送帧.</li>
+<li>m最大为10，超过16次重传以后就向上报告</li>
 </ul>
 </li>
-<li>CSMA/CA:碰撞避免-&gt;在802.11中使用</li>
+<li>
+<p>CSMA/CA:碰撞避免-&gt;在802.11中使用</p>
+<ul>
+<li>有数据要发+信道空闲+等待DIFS时间后发送</li>
+<li>信道忙-》执行退避算法，计算退避值，等待信道空闲，在忙的时候退避值不减少，在空闲的时候，退避值倒计时</li>
+<li>退避值为0，发送帧，等待确认</li>
+<li>发送第二帧时候，要重新计算退避值，从第二步开始。</li>
+</ul>
+<p>隐蔽问题：A，B站同时向AP发送信息</p>
+<p>信道预约方法：</p>
+<p><img src="/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20250702131701049.png"
+	width="658"
+	height="610"
+	srcset="/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20250702131701049_hu_38f194f5bc6da342.png 480w, /huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/image-20250702131701049_hu_abdda41199d23733.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250702131701049"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="107"
+		data-flex-basis="258px"
+	
+></p>
+</li>
 </ul>
 <h4 id="轮流方式"><strong>轮流方式</strong>
 </h4><ul>
@@ -775,12 +1085,12 @@
             
                 
 <article class="">
-    <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/">
+    <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">传输层</h2>
+            <h2 class="article-title">传输层核心协议：TCP与UDP深度解析</h2>
         </div>
     </a>
 </article>

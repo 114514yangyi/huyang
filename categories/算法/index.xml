@@ -3213,7 +3213,7 @@ Created time: November 8, 2023 3:06 PM&lt;/p&gt;
 &lt;p&gt;涉及的题目：&lt;a class=&#34;link&#34; href=&#34;https://leetcode.cn/problems/decremental-string-concatenation/description/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;字符串连接删减字母&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;特征：dp【字符集】【序列】&lt;/p&gt;&lt;/blockquote&gt;
-&lt;p&gt;字符集DP的核心在于，当处理序列问题时，若每一步决策的优化目标仅依赖于&lt;strong&gt;当前形成的中间结果的某些关键属性（例如字符串的首尾字符），且这些属性的数量有限且可枚举&lt;/strong&gt;，我们便可将其作为DP状态的维度，从而高效地解决问题。&lt;/p&gt;
+&lt;p&gt;字符集DP的核心在于，当处理序列问题时，若每一步决策的优化目标仅依赖于&lt;strong&gt;当前形成的中间结果的某些关键属性（例如字符串的首尾字符），且这些属性的数量有限且可枚举&lt;/strong&gt;，我们便可将其作为DP状态的维度，从而高效地解决问题&lt;/p&gt;
 &lt;hr&gt;
 &lt;h4 id=&#34;1-核心思想&#34;&gt;1. 核心思想
 &lt;/h4&gt;&lt;p&gt;这种方法利用了这样一个观察：在某些序列连接或构建问题中，虽然中间结果可能很长，但&lt;strong&gt;决定未来连接方式和成本的关键信息仅仅是其头部和尾部的字符&lt;/strong&gt;（或其它少量、有限的属性）。通过将这些关键字符编码到DP状态中，我们避免了存储和传递整个字符串，极大地降低了状态空间复杂度。&lt;/p&gt;
@@ -3460,7 +3460,11 @@ Created time: November 8, 2023 3:06 PM&lt;/p&gt;
 		data-flex-basis=&#34;905px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;对于上面的式子，我们可以使用乘法的快速幂方法来做。&lt;/p&gt;
+&lt;p&gt;这里的使用乘法幂的求和公式：
+&lt;/p&gt;
+$$
+S_q=\frac{a_0(q^n-1)}{q-1}
+$$&lt;p&gt;对于上面的式子，我们可以使用乘法的快速幂方法来做。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;[!NOTE]&lt;/p&gt;
 &lt;p&gt;思考上面的过程是一种什么样子的过程：&lt;/p&gt;
@@ -3478,7 +3482,7 @@ Created time: November 8, 2023 3:06 PM&lt;/p&gt;
 &lt;p&gt;综上就能够发现递推关系。&lt;/p&gt;
 &lt;p&gt;但是我们现在来看一看从后往前求解思路的可能性，因为这种将A1和An同色融合的trick有点困难。&lt;/p&gt;
 &lt;p&gt;设置k为颜色的数量：&lt;/p&gt;
-&lt;p&gt;我们不妨将An-1和A1颜色相同的可能性数量设置为Bn-1，颜色相同的可能性设置为Cn-1，那么显然Sn=Bn-1*(k-1)+Cn-1*(k-2).&lt;/p&gt;
+&lt;p&gt;我们不妨将An-1和A1颜色相同的可能性数量设置为Bn-1，颜色不相同的可能性设置为Cn-1，那么显然Sn=Bn-1*(k-1)+Cn-1*(k-2).&lt;/p&gt;
 &lt;p&gt;Bn=Cn-1,Cn=Cn-1*(k-2)+Bn-1*(k-1),由此也可以求出来递推公式。&lt;/p&gt;
 &lt;p&gt;下面是GPT的回答：&lt;/p&gt;
 &lt;h1 id=&#34;环染色问题的递推关系证明思路&#34;&gt;环染色问题的递推关系证明思路
