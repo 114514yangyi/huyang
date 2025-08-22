@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%A6%81%E7%82%B9/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="互联网要点">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="互联网要点">
 <meta property='og:description' content="互联网要点 互联网计算简介 主机:\n连接互联网的,运行应用程序的系统\n分组\n一个端系统向另一个端系统传输的数据,将数据分段,并添加首部字节\n协议\n指的是发送报文的格式,顺序,发送/接受报文和其他事件所采取的操作\n运输层 多路复用\n收集套接字的数据块,并添加首部信息,形成报文段,并将报文段发送到网络层\n多路分解\n将从运输层接受的报文段正确地交付给套接字\n网络层 数据平面\n输入链路之一的数据报转发到输出链路之一\n控制平面\n控制数据报从源主机到目的主机的端到端的路由方式\n转发\n将输入链路接口的数据包转移给合适的输出链路接口\n路由选择\n将数据报从源到目的地采取的端到端的网络范围处理过程\nOSPF\n在AS中计算每一个节点的最短距离的链路状态算法\nSDN体系的4个特点\n基于流的转发 控制平面和数据平面分离 可编程网络 网络控制能力 ICMP\n主机和路由器交流网络状态信息报文的协议\nSNMP\n用于管理服务器和代被管理主机执行的代理之间传递网络管理信息报文的协议\n代理 MBI 管理系统 网络管理的关键组件\n管理服务器 被管理设备 数据 SNMP 链路层 节点\n任何运行链路层协议的设备\n链路\n两个节点之间的通信信道\n链路层提供的服务\n成帧 链路接入 可靠交付 比特级的差错检验和纠正 链路层在何处实现\n网络适配器的芯片上\n多路访问协议\n频率,时间片划分接入 随机接入 轮流接入 数据中心的等级拓扑\n网关路由器 接入路由器 负载均衡器 第一层交换机 第二层交换机 TOR交换机 服务器架构 无线网络和移动网络 无线主机\n运行应用程序的端系统设备\n无线链路\n主机通过无线通信链路和基站或主机连接\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%A6%81%E7%82%B9/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -756,7 +756,40 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

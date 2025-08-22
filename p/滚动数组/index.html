@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E6%BB%9A%E5%8A%A8%E6%95%B0%E7%BB%84/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="滚动数组">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="滚动数组">
 <meta property='og:description' content="滚动数组 Tags: 算法 Created by: Hu Yang Created time: November 12, 2023 3:34 PM\n滚动数组思想是一种优化算法的技巧，用于减少空间复杂度。它通过复用数组中的元素，避免创建额外的数组，从而节省内存空间。\n滚动数组的思想在算法设计中非常常见，特别是在动态规划问题中。它通过将问题的状态压缩到一个固定大小的数组中，从而减少空间的使用。\n滚动数组的基本思想是，通过不断更新数组中的元素，将当前状态的计算结果保存在数组中，然后根据需要，将数组中的元素复用到下一个状态的计算中。这样，就可以避免创建额外的数组，节省内存空间。\n滚动数组的应用场景很多，例如在动态规划中，当状态转移方程只依赖于前一状态的计算结果时，可以使用滚动数组来优化空间复杂度。另外，在一些数组遍历的问题中，也可以使用滚动数组来减少空间的使用。\n总结一下，滚动数组思想是一种优化算法的技巧，通过复用数组中的元素，避免创建额外的数组，从而节省内存空间。它在动态规划和数组遍历等问题中有广泛的应用。\nLearn more:\n算法导论 读书笔记 - Chuanqi 的技术文档 空间优化技巧：Scrolling array 滚动数组 - 知乎 ">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E6%BB%9A%E5%8A%A8%E6%95%B0%E7%BB%84/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -613,7 +613,40 @@ Created time: November 12, 2023 3:34 PM</p>
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="概率论知识点">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="概率论知识点">
 <meta property='og:description' content="概率论知识点 为什么二项分布的方差是 npq 方差计算公式 好的，没问题！概率论是研究随机现象规律的数学分支。下面为您梳理一些概率论中最基础、最重要的概念和公式，尽量用简单的方式来解释。\n1. 基本概念\n试验 (Experiment): 一个可以重复进行的过程，其结果具有不确定性（例如：掷骰子、抛硬币）。 样本空间 (Sample Space, S): 一个试验所有可能的基本结果组成的集合（例如：掷一次骰子的样本空间 S={1,2,3,4,5,6}）。 事件 (Event, A, B, &hellip;): 样本空间的一个子集，即我们关心的某一个或某一些结果（例如：掷骰子得到偶数，事件 A={2,4,6}）。 概率 (Probability, P(A)): 衡量一个事件 A 发生的可能性大小的数值，通常在 0 到 1 之间。P(A)=0 表示事件不可能发生，P(A)=1 表示事件必然发生。 2. 概率的基本计算\n古典概率 (Classical Probability): 如果一个试验的所有基本结果是有限的，并且每个基本结果发生的可能性相同，那么事件 A 的概率为： P(A)=样本空间 S 中基本结果的总数包含在事件 A 中的基本结果数\n例子： 掷一个均匀的骰子，得到偶数的概率 P(偶数)=∣{1,2,3,4,5,6}∣∣{2,4,6}∣=63=21。\n3. 概率的基本公理与性质 (Axioms and Properties)\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E7%9F%A5%E8%AF%86%E7%82%B9/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -829,7 +829,40 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

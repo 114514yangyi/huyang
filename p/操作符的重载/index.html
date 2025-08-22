@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E9%87%8D%E8%BD%BD/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="操作符的重载">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="操作符的重载">
 <meta property='og:description' content="操作符的重载 1.操作符重载的方式：#通过一个类的非静态的成员函数（除了new和delete） #一个全局友元函数。\n2.当函数的第一个参数不是一个自定义类型的对象的时候只能使用全局函数来实现操作符重载。\n4.前置加加是将对象本身进行自增，并返回对象本身，可以进行后续的操作；后置加加是将对象自增并返回一个对象的常拷贝，不能进行修改，只能进行使用值。\n5.特殊的操作符重载： #对于“=”的重载，用于对于对象赋值，通常在定义了拷贝函数的类中也需要自定义赋值函数；\n#“[]”的重载，使用在具有线性关系的成员变量。\n#对于“→“重载可以实现智能指针，但是注意在重载操作符的时候，不需要额外的参数，返回值应该是一个指针，用于替代在原先“→”之前位置的变量。例如：\n#“（）”的重载是将类的对象看做一个函数进行使用\n#new 和 delete 的重载：\n对于这两个操作符的重载是只会重载他们对于动态对象的空间分配方式，而并不会去影响他们对于对象类的构造函数和析构函数 的调用。\n在new中除了要传size参数，还可提供其他的参数用于其中：\ndelete的定义：\n在重载操作符：new[] 和delete[]时：\n注意：当类（或基类和成员对象类）中有析构函数时，传给函数new[]的参数size的实际值会比对象数组需要的空间多4个字节，用于存储元素个数！会根据存储的元素个数调用每个元素的析构函数\n#转义操作符：\n将其他类型转换为当前类型需要当前类有对应的其他类型的构造函数；从当前类型转换为其他类型需要重载诸如：int(),float()等操作符\n但是当两者转换方式同时存在会存在歧义，不知道应该去调用哪一个类型转换函数，所以在两者同时定义的时候要进行显式类型转换，或者使用explicit修饰符说明此转换方式不能适用于隐式转换方式。\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E9%87%8D%E8%BD%BD/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -687,7 +687,40 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

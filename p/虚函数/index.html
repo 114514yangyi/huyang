@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E8%99%9A%E5%87%BD%E6%95%B0/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="虚函数">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="虚函数">
 <meta property='og:description' content="虚函数 1.静态绑定是由编译时刻确定的，主要是找自己本类型的非虚函数进行绑定。\n动态绑定是假如在本类型的函数时只存在虚函数的话就会找当前所指的子类型的虚函数表，并于表中的函数进行动态绑定。\n2.虚函数有两个作用：\n#指定消息采用动态绑定；\n#指出基类中可以被派生类重新定义的成员函数\n4.静态成员不能是虚函数；构造函数不能是虚函数，而析构函数往往是虚函数；在构造函数和析构函数中对于虚函数的调用不进行动态绑定。\n5.通过基类的指针访问到派生类的新定义的成员：\n6.包含纯虚函数的类称之为抽象类，其中纯虚函数是并未给出实现的函数，形式为：\n抽象类只提供待实现的接口来实现类型的多态。并且抽象类可以提供真正的封装性。\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E8%99%9A%E5%87%BD%E6%95%B0/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -649,7 +649,40 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

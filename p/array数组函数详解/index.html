@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/array%E6%95%B0%E7%BB%84%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="Array数组函数详解">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="Array数组函数详解">
 <meta property='og:description' content="Array数组函数详解 Created by: Hu Yang Created time: November 9, 2023 9:34 AM Tags: Guides, 容器\n在Java中，数组是一种用于存储多个相同类型元素的数据结构。Java提供了一些内置的Array类函数，用于操作和处理数组。下面是一些常用的Array函数的详细解释：\nlength：数组的长度是一个属性，用于获取数组中元素的数量。例如，如果int[] nums = {1, 2, 3, 4};，则nums.length的值为4。 clone：clone方法用于创建一个数组的副本。它会复制原始数组中的所有元素，并返回一个新的数组对象。例如，int[] nums = {1, 2, 3, 4}; int[] copy = nums.clone();会创建一个与nums相同的数组副本。 toString：toString方法用于将数组转换为字符串表示。它返回一个包含数组中所有元素的字符串，每个元素用逗号分隔，并用方括号括起来。例如，int[] nums = {1, 2, 3, 4}; String str = Arrays.toString(nums);会将数组转换为字符串&quot;[1, 2, 3, 4]&quot;。 sort：sort方法用于对数组进行排序。它可以对包含基本数据类型或实现了Comparable接口的对象的数组进行排序。排序会改变原始数组的顺序。例如，int[] nums = {4, 2, 1, 3}; Arrays.sort(nums);会将数组按升序排序，结果为[1, 2, 3, 4]。 binarySearch：binarySearch方法用于在已排序的数组中执行二分查找。它接受一个已排序的数组和要搜索的值，并返回要搜索的值的索引。如果找到该值，则返回其索引；如果找不到，则返回一个负数。例如，int[] nums = {1, 2, 3, 4}; int index = Arrays.binarySearch(nums, 3);会返回值3在数组中的索引，结果为2。 fill：fill方法用于将数组的所有元素设置为指定的值。它接受一个数组和要填充的值，并将所有元素设置为该值。例如，int[] nums = new int[5]; Arrays.fill(nums, 0);会将数组nums中的所有元素设置为0。 这些是Java中一些常用的Array函数，可以帮助你在处理和操作数组时更加方便和高效地进行编程。\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/array%E6%95%B0%E7%BB%84%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -610,7 +610,40 @@ Tags: Guides, 容器</p>
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

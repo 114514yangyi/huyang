@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="互联网安全">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="互联网安全">
 <meta property='og:description' content="互联网安全 主要是\n鉴别 机密性 完整性 运行安全性 秘钥 对称秘钥 接收方和发送者使用同一份秘钥进行加密和解密\n加密算法:\n凯撒密码\n循环的加密模式\nDES加密算法:\n使用56位对称密钥，64位明文输入\n有3DES:使用3个不同的秘钥进行加密\nAES:\n使用128/192/256bits的秘钥加密128bits的数据块\n非对称秘钥 所有人都知道接受者的公钥,只有接受者有私钥;发送者使用公钥加密,接受者使用私钥解密;\nRSA算法:\n密钥生成： 选择两个大素数 p 和 q。 计算 n = p * q，n 称为模数。 计算欧拉函数 φ(n) = (p-1) * (q-1)。 选择一个指数 e，使得 e 与 φ(n) 互质，通常选择一个小素数，常见的选择是65537。 计算私钥指数 d，满足 (d * e) mod φ(n) = 1。 加密： 将明文 M 转换为整数 m，要求 0 &lt;= m &lt; n。 加密计算：C = M^e mod n，得到密文 C。 解密： 解密计算：M = C^d mod n，得到原始明文 M。 私钥:$K^{-}{B}=(n,d)$;公钥:$K^{+}{B}=(n,e)$.\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -1552,7 +1552,40 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

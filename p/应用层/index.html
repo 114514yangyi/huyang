@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E5%BA%94%E7%94%A8%E5%B1%82/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="应用层">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="应用层">
 <meta property='og:description' content="应用层 作用:提供用户或者应用程序访问互联网的接口\n应用层结构 客户/服务器结构 客户端（Client）： 启动方式：根据需要启动。\n联系服务器方式：客户端主动与服务器建立联系，客户端先发起通信。\n动态IP地址：客户端可能具有动态分配的IP地址。\n服务器（Server）： 运行方式：作为守护进程（始终运行）。 提供服务方式：向客户端提供请求的服务。 固定IP地址：服务器通常具有固定的IP地址。 peer-to-peer结构 核心特点： 无始终在线服务器：对等网络中没有始终在线的中央服务器，而是由各个端系统直接相互通信。 端系统直接通信：对等网络中的节点（对等者）可以互相请求服务，也可以相互提供服务。 自我可扩展性：新的节点加入可以带来新的服务能力，同时也带来新的服务需求，因此网络具有自我扩展的性质。 节点连接多变：对等节点的连接不稳定，IP地址可能会改变。 高度扩展性但管理困难：对等网络具有很高的可扩展性，但管理复杂度较高。 DNS : Domain Name Service 域名解析服务 将域名解析陈相应的IP地址\n层次化的域名解析 根域名服务器（Root Name Servers）：\n功能：根域名服务器位于 DNS 层次结构的最顶部，负责管理顶级域的信息，当本地域名服务器无法解析域名时，会联系根域名服务器。 作用：根域名服务器不直接回答 DNS 查询，而是指示本地域名服务器转向哪个顶级域名服务器处理查询。 顶级域名服务器（Top-Level Domain Servers）：\n功能：顶级域名服务器负责管理顶级域（TLD）信息，如.com、.org、.net、.edu等，以及各国家顶级域，如.cn、.uk、.fr等。 作用：当本地域名服务器接收到从根域名服务器指示后的查询，会进一步向适当的顶级域名服务器发出查询以获取更详细的信息。 权威 DNS 服务器（Authoritative DNS Servers）：\n功能：权威 DNS 服务器包含有关特定域的权威信息，负责提供给查询者域名到IP地址的映射。 作用：当本地域名服务器需要解析特定域的信息时，会向该域的权威 DNS 服务器发送查询请求以获取准确的映射关系。 本地域名服务器（Local Name Servers）：\n功能：本地域名服务器通常由住宅ISP、公司或大学维护，存储已查询过的域名映射关系，提高解析效率。 作用：当用户设备发起 DNS 查询时，查询会首先发送到本地域名服务器，如果本地服务器有相应的记录，将直接返回结果；否则，会按照层级结构向更高级的域名服务器继续查询。 Every server knows the root Root server knows about all top-level domains 域名解析的顺序: ">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E5%BA%94%E7%94%A8%E5%B1%82/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -1162,7 +1162,40 @@ FTP 的服务器进程由两大部分组成:一个主进程,负责接收新的�
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

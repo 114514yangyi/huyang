@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="网络层">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="网络层">
 <meta property='og:description' content="网络层协议 Internet的网络架构是best-effort的网络协议,不会做任何的保证,并且没有拥塞的通知.IPV4的头部的基础长度是20字节,而IPV6的长度是40字节.\nIP协议简介: 网络-IP协议详解（报文格式、分类、NAT、子网、CIDR、抓包分析）_nat报文-CSDN博客\n在IPV4或者IPV6都要有一个信息去指示包裹在IP中的数据报文的类型\nIP数据报格式 IPv4头部字段结构： 版本（Version）（4 bits）：指定使用的IPv4协议版本，通常为IPv4，值为4。 头部长度（IHL - Internet Header Length）（4 bits）：表示IPv4头部的长度，以32位字的数量来计算，因此值为正整数，最小值为5，最大值为15（即最大长度为60字节）。 区分服务（Type of Service, ToS）（8 bits）：用于指定数据包的服务质量要求，包括优先级、延迟、吞吐量、可靠性等。 总长度（Total Length）（16 bits）：指定整个IPv4数据报的长度，包括头部和数据部分的总长度。 标识（Identification）（16 bits）：用于识别数据报的唯一性，有助于数据包的重组和重组应用（如分片）。 标志（Flags）（3 bits）：包含分片的标志信息，包括标记、不分片和更多分片。 片偏移（Fragment Offset）（13 bits）：指定数据报的片偏移，表示数据报在原始报文中的位置。 生存时间（Time to Live, TTL）（8 bits）：指定数据报在网络中最大生存时间，每经过一个路由器减一，直到为0时被丢弃。 协议（Protocol）（8 bits）：指定数据部分使用的协议，例如TCP为6，UDP为17。 头部校验和（Header Checksum）（16 bits）：用于校验IPv4头部的完整性，检测传输过程中是否发生错误。 源IP地址（Source IP Address）（32 bits）：指定数据包的源IP地址。 目的IP地址（Destination IP Address）（32 bits）：指定数据包的目的IP地址。 IPV6头信息 #IP地址变成了8个字节\n版本（Version）（4 bits）：表示使用的IPv6协议版本，值为6。 流量分类（Traffic Class）（8 bits）：类似于IPv4中的区分服务（Type of Service），用于指定不同类型的数据流，如优先级、延迟或吞吐量要求。 有效载荷长度（Payload Length）（16 bits）：指定IPv6头部后面的有效载荷（payload）的长度，包括扩展头部及数据部分的总长度。 下一个头部（Next Header）（8 bits）：指示紧随IPv6头部的下一个头部类型，类似IPv4的协议字段，确定如何解释数据包的有效载荷。 跳限制（Hop Limit）（8 bits）：类似于IPv4中的生存时间（Time to Live），指定数据包在网络中能通过的最大跳数，每经过一个路由器减一，最终为0时数据包被丢弃。 源地址（Source Address）（128 bits）：指定IPv6数据包的源IPv6地址。 目的地址（Destination Address）（128 bits）：指定IPv6数据包的目的IPv6地址。 Flow Label 标识数据流：Flow Label用于唯一标识一个数据流，帮助网络设备识别和区分不同的数据流。这对于实时传输、多媒体传输和其他需要特殊处理的数据流尤为重要。 优化路由决策：Flow Label可以帮助路由器做出更智能的路由决策，以提高数据流的传输效率和减少传输时延。通过识别Flow Label，路由器可以采取更合适的路由策略，如流级负载均衡或特定路径选择。 提高服务质量：使用Flow Label可以支持差异化服务质量（QoS），确保特定的数据流能够获得适当的带宽和延迟要求。这对于要求实时传输和延迟敏感的应用程序非常重要。 简化数据包处理：Flow Label可以帮助网络设备快速识别特定数据流，从而简化数据包的处理过程，提高网络设备的效率和性能。 从IPV4向IPV6的转换方法: 双栈:由支持IPV4/IPV6的路由器将包转换为IPV4的包,当发送给只支持IPV4的路由器的时候.\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -1240,7 +1240,40 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

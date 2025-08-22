@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E5%B8%B8%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E9%9D%99%E6%80%81%E6%88%90%E5%91%98/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="常成员函数，静态成员">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="常成员函数，静态成员">
 <meta property='og:description' content="常成员函数，静态成员 1.长成员函数就是指不会对对象的成员变量进行改变的函数，通常在函数的成员初始化表中进行const修饰：\nint get_day() const; //常成员函数\n2.然而常成员函数可以通过成员指针来修改指针所指的值，不会报错。\n3.将成员变量声明为static可以实现成员的空间由class来维护，所有的对象将会只使用同一个变量；而对于static修饰的成员函数，其特点就是 只能访问类中的静态成员变量；static函数没有隐藏的this指针。\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E5%B8%B8%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E9%9D%99%E6%80%81%E6%88%90%E5%91%98/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -604,7 +604,40 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

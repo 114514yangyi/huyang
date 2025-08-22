@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B1%82%E8%BE%B9%E7%95%8C/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="双指针求边界">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="双指针求边界">
 <meta property='og:description' content="双指针求边界 Created by: Hu Yang Created time: October 24, 2023 11:08 AM Tags: Guides, 双指针\n双指针求边界问题，需要元素是有序的，两个指针L,R从两端开始遍历，并且在每一次得出结果时，要能够清晰地判断是要移动哪一个指针。运用双指针能够将从数组中挑选符合条件的两个元素从原先的需要两次遍历，变成了一次遍历，将复杂度降低了一个阶。\n一、双指针 双指针技巧可细分分为两类，一类是快慢指针，一类是左右指针。\n前者解决主要解决链表中的问题，比如典型的判定链表中是否包含环、反转链表、找链表的中间节点、删除链表的倒数第 N 个结点；也用来解决数组中的问题，如移动/移除元素、删除有序数组中的重复项。\n后者主要解决数组（或者字符串）中的问题，比如二分查找，滑动窗口。\n算法——双指针技巧总结 一、双指针 二、链表快慢指针 19.删除链表的倒数第 N 个结点双指针206.反转链表思路：双指针法递归法92.反转链表 II1.递归2.迭代（双指针头插法）876.链表的中间结点常规思路双指针思路141.环形链表（判断链表是否有环）双指针142.环形链表 II（找链表的环入口）双指针相交链表思路1思路2 三、数组快慢指针 27.移除元素1.暴力解法2.双指针法（快慢指针法）3.双指针优化26.删除有序数组中的重复项双指针法80.删除有序数组中的重复项 II1.双指针法2.有序数组去重保留k位重复数的通法283.移动零双指针法 四、左右指针 977.有序数组的平方1.暴力排序解法2.双指针法（左右指针法）344. 反转字符串 （数组）双指针18. 四数之和双指针法167. 两数之和 II - 输入有序数组870. 优势洗牌回文子串问题 五、二分查找与滑动窗口 双指针代表的是 可以作为容器边界的所有位置的范围。在一开始，双指针指向数组的左右边界，表示 数组中所有的位置都可以作为容器的边界，因为我们还没有进行过任何尝试。在这之后，我们每次将 对应的数字较小的那个指针 往 另一个指针 的方向移动一个位置，就表示我们认为 这个指针不可能再作为容器的边界了\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B1%82%E8%BE%B9%E7%95%8C/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -704,7 +704,40 @@ Tags: Guides, 双指针</p>
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

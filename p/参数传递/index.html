@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="参数传递">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="参数传递">
 <meta property='og:description' content="参数传递 Created by: Hu Yang Created time: November 9, 2023 10:06 AM Tags: Guides\n在Java中，参数传递可以分为值传递和引用传递两种方式。下面我将为你提供一些例子来说明这两种传递方式的区别。\n值传递（Pass-by-Value）：\n在值传递中，方法接收的是实际参数值的一个拷贝。修改形参的值不会影响实际参数的值。\n示例1：基本数据类型的值传递\n1 2 3 4 5 6 7 8 9 10 11 12 13 public class Main { public static void main(String[] args) { int num = 10; System.out.println(&#34;调用方法前：&#34; + num); increment(num); System.out.println(&#34;调用方法后：&#34; + num); } public static void increment(int value) { value = value + 1; System.out.println(&#34;方法内部：&#34; + value); } } 输出：\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -750,7 +750,40 @@ Tags: Guides</p>
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

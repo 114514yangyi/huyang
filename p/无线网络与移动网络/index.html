@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="无线网络与移动网络">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="无线网络与移动网络">
 <meta property='og:description' content="无线网络和移动网络 组成 无线主机\n运行应用程序的端系统设备\n无线链路:\n主机通过无线链路连接到基站\n基站:\n连接方式: 自组织: 没有基站,使用其他的主机节点来传播消息 基站模式: 有基站,是可以在基站间移交的(设备可以移动) 无线: 缺点: 在传播的过程中有损耗,和频率,距离成正比;\n有多重路径的问题,可以通过反射导致接收到同样的数据在不同的时间-&gt;具有时间的一致性,每一次传播的波在一定的时间内是一致的,没有重叠.\n噪声:SNR(信噪比),即信息量和噪声的比值,越大越好.BER(bit差错率),比特位错误的概率,越小越好.传播的速率越大,比特差错率越大,或者信噪比越小;\n节点相互不可见:\n隐藏终端:由于遮挡物的影响,两个节点不知道彼此的存在: 衰减:两个节点听不到彼此的存在:\nCDMA:码分复用:Code Division Multiple Access 使用不同的正交(相乘相加为0)的码对要传输的多路节点数据包进行编码相加,在接收端进行根据码的解码,实现多路复用(同频率同时隙传输).\n对于sender_i (有M个sender)有单个位的数据$d_i$,8位的码(由正一和负一组成)$c_i$,则最终的$Z_i=d_i\\times c_i$,对于每一个sender,都形成这样的Z,最终将Z相加并发送给receiver:$Z^{*}=\\sum_{0}^{M}{Zi}$. 对于receiver想要解析出sender_i的信息,则$d_{i}=\\frac{\\sum_{m=1}^{M}Z^{*}\\times c_{i}}{M}$. WIFI:802.11 将频率划分为11个信道(没有重叠)\n基础结构(基础服务集):1.一个接入点(基站) 2.一些列的无线主机\n运行在同一个信道的APs会有碰撞的可能的,所有需要运行CSMA/CA\n802.11连接:\n到来的主机首先扫描每一个信道,监听信标帧(里面包含着接入点的名称(SSID),MAC地址) 选择一个AP去连接 开始认证 运行DHCP分配IP 扫描的过程:\n被动扫描: APs向主机发送信标帧,主机选择一个向AP发送关联请求帧,选择的AP向主机发送关联响应帧\n主动扫描:\n主机广播探测请求帧,APs发送探测响应帧,主机向选择的AP发送关联请求帧,AP向主机发送关联相应帧\n使用协议CSMA/CA:碰撞避免:Carrier Sense Multiple Access/Collision Avoidance 为什么802.11要使用CSMA/CA的方式:\n\u200b\n隐藏节点和暴露节点问题： 在无线网络中，存在隐藏节点和暴露节点的问题。节点之间无法直接检测到冲突，因此无法像有线网络那样依靠冲突检测来解决冲突问题。CSMA/CA通过采用持续监听的方式来尽量减少这些问题的影响，而CSMA/CD无法有效处理这种情况。 碰撞的后果： 在无线网络中，碰撞的后果是严重的，因为当多个节点同时发送数据时，发生碰撞主机检测不出来,会一直将整个的数据包传输，降低了网络性能。CSMA/CA通过避免碰撞的方式来减少重传，提高了效率。 具体原理 ">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -1052,7 +1052,40 @@ APs向主机发送信标帧,主机选择一个向AP发送关联请求帧,选择�
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

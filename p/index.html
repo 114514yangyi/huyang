@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="">
 <meta property='og:description' content=" date: &lsquo;2025-05-18T22:36:53+08:00&rsquo; draft: false title: &lsquo;协方差矩阵&rsquo; categories: - 数学\n对于一组有关联的随机变量，方差和协方差之间的关系可以通过联合分布或多变量的角度来理解。设有 nn 个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，它们的协方差矩阵和方差之间的关系如下。\n1. 协方差矩阵 对于多个随机变量 X1,X2,…,XnX_1, X_2, \\dots, X_n，我们可以构造一个协方差矩阵 Σ\\Sigma，这个矩阵描述了各个变量之间的协方差。协方差矩阵是一个对称矩阵，其中对角线上的元素是每个变量的方差，非对角线上的元素是变量之间的协方差。\n协方差矩阵的定义：\nΣ=(Var(X1)Cov(X1,X2)…Cov(X1,Xn)Cov(X2,X1)Var(X2)…Cov(X2,Xn)⋮⋮⋱⋮Cov(Xn,X1)Cov(Xn,X2)…Var(Xn))\\Sigma = \\begin{pmatrix} Var(X_1) &amp; Cov(X_1, X_2) &amp; \\dots &amp; Cov(X_1, X_n) \\ Cov(X_2, X_1) &amp; Var(X_2) &amp; \\dots &amp; Cov(X_2, X_n) \\ \\vdots &amp; \\vdots &amp; \\ddots &amp; \\vdots \\ Cov(X_n, X_1) &amp; Cov(X_n, X_2) &amp; \\dots &amp; Var(X_n) \\end{pmatrix}\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -679,7 +679,40 @@ $$y = a_1 x_1 + a_2 x_2 + b$$
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

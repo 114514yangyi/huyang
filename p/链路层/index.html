@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="链路层">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="链路层">
 <meta property='og:description' content="链路层协议 节点:运行链路层协议的任何设备 链路:连接两个节点的通信信道 点对点传输 流量控制与可靠传输 流量控制就是限制发送方的传输速率，以免超过接受方的接受能力，造成帧丢失\n在OSI体系中链路层是有流量控制的，而在TCP/IP体系中流量控制在传输层实现。\n停等协议 W_t=1，W_r=1，接受饭接收到了帧发送确认帧\nGBN 发送方维持一个&gt;1的滑动窗口发送信息帧，为整个滑动窗口设置一个计时器，超时就全部重传，超时就重发这个超时帧包括后面一系列的滑动窗口的帧；接受方维持一个W=1的滑动窗口，按顺序接收帧，超出范围的帧丢弃，使用累计确认的方式返回确认信息，ACKn。\nSR 选择重传协议 发送方维持一个W&gt;1的滑动窗口，为每一个帧都设置一个单独的计时器；接受方维持一个窗口&gt;1的窗口，缓存窗口内的帧，对每一个帧单独发送ACK，为错误帧发送NAK。\n链路层提供的服务 成帧 链路接入 可靠交付 比特差错检验和纠正 链路层在何处实现 是在网络适配器的芯片上实现的,结合了软件硬件\n唯一标识每一个接口:MAC地址\n链路层协议包括比特错误的检测和纠正,流量控制\n半双工通道:可以支持端点相互传输数据,但是同时只能够有一个端点在传送消息 全双工通道:能够有两端同时向对方传输信息 错误检查和纠正 错误分为位错（帧中的几个数据位出现错误）和帧错（帧丢失，顺序错误，帧重复）\n（在OSI中认为链路层应该提供可靠的传输，所以提供了原本应该是传输层的作用：帧的重传，确认，标号）\n使用奇偶校验:\n对于n位的数据位来说：\n奇检验码是在数据位后面添一个位数使得所有位数中“1”的个数为奇数； 偶检验码是在数据位后面添加一个位数使得所有位数中“1”的个数为偶数； 一维的奇偶校验,只能够检测出一位的错误,但是不能纠正错误,需要1bit冗余 二维的奇偶校验,可以检测一位的错误,可以纠正一位的错误,需要2n bit的冗余\n使用校验和: 将每16位相加最终结果取反\n使用循环冗余校验法: 先决定R位的冗余位,再确定生成的G(R+1位)生成码,使用数据$D\\times 2^R$（在D的后面添加R个0）来异或除G,最终得到R位的异或余数,为最终的冗余位.\n循环冗余校验码(CRC)详解 问题1：计算CRC过程 题目要求 给定数据串：1101011011 (10位) 生成多项式：10011 (G(x)=x⁴+x+1)\n计算步骤 确定多项式阶数：\n生成多项式10011是4阶(r=4) 需要在数据后附加4个0 → 11010110110000 模2除法计算：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 11010110110000 (被除数) ⊕ 10011 (除数) ------------ 01001110110000 ⊕ 10011 ------------ 0000010110000 ⊕ 10011 ------------ 001110000 ⊕ 10011 ------------ 01101000 ⊕ 10011 ------------ 0101000 ⊕ 10011 ------------ 001110 ⊕ 10011 ------------ 01101 → 余数(CRC码) 最终结果：\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E9%93%BE%E8%B7%AF%E5%B1%82/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -1254,7 +1254,40 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');

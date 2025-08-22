@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.d3155b48d3f5e651913a4712b8065e284fd3889f067f1ac6e6ec77400046eba5.css"><meta property='og:title' content="互联网计算简洁">
+<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="互联网计算简洁">
 <meta property='og:description' content="互联网计算简介 接入互联网 网络设备:\n网络边沿:\n运行程序,访问互联网的主机\n服务器,电脑,笔记本电脑,手机,智能家具\n接入互联网:\n接入互联网的物理设备(介质)\n双绞线,无线路由器,同轴电缆,光纤\n网络核心:\n链路层交换机,路由器\n交换机制 电路交换 当双方想要通信的时候建立一条交换机之间的电路,预留了恒定的传输速度,这种事端到端的连接(P2P)\n好处: 可以预测的行为 足够简单 坏处: 电路的建立和关闭是复杂的 当电路没有使用者的时候是空闲的,效率低下 电路的建立需要消耗时间 当建立电路的交换机故障时,通信就故障 分组交换 将数据分割成一个个的报文进行根据IP传输,但是会有传输时延,传播时延,排队时延,还有丢包的可能性\n好处: 足够效率高 实现更加简单 鲁棒性 坏处: 行为不可预测 需要buffer的管理和拥塞控制 虚电路交换 电路交换+分组交换-&gt;\n选择一条建立的电路,使用报文的形式传输\n电路交换相较于分组交换的优点 电路交换：由于电路交换在通信之前要在通信双方之间建立一条被双方独占的物理通 路（由通信双方之间的交换设备和链路逐段连接而成）。因而有以下优点： （1）由于通信线路为通信双方用户专用，数据直达，所以传输数据的时延非常小 （2）通信双方之间的物理通路一旦建立，双方可以随时通信，实时性强。 （3）双方通信时按发送顺序传送数据，不存在失序问题。 （4）电路交换既适用于传输模拟信号，也适用于传输数字信号。 （5）电路交换设备控制均较简单。\nTMD相较于FMD的优点 TDM比FDM的优点如下：\n当发生拥塞等网络问题时，TDM中的数据丢失可能只会是一部分，而FDM中就可能 是大部分或全部。 TDM适合数字信号传输，而FDM适合模拟信号传输，因为现在通信网络多是传输数 字信号，所以TDM比FDM好。 因为频分复用连接建立后，当中途没有数据传输时，他所占有的频段带宽不能被其 他连接使用，故可能存在空置，而在时分复用的统计时分模式下，连接建立后，当某 个连接暂时不用传输数据时可以少分时间片或者不分，即其时隙的分配时“按需分 配”，这样就让出了相应的传输时间给其他连接。 交换技术时延计算核心公式 ⏱️ [!NOTE]\n发送延时在每一个路由器上（包括原主机上）都要记一次，一次的发送延时是发送一次分组的时间。\n在进行分组传输比较麻烦的情况可以使用画图的形式来说明。\n1. 电路交换 (Circuit Switching) 📞 通信前先建立专用物理路径。\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -886,7 +886,40 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
 <script>
     (function () {
         const customFont = document.createElement('link');
