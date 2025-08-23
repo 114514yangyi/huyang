@@ -6,13 +6,14 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/dijastra_%E6%AD%A3%E6%9D%83%E8%BE%B9/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="Dijastra_正权边">
+<link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="Dijastra_正权边">
 <meta property='og:description' content="Dijastra_正权边 Certainly! Here&rsquo;s the code block you requested:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 #define INT_MAX 2147483647 int N, M, u, v; unordered_map&lt;int, int&gt; weight; unordered_map&lt;int, vector&lt;int&gt;&gt; graph; vector&lt;int&gt; dist; int to(int a, int b) { int x = max(a, b); int y = min(a, b); return ((x + y) * (x + y + 1) / 2 + y); } int getWeight(int a, int b) { return weight[to(a, b)]; } int main() { // Given a weighted undirected graph and two target vertices, output the shortest path between these two vertices. // Handle input and output on your own cin &gt;&gt; N &gt;&gt; M &gt;&gt; u &gt;&gt; v; dist.resize(N + 1, INT_MAX); for (int i = 0; i &lt; M; i++) { int a, b, w; cin &gt;&gt; a &gt;&gt; b &gt;&gt; w; graph[a].push_back(b); graph[b].push_back(a); weight[to(a, b)] = w; } dist[u] = 0; priority_queue&lt;pair&lt;int, int&gt;, vector&lt;pair&lt;int, int&gt;&gt;, greater&lt;pair&lt;int, int&gt;&gt;&gt; pq; pq.push({0, u}); while (!pq.empty()) { auto p = pq.top(); pq.pop(); int d = p.first; int cur = p.second; if (d &gt; dist[cur]) continue; for (auto nxt : graph[cur]) { int w = getWeight(cur, nxt); if (dist[nxt] &gt; dist[cur] + w) { dist[nxt] = dist[cur] + w; pq.push({dist[nxt], nxt}); } } } if (dist[v] == INT_MAX) cout &lt;&lt; -1 &lt;&lt; endl; else cout &lt;&lt; dist[v] &lt;&lt; endl; return 0; } This code defines a few utility functions and implements Dijkstra&rsquo;s algorithm to find the shortest path between two vertices in a weighted undirected graph. The weight unordered map stores the weights of the edges, and the graph unordered map represents the adjacency list of the graph. The dist vector keeps track of the shortest distances from the source vertex to each vertex in the graph.\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/dijastra_%E6%AD%A3%E6%9D%83%E8%BE%B9/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='原创' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='og:image' content='https://114514yangyi.github.io/huyang/img/Dijastra_%E6%AD%A3%E6%9D%83%E8%BE%B9_cover.png' />
 <meta name="twitter:title" content="Dijastra_正权边">
-<meta name="twitter:description" content="Dijastra_正权边 Certainly! Here&rsquo;s the code block you requested:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 #define INT_MAX 2147483647 int N, M, u, v; unordered_map&lt;int, int&gt; weight; unordered_map&lt;int, vector&lt;int&gt;&gt; graph; vector&lt;int&gt; dist; int to(int a, int b) { int x = max(a, b); int y = min(a, b); return ((x + y) * (x + y + 1) / 2 + y); } int getWeight(int a, int b) { return weight[to(a, b)]; } int main() { // Given a weighted undirected graph and two target vertices, output the shortest path between these two vertices. // Handle input and output on your own cin &gt;&gt; N &gt;&gt; M &gt;&gt; u &gt;&gt; v; dist.resize(N + 1, INT_MAX); for (int i = 0; i &lt; M; i++) { int a, b, w; cin &gt;&gt; a &gt;&gt; b &gt;&gt; w; graph[a].push_back(b); graph[b].push_back(a); weight[to(a, b)] = w; } dist[u] = 0; priority_queue&lt;pair&lt;int, int&gt;, vector&lt;pair&lt;int, int&gt;&gt;, greater&lt;pair&lt;int, int&gt;&gt;&gt; pq; pq.push({0, u}); while (!pq.empty()) { auto p = pq.top(); pq.pop(); int d = p.first; int cur = p.second; if (d &gt; dist[cur]) continue; for (auto nxt : graph[cur]) { int w = getWeight(cur, nxt); if (dist[nxt] &gt; dist[cur] + w) { dist[nxt] = dist[cur] + w; pq.push({dist[nxt], nxt}); } } } if (dist[v] == INT_MAX) cout &lt;&lt; -1 &lt;&lt; endl; else cout &lt;&lt; dist[v] &lt;&lt; endl; return 0; } This code defines a few utility functions and implements Dijkstra&rsquo;s algorithm to find the shortest path between two vertices in a weighted undirected graph. The weight unordered map stores the weights of the edges, and the graph unordered map represents the adjacency list of the graph. The dist vector keeps track of the shortest distances from the source vertex to each vertex in the graph.\n">
+<meta name="twitter:description" content="Dijastra_正权边 Certainly! Here&rsquo;s the code block you requested:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 #define INT_MAX 2147483647 int N, M, u, v; unordered_map&lt;int, int&gt; weight; unordered_map&lt;int, vector&lt;int&gt;&gt; graph; vector&lt;int&gt; dist; int to(int a, int b) { int x = max(a, b); int y = min(a, b); return ((x + y) * (x + y + 1) / 2 + y); } int getWeight(int a, int b) { return weight[to(a, b)]; } int main() { // Given a weighted undirected graph and two target vertices, output the shortest path between these two vertices. // Handle input and output on your own cin &gt;&gt; N &gt;&gt; M &gt;&gt; u &gt;&gt; v; dist.resize(N + 1, INT_MAX); for (int i = 0; i &lt; M; i++) { int a, b, w; cin &gt;&gt; a &gt;&gt; b &gt;&gt; w; graph[a].push_back(b); graph[b].push_back(a); weight[to(a, b)] = w; } dist[u] = 0; priority_queue&lt;pair&lt;int, int&gt;, vector&lt;pair&lt;int, int&gt;&gt;, greater&lt;pair&lt;int, int&gt;&gt;&gt; pq; pq.push({0, u}); while (!pq.empty()) { auto p = pq.top(); pq.pop(); int d = p.first; int cur = p.second; if (d &gt; dist[cur]) continue; for (auto nxt : graph[cur]) { int w = getWeight(cur, nxt); if (dist[nxt] &gt; dist[cur] + w) { dist[nxt] = dist[cur] + w; pq.push({dist[nxt], nxt}); } } } if (dist[v] == INT_MAX) cout &lt;&lt; -1 &lt;&lt; endl; else cout &lt;&lt; dist[v] &lt;&lt; endl; return 0; } This code defines a few utility functions and implements Dijkstra&rsquo;s algorithm to find the shortest path between two vertices in a weighted undirected graph. The weight unordered map stores the weights of the edges, and the graph unordered map represents the adjacency list of the graph. The dist vector keeps track of the shortest distances from the source vertex to each vertex in the graph.\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://114514yangyi.github.io/huyang/img/Dijastra_%E6%AD%A3%E6%9D%83%E8%BE%B9_cover.png' />
     </head>
     <body class="
     article-page
@@ -158,6 +159,25 @@
         
         
         <li >
+            <a href='/huyang/journal/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Journal</span>
+            </a>
+        </li>
+        
+        
+        <li >
             <a href='/huyang/archives/' >
                 
                 
@@ -271,8 +291,16 @@
     
 
             <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/huyang/p/dijastra_%E6%AD%A3%E6%9D%83%E8%BE%B9/">
+                
+                    <img src="/huyang/img/Dijastra_%e6%ad%a3%e6%9d%83%e8%be%b9_cover.png" loading="lazy" alt="Featured image of post Dijastra_正权边" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
     
@@ -470,6 +498,12 @@
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/huyang/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -499,9 +533,15 @@
         <div class="flex article-list--tile">
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/bellman_%E6%97%A0%E8%B4%9F%E7%8E%AF/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Bellman_%e6%97%a0%e8%b4%9f%e7%8e%af_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Bellman_无负环_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -512,9 +552,15 @@
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/bfs_%E5%8D%95%E5%85%83%E6%9D%83%E8%BE%B9/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Bfs_%e5%8d%95%e5%85%83%e6%9d%83%e8%be%b9_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Bfs_单元权边_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -525,9 +571,15 @@
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/dag%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Dag%e6%8b%93%e6%89%91%e6%8e%92%e5%ba%8f_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Dag拓扑排序_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -538,9 +590,15 @@
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/kmp%E7%AE%97%E6%B3%95/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Kmp%e7%ae%97%e6%b3%95_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Kmp算法_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -551,9 +609,15 @@
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/leetcode%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Leetcode%e7%ae%97%e6%b3%95%e6%80%9d%e8%80%83_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Leetcode算法思考_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">

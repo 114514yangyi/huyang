@@ -6,13 +6,14 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="传输层核心协议：TCP与UDP深度解析">
+<link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="传输层核心协议：TCP与UDP深度解析">
 <meta property='og:description' content="传输层协议深度解析 套接字与端口机制 套接字(Socket) 套接字是操作系统提供的网络编程接口，充当应用进程与传输层之间的通信桥梁。它抽象了底层网络细节，为应用程序提供统一的网络访问方式。\n传输层地址标识： 每个套接字由二元组 &lt;主机IP地址, 端口号&gt; 唯一标识，构成完整的传输层端点地址。\n端口(Port) 端口是16位数字标识符（0-65535），用于区分同一主机上的不同应用程序：\n网络数据包头部包含源端口号和目的端口号 网络设备依据端口号识别和路由到正确的应用程序 知名端口：0-1023（如HTTP-80、HTTPS-443） 注册端口：1024-49151 动态端口：49152-65535 多路复用与分解机制 UDP协议特性 无连接协议：仅根据目的IP和端口进行报文分配 轻量级传输：无序列号、重传和流控制机制 尽力而为服务：不保证可靠交付 典型应用：DNS查询、流媒体、实时通信 UDP头部结构（8字节） 1 2 3 4 5 6 0 7 8 15 16 23 24 31 +--------+--------+--------+--------+ | 源端口号 | 目的端口号 | +--------+--------+--------+--------+ | 长度 | 校验和 | +--------+--------+--------+--------+ 长度字段：UDP报文总长度（首部+数据） 校验和字段：检测数据传输错误的校验码 校验和计算机制 将每16位作为加数求和（包括伪首部、UDP首部和数据），进位回加到个位，最后取反码作为校验和。\nTCP协议特性 面向连接：基于四元组&lt;源IP, 源端口, 目的IP, 目的端口&gt;分配套接字 可靠传输：提供有序、可靠的字节流服务 流量控制：动态调整发送速率避免拥塞 TCP头部结构（20字节+选项） 1 2 3 4 5 6 7 8 9 0 1 2 3 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 +---------------+---------------+---------------+---------------+ | 源端口号 | 目的端口号 | 序列号 | +---------------+---------------+---------------+---------------+ | 确认号 | 数据偏移|保留| 控制标志 | 窗口大小 | +---------------+---------------+---------------+---------------+ | 校验和 | 紧急指针 | 选项 | +---------------+---------------+---------------+---------------+ 关键字段详解：\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='原创' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='og:image' content='https://114514yangyi.github.io/huyang/img/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AE_TCP%E4%B8%8EUDP%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90_cover.png' />
 <meta name="twitter:title" content="传输层核心协议：TCP与UDP深度解析">
-<meta name="twitter:description" content="传输层协议深度解析 套接字与端口机制 套接字(Socket) 套接字是操作系统提供的网络编程接口，充当应用进程与传输层之间的通信桥梁。它抽象了底层网络细节，为应用程序提供统一的网络访问方式。\n传输层地址标识： 每个套接字由二元组 &lt;主机IP地址, 端口号&gt; 唯一标识，构成完整的传输层端点地址。\n端口(Port) 端口是16位数字标识符（0-65535），用于区分同一主机上的不同应用程序：\n网络数据包头部包含源端口号和目的端口号 网络设备依据端口号识别和路由到正确的应用程序 知名端口：0-1023（如HTTP-80、HTTPS-443） 注册端口：1024-49151 动态端口：49152-65535 多路复用与分解机制 UDP协议特性 无连接协议：仅根据目的IP和端口进行报文分配 轻量级传输：无序列号、重传和流控制机制 尽力而为服务：不保证可靠交付 典型应用：DNS查询、流媒体、实时通信 UDP头部结构（8字节） 1 2 3 4 5 6 0 7 8 15 16 23 24 31 +--------+--------+--------+--------+ | 源端口号 | 目的端口号 | +--------+--------+--------+--------+ | 长度 | 校验和 | +--------+--------+--------+--------+ 长度字段：UDP报文总长度（首部+数据） 校验和字段：检测数据传输错误的校验码 校验和计算机制 将每16位作为加数求和（包括伪首部、UDP首部和数据），进位回加到个位，最后取反码作为校验和。\nTCP协议特性 面向连接：基于四元组&lt;源IP, 源端口, 目的IP, 目的端口&gt;分配套接字 可靠传输：提供有序、可靠的字节流服务 流量控制：动态调整发送速率避免拥塞 TCP头部结构（20字节+选项） 1 2 3 4 5 6 7 8 9 0 1 2 3 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 +---------------+---------------+---------------+---------------+ | 源端口号 | 目的端口号 | 序列号 | +---------------+---------------+---------------+---------------+ | 确认号 | 数据偏移|保留| 控制标志 | 窗口大小 | +---------------+---------------+---------------+---------------+ | 校验和 | 紧急指针 | 选项 | +---------------+---------------+---------------+---------------+ 关键字段详解：\n">
+<meta name="twitter:description" content="传输层协议深度解析 套接字与端口机制 套接字(Socket) 套接字是操作系统提供的网络编程接口，充当应用进程与传输层之间的通信桥梁。它抽象了底层网络细节，为应用程序提供统一的网络访问方式。\n传输层地址标识： 每个套接字由二元组 &lt;主机IP地址, 端口号&gt; 唯一标识，构成完整的传输层端点地址。\n端口(Port) 端口是16位数字标识符（0-65535），用于区分同一主机上的不同应用程序：\n网络数据包头部包含源端口号和目的端口号 网络设备依据端口号识别和路由到正确的应用程序 知名端口：0-1023（如HTTP-80、HTTPS-443） 注册端口：1024-49151 动态端口：49152-65535 多路复用与分解机制 UDP协议特性 无连接协议：仅根据目的IP和端口进行报文分配 轻量级传输：无序列号、重传和流控制机制 尽力而为服务：不保证可靠交付 典型应用：DNS查询、流媒体、实时通信 UDP头部结构（8字节） 1 2 3 4 5 6 0 7 8 15 16 23 24 31 +--------+--------+--------+--------+ | 源端口号 | 目的端口号 | +--------+--------+--------+--------+ | 长度 | 校验和 | +--------+--------+--------+--------+ 长度字段：UDP报文总长度（首部+数据） 校验和字段：检测数据传输错误的校验码 校验和计算机制 将每16位作为加数求和（包括伪首部、UDP首部和数据），进位回加到个位，最后取反码作为校验和。\nTCP协议特性 面向连接：基于四元组&lt;源IP, 源端口, 目的IP, 目的端口&gt;分配套接字 可靠传输：提供有序、可靠的字节流服务 流量控制：动态调整发送速率避免拥塞 TCP头部结构（20字节+选项） 1 2 3 4 5 6 7 8 9 0 1 2 3 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 +---------------+---------------+---------------+---------------+ | 源端口号 | 目的端口号 | 序列号 | +---------------+---------------+---------------+---------------+ | 确认号 | 数据偏移|保留| 控制标志 | 窗口大小 | +---------------+---------------+---------------+---------------+ | 校验和 | 紧急指针 | 选项 | +---------------+---------------+---------------+---------------+ 关键字段详解：\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://114514yangyi.github.io/huyang/img/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AE_TCP%E4%B8%8EUDP%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90_cover.png' />
     </head>
     <body class="
     article-page
@@ -153,6 +154,25 @@
 
                 
                 <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/journal/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Journal</span>
             </a>
         </li>
         
@@ -383,8 +403,16 @@
 
 
             <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/">
+                
+                    <img src="/huyang/img/%e4%bc%a0%e8%be%93%e5%b1%82%e6%a0%b8%e5%bf%83%e5%8d%8f%e8%ae%ae_TCP%e4%b8%8eUDP%e6%b7%b1%e5%ba%a6%e8%a7%a3%e6%9e%90_cover.png" loading="lazy" alt="Featured image of post 传输层核心协议：TCP与UDP深度解析" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
     
@@ -897,6 +925,12 @@ $$<hr>
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/huyang/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -926,22 +960,15 @@ $$<hr>
         <div class="flex article-list--tile">
             
                 
-<article class="">
-    <a href="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">网络层</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e4%ba%92%e8%81%94%e7%bd%91%e5%ae%89%e5%85%a8_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/互联网安全_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -952,9 +979,15 @@ $$<hr>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%A6%81%E7%82%B9/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e4%ba%92%e8%81%94%e7%bd%91%e8%a6%81%e7%82%b9_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/互联网要点_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -965,9 +998,15 @@ $$<hr>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e4%ba%92%e8%81%94%e7%bd%91%e8%ae%a1%e7%ae%97%e7%ae%80%e6%b4%81_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/互联网计算简洁_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -978,13 +1017,38 @@ $$<hr>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E5%BA%94%E7%94%A8%E5%B1%82/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e5%ba%94%e7%94%a8%e5%b1%82_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/应用层_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
             <h2 class="article-title">应用层</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/huyang/p/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e6%97%a0%e7%ba%bf%e7%bd%91%e7%bb%9c%e4%b8%8e%e7%a7%bb%e5%8a%a8%e7%bd%91%e7%bb%9c_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/无线网络与移动网络_cover.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">无线网络与移动网络</h2>
         </div>
     </a>
 </article>

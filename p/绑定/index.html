@@ -6,13 +6,14 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E7%BB%91%E5%AE%9A/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="绑定">
+<link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="绑定">
 <meta property='og:description' content="绑定 Created by: Hu Yang Created time: September 18, 2023 3:25 PM Tags: Guides\n绑定（Binding）是指将一个名称（如变量或函数名）与一个实体（如变量的值或函数的实现）关联起来的过程。在编程语言中，绑定可以分为两种类型：静态绑定（Static Binding）和动态绑定（Dynamic Binding）。\n静态绑定（Static Binding）： 静态绑定发生在编译时，由编译器根据变量声明或函数调用的静态类型（声明时的类型）来确定与之关联的实体。 在静态绑定中，绑定关系在编译阶段就已经确定，不会在运行时发生改变。 静态绑定适用于静态类型语言，如C、C++等。在这些语言中，多态性通常通过函数重载（函数名相同，但参数列表不同）来实现。 动态绑定（Dynamic Binding）： 动态绑定发生在运行时，根据变量的实际类型或对象的实际类来确定与之关联的实体。 在动态绑定中，绑定关系在运行时根据对象的类型或类的继承关系来确定，可以在运行时根据具体情况进行调整。 动态绑定适用于面向对象语言，如Java、C#、Python等。在这些语言中，多态性通常通过继承和方法重写（override）来实现。 动态绑定使得程序能够在运行时根据对象的实际类型来确定调用哪个实体，从而实现多态性。这样就可以通过基类的引用或指针来处理不同类型的对象，而不需要关心具体的子类类型，提高了代码的灵活性和可扩展性。\n1 2 3 4 5 6 7 8 9 10 11 12 当涉及到绑定时，下面是一个具体的C++代码示例，展示了静态绑定和动态绑定的区别： include &lt;iostream&gt; class Animal {public: virtual void speak() { std==cout &lt;&lt; &#34;动物正在发出声音！&#34; &lt;&lt; std==endl; }}; class Dog : public Animal {public: void speak() override { std==cout &lt;&lt; &#34;汪汪汪！&#34; &lt;&lt; std==endl; }}; int main() { Animal animal; Dog dog; Animal* animalPtr1 = &amp;animal; // 使用基类指针指向基类对象 Animal* animalPtr2 = &amp;dog; // 使用基类指针指向子类对象 // 静态绑定：编译时确定调用的方法 animal.speak(); // 输出：动物正在发出声音！ dog.speak(); // 输出：汪汪汪！ // 动态绑定：运行时确定调用的方法 animalPtr1-&gt;speak(); // 输出：动物正在发出声音！（静态类型和动态类型一致） animalPtr2-&gt;speak(); // 输出：汪汪汪！（静态类型是基类，动态类型是子类） return 0;}``` 在上面的代码中，Animal是一个基类，Dog是Animal的子类。Animal类中的speak()方法被声明为虚函数（virtual），以实现动态绑定。 在静态绑定的情况下，编译器根据变量的静态类型（声明时的类型）来确定调用的方法。在动态绑定的情况下，基类指针指向子类对象，根据实际对象的类型（动态类型）来确定调用的方法。 在输出结果中，可以看到静态绑定时调用的方法由变量的静态类型决定，而动态绑定时调用的方法由变量的动态类型决定。这展示了动态绑定在运行时根据对象的实际类型来确定调用的方法，实现了多态性。 ">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E7%BB%91%E5%AE%9A/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='原创' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='og:image' content='https://114514yangyi.github.io/huyang/img/%E7%BB%91%E5%AE%9A_cover.png' />
 <meta name="twitter:title" content="绑定">
-<meta name="twitter:description" content="绑定 Created by: Hu Yang Created time: September 18, 2023 3:25 PM Tags: Guides\n绑定（Binding）是指将一个名称（如变量或函数名）与一个实体（如变量的值或函数的实现）关联起来的过程。在编程语言中，绑定可以分为两种类型：静态绑定（Static Binding）和动态绑定（Dynamic Binding）。\n静态绑定（Static Binding）： 静态绑定发生在编译时，由编译器根据变量声明或函数调用的静态类型（声明时的类型）来确定与之关联的实体。 在静态绑定中，绑定关系在编译阶段就已经确定，不会在运行时发生改变。 静态绑定适用于静态类型语言，如C、C++等。在这些语言中，多态性通常通过函数重载（函数名相同，但参数列表不同）来实现。 动态绑定（Dynamic Binding）： 动态绑定发生在运行时，根据变量的实际类型或对象的实际类来确定与之关联的实体。 在动态绑定中，绑定关系在运行时根据对象的类型或类的继承关系来确定，可以在运行时根据具体情况进行调整。 动态绑定适用于面向对象语言，如Java、C#、Python等。在这些语言中，多态性通常通过继承和方法重写（override）来实现。 动态绑定使得程序能够在运行时根据对象的实际类型来确定调用哪个实体，从而实现多态性。这样就可以通过基类的引用或指针来处理不同类型的对象，而不需要关心具体的子类类型，提高了代码的灵活性和可扩展性。\n1 2 3 4 5 6 7 8 9 10 11 12 当涉及到绑定时，下面是一个具体的C++代码示例，展示了静态绑定和动态绑定的区别： include &lt;iostream&gt; class Animal {public: virtual void speak() { std==cout &lt;&lt; &#34;动物正在发出声音！&#34; &lt;&lt; std==endl; }}; class Dog : public Animal {public: void speak() override { std==cout &lt;&lt; &#34;汪汪汪！&#34; &lt;&lt; std==endl; }}; int main() { Animal animal; Dog dog; Animal* animalPtr1 = &amp;animal; // 使用基类指针指向基类对象 Animal* animalPtr2 = &amp;dog; // 使用基类指针指向子类对象 // 静态绑定：编译时确定调用的方法 animal.speak(); // 输出：动物正在发出声音！ dog.speak(); // 输出：汪汪汪！ // 动态绑定：运行时确定调用的方法 animalPtr1-&gt;speak(); // 输出：动物正在发出声音！（静态类型和动态类型一致） animalPtr2-&gt;speak(); // 输出：汪汪汪！（静态类型是基类，动态类型是子类） return 0;}``` 在上面的代码中，Animal是一个基类，Dog是Animal的子类。Animal类中的speak()方法被声明为虚函数（virtual），以实现动态绑定。 在静态绑定的情况下，编译器根据变量的静态类型（声明时的类型）来确定调用的方法。在动态绑定的情况下，基类指针指向子类对象，根据实际对象的类型（动态类型）来确定调用的方法。 在输出结果中，可以看到静态绑定时调用的方法由变量的静态类型决定，而动态绑定时调用的方法由变量的动态类型决定。这展示了动态绑定在运行时根据对象的实际类型来确定调用的方法，实现了多态性。 ">
+<meta name="twitter:description" content="绑定 Created by: Hu Yang Created time: September 18, 2023 3:25 PM Tags: Guides\n绑定（Binding）是指将一个名称（如变量或函数名）与一个实体（如变量的值或函数的实现）关联起来的过程。在编程语言中，绑定可以分为两种类型：静态绑定（Static Binding）和动态绑定（Dynamic Binding）。\n静态绑定（Static Binding）： 静态绑定发生在编译时，由编译器根据变量声明或函数调用的静态类型（声明时的类型）来确定与之关联的实体。 在静态绑定中，绑定关系在编译阶段就已经确定，不会在运行时发生改变。 静态绑定适用于静态类型语言，如C、C++等。在这些语言中，多态性通常通过函数重载（函数名相同，但参数列表不同）来实现。 动态绑定（Dynamic Binding）： 动态绑定发生在运行时，根据变量的实际类型或对象的实际类来确定与之关联的实体。 在动态绑定中，绑定关系在运行时根据对象的类型或类的继承关系来确定，可以在运行时根据具体情况进行调整。 动态绑定适用于面向对象语言，如Java、C#、Python等。在这些语言中，多态性通常通过继承和方法重写（override）来实现。 动态绑定使得程序能够在运行时根据对象的实际类型来确定调用哪个实体，从而实现多态性。这样就可以通过基类的引用或指针来处理不同类型的对象，而不需要关心具体的子类类型，提高了代码的灵活性和可扩展性。\n1 2 3 4 5 6 7 8 9 10 11 12 当涉及到绑定时，下面是一个具体的C++代码示例，展示了静态绑定和动态绑定的区别： include &lt;iostream&gt; class Animal {public: virtual void speak() { std==cout &lt;&lt; &#34;动物正在发出声音！&#34; &lt;&lt; std==endl; }}; class Dog : public Animal {public: void speak() override { std==cout &lt;&lt; &#34;汪汪汪！&#34; &lt;&lt; std==endl; }}; int main() { Animal animal; Dog dog; Animal* animalPtr1 = &amp;animal; // 使用基类指针指向基类对象 Animal* animalPtr2 = &amp;dog; // 使用基类指针指向子类对象 // 静态绑定：编译时确定调用的方法 animal.speak(); // 输出：动物正在发出声音！ dog.speak(); // 输出：汪汪汪！ // 动态绑定：运行时确定调用的方法 animalPtr1-&gt;speak(); // 输出：动物正在发出声音！（静态类型和动态类型一致） animalPtr2-&gt;speak(); // 输出：汪汪汪！（静态类型是基类，动态类型是子类） return 0;}``` 在上面的代码中，Animal是一个基类，Dog是Animal的子类。Animal类中的speak()方法被声明为虚函数（virtual），以实现动态绑定。 在静态绑定的情况下，编译器根据变量的静态类型（声明时的类型）来确定调用的方法。在动态绑定的情况下，基类指针指向子类对象，根据实际对象的类型（动态类型）来确定调用的方法。 在输出结果中，可以看到静态绑定时调用的方法由变量的静态类型决定，而动态绑定时调用的方法由变量的动态类型决定。这展示了动态绑定在运行时根据对象的实际类型来确定调用的方法，实现了多态性。 "><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://114514yangyi.github.io/huyang/img/%E7%BB%91%E5%AE%9A_cover.png' />
     </head>
     <body class="
     article-page
@@ -158,6 +159,25 @@
         
         
         <li >
+            <a href='/huyang/journal/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Journal</span>
+            </a>
+        </li>
+        
+        
+        <li >
             <a href='/huyang/archives/' >
                 
                 
@@ -271,8 +291,16 @@
     
 
             <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/huyang/p/%E7%BB%91%E5%AE%9A/">
+                
+                    <img src="/huyang/img/%e7%bb%91%e5%ae%9a_cover.png" loading="lazy" alt="Featured image of post 绑定" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
     
@@ -397,6 +425,12 @@ Tags: Guides</p>
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/huyang/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -426,9 +460,15 @@ Tags: Guides</p>
         <div class="flex article-list--tile">
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/algorithm/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Algorithm_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Algorithm_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -439,9 +479,15 @@ Tags: Guides</p>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/array%E6%95%B0%E7%BB%84%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Array%e6%95%b0%e7%bb%84%e5%87%bd%e6%95%b0%e8%af%a6%e8%a7%a3_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Array数组函数详解_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -452,9 +498,15 @@ Tags: Guides</p>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/c-/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/C_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/C_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -465,9 +517,15 @@ Tags: Guides</p>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/c-/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/C_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/C_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -478,9 +536,15 @@ Tags: Guides</p>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/c-%E5%A4%9A%E6%80%81/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/C_%e5%a4%9a%e6%80%81_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/C_多态_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">

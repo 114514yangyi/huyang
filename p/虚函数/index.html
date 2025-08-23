@@ -6,13 +6,14 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E8%99%9A%E5%87%BD%E6%95%B0/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="虚函数">
+<link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="虚函数">
 <meta property='og:description' content="虚函数 1.静态绑定是由编译时刻确定的，主要是找自己本类型的非虚函数进行绑定。\n动态绑定是假如在本类型的函数时只存在虚函数的话就会找当前所指的子类型的虚函数表，并于表中的函数进行动态绑定。\n2.虚函数有两个作用：\n#指定消息采用动态绑定；\n#指出基类中可以被派生类重新定义的成员函数\n4.静态成员不能是虚函数；构造函数不能是虚函数，而析构函数往往是虚函数；在构造函数和析构函数中对于虚函数的调用不进行动态绑定。\n5.通过基类的指针访问到派生类的新定义的成员：\n6.包含纯虚函数的类称之为抽象类，其中纯虚函数是并未给出实现的函数，形式为：\n抽象类只提供待实现的接口来实现类型的多态。并且抽象类可以提供真正的封装性。\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E8%99%9A%E5%87%BD%E6%95%B0/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='原创' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='og:image' content='https://114514yangyi.github.io/huyang/img/%E8%99%9A%E5%87%BD%E6%95%B0_cover.png' />
 <meta name="twitter:title" content="虚函数">
-<meta name="twitter:description" content="虚函数 1.静态绑定是由编译时刻确定的，主要是找自己本类型的非虚函数进行绑定。\n动态绑定是假如在本类型的函数时只存在虚函数的话就会找当前所指的子类型的虚函数表，并于表中的函数进行动态绑定。\n2.虚函数有两个作用：\n#指定消息采用动态绑定；\n#指出基类中可以被派生类重新定义的成员函数\n4.静态成员不能是虚函数；构造函数不能是虚函数，而析构函数往往是虚函数；在构造函数和析构函数中对于虚函数的调用不进行动态绑定。\n5.通过基类的指针访问到派生类的新定义的成员：\n6.包含纯虚函数的类称之为抽象类，其中纯虚函数是并未给出实现的函数，形式为：\n抽象类只提供待实现的接口来实现类型的多态。并且抽象类可以提供真正的封装性。\n">
+<meta name="twitter:description" content="虚函数 1.静态绑定是由编译时刻确定的，主要是找自己本类型的非虚函数进行绑定。\n动态绑定是假如在本类型的函数时只存在虚函数的话就会找当前所指的子类型的虚函数表，并于表中的函数进行动态绑定。\n2.虚函数有两个作用：\n#指定消息采用动态绑定；\n#指出基类中可以被派生类重新定义的成员函数\n4.静态成员不能是虚函数；构造函数不能是虚函数，而析构函数往往是虚函数；在构造函数和析构函数中对于虚函数的调用不进行动态绑定。\n5.通过基类的指针访问到派生类的新定义的成员：\n6.包含纯虚函数的类称之为抽象类，其中纯虚函数是并未给出实现的函数，形式为：\n抽象类只提供待实现的接口来实现类型的多态。并且抽象类可以提供真正的封装性。\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://114514yangyi.github.io/huyang/img/%E8%99%9A%E5%87%BD%E6%95%B0_cover.png' />
     </head>
     <body class="
     article-page
@@ -158,6 +159,25 @@
         
         
         <li >
+            <a href='/huyang/journal/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Journal</span>
+            </a>
+        </li>
+        
+        
+        <li >
             <a href='/huyang/archives/' >
                 
                 
@@ -271,8 +291,16 @@
     
 
             <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/huyang/p/%E8%99%9A%E5%87%BD%E6%95%B0/">
+                
+                    <img src="/huyang/img/%e8%99%9a%e5%87%bd%e6%95%b0_cover.png" loading="lazy" alt="Featured image of post 虚函数" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
     
@@ -398,6 +426,12 @@
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/huyang/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -427,9 +461,15 @@
         <div class="flex article-list--tile">
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/algorithm/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Algorithm_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Algorithm_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -440,9 +480,15 @@
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/array%E6%95%B0%E7%BB%84%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Array%e6%95%b0%e7%bb%84%e5%87%bd%e6%95%b0%e8%af%a6%e8%a7%a3_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Array数组函数详解_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -453,9 +499,15 @@
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/c-/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/C_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/C_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -466,9 +518,15 @@
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/c-/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/C_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/C_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -479,9 +537,15 @@
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/c-%E5%A4%9A%E6%80%81/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/C_%e5%a4%9a%e6%80%81_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/C_多态_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">

@@ -6,13 +6,14 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E5%BA%94%E7%94%A8%E5%B1%82/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="应用层">
+<link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="应用层">
 <meta property='og:description' content="应用层 作用:提供用户或者应用程序访问互联网的接口\n应用层结构 客户/服务器结构 客户端（Client）： 启动方式：根据需要启动。\n联系服务器方式：客户端主动与服务器建立联系，客户端先发起通信。\n动态IP地址：客户端可能具有动态分配的IP地址。\n服务器（Server）： 运行方式：作为守护进程（始终运行）。 提供服务方式：向客户端提供请求的服务。 固定IP地址：服务器通常具有固定的IP地址。 peer-to-peer结构 核心特点： 无始终在线服务器：对等网络中没有始终在线的中央服务器，而是由各个端系统直接相互通信。 端系统直接通信：对等网络中的节点（对等者）可以互相请求服务，也可以相互提供服务。 自我可扩展性：新的节点加入可以带来新的服务能力，同时也带来新的服务需求，因此网络具有自我扩展的性质。 节点连接多变：对等节点的连接不稳定，IP地址可能会改变。 高度扩展性但管理困难：对等网络具有很高的可扩展性，但管理复杂度较高。 DNS : Domain Name Service 域名解析服务 将域名解析陈相应的IP地址\n层次化的域名解析 根域名服务器（Root Name Servers）：\n功能：根域名服务器位于 DNS 层次结构的最顶部，负责管理顶级域的信息，当本地域名服务器无法解析域名时，会联系根域名服务器。 作用：根域名服务器不直接回答 DNS 查询，而是指示本地域名服务器转向哪个顶级域名服务器处理查询。 顶级域名服务器（Top-Level Domain Servers）：\n功能：顶级域名服务器负责管理顶级域（TLD）信息，如.com、.org、.net、.edu等，以及各国家顶级域，如.cn、.uk、.fr等。 作用：当本地域名服务器接收到从根域名服务器指示后的查询，会进一步向适当的顶级域名服务器发出查询以获取更详细的信息。 权威 DNS 服务器（Authoritative DNS Servers）：\n功能：权威 DNS 服务器包含有关特定域的权威信息，负责提供给查询者域名到IP地址的映射。 作用：当本地域名服务器需要解析特定域的信息时，会向该域的权威 DNS 服务器发送查询请求以获取准确的映射关系。 本地域名服务器（Local Name Servers）：\n功能：本地域名服务器通常由住宅ISP、公司或大学维护，存储已查询过的域名映射关系，提高解析效率。 作用：当用户设备发起 DNS 查询时，查询会首先发送到本地域名服务器，如果本地服务器有相应的记录，将直接返回结果；否则，会按照层级结构向更高级的域名服务器继续查询。 Every server knows the root Root server knows about all top-level domains 域名解析的顺序: ">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E5%BA%94%E7%94%A8%E5%B1%82/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='原创' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='og:image' content='https://114514yangyi.github.io/huyang/img/%E5%BA%94%E7%94%A8%E5%B1%82_cover.png' />
 <meta name="twitter:title" content="应用层">
-<meta name="twitter:description" content="应用层 作用:提供用户或者应用程序访问互联网的接口\n应用层结构 客户/服务器结构 客户端（Client）： 启动方式：根据需要启动。\n联系服务器方式：客户端主动与服务器建立联系，客户端先发起通信。\n动态IP地址：客户端可能具有动态分配的IP地址。\n服务器（Server）： 运行方式：作为守护进程（始终运行）。 提供服务方式：向客户端提供请求的服务。 固定IP地址：服务器通常具有固定的IP地址。 peer-to-peer结构 核心特点： 无始终在线服务器：对等网络中没有始终在线的中央服务器，而是由各个端系统直接相互通信。 端系统直接通信：对等网络中的节点（对等者）可以互相请求服务，也可以相互提供服务。 自我可扩展性：新的节点加入可以带来新的服务能力，同时也带来新的服务需求，因此网络具有自我扩展的性质。 节点连接多变：对等节点的连接不稳定，IP地址可能会改变。 高度扩展性但管理困难：对等网络具有很高的可扩展性，但管理复杂度较高。 DNS : Domain Name Service 域名解析服务 将域名解析陈相应的IP地址\n层次化的域名解析 根域名服务器（Root Name Servers）：\n功能：根域名服务器位于 DNS 层次结构的最顶部，负责管理顶级域的信息，当本地域名服务器无法解析域名时，会联系根域名服务器。 作用：根域名服务器不直接回答 DNS 查询，而是指示本地域名服务器转向哪个顶级域名服务器处理查询。 顶级域名服务器（Top-Level Domain Servers）：\n功能：顶级域名服务器负责管理顶级域（TLD）信息，如.com、.org、.net、.edu等，以及各国家顶级域，如.cn、.uk、.fr等。 作用：当本地域名服务器接收到从根域名服务器指示后的查询，会进一步向适当的顶级域名服务器发出查询以获取更详细的信息。 权威 DNS 服务器（Authoritative DNS Servers）：\n功能：权威 DNS 服务器包含有关特定域的权威信息，负责提供给查询者域名到IP地址的映射。 作用：当本地域名服务器需要解析特定域的信息时，会向该域的权威 DNS 服务器发送查询请求以获取准确的映射关系。 本地域名服务器（Local Name Servers）：\n功能：本地域名服务器通常由住宅ISP、公司或大学维护，存储已查询过的域名映射关系，提高解析效率。 作用：当用户设备发起 DNS 查询时，查询会首先发送到本地域名服务器，如果本地服务器有相应的记录，将直接返回结果；否则，会按照层级结构向更高级的域名服务器继续查询。 Every server knows the root Root server knows about all top-level domains 域名解析的顺序: ">
+<meta name="twitter:description" content="应用层 作用:提供用户或者应用程序访问互联网的接口\n应用层结构 客户/服务器结构 客户端（Client）： 启动方式：根据需要启动。\n联系服务器方式：客户端主动与服务器建立联系，客户端先发起通信。\n动态IP地址：客户端可能具有动态分配的IP地址。\n服务器（Server）： 运行方式：作为守护进程（始终运行）。 提供服务方式：向客户端提供请求的服务。 固定IP地址：服务器通常具有固定的IP地址。 peer-to-peer结构 核心特点： 无始终在线服务器：对等网络中没有始终在线的中央服务器，而是由各个端系统直接相互通信。 端系统直接通信：对等网络中的节点（对等者）可以互相请求服务，也可以相互提供服务。 自我可扩展性：新的节点加入可以带来新的服务能力，同时也带来新的服务需求，因此网络具有自我扩展的性质。 节点连接多变：对等节点的连接不稳定，IP地址可能会改变。 高度扩展性但管理困难：对等网络具有很高的可扩展性，但管理复杂度较高。 DNS : Domain Name Service 域名解析服务 将域名解析陈相应的IP地址\n层次化的域名解析 根域名服务器（Root Name Servers）：\n功能：根域名服务器位于 DNS 层次结构的最顶部，负责管理顶级域的信息，当本地域名服务器无法解析域名时，会联系根域名服务器。 作用：根域名服务器不直接回答 DNS 查询，而是指示本地域名服务器转向哪个顶级域名服务器处理查询。 顶级域名服务器（Top-Level Domain Servers）：\n功能：顶级域名服务器负责管理顶级域（TLD）信息，如.com、.org、.net、.edu等，以及各国家顶级域，如.cn、.uk、.fr等。 作用：当本地域名服务器接收到从根域名服务器指示后的查询，会进一步向适当的顶级域名服务器发出查询以获取更详细的信息。 权威 DNS 服务器（Authoritative DNS Servers）：\n功能：权威 DNS 服务器包含有关特定域的权威信息，负责提供给查询者域名到IP地址的映射。 作用：当本地域名服务器需要解析特定域的信息时，会向该域的权威 DNS 服务器发送查询请求以获取准确的映射关系。 本地域名服务器（Local Name Servers）：\n功能：本地域名服务器通常由住宅ISP、公司或大学维护，存储已查询过的域名映射关系，提高解析效率。 作用：当用户设备发起 DNS 查询时，查询会首先发送到本地域名服务器，如果本地服务器有相应的记录，将直接返回结果；否则，会按照层级结构向更高级的域名服务器继续查询。 Every server knows the root Root server knows about all top-level domains 域名解析的顺序: "><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://114514yangyi.github.io/huyang/img/%E5%BA%94%E7%94%A8%E5%B1%82_cover.png' />
     </head>
     <body class="
     article-page
@@ -153,6 +154,25 @@
 
                 
                 <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/journal/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Journal</span>
             </a>
         </li>
         
@@ -365,8 +385,16 @@
 
 
             <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/huyang/p/%E5%BA%94%E7%94%A8%E5%B1%82/">
+                
+                    <img src="/huyang/img/%e5%ba%94%e7%94%a8%e5%b1%82_cover.png" loading="lazy" alt="Featured image of post 应用层" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
     
@@ -911,6 +939,12 @@ FTP 的服务器进程由两大部分组成:一个主进程,负责接收新的�
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/huyang/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -940,22 +974,15 @@ FTP 的服务器进程由两大部分组成:一个主进程,负责接收新的�
         <div class="flex article-list--tile">
             
                 
-<article class="">
-    <a href="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">网络层</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e4%ba%92%e8%81%94%e7%bd%91%e5%ae%89%e5%85%a8_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/互联网安全_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -966,9 +993,15 @@ FTP 的服务器进程由两大部分组成:一个主进程,负责接收新的�
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%A6%81%E7%82%B9/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e4%ba%92%e8%81%94%e7%bd%91%e8%a6%81%e7%82%b9_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/互联网要点_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -979,9 +1012,15 @@ FTP 的服务器进程由两大部分组成:一个主进程,负责接收新的�
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e4%ba%92%e8%81%94%e7%bd%91%e8%ae%a1%e7%ae%97%e7%ae%80%e6%b4%81_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/互联网计算简洁_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -992,13 +1031,38 @@ FTP 的服务器进程由两大部分组成:一个主进程,负责接收新的�
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e4%bc%a0%e8%be%93%e5%b1%82%e6%a0%b8%e5%bf%83%e5%8d%8f%e8%ae%ae_TCP%e4%b8%8eUDP%e6%b7%b1%e5%ba%a6%e8%a7%a3%e6%9e%90_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/传输层核心协议_TCP与UDP深度解析_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
             <h2 class="article-title">传输层核心协议：TCP与UDP深度解析</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/huyang/p/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e6%97%a0%e7%ba%bf%e7%bd%91%e7%bb%9c%e4%b8%8e%e7%a7%bb%e5%8a%a8%e7%bd%91%e7%bb%9c_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/无线网络与移动网络_cover.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">无线网络与移动网络</h2>
         </div>
     </a>
 </article>

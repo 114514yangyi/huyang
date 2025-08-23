@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on Hu Yang&#39;s Blog</title>
+        <link>http://localhost:1313/huyang/posts/</link>
+        <description>Recent content in Posts on Hu Yang&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>Hu Yang</copyright>
+        <lastBuildDate>Tue, 20 May 2025 11:54:10 +0800</lastBuildDate><atom:link href="http://localhost:1313/huyang/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Hugo搭建</title>
+        <link>http://localhost:1313/huyang/posts/hugo%E6%90%AD%E5%BB%BA/</link>
+        <pubDate>Tue, 20 May 2025 11:54:10 +0800</pubDate>
+        
+        <guid>http://localhost:1313/huyang/posts/hugo%E6%90%AD%E5%BB%BA/</guid>
+        <description>&lt;img src="http://localhost:1313/huyang/img/Hugo%E6%90%AD%E5%BB%BA_cover.png" alt="Featured image of post Hugo搭建" /&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;//cdn.jsdelivr.net/npm/katex/dist/katex.min.css&#34;&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/math-code.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/katex.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js&#34; defer&gt;&lt;/script&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

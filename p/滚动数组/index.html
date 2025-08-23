@@ -6,13 +6,14 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E6%BB%9A%E5%8A%A8%E6%95%B0%E7%BB%84/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="滚动数组">
+<link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="滚动数组">
 <meta property='og:description' content="滚动数组 Tags: 算法 Created by: Hu Yang Created time: November 12, 2023 3:34 PM\n滚动数组思想是一种优化算法的技巧，用于减少空间复杂度。它通过复用数组中的元素，避免创建额外的数组，从而节省内存空间。\n滚动数组的思想在算法设计中非常常见，特别是在动态规划问题中。它通过将问题的状态压缩到一个固定大小的数组中，从而减少空间的使用。\n滚动数组的基本思想是，通过不断更新数组中的元素，将当前状态的计算结果保存在数组中，然后根据需要，将数组中的元素复用到下一个状态的计算中。这样，就可以避免创建额外的数组，节省内存空间。\n滚动数组的应用场景很多，例如在动态规划中，当状态转移方程只依赖于前一状态的计算结果时，可以使用滚动数组来优化空间复杂度。另外，在一些数组遍历的问题中，也可以使用滚动数组来减少空间的使用。\n总结一下，滚动数组思想是一种优化算法的技巧，通过复用数组中的元素，避免创建额外的数组，从而节省内存空间。它在动态规划和数组遍历等问题中有广泛的应用。\nLearn more:\n算法导论 读书笔记 - Chuanqi 的技术文档 空间优化技巧：Scrolling array 滚动数组 - 知乎 ">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E6%BB%9A%E5%8A%A8%E6%95%B0%E7%BB%84/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='原创' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='og:image' content='https://114514yangyi.github.io/huyang/img/%E6%BB%9A%E5%8A%A8%E6%95%B0%E7%BB%84_cover.png' />
 <meta name="twitter:title" content="滚动数组">
-<meta name="twitter:description" content="滚动数组 Tags: 算法 Created by: Hu Yang Created time: November 12, 2023 3:34 PM\n滚动数组思想是一种优化算法的技巧，用于减少空间复杂度。它通过复用数组中的元素，避免创建额外的数组，从而节省内存空间。\n滚动数组的思想在算法设计中非常常见，特别是在动态规划问题中。它通过将问题的状态压缩到一个固定大小的数组中，从而减少空间的使用。\n滚动数组的基本思想是，通过不断更新数组中的元素，将当前状态的计算结果保存在数组中，然后根据需要，将数组中的元素复用到下一个状态的计算中。这样，就可以避免创建额外的数组，节省内存空间。\n滚动数组的应用场景很多，例如在动态规划中，当状态转移方程只依赖于前一状态的计算结果时，可以使用滚动数组来优化空间复杂度。另外，在一些数组遍历的问题中，也可以使用滚动数组来减少空间的使用。\n总结一下，滚动数组思想是一种优化算法的技巧，通过复用数组中的元素，避免创建额外的数组，从而节省内存空间。它在动态规划和数组遍历等问题中有广泛的应用。\nLearn more:\n算法导论 读书笔记 - Chuanqi 的技术文档 空间优化技巧：Scrolling array 滚动数组 - 知乎 ">
+<meta name="twitter:description" content="滚动数组 Tags: 算法 Created by: Hu Yang Created time: November 12, 2023 3:34 PM\n滚动数组思想是一种优化算法的技巧，用于减少空间复杂度。它通过复用数组中的元素，避免创建额外的数组，从而节省内存空间。\n滚动数组的思想在算法设计中非常常见，特别是在动态规划问题中。它通过将问题的状态压缩到一个固定大小的数组中，从而减少空间的使用。\n滚动数组的基本思想是，通过不断更新数组中的元素，将当前状态的计算结果保存在数组中，然后根据需要，将数组中的元素复用到下一个状态的计算中。这样，就可以避免创建额外的数组，节省内存空间。\n滚动数组的应用场景很多，例如在动态规划中，当状态转移方程只依赖于前一状态的计算结果时，可以使用滚动数组来优化空间复杂度。另外，在一些数组遍历的问题中，也可以使用滚动数组来减少空间的使用。\n总结一下，滚动数组思想是一种优化算法的技巧，通过复用数组中的元素，避免创建额外的数组，从而节省内存空间。它在动态规划和数组遍历等问题中有广泛的应用。\nLearn more:\n算法导论 读书笔记 - Chuanqi 的技术文档 空间优化技巧：Scrolling array 滚动数组 - 知乎 "><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://114514yangyi.github.io/huyang/img/%E6%BB%9A%E5%8A%A8%E6%95%B0%E7%BB%84_cover.png' />
     </head>
     <body class="
     article-page
@@ -158,6 +159,25 @@
         
         
         <li >
+            <a href='/huyang/journal/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Journal</span>
+            </a>
+        </li>
+        
+        
+        <li >
             <a href='/huyang/archives/' >
                 
                 
@@ -271,8 +291,16 @@
     
 
             <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/huyang/p/%E6%BB%9A%E5%8A%A8%E6%95%B0%E7%BB%84/">
+                
+                    <img src="/huyang/img/%e6%bb%9a%e5%8a%a8%e6%95%b0%e7%bb%84_cover.png" loading="lazy" alt="Featured image of post 滚动数组" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
     
@@ -362,6 +390,12 @@ Created time: November 12, 2023 3:34 PM</p>
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/huyang/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -391,9 +425,15 @@ Created time: November 12, 2023 3:34 PM</p>
         <div class="flex article-list--tile">
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/heap/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Heap_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Heap_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -404,9 +444,15 @@ Created time: November 12, 2023 3:34 PM</p>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/list/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/List_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/List_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -417,9 +463,15 @@ Created time: November 12, 2023 3:34 PM</p>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E5%B9%B6%E6%9F%A5%E9%9B%86/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e5%b9%b6%e6%9f%a5%e9%9b%86_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/并查集_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -430,9 +482,15 @@ Created time: November 12, 2023 3:34 PM</p>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e4%b8%8e%e7%ae%97%e6%b3%95_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/数据结构与算法_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -443,9 +501,15 @@ Created time: November 12, 2023 3:34 PM</p>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E6%A0%88stack/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e6%a0%88Stack_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/栈Stack_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">

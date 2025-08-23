@@ -6,13 +6,14 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="无线网络与移动网络">
+<link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="无线网络与移动网络">
 <meta property='og:description' content="无线网络和移动网络 组成 无线主机\n运行应用程序的端系统设备\n无线链路:\n主机通过无线链路连接到基站\n基站:\n连接方式: 自组织: 没有基站,使用其他的主机节点来传播消息 基站模式: 有基站,是可以在基站间移交的(设备可以移动) 无线: 缺点: 在传播的过程中有损耗,和频率,距离成正比;\n有多重路径的问题,可以通过反射导致接收到同样的数据在不同的时间-&gt;具有时间的一致性,每一次传播的波在一定的时间内是一致的,没有重叠.\n噪声:SNR(信噪比),即信息量和噪声的比值,越大越好.BER(bit差错率),比特位错误的概率,越小越好.传播的速率越大,比特差错率越大,或者信噪比越小;\n节点相互不可见:\n隐藏终端:由于遮挡物的影响,两个节点不知道彼此的存在: 衰减:两个节点听不到彼此的存在:\nCDMA:码分复用:Code Division Multiple Access 使用不同的正交(相乘相加为0)的码对要传输的多路节点数据包进行编码相加,在接收端进行根据码的解码,实现多路复用(同频率同时隙传输).\n对于sender_i (有M个sender)有单个位的数据$d_i$,8位的码(由正一和负一组成)$c_i$,则最终的$Z_i=d_i\\times c_i$,对于每一个sender,都形成这样的Z,最终将Z相加并发送给receiver:$Z^{*}=\\sum_{0}^{M}{Zi}$. 对于receiver想要解析出sender_i的信息,则$d_{i}=\\frac{\\sum_{m=1}^{M}Z^{*}\\times c_{i}}{M}$. WIFI:802.11 将频率划分为11个信道(没有重叠)\n基础结构(基础服务集):1.一个接入点(基站) 2.一些列的无线主机\n运行在同一个信道的APs会有碰撞的可能的,所有需要运行CSMA/CA\n802.11连接:\n到来的主机首先扫描每一个信道,监听信标帧(里面包含着接入点的名称(SSID),MAC地址) 选择一个AP去连接 开始认证 运行DHCP分配IP 扫描的过程:\n被动扫描: APs向主机发送信标帧,主机选择一个向AP发送关联请求帧,选择的AP向主机发送关联响应帧\n主动扫描:\n主机广播探测请求帧,APs发送探测响应帧,主机向选择的AP发送关联请求帧,AP向主机发送关联相应帧\n使用协议CSMA/CA:碰撞避免:Carrier Sense Multiple Access/Collision Avoidance 为什么802.11要使用CSMA/CA的方式:\n\u200b\n隐藏节点和暴露节点问题： 在无线网络中，存在隐藏节点和暴露节点的问题。节点之间无法直接检测到冲突，因此无法像有线网络那样依靠冲突检测来解决冲突问题。CSMA/CA通过采用持续监听的方式来尽量减少这些问题的影响，而CSMA/CD无法有效处理这种情况。 碰撞的后果： 在无线网络中，碰撞的后果是严重的，因为当多个节点同时发送数据时，发生碰撞主机检测不出来,会一直将整个的数据包传输，降低了网络性能。CSMA/CA通过避免碰撞的方式来减少重传，提高了效率。 具体原理 ">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='原创' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='og:image' content='https://114514yangyi.github.io/huyang/img/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C_cover.png' />
 <meta name="twitter:title" content="无线网络与移动网络">
-<meta name="twitter:description" content="无线网络和移动网络 组成 无线主机\n运行应用程序的端系统设备\n无线链路:\n主机通过无线链路连接到基站\n基站:\n连接方式: 自组织: 没有基站,使用其他的主机节点来传播消息 基站模式: 有基站,是可以在基站间移交的(设备可以移动) 无线: 缺点: 在传播的过程中有损耗,和频率,距离成正比;\n有多重路径的问题,可以通过反射导致接收到同样的数据在不同的时间-&gt;具有时间的一致性,每一次传播的波在一定的时间内是一致的,没有重叠.\n噪声:SNR(信噪比),即信息量和噪声的比值,越大越好.BER(bit差错率),比特位错误的概率,越小越好.传播的速率越大,比特差错率越大,或者信噪比越小;\n节点相互不可见:\n隐藏终端:由于遮挡物的影响,两个节点不知道彼此的存在: 衰减:两个节点听不到彼此的存在:\nCDMA:码分复用:Code Division Multiple Access 使用不同的正交(相乘相加为0)的码对要传输的多路节点数据包进行编码相加,在接收端进行根据码的解码,实现多路复用(同频率同时隙传输).\n对于sender_i (有M个sender)有单个位的数据$d_i$,8位的码(由正一和负一组成)$c_i$,则最终的$Z_i=d_i\\times c_i$,对于每一个sender,都形成这样的Z,最终将Z相加并发送给receiver:$Z^{*}=\\sum_{0}^{M}{Zi}$. 对于receiver想要解析出sender_i的信息,则$d_{i}=\\frac{\\sum_{m=1}^{M}Z^{*}\\times c_{i}}{M}$. WIFI:802.11 将频率划分为11个信道(没有重叠)\n基础结构(基础服务集):1.一个接入点(基站) 2.一些列的无线主机\n运行在同一个信道的APs会有碰撞的可能的,所有需要运行CSMA/CA\n802.11连接:\n到来的主机首先扫描每一个信道,监听信标帧(里面包含着接入点的名称(SSID),MAC地址) 选择一个AP去连接 开始认证 运行DHCP分配IP 扫描的过程:\n被动扫描: APs向主机发送信标帧,主机选择一个向AP发送关联请求帧,选择的AP向主机发送关联响应帧\n主动扫描:\n主机广播探测请求帧,APs发送探测响应帧,主机向选择的AP发送关联请求帧,AP向主机发送关联相应帧\n使用协议CSMA/CA:碰撞避免:Carrier Sense Multiple Access/Collision Avoidance 为什么802.11要使用CSMA/CA的方式:\n\u200b\n隐藏节点和暴露节点问题： 在无线网络中，存在隐藏节点和暴露节点的问题。节点之间无法直接检测到冲突，因此无法像有线网络那样依靠冲突检测来解决冲突问题。CSMA/CA通过采用持续监听的方式来尽量减少这些问题的影响，而CSMA/CD无法有效处理这种情况。 碰撞的后果： 在无线网络中，碰撞的后果是严重的，因为当多个节点同时发送数据时，发生碰撞主机检测不出来,会一直将整个的数据包传输，降低了网络性能。CSMA/CA通过避免碰撞的方式来减少重传，提高了效率。 具体原理 ">
+<meta name="twitter:description" content="无线网络和移动网络 组成 无线主机\n运行应用程序的端系统设备\n无线链路:\n主机通过无线链路连接到基站\n基站:\n连接方式: 自组织: 没有基站,使用其他的主机节点来传播消息 基站模式: 有基站,是可以在基站间移交的(设备可以移动) 无线: 缺点: 在传播的过程中有损耗,和频率,距离成正比;\n有多重路径的问题,可以通过反射导致接收到同样的数据在不同的时间-&gt;具有时间的一致性,每一次传播的波在一定的时间内是一致的,没有重叠.\n噪声:SNR(信噪比),即信息量和噪声的比值,越大越好.BER(bit差错率),比特位错误的概率,越小越好.传播的速率越大,比特差错率越大,或者信噪比越小;\n节点相互不可见:\n隐藏终端:由于遮挡物的影响,两个节点不知道彼此的存在: 衰减:两个节点听不到彼此的存在:\nCDMA:码分复用:Code Division Multiple Access 使用不同的正交(相乘相加为0)的码对要传输的多路节点数据包进行编码相加,在接收端进行根据码的解码,实现多路复用(同频率同时隙传输).\n对于sender_i (有M个sender)有单个位的数据$d_i$,8位的码(由正一和负一组成)$c_i$,则最终的$Z_i=d_i\\times c_i$,对于每一个sender,都形成这样的Z,最终将Z相加并发送给receiver:$Z^{*}=\\sum_{0}^{M}{Zi}$. 对于receiver想要解析出sender_i的信息,则$d_{i}=\\frac{\\sum_{m=1}^{M}Z^{*}\\times c_{i}}{M}$. WIFI:802.11 将频率划分为11个信道(没有重叠)\n基础结构(基础服务集):1.一个接入点(基站) 2.一些列的无线主机\n运行在同一个信道的APs会有碰撞的可能的,所有需要运行CSMA/CA\n802.11连接:\n到来的主机首先扫描每一个信道,监听信标帧(里面包含着接入点的名称(SSID),MAC地址) 选择一个AP去连接 开始认证 运行DHCP分配IP 扫描的过程:\n被动扫描: APs向主机发送信标帧,主机选择一个向AP发送关联请求帧,选择的AP向主机发送关联响应帧\n主动扫描:\n主机广播探测请求帧,APs发送探测响应帧,主机向选择的AP发送关联请求帧,AP向主机发送关联相应帧\n使用协议CSMA/CA:碰撞避免:Carrier Sense Multiple Access/Collision Avoidance 为什么802.11要使用CSMA/CA的方式:\n\u200b\n隐藏节点和暴露节点问题： 在无线网络中，存在隐藏节点和暴露节点的问题。节点之间无法直接检测到冲突，因此无法像有线网络那样依靠冲突检测来解决冲突问题。CSMA/CA通过采用持续监听的方式来尽量减少这些问题的影响，而CSMA/CD无法有效处理这种情况。 碰撞的后果： 在无线网络中，碰撞的后果是严重的，因为当多个节点同时发送数据时，发生碰撞主机检测不出来,会一直将整个的数据包传输，降低了网络性能。CSMA/CA通过避免碰撞的方式来减少重传，提高了效率。 具体原理 "><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://114514yangyi.github.io/huyang/img/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C_cover.png' />
     </head>
     <body class="
     article-page
@@ -153,6 +154,25 @@
 
                 
                 <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/journal/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Journal</span>
             </a>
         </li>
         
@@ -334,8 +354,16 @@
 
 
             <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/huyang/p/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/">
+                
+                    <img src="/huyang/img/%e6%97%a0%e7%ba%bf%e7%bd%91%e7%bb%9c%e4%b8%8e%e7%a7%bb%e5%8a%a8%e7%bd%91%e7%bb%9c_cover.png" loading="lazy" alt="Featured image of post 无线网络与移动网络" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
     
@@ -801,6 +829,12 @@ APs向主机发送信标帧,主机选择一个向AP发送关联请求帧,选择�
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/huyang/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -830,22 +864,15 @@ APs向主机发送信标帧,主机选择一个向AP发送关联请求帧,选择�
         <div class="flex article-list--tile">
             
                 
-<article class="">
-    <a href="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">网络层</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e4%ba%92%e8%81%94%e7%bd%91%e5%ae%89%e5%85%a8_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/互联网安全_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -856,9 +883,15 @@ APs向主机发送信标帧,主机选择一个向AP发送关联请求帧,选择�
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%A6%81%E7%82%B9/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e4%ba%92%e8%81%94%e7%bd%91%e8%a6%81%e7%82%b9_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/互联网要点_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -869,9 +902,15 @@ APs向主机发送信标帧,主机选择一个向AP发送关联请求帧,选择�
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e4%ba%92%e8%81%94%e7%bd%91%e8%ae%a1%e7%ae%97%e7%ae%80%e6%b4%81_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/互联网计算简洁_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -882,13 +921,38 @@ APs向主机发送信标帧,主机选择一个向AP发送关联请求帧,选择�
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e4%bc%a0%e8%be%93%e5%b1%82%e6%a0%b8%e5%bf%83%e5%8d%8f%e8%ae%ae_TCP%e4%b8%8eUDP%e6%b7%b1%e5%ba%a6%e8%a7%a3%e6%9e%90_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/传输层核心协议_TCP与UDP深度解析_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
             <h2 class="article-title">传输层核心协议：TCP与UDP深度解析</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/huyang/p/%E5%BA%94%E7%94%A8%E5%B1%82/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e5%ba%94%e7%94%a8%e5%b1%82_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/应用层_cover.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">应用层</h2>
         </div>
     </a>
 </article>

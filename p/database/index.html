@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/huyang/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=huyang/livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Database 关于数据库关系运算 当涉及数据库课程中的操作关系时，以下是一些操作的定义和具体例子：\n运算的类型： 1.集合运算：\n交，并，差，笛卡尔积 2.关系运算：\n投影，选择 连接 除 基本的关系运算： 交，差，笛卡尔积，投影，选择 扩充运算： $$R\\cap S=R-(R-S)$$ $$R\\Join _{A\\theta B}S=\\sigma_{R.A=S.B}(R\\times B)$$ $$R\\div S=\\Pi_{a1}(R)-\\Pi_{a1}((\\Pi_{a1}(R)\\times S)-R)$$ 一些特殊的常用意义表示: 1 2 3 $$\\begin{flalign} &amp;A(a1,a2)\\div B(a1):means 选择a1中那些拥有B(a1)中所有值的元组，返回C(a2) \\end{flalign}$$ $$\\sigma _{condition1,condition2} (A(a1,a2)\\times B(b1,b2)) 对于任意的AB中的组合进行筛选$$ $$A(a1)\\Join B(b1,b2,b3,a1) 选择在B中满足其a1属性在A中的元组$$ $$\\Pi_{id}(A)-\\Pi_{A.id}(\\sigma_{A.val $$对于所有关系的语句来说，可以考虑从反面即不满足条件的语句出发$$ $$对于满足有关系的语句来说，可以考虑使用连接来表示$$ $$顾客 C(cid, cn, city, dis)\\\\ 供应商 A(aid, an, city, per)\\\\ 商品 P(pid, pn, city, qua, pri)\\\\ 订单 O(ordno, orddate, cid, aid, pid, qty, dol)\\\\ ⑦ 没有购买过商品\\\\ \\Pi_{cid}(C)-\\Pi{cid}(O)\\\\ ⑧ 只购买过一次商品\\\\ \\Pi_{cid}(O)-\\Pi_{cid}(\\sigma_{A.cid=B.cid,A.ordno\\neq B.ordno}(A\\times B)),whileA=B=O\\\\ ⑨ 只购买过同一种商品\\\\ \\Pi_{cid}(O)-\\Pi_{cid}(\\sigma_{A.cid=b.cid,A.pid\\neq B.pid}(A\\times B))\\\\$$ 除运算和笛卡尔积的关系： $$if~R=T\\times S,then T=R\\div S ,S=R\\div T\\\\ if~T=R\\div S,then~T\\times S\\subseteq R$$交（Intersection） 交运算符用于获取两个关系之间的共同元组。\n">
 <title>Database</title>
 
-<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/database/'>
+<link rel='canonical' href='http://localhost:1313/huyang/p/database/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="Database">
+<link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="Database">
 <meta property='og:description' content="Database 关于数据库关系运算 当涉及数据库课程中的操作关系时，以下是一些操作的定义和具体例子：\n运算的类型： 1.集合运算：\n交，并，差，笛卡尔积 2.关系运算：\n投影，选择 连接 除 基本的关系运算： 交，差，笛卡尔积，投影，选择 扩充运算： $$R\\cap S=R-(R-S)$$ $$R\\Join _{A\\theta B}S=\\sigma_{R.A=S.B}(R\\times B)$$ $$R\\div S=\\Pi_{a1}(R)-\\Pi_{a1}((\\Pi_{a1}(R)\\times S)-R)$$ 一些特殊的常用意义表示: 1 2 3 $$\\begin{flalign} &amp;A(a1,a2)\\div B(a1):means 选择a1中那些拥有B(a1)中所有值的元组，返回C(a2) \\end{flalign}$$ $$\\sigma _{condition1,condition2} (A(a1,a2)\\times B(b1,b2)) 对于任意的AB中的组合进行筛选$$ $$A(a1)\\Join B(b1,b2,b3,a1) 选择在B中满足其a1属性在A中的元组$$ $$\\Pi_{id}(A)-\\Pi_{A.id}(\\sigma_{A.val $$对于所有关系的语句来说，可以考虑从反面即不满足条件的语句出发$$ $$对于满足有关系的语句来说，可以考虑使用连接来表示$$ $$顾客 C(cid, cn, city, dis)\\\\ 供应商 A(aid, an, city, per)\\\\ 商品 P(pid, pn, city, qua, pri)\\\\ 订单 O(ordno, orddate, cid, aid, pid, qty, dol)\\\\ ⑦ 没有购买过商品\\\\ \\Pi_{cid}(C)-\\Pi{cid}(O)\\\\ ⑧ 只购买过一次商品\\\\ \\Pi_{cid}(O)-\\Pi_{cid}(\\sigma_{A.cid=B.cid,A.ordno\\neq B.ordno}(A\\times B)),whileA=B=O\\\\ ⑨ 只购买过同一种商品\\\\ \\Pi_{cid}(O)-\\Pi_{cid}(\\sigma_{A.cid=b.cid,A.pid\\neq B.pid}(A\\times B))\\\\$$ 除运算和笛卡尔积的关系： $$if~R=T\\times S,then T=R\\div S ,S=R\\div T\\\\ if~T=R\\div S,then~T\\times S\\subseteq R$$交（Intersection） 交运算符用于获取两个关系之间的共同元组。\n">
-<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/database/'>
+<meta property='og:url' content='http://localhost:1313/huyang/p/database/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T22:57:43&#43;08:00'/><meta property='article:modified_time' content='2025-05-18T22:57:43&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='原创' /><meta property='article:published_time' content='2025-05-18T22:57:43&#43;08:00'/><meta property='article:modified_time' content='2025-05-18T22:57:43&#43;08:00'/><meta property='og:image' content='http://localhost:1313/huyang/img/Database_cover.png' />
 <meta name="twitter:title" content="Database">
-<meta name="twitter:description" content="Database 关于数据库关系运算 当涉及数据库课程中的操作关系时，以下是一些操作的定义和具体例子：\n运算的类型： 1.集合运算：\n交，并，差，笛卡尔积 2.关系运算：\n投影，选择 连接 除 基本的关系运算： 交，差，笛卡尔积，投影，选择 扩充运算： $$R\\cap S=R-(R-S)$$ $$R\\Join _{A\\theta B}S=\\sigma_{R.A=S.B}(R\\times B)$$ $$R\\div S=\\Pi_{a1}(R)-\\Pi_{a1}((\\Pi_{a1}(R)\\times S)-R)$$ 一些特殊的常用意义表示: 1 2 3 $$\\begin{flalign} &amp;A(a1,a2)\\div B(a1):means 选择a1中那些拥有B(a1)中所有值的元组，返回C(a2) \\end{flalign}$$ $$\\sigma _{condition1,condition2} (A(a1,a2)\\times B(b1,b2)) 对于任意的AB中的组合进行筛选$$ $$A(a1)\\Join B(b1,b2,b3,a1) 选择在B中满足其a1属性在A中的元组$$ $$\\Pi_{id}(A)-\\Pi_{A.id}(\\sigma_{A.val $$对于所有关系的语句来说，可以考虑从反面即不满足条件的语句出发$$ $$对于满足有关系的语句来说，可以考虑使用连接来表示$$ $$顾客 C(cid, cn, city, dis)\\\\ 供应商 A(aid, an, city, per)\\\\ 商品 P(pid, pn, city, qua, pri)\\\\ 订单 O(ordno, orddate, cid, aid, pid, qty, dol)\\\\ ⑦ 没有购买过商品\\\\ \\Pi_{cid}(C)-\\Pi{cid}(O)\\\\ ⑧ 只购买过一次商品\\\\ \\Pi_{cid}(O)-\\Pi_{cid}(\\sigma_{A.cid=B.cid,A.ordno\\neq B.ordno}(A\\times B)),whileA=B=O\\\\ ⑨ 只购买过同一种商品\\\\ \\Pi_{cid}(O)-\\Pi_{cid}(\\sigma_{A.cid=b.cid,A.pid\\neq B.pid}(A\\times B))\\\\$$ 除运算和笛卡尔积的关系： $$if~R=T\\times S,then T=R\\div S ,S=R\\div T\\\\ if~T=R\\div S,then~T\\times S\\subseteq R$$交（Intersection） 交运算符用于获取两个关系之间的共同元组。\n">
+<meta name="twitter:description" content="Database 关于数据库关系运算 当涉及数据库课程中的操作关系时，以下是一些操作的定义和具体例子：\n运算的类型： 1.集合运算：\n交，并，差，笛卡尔积 2.关系运算：\n投影，选择 连接 除 基本的关系运算： 交，差，笛卡尔积，投影，选择 扩充运算： $$R\\cap S=R-(R-S)$$ $$R\\Join _{A\\theta B}S=\\sigma_{R.A=S.B}(R\\times B)$$ $$R\\div S=\\Pi_{a1}(R)-\\Pi_{a1}((\\Pi_{a1}(R)\\times S)-R)$$ 一些特殊的常用意义表示: 1 2 3 $$\\begin{flalign} &amp;A(a1,a2)\\div B(a1):means 选择a1中那些拥有B(a1)中所有值的元组，返回C(a2) \\end{flalign}$$ $$\\sigma _{condition1,condition2} (A(a1,a2)\\times B(b1,b2)) 对于任意的AB中的组合进行筛选$$ $$A(a1)\\Join B(b1,b2,b3,a1) 选择在B中满足其a1属性在A中的元组$$ $$\\Pi_{id}(A)-\\Pi_{A.id}(\\sigma_{A.val $$对于所有关系的语句来说，可以考虑从反面即不满足条件的语句出发$$ $$对于满足有关系的语句来说，可以考虑使用连接来表示$$ $$顾客 C(cid, cn, city, dis)\\\\ 供应商 A(aid, an, city, per)\\\\ 商品 P(pid, pn, city, qua, pri)\\\\ 订单 O(ordno, orddate, cid, aid, pid, qty, dol)\\\\ ⑦ 没有购买过商品\\\\ \\Pi_{cid}(C)-\\Pi{cid}(O)\\\\ ⑧ 只购买过一次商品\\\\ \\Pi_{cid}(O)-\\Pi_{cid}(\\sigma_{A.cid=B.cid,A.ordno\\neq B.ordno}(A\\times B)),whileA=B=O\\\\ ⑨ 只购买过同一种商品\\\\ \\Pi_{cid}(O)-\\Pi_{cid}(\\sigma_{A.cid=b.cid,A.pid\\neq B.pid}(A\\times B))\\\\$$ 除运算和笛卡尔积的关系： $$if~R=T\\times S,then T=R\\div S ,S=R\\div T\\\\ if~T=R\\div S,then~T\\times S\\subseteq R$$交（Intersection） 交运算符用于获取两个关系之间的共同元组。\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/huyang/img/Database_cover.png' />
     </head>
     <body class="
     article-page
@@ -231,11 +232,11 @@
 
                             <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
                                 
-                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                    <option value="http://localhost:1313/huyang/" selected>English</option>
                                 
-                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                    <option value="http://localhost:1313/huyang/zh-cn/" >中文</option>
                                 
-                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                    <option value="http://localhost:1313/huyang/ar/" >عربي</option>
                                 
                             </select>
                         </li>
@@ -314,8 +315,16 @@
 
 
             <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/huyang/p/database/">
+                
+                    <img src="/huyang/img/Database_cover.png" loading="lazy" alt="Featured image of post Database" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
     
@@ -995,6 +1004,12 @@ if~T=R\div S,then~T\times S\subseteq R$$<h2 id="交intersection"><strong>交（I
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/huyang/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -1024,9 +1039,15 @@ if~T=R\div S,then~T\times S\subseteq R$$<h2 id="交intersection"><strong>交（I
         <div class="flex article-list--tile">
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/fastapi-more/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Fastapi_More_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Fastapi_More_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -1037,9 +1058,15 @@ if~T=R\div S,then~T\times S\subseteq R$$<h2 id="交intersection"><strong>交（I
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/html/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Html_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Html_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -1050,9 +1077,15 @@ if~T=R\div S,then~T\times S\subseteq R$$<h2 id="交intersection"><strong>交（I
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/quickstart/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Quickstart_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Quickstart_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -1063,9 +1096,15 @@ if~T=R\div S,then~T\times S\subseteq R$$<h2 id="交intersection"><strong>交（I
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/shell/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Shell_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Shell_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -1076,9 +1115,15 @@ if~T=R\div S,then~T\times S\subseteq R$$<h2 id="交intersection"><strong>交（I
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/socket/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Socket_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Socket_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -1246,7 +1291,7 @@ if~T=R\div S,then~T\times S\subseteq R$$<h2 id="交intersection"><strong>交（I
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+            </script><script type="text/javascript" src="/huyang/ts/main.cd76aa272fba173b2f464f406f017da86c41ef720de6e50607ddcf590ac18f8d.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.53add811215acd63de1f643b21474d8051ad03c75ccf856e4b58dcfc0c5ced4c.js" defer></script>
 
 
     

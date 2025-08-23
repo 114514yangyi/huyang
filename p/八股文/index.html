@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E5%85%AB%E8%82%A1%E6%96%87/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="八股文">
+<link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="八股文">
 <meta property='og:description' content=" 面经八股文 操作系统 线程与进程的区别及联系 线程与进程之间的区别和联系我可以从以下几个方面来阐述：\n资源分配：进程是资源分配和调度的基本单位，每个进程都有独立的地址空间和系统资源；线程是程序执行的基本单位，同进程的多个线程共享进程的资源。\n切换成本：线程切换只需要保存少量寄存器状态，切换速度快；进程切换需要切换整个地址空间，成本更高。\n3）通信机制：进程间通信需要通过复杂的IPC机制；线程可以直接读写进程数据段进行通信。\n稳定性：一个线程崩溃可能导致整个进程终止；进程之间相互独立，一个进程崩溃不会影响其他进程。 主要联系在于线程依附于进程存在，一个进程至少包含一个线程，多线程工作在同一进程地址空间内协同完成任务。它们都是操作系统实现并发的重要手段。\n死锁条件 死锁 是指两个或多个进程/线程因竞争资源而 永久阻塞 的状态，所有参与方都无法继续执行。\n资源互斥 持有并等待 不能夺取别人的资源 资源的持有并等待的关系成环 用户态和内核态概念,并且说明原因,怎么切换 用户态：用户态是CPU运行用户程序的一种模式，权限较低，不能直接访问硬件资源；用户态需要通过系统调用（System Call）请求内核态的服务。 内核态：内核态是CPU运行操作系统内核的一种模式，拥有最高权限，可以直接访问硬件资源；内核态负责管理系统的核心功能，如进程调度、内存管理、设备驱动等。 原因:\n安全管理:\n用户态和内核态之间做了隔离,这样子话,用户的应用程序所导致的崩溃或者内存泄漏就不会影响到系统内核的崩溃\n统一接口:\n内核态直接管理硬件资源,将硬件资源抽象称为许多可以通过systemcall来调用的统一接口,用户态的应用程序就可以直接调用统一的接口来获取资源和服务\n权限控制:\n通过系统调用（syscall）实现 最小权限原则\n切换:\n系统调用 中断 异常 协程 协程是 用户态轻量级线程，由程序自身调度（而非操作系统），可在任意位置挂起/恢复，避免线程切换的开销。\nCache定义 Cache（缓存） 是一种用于存储临时数据的高速存储器，位于 CPU 和主存（RAM）之间，旨在减少数据访问延迟\n核心目标：解决 CPU 和主存之间的速度差距（Memory Wall 问题）。 软链接和硬链接之间的区别 硬链接： 本质是iNODE目录项的别名,指向同一个文件和inode目录项,并且将引用计数+1 本质是同一个 inode 的多个目录项（dentry），ls -i 可看到 inode 号相同。 引用计数（ls -l 的第二列数字）表示有多少硬链接指向该 inode。 删除文件 = 减少引用计数，只有计数归零时数据块才被释放。 软链接： 本质上是所指文件的绝对路劲的别名,是使用另一个新的文件去存储所指文件的绝对路劲,拥有不同的inode号,对引用计数不产生影响. 是一个独立的小文件（有自己的 inode），内容存储目标文件的绝对/相对路径。 类似 C 语言的指针，解引用时需逐层查找（可嵌套，如 A→B→C）。 大端序和小端序 区别本质：数据在内存中的字节存储顺序不同\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E5%85%AB%E8%82%A1%E6%96%87/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
@@ -153,6 +153,25 @@
 
                 
                 <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/journal/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Journal</span>
             </a>
         </li>
         
@@ -1824,9 +1843,15 @@ HTTP 的请求和响应的报文格式（Header + Body）不包含任何历史�
         <div class="flex article-list--tile">
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e9%9d%a2%e8%af%95%e6%8b%b7%e6%89%93_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/面试拷打_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">

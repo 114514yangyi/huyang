@@ -6,13 +6,14 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="互联网安全">
+<link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="互联网安全">
 <meta property='og:description' content="互联网安全 主要是\n鉴别 机密性 完整性 运行安全性 秘钥 对称秘钥 接收方和发送者使用同一份秘钥进行加密和解密\n加密算法:\n凯撒密码\n循环的加密模式\nDES加密算法:\n使用56位对称密钥，64位明文输入\n有3DES:使用3个不同的秘钥进行加密\nAES:\n使用128/192/256bits的秘钥加密128bits的数据块\n非对称秘钥 所有人都知道接受者的公钥,只有接受者有私钥;发送者使用公钥加密,接受者使用私钥解密;\nRSA算法:\n密钥生成： 选择两个大素数 p 和 q。 计算 n = p * q，n 称为模数。 计算欧拉函数 φ(n) = (p-1) * (q-1)。 选择一个指数 e，使得 e 与 φ(n) 互质，通常选择一个小素数，常见的选择是65537。 计算私钥指数 d，满足 (d * e) mod φ(n) = 1。 加密： 将明文 M 转换为整数 m，要求 0 &lt;= m &lt; n。 加密计算：C = M^e mod n，得到密文 C。 解密： 解密计算：M = C^d mod n，得到原始明文 M。 私钥:$K^{-}{B}=(n,d)$;公钥:$K^{+}{B}=(n,e)$.\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='原创' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='og:image' content='https://114514yangyi.github.io/huyang/img/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8_cover.png' />
 <meta name="twitter:title" content="互联网安全">
-<meta name="twitter:description" content="互联网安全 主要是\n鉴别 机密性 完整性 运行安全性 秘钥 对称秘钥 接收方和发送者使用同一份秘钥进行加密和解密\n加密算法:\n凯撒密码\n循环的加密模式\nDES加密算法:\n使用56位对称密钥，64位明文输入\n有3DES:使用3个不同的秘钥进行加密\nAES:\n使用128/192/256bits的秘钥加密128bits的数据块\n非对称秘钥 所有人都知道接受者的公钥,只有接受者有私钥;发送者使用公钥加密,接受者使用私钥解密;\nRSA算法:\n密钥生成： 选择两个大素数 p 和 q。 计算 n = p * q，n 称为模数。 计算欧拉函数 φ(n) = (p-1) * (q-1)。 选择一个指数 e，使得 e 与 φ(n) 互质，通常选择一个小素数，常见的选择是65537。 计算私钥指数 d，满足 (d * e) mod φ(n) = 1。 加密： 将明文 M 转换为整数 m，要求 0 &lt;= m &lt; n。 加密计算：C = M^e mod n，得到密文 C。 解密： 解密计算：M = C^d mod n，得到原始明文 M。 私钥:$K^{-}{B}=(n,d)$;公钥:$K^{+}{B}=(n,e)$.\n">
+<meta name="twitter:description" content="互联网安全 主要是\n鉴别 机密性 完整性 运行安全性 秘钥 对称秘钥 接收方和发送者使用同一份秘钥进行加密和解密\n加密算法:\n凯撒密码\n循环的加密模式\nDES加密算法:\n使用56位对称密钥，64位明文输入\n有3DES:使用3个不同的秘钥进行加密\nAES:\n使用128/192/256bits的秘钥加密128bits的数据块\n非对称秘钥 所有人都知道接受者的公钥,只有接受者有私钥;发送者使用公钥加密,接受者使用私钥解密;\nRSA算法:\n密钥生成： 选择两个大素数 p 和 q。 计算 n = p * q，n 称为模数。 计算欧拉函数 φ(n) = (p-1) * (q-1)。 选择一个指数 e，使得 e 与 φ(n) 互质，通常选择一个小素数，常见的选择是65537。 计算私钥指数 d，满足 (d * e) mod φ(n) = 1。 加密： 将明文 M 转换为整数 m，要求 0 &lt;= m &lt; n。 加密计算：C = M^e mod n，得到密文 C。 解密： 解密计算：M = C^d mod n，得到原始明文 M。 私钥:$K^{-}{B}=(n,d)$;公钥:$K^{+}{B}=(n,e)$.\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://114514yangyi.github.io/huyang/img/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8_cover.png' />
     </head>
     <body class="
     article-page
@@ -153,6 +154,25 @@
 
                 
                 <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/journal/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Journal</span>
             </a>
         </li>
         
@@ -300,7 +320,7 @@
       <ol>
         <li><a href="#数字签名">数字签名</a>
           <ol>
-            <li><a href="#生成过程">生成过程:</a></li>
+            <li><a href="#生成过程">生成过程</a></li>
             <li><a href="#颁布公钥的组织ca">颁布公钥的组织:CA</a></li>
           </ol>
         </li>
@@ -317,15 +337,15 @@
       <ol>
         <li>
           <ol>
-            <li><a href="#过程">过程:</a></li>
-            <li><a href="#hmac">HMAC:</a></li>
+            <li><a href="#过程">过程</a></li>
+            <li><a href="#hmac">HMAC</a></li>
           </ol>
         </li>
       </ol>
     </li>
     <li><a href="#ipsec网络层安全">IPsec:网络层安全</a>
       <ol>
-        <li><a href="#两种协议">两种协议:</a></li>
+        <li><a href="#两种协议">两种协议</a></li>
         <li><a href="#sa--security-association-安全关联">SA : Security Association 安全关联</a></li>
         <li><a href="#分组模式">分组模式</a></li>
         <li><a href="#传输过程">传输过程</a></li>
@@ -340,7 +360,7 @@
         </li>
         <li><a href="#数据库">数据库</a>
           <ol>
-            <li><a href="#简单总结">简单总结：</a></li>
+            <li><a href="#简单总结">简单总结</a></li>
           </ol>
         </li>
       </ol>
@@ -404,8 +424,16 @@
 
 
             <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/">
+                
+                    <img src="/huyang/img/%e4%ba%92%e8%81%94%e7%bd%91%e5%ae%89%e5%85%a8_cover.png" loading="lazy" alt="Featured image of post 互联网安全" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
     
@@ -537,7 +565,7 @@
 <li>SHA-1</li>
 </ul>
 <h3 id="数字签名">数字签名
-</h3><h4 id="生成过程">生成过程:
+</h3><h4 id="生成过程">生成过程
 </h4><p><img src="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8/image-20240611195128788.png"
 	width="1682"
 	height="815"
@@ -643,7 +671,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="过程">过程:
+<h4 id="过程">过程
 </h4><ol>
 <li>客户端发送协议版本号、加密算法列表和不重数A到服务器端。</li>
 <li>服务端返回自己的协议版本号、加密算法选择、证书和不重数B到客户端。</li>
@@ -653,7 +681,7 @@
 <li>客户端发送所有的握手报文的HMAC</li>
 <li>服务端发送所有握手报文的HMAC</li>
 </ol>
-<h4 id="hmac">HMAC:
+<h4 id="hmac">HMAC
 </h4><p>HMAC（Keyed-Hash Message Authentication Code）是一种在计算机安全领域中使用的消息认证码（MAC）算法。HMAC通过在哈希函数的基础上加入一个密钥，结合消息本身进行计算，可以验证消息的完整性和真实性，防止数据被篡改。以下是HMAC的基本原理和特点：</p>
 <ol>
 <li>
@@ -673,7 +701,7 @@
 </li>
 </ol>
 <h2 id="ipsec网络层安全">IPsec:网络层安全
-</h2><h3 id="两种协议">两种协议:
+</h2><h3 id="两种协议">两种协议
 </h3><p>一、AH协议（Authentication Header）：</p>
 <p>AH协议是一种用于提供IP通信认证和完整性保护的协议。其主要功能包括：</p>
 <ol>
@@ -787,7 +815,7 @@
 <li><strong>发送过程</strong>: 当发送IPsec数据报时，如路由器R1，会访问SAD以确定如何处理该数据报。它根据SAD中的信息来确定应该使用的加密或验证方法。</li>
 <li><strong>接收过程</strong>: 当IPsec数据报到达路由器R2时，R2会检查数据报中的序列号（SPI），然后使用SPI索引SAD，并据此处理数据报。</li>
 </ul>
-<h4 id="简单总结">简单总结：
+<h4 id="简单总结">简单总结
 </h4><ul>
 <li><strong>SPD</strong>: 告诉你“<strong>要做什么</strong>”（即哪些数据报需要使用IPsec，使用哪种加密或验证方法）。</li>
 <li><strong>SAD</strong>: 告诉你“<strong>如何做</strong>”（即具体如何加密或验证数据报，包括使用的密钥、算法等信息）。</li>
@@ -809,7 +837,8 @@
 </h2><p>假设 <strong>发送方（Alice）</strong> 要对一份文档签名，并发送给 <strong>接收方（Bob）</strong>。</p>
 <h3 id="步骤-1准备原始数据"><strong>步骤 1：准备原始数据</strong>
 </h3><ul>
-<li>Alice 有一份需要签名的消息（Message），例如：
+<li>
+<p>Alice 有一份需要签名的消息（Message），例如：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -822,7 +851,8 @@
 </ul>
 <h3 id="步骤-2计算消息的哈希值"><strong>步骤 2：计算消息的哈希值</strong>
 </h3><ul>
-<li>使用 <strong>哈希函数（如 SHA-256）</strong> 对消息生成固定长度的摘要（Digest）：
+<li>
+<p>使用 <strong>哈希函数（如 SHA-256）</strong> 对消息生成固定长度的摘要（Digest）：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -831,7 +861,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Hash = SHA-256(Message) 
 </span></span></code></pre></td></tr></table>
 </div>
-</div>例如：
+</div><p>例如：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -847,7 +877,8 @@
 </ul>
 <h3 id="步骤-3使用私钥加密哈希值"><strong>步骤 3：使用私钥加密哈希值</strong>
 </h3><ul>
-<li>Alice 用自己的 <strong>私钥（Private Key）</strong> 对哈希值进行加密，生成数字签名：
+<li>
+<p>Alice 用自己的 <strong>私钥（Private Key）</strong> 对哈希值进行加密，生成数字签名：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -864,7 +895,8 @@
 </ul>
 <h3 id="步骤-4发送原始消息和签名"><strong>步骤 4：发送原始消息和签名</strong>
 </h3><ul>
-<li>Alice 将 <strong>原始消息（Message）</strong> 和 <strong>签名（Signature）</strong> 一起发送给 Bob：
+<li>
+<p>Alice 将 <strong>原始消息（Message）</strong> 和 <strong>签名（Signature）</strong> 一起发送给 Bob：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -880,7 +912,8 @@
 </h2><p>Bob 收到消息后，需要验证签名是否确实来自 Alice，且消息未被篡改。</p>
 <h3 id="步骤-1计算收到消息的哈希值"><strong>步骤 1：计算收到消息的哈希值</strong>
 </h3><ul>
-<li>Bob 对收到的 <code>Message</code> 用相同的哈希函数（SHA-256）计算哈希：
+<li>
+<p>Bob 对收到的 <code>Message</code> 用相同的哈希函数（SHA-256）计算哈希：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -893,7 +926,8 @@
 </ul>
 <h3 id="步骤-2用公钥解密签名"><strong>步骤 2：用公钥解密签名</strong>
 </h3><ul>
-<li>Bob 使用 Alice 的 <strong>公钥（Public Key）</strong> 解密 <code>Signature</code>，得到原始哈希值：
+<li>
+<p>Bob 使用 Alice 的 <strong>公钥（Public Key）</strong> 解密 <code>Signature</code>，得到原始哈希值：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -906,7 +940,8 @@
 </ul>
 <h3 id="步骤-3比对哈希值"><strong>步骤 3：比对哈希值</strong>
 </h3><ul>
-<li>比较 <code>Hash_received</code>（Bob 计算的）和 <code>Hash_decrypted</code>（从签名解密的）：
+<li>
+<p>比较 <code>Hash_received</code>（Bob 计算的）和 <code>Hash_decrypted</code>（从签名解密的）：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1084,9 +1119,14 @@
 </h2><p>假设 Alice 使用 <strong>RSA-PSS</strong> 算法签名，步骤如下：</p>
 <h3 id="步骤-1计算消息的哈希值"><strong>步骤 1：计算消息的哈希值</strong>
 </h3><ul>
-<li>原始消息：<code>&quot;Transfer $100 to Bob&quot;</code></li>
-<li>哈希算法：SHA-256</li>
-<li>哈希值（H）：
+<li>
+<p>原始消息：<code>&quot;Transfer $100 to Bob&quot;</code></p>
+</li>
+<li>
+<p>哈希算法：SHA-256</p>
+</li>
+<li>
+<p>哈希值（H）：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1110,13 +1150,15 @@
 </ul>
 <h3 id="步骤-3用私钥对填充后的数据签名"><strong>步骤 3：用私钥对填充后的数据签名</strong>
 </h3><ul>
-<li>Alice 的 <strong>RSA 私钥</strong> 是一对数字 <code>(d, n)</code>，其中：
+<li>
+<p>Alice 的 <strong>RSA 私钥</strong> 是一对数字 <code>(d, n)</code>，其中：</p>
 <ul>
 <li><code>n</code>：大整数模数（公钥和私钥共用）。</li>
 <li><code>d</code>：私钥指数（保密）。</li>
 </ul>
 </li>
-<li><strong>签名计算</strong>：
+<li>
+<p><strong>签名计算</strong>：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1143,7 +1185,8 @@
 </div><hr>
 <h2 id="3-数学本质签名是加密吗"><strong>3. 数学本质：签名是“加密”吗？</strong>
 </h2><ul>
-<li><strong>传统 RSA 加密</strong>：
+<li>
+<p><strong>传统 RSA 加密</strong>：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1155,7 +1198,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div></li>
-<li><strong>RSA 签名</strong>：
+<li>
+<p><strong>RSA 签名</strong>：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1166,7 +1210,7 @@
 </span></span><span class="line"><span class="cl">验证 = 签名^e mod n == 哈希  （公钥“验证”）
 </span></span></code></pre></td></tr></table>
 </div>
-</div>虽然数学形式类似，但目的完全不同：
+</div><p>虽然数学形式类似，但目的完全不同：</p>
 <ul>
 <li><strong>加密</strong>：保护数据机密性（公钥加密，私钥解密）。</li>
 <li><strong>签名</strong>：证明身份和完整性（私钥签名，公钥验证）。</li>
@@ -1301,6 +1345,12 @@
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/huyang/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -1330,22 +1380,15 @@
         <div class="flex article-list--tile">
             
                 
-<article class="">
-    <a href="/huyang/p/%E7%BD%91%E7%BB%9C%E5%B1%82/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">网络层</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%A6%81%E7%82%B9/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e4%ba%92%e8%81%94%e7%bd%91%e8%a6%81%e7%82%b9_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/互联网要点_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -1356,9 +1399,15 @@
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97%E7%AE%80%E6%B4%81/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e4%ba%92%e8%81%94%e7%bd%91%e8%ae%a1%e7%ae%97%e7%ae%80%e6%b4%81_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/互联网计算简洁_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -1369,9 +1418,15 @@
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A0%B8%E5%BF%83%E5%8D%8F%E8%AE%AEtcp%E4%B8%8Eudp%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e4%bc%a0%e8%be%93%e5%b1%82%e6%a0%b8%e5%bf%83%e5%8d%8f%e8%ae%ae_TCP%e4%b8%8eUDP%e6%b7%b1%e5%ba%a6%e8%a7%a3%e6%9e%90_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/传输层核心协议_TCP与UDP深度解析_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -1382,13 +1437,38 @@
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/%E5%BA%94%E7%94%A8%E5%B1%82/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e5%ba%94%e7%94%a8%e5%b1%82_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/应用层_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
             <h2 class="article-title">应用层</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/huyang/p/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e6%97%a0%e7%ba%bf%e7%bd%91%e7%bb%9c%e4%b8%8e%e7%a7%bb%e5%8a%a8%e7%bd%91%e7%bb%9c_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/无线网络与移动网络_cover.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">无线网络与移动网络</h2>
         </div>
     </a>
 </article>

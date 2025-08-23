@@ -6,13 +6,14 @@
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/c-/'>
 
-<link rel="stylesheet" href="/huyang/scss/style.min.e78dcc50c297be235a0cf3879cdc56f9bf3f20c18e07c6e9101e8804a58c4068.css"><meta property='og:title' content="C++">
+<link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="C++">
 <meta property='og:description' content="c++ 类 1.类中函数的定义放在类的定义中表示建议编译器将函数作为内敛函数处理，在类外实现函数的时候要对函数加上类名受限。\n2.除了析构函数以外的函数都支持重载\n对同类对象进行赋值的时候默认是将对象的数据成员进行拷贝，但是我们可以使用拷贝函数来重定义； 在类中的非static函数都是拥有一个this指针用来表示当前正在操作的对象，而对于static函数来说，函数是属于class本身的，c++的类本身是包含成员变量的定义和static函数的。 构造函数对于成员变量的初始化都是通过构造函数名与函数体之间的区域进行的，其按照class中对于成员变量的声明顺序来进行的，而在析构函数中则是通过与class中成员变量的声明顺序相反的来调用变量的析构函数。 在创建动态数组对象时只能通过调用对象的默认构造函数。 对于常量和引用的数据成员是不能在申明的时候进行初始化，所以应该在构造函数的成员初始化表中进行初始化。 在调用class的构造函数的时候，是先执行成员变量的构造函数，最后再进行本类的构造函数；而析构函数是正好相反的，是先执行完本类的函数体，在按照相反的顺序去调用成员变量的析构函数。 若一个构造函数的参数类型为本类的引用，则称它为拷贝构造函数。 在三种情况下才会调用拷贝函数：在创建对象的时候用其他的对象进行初始化；把对象当做参数给函数传递参数的时候；把对象当做函数返回值的时候。 c++中提供的隐式的拷贝函数就是将类中的成员变量逐一进行拷贝初始化。 ">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/c-/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='原创' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='og:image' content='https://114514yangyi.github.io/huyang/img/C_cover.png' />
 <meta name="twitter:title" content="C++">
-<meta name="twitter:description" content="c++ 类 1.类中函数的定义放在类的定义中表示建议编译器将函数作为内敛函数处理，在类外实现函数的时候要对函数加上类名受限。\n2.除了析构函数以外的函数都支持重载\n对同类对象进行赋值的时候默认是将对象的数据成员进行拷贝，但是我们可以使用拷贝函数来重定义； 在类中的非static函数都是拥有一个this指针用来表示当前正在操作的对象，而对于static函数来说，函数是属于class本身的，c++的类本身是包含成员变量的定义和static函数的。 构造函数对于成员变量的初始化都是通过构造函数名与函数体之间的区域进行的，其按照class中对于成员变量的声明顺序来进行的，而在析构函数中则是通过与class中成员变量的声明顺序相反的来调用变量的析构函数。 在创建动态数组对象时只能通过调用对象的默认构造函数。 对于常量和引用的数据成员是不能在申明的时候进行初始化，所以应该在构造函数的成员初始化表中进行初始化。 在调用class的构造函数的时候，是先执行成员变量的构造函数，最后再进行本类的构造函数；而析构函数是正好相反的，是先执行完本类的函数体，在按照相反的顺序去调用成员变量的析构函数。 若一个构造函数的参数类型为本类的引用，则称它为拷贝构造函数。 在三种情况下才会调用拷贝函数：在创建对象的时候用其他的对象进行初始化；把对象当做参数给函数传递参数的时候；把对象当做函数返回值的时候。 c++中提供的隐式的拷贝函数就是将类中的成员变量逐一进行拷贝初始化。 ">
+<meta name="twitter:description" content="c++ 类 1.类中函数的定义放在类的定义中表示建议编译器将函数作为内敛函数处理，在类外实现函数的时候要对函数加上类名受限。\n2.除了析构函数以外的函数都支持重载\n对同类对象进行赋值的时候默认是将对象的数据成员进行拷贝，但是我们可以使用拷贝函数来重定义； 在类中的非static函数都是拥有一个this指针用来表示当前正在操作的对象，而对于static函数来说，函数是属于class本身的，c++的类本身是包含成员变量的定义和static函数的。 构造函数对于成员变量的初始化都是通过构造函数名与函数体之间的区域进行的，其按照class中对于成员变量的声明顺序来进行的，而在析构函数中则是通过与class中成员变量的声明顺序相反的来调用变量的析构函数。 在创建动态数组对象时只能通过调用对象的默认构造函数。 对于常量和引用的数据成员是不能在申明的时候进行初始化，所以应该在构造函数的成员初始化表中进行初始化。 在调用class的构造函数的时候，是先执行成员变量的构造函数，最后再进行本类的构造函数；而析构函数是正好相反的，是先执行完本类的函数体，在按照相反的顺序去调用成员变量的析构函数。 若一个构造函数的参数类型为本类的引用，则称它为拷贝构造函数。 在三种情况下才会调用拷贝函数：在创建对象的时候用其他的对象进行初始化；把对象当做参数给函数传递参数的时候；把对象当做函数返回值的时候。 c++中提供的隐式的拷贝函数就是将类中的成员变量逐一进行拷贝初始化。 "><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://114514yangyi.github.io/huyang/img/C_cover.png' />
     </head>
     <body class="
     article-page
@@ -158,6 +159,25 @@
         
         
         <li >
+            <a href='/huyang/journal/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Journal</span>
+            </a>
+        </li>
+        
+        
+        <li >
             <a href='/huyang/archives/' >
                 
                 
@@ -271,8 +291,16 @@
     
 
             <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/huyang/p/c-/">
+                
+                    <img src="/huyang/img/C_cover.png" loading="lazy" alt="Featured image of post C&#43;&#43;" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
     
@@ -373,6 +401,12 @@ Tags: Guides</p>
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/huyang/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -402,9 +436,15 @@ Tags: Guides</p>
         <div class="flex article-list--tile">
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/algorithm/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Algorithm_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Algorithm_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -415,9 +455,15 @@ Tags: Guides</p>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/array%E6%95%B0%E7%BB%84%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/Array%e6%95%b0%e7%bb%84%e5%87%bd%e6%95%b0%e8%af%a6%e8%a7%a3_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Array数组函数详解_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -428,9 +474,15 @@ Tags: Guides</p>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/c-/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/C_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/C_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -441,9 +493,15 @@ Tags: Guides</p>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/c-%E5%A4%9A%E6%80%81/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/C_%e5%a4%9a%e6%80%81_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/C_多态_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -454,9 +512,15 @@ Tags: Guides</p>
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/huyang/p/c-%E5%A4%B4%E6%96%87%E4%BB%B6/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/C_%e5%a4%b4%e6%96%87%e4%bb%b6_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/C_头文件_cover.png"/>
+                
+            </div>
         
 
         <div class="article-details">
