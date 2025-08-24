@@ -466,8 +466,13 @@
 &lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js&#34; defer&gt;&lt;/script&gt;
 &lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js&#34; defer&gt;&lt;/script&gt;
 &lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src= &#39;/js/pdf-js/build/pdf.js&#39;&gt;&lt;/script&gt;
 &lt;h1 id=&#34;面经八股文&#34;&gt;面经八股文
-&lt;/h1&gt;&lt;h2 id=&#34;操作系统&#34;&gt;操作系统
+&lt;/h1&gt;&lt;h2 id=&#34;计算机基础&#34;&gt;计算机基础
+&lt;/h2&gt;&lt;center&gt;&lt;embed src=&#34;计算机基础.pdf&#34; width=&#34;850&#34; height=&#34;550&#34;&gt;&lt;/center&gt;
+&lt;h2 id=&#34;mysql&#34;&gt;MYSQL
+&lt;/h2&gt;&lt;center&gt;&lt;embed src=&#34;MySQL.pdf&#34; width=&#34;850&#34; height=&#34;550&#34;&gt;&lt;/center&gt;
+&lt;h2 id=&#34;操作系统&#34;&gt;操作系统
 &lt;/h2&gt;&lt;h3 id=&#34;线程与进程的区别及联系&#34;&gt;线程与进程的区别及联系
 &lt;/h3&gt;&lt;p&gt;线程与进程之间的区别和联系我可以从以下几个方面来阐述：&lt;/p&gt;
 &lt;ol&gt;
@@ -1155,6 +1160,9 @@ HTTP 的请求和响应的报文格式（Header + Body）不包含任何历史�
 &lt;h3 id=&#34;b数和b--树的特点好处&#34;&gt;B数和B + 树的特点,好处
 &lt;/h3&gt;&lt;p&gt;B树是一种多路平衡搜索树，其特点是每个节点可以存储多个键值，并且所有叶子节点位于同一层，好处是能够减少磁盘I/O次数，适合在内存有限时高效查找数据，但由于节点既存储数据又存储键值，范围查询效率较低；而B+树在B树基础上优化，特点是&lt;strong&gt;非叶子节点只存键值不存数据&lt;/strong&gt;（数据全部集中在叶子节点），且叶子节点&lt;strong&gt;通过指针连接成有序链表&lt;/strong&gt;，这使得B+树比B树更加&lt;strong&gt;矮胖&lt;/strong&gt;（树高度更低，减少I/O），&lt;strong&gt;范围查询更高效&lt;/strong&gt;（只需遍历链表），同时&lt;strong&gt;更适合磁盘存储&lt;/strong&gt;（节点结构简单，能存储更多键），因此MySQL等数据库的索引一般使用B+树而非B树。&lt;/p&gt;
 &lt;p&gt;高扇出,低扇入.&lt;/p&gt;
+&lt;h3 id=&#34;为什么使用b树而不使用其他的数据结构&#34;&gt;为什么使用B+树,而不使用其他的数据结构
+&lt;/h3&gt;&lt;p&gt;对于一帮的快速查询的数据结构有哈希表,二叉排序树,平衡二叉树,红黑树;&lt;/p&gt;
+&lt;p&gt;对于哈希表来说,他的查询速度是O(1),查询很快,但是不能够支持范围查询;二叉排序树的插入和查询是O(logn),其中左边的节点小于当前节点,右边的节点大于当前节点,因此可以进行范围查询,也可以进行排序,但是在ID自增键这样子的插入情况下,很容易退化成为链表,时间复杂度退化成为O(n)成为全表遍历;而对于平衡二叉树来说,他对于树的节点使用一系列的旋转操作保证了每一个左右子树的高度差最大为1,从而保持了树的平衡,但是他的维持平衡的旋转操作开销太大,对于一些颠簸的插入删除操作就会频繁进行旋转,需要维持绝对的平衡,对应到数据库中,频繁地旋转就会带来大量的磁盘IO;对于红黑树来说是使用将节点染色称为红色和黑色和旋转操作来维持树的平衡的,&lt;/p&gt;
 &lt;h3 id=&#34;联合索引在-b--树上的存储方式如何按索引顺序构建树结构&#34;&gt;联合索引在 B + 树上的存储方式（如何按索引顺序构建树结构）
 &lt;/h3&gt;&lt;p&gt;在 B+ 树中，&lt;strong&gt;联合索引（复合索引）的存储方式&lt;/strong&gt; 遵循 &amp;ldquo;&lt;strong&gt;最左匹配原则&lt;/strong&gt;&amp;quot;，其特点如下：&lt;/p&gt;
 &lt;ol&gt;
@@ -7634,6 +7642,30 @@ DevOps 需要弹性云资源支持频繁部署测试。&lt;/p&gt;
 &lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js&#34; defer&gt;&lt;/script&gt;
 &lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js&#34; defer&gt;&lt;/script&gt;
 &lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js&#34; defer&gt;&lt;/script&gt;
+</description>
+        </item>
+        <item>
+        <title>Java八股文</title>
+        <link>https://114514yangyi.github.io/huyang/p/java%E5%85%AB%E8%82%A1%E6%96%87/</link>
+        <pubDate>Tue, 20 May 2025 11:54:10 +0800</pubDate>
+        
+        <guid>https://114514yangyi.github.io/huyang/p/java%E5%85%AB%E8%82%A1%E6%96%87/</guid>
+        <description>&lt;img src="https://114514yangyi.github.io/huyang/img/Java%E5%85%AB%E8%82%A1%E6%96%87_cover.png" alt="Featured image of post Java八股文" /&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;//cdn.jsdelivr.net/npm/katex/dist/katex.min.css&#34;&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/math-code.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/katex.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;h3 id=&#34;spring全家桶&#34;&gt;Spring全家桶
+&lt;/h3&gt;&lt;center&gt;&lt;embed src=&#34;Spring全家桶.pdf&#34; width=&#34;850&#34; height=&#34;550&#34;&gt;&lt;/center&gt;
+&lt;h2 id=&#34;javase&#34;&gt;JavaSE
+&lt;/h2&gt;&lt;center&gt;&lt;embed src=&#34;JavaSE.pdf&#34; width=&#34;850&#34; height=&#34;550&#34;&gt;&lt;/center&gt;
+&lt;h2 id=&#34;juc&#34;&gt;JUC
+&lt;/h2&gt;&lt;center&gt;&lt;embed src=&#34;JUC.pdf&#34; width=&#34;850&#34; height=&#34;550&#34;&gt;&lt;/center&gt;
+&lt;h2 id=&#34;mq&#34;&gt;MQ
+&lt;/h2&gt;&lt;center&gt;&lt;embed src=&#34;MQ.pdf&#34; width=&#34;850&#34; height=&#34;550&#34;&gt;&lt;/center&gt;
+&lt;h2 id=&#34;redis&#34;&gt;Redis
+&lt;/h2&gt;&lt;center&gt;&lt;embed src=&#34;Redis.pdf&#34; width=&#34;850&#34; height=&#34;550&#34;&gt;&lt;/center&gt;
 </description>
         </item>
         <item>

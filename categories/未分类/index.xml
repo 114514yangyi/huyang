@@ -21,6 +21,30 @@
 &lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js&#34; defer&gt;&lt;/script&gt;
 </description>
         </item>
+        <item>
+        <title>Java八股文</title>
+        <link>https://114514yangyi.github.io/huyang/p/java%E5%85%AB%E8%82%A1%E6%96%87/</link>
+        <pubDate>Tue, 20 May 2025 11:54:10 +0800</pubDate>
+        
+        <guid>https://114514yangyi.github.io/huyang/p/java%E5%85%AB%E8%82%A1%E6%96%87/</guid>
+        <description>&lt;img src="https://114514yangyi.github.io/huyang/img/Java%E5%85%AB%E8%82%A1%E6%96%87_cover.png" alt="Featured image of post Java八股文" /&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;//cdn.jsdelivr.net/npm/katex/dist/katex.min.css&#34;&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/math-code.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/katex.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;h3 id=&#34;spring全家桶&#34;&gt;Spring全家桶
+&lt;/h3&gt;&lt;center&gt;&lt;embed src=&#34;Spring全家桶.pdf&#34; width=&#34;850&#34; height=&#34;550&#34;&gt;&lt;/center&gt;
+&lt;h2 id=&#34;javase&#34;&gt;JavaSE
+&lt;/h2&gt;&lt;center&gt;&lt;embed src=&#34;JavaSE.pdf&#34; width=&#34;850&#34; height=&#34;550&#34;&gt;&lt;/center&gt;
+&lt;h2 id=&#34;juc&#34;&gt;JUC
+&lt;/h2&gt;&lt;center&gt;&lt;embed src=&#34;JUC.pdf&#34; width=&#34;850&#34; height=&#34;550&#34;&gt;&lt;/center&gt;
+&lt;h2 id=&#34;mq&#34;&gt;MQ
+&lt;/h2&gt;&lt;center&gt;&lt;embed src=&#34;MQ.pdf&#34; width=&#34;850&#34; height=&#34;550&#34;&gt;&lt;/center&gt;
+&lt;h2 id=&#34;redis&#34;&gt;Redis
+&lt;/h2&gt;&lt;center&gt;&lt;embed src=&#34;Redis.pdf&#34; width=&#34;850&#34; height=&#34;550&#34;&gt;&lt;/center&gt;
+</description>
+        </item>
         
     </channel>
 </rss>
