@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 深度学习核心架构与技术详解 1. 深度神经网络基础架构 深度神经网络 (DNN) 原理：由多个隐藏层组成的神经网络，通过层级变换实现复杂函数逼近。\n1 2 3 4 5 6 7 8 9 10 11 12 # 简单DNN实现 import tensorflow as tf from tensorflow.keras.models import Sequential from tensorflow.keras.layers import Dense, Dropout model = Sequential([ Dense(128, activation=&#39;relu&#39;, input_shape=(input_dim,)), Dropout(0.3), Dense(64, activation=&#39;relu&#39;), Dense(32, activation=&#39;relu&#39;), Dense(num_classes, activation=&#39;softmax&#39;) ]) 搭建要点：\n层数深度决定模型容量 激活函数引入非线性 Dropout防止过拟合 2. 卷积神经网络 (CNN) 原理与架构 核心思想：局部连接、权重共享、空间层次化特征提取\n1 2 3 4 5 6 7 8 9 10 11 12 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten model = Sequential([ Conv2D(32, (3, 3), activation=&#39;relu&#39;, input_shape=(28, 28, 1)), MaxPooling2D((2, 2)), Conv2D(64, (3, 3), activation=&#39;relu&#39;), MaxPooling2D((2, 2)), Conv2D(64, (3, 3), activation=&#39;relu&#39;), Flatten(), Dense(64, activation=&#39;relu&#39;), Dense(10, activation=&#39;softmax&#39;) ]) 关键组件：\n">
+<title>大模型八股文</title>
+
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%85%AB%E8%82%A1%E6%96%87/'>
+
+<link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="大模型八股文">
+<meta property='og:description' content=" 深度学习核心架构与技术详解 1. 深度神经网络基础架构 深度神经网络 (DNN) 原理：由多个隐藏层组成的神经网络，通过层级变换实现复杂函数逼近。\n1 2 3 4 5 6 7 8 9 10 11 12 # 简单DNN实现 import tensorflow as tf from tensorflow.keras.models import Sequential from tensorflow.keras.layers import Dense, Dropout model = Sequential([ Dense(128, activation=&#39;relu&#39;, input_shape=(input_dim,)), Dropout(0.3), Dense(64, activation=&#39;relu&#39;), Dense(32, activation=&#39;relu&#39;), Dense(num_classes, activation=&#39;softmax&#39;) ]) 搭建要点：\n层数深度决定模型容量 激活函数引入非线性 Dropout防止过拟合 2. 卷积神经网络 (CNN) 原理与架构 核心思想：局部连接、权重共享、空间层次化特征提取\n1 2 3 4 5 6 7 8 9 10 11 12 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten model = Sequential([ Conv2D(32, (3, 3), activation=&#39;relu&#39;, input_shape=(28, 28, 1)), MaxPooling2D((2, 2)), Conv2D(64, (3, 3), activation=&#39;relu&#39;), MaxPooling2D((2, 2)), Conv2D(64, (3, 3), activation=&#39;relu&#39;), Flatten(), Dense(64, activation=&#39;relu&#39;), Dense(10, activation=&#39;softmax&#39;) ]) 关键组件：\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%85%AB%E8%82%A1%E6%96%87/'>
+<meta property='og:site_name' content='Hu Yang&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='原创' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='og:image' content='https://114514yangyi.github.io/huyang/img/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%85%AB%E8%82%A1%E6%96%87_cover.png' />
+<meta name="twitter:title" content="大模型八股文">
+<meta name="twitter:description" content=" 深度学习核心架构与技术详解 1. 深度神经网络基础架构 深度神经网络 (DNN) 原理：由多个隐藏层组成的神经网络，通过层级变换实现复杂函数逼近。\n1 2 3 4 5 6 7 8 9 10 11 12 # 简单DNN实现 import tensorflow as tf from tensorflow.keras.models import Sequential from tensorflow.keras.layers import Dense, Dropout model = Sequential([ Dense(128, activation=&#39;relu&#39;, input_shape=(input_dim,)), Dropout(0.3), Dense(64, activation=&#39;relu&#39;), Dense(32, activation=&#39;relu&#39;), Dense(num_classes, activation=&#39;softmax&#39;) ]) 搭建要点：\n层数深度决定模型容量 激活函数引入非线性 Dropout防止过拟合 2. 卷积神经网络 (CNN) 原理与架构 核心思想：局部连接、权重共享、空间层次化特征提取\n1 2 3 4 5 6 7 8 9 10 11 12 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten model = Sequential([ Conv2D(32, (3, 3), activation=&#39;relu&#39;, input_shape=(28, 28, 1)), MaxPooling2D((2, 2)), Conv2D(64, (3, 3), activation=&#39;relu&#39;), MaxPooling2D((2, 2)), Conv2D(64, (3, 3), activation=&#39;relu&#39;), Flatten(), Dense(64, activation=&#39;relu&#39;), Dense(10, activation=&#39;softmax&#39;) ]) 关键组件：\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://114514yangyi.github.io/huyang/img/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%85%AB%E8%82%A1%E6%96%87_cover.png' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/huyang/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/huyang/img/logo-transparent_hu_2593eda3cf734d42.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/huyang">Hu Yang&#39;s Blog</a></h1>
+            <h2 class="site-description">Blog</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://114514yangyi.github.io/huyang/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='2416572689@qq.com'
+                        target="_blank"
+                        title="QQ"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/huyang/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/journal/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Journal</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#1-深度神经网络基础架构">1. 深度神经网络基础架构</a>
+      <ol>
+        <li><a href="#深度神经网络-dnn">深度神经网络 (DNN)</a></li>
+      </ol>
+    </li>
+    <li><a href="#2-卷积神经网络-cnn">2. 卷积神经网络 (CNN)</a>
+      <ol>
+        <li><a href="#原理与架构">原理与架构</a></li>
+      </ol>
+    </li>
+    <li><a href="#3-循环神经网络-rnn-和-lstm">3. 循环神经网络 (RNN) 和 LSTM</a>
+      <ol>
+        <li><a href="#rnn原理">RNN原理</a></li>
+        <li><a href="#lstm-长短期记忆网络">LSTM (长短期记忆网络)</a></li>
+      </ol>
+    </li>
+    <li><a href="#4-图神经网络-gnn">4. 图神经网络 (GNN)</a>
+      <ol>
+        <li><a href="#原理">原理</a></li>
+      </ol>
+    </li>
+    <li><a href="#5-transformer-架构">5. Transformer 架构</a>
+      <ol>
+        <li><a href="#核心原理">核心原理</a></li>
+      </ol>
+    </li>
+    <li><a href="#6-词嵌入技术">6. 词嵌入技术</a>
+      <ol>
+        <li><a href="#word2vec">Word2Vec</a></li>
+        <li><a href="#glove-global-vectors">GloVe (Global Vectors)</a></li>
+      </ol>
+    </li>
+    <li><a href="#7-gpt-架构">7. GPT 架构</a>
+      <ol>
+        <li><a href="#generative-pre-trained-transformer">Generative Pre-trained Transformer</a></li>
+      </ol>
+    </li>
+    <li><a href="#8-bert-架构">8. BERT 架构</a>
+      <ol>
+        <li><a href="#bidirectional-encoder-representations-from-transformers">Bidirectional Encoder Representations from Transformers</a></li>
+      </ol>
+    </li>
+    <li><a href="#9-语言模型对比">9. 语言模型对比</a>
+      <ol>
+        <li><a href="#自回归-vs-自编码">自回归 vs 自编码</a></li>
+      </ol>
+    </li>
+    <li><a href="#10-模型优化技术">10. 模型优化技术</a>
+      <ol>
+        <li><a href="#长文本处理">长文本处理</a></li>
+        <li><a href="#模型蒸馏与压缩">模型蒸馏与压缩</a></li>
+        <li><a href="#生成模型优化">生成模型优化</a></li>
+      </ol>
+    </li>
+    <li><a href="#11-完整搭建流程示例">11. 完整搭建流程示例</a>
+      <ol>
+        <li><a href="#bert文本分类实战">BERT文本分类实战</a></li>
+      </ol>
+    </li>
+    <li><a href="#12-性能优化技巧">12. 性能优化技巧</a>
+      <ol>
+        <li><a href="#混合精度训练">混合精度训练</a></li>
+        <li><a href="#梯度累积">梯度累积</a></li>
+      </ol>
+    </li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#1-大模型llms基础面pdf">1-大模型（LLMs）基础面.pdf</a></li>
+    <li><a href="#2-layer-normalization-篇pdf">2-Layer normalization 篇.pdf</a></li>
+    <li><a href="#3-llms-激活函数篇pdf">3-LLMs 激活函数篇.pdf</a></li>
+    <li><a href="#4-attention-升级面pdf">4-Attention 升级面.pdf</a></li>
+    <li><a href="#5-transformers-操作篇pdf">5-transformers 操作篇.pdf</a></li>
+    <li><a href="#6-llms-损失函数篇pdf">6-LLMs 损失函数篇.pdf</a></li>
+    <li><a href="#7-相似度函数篇pdf">7-相似度函数篇.pdf</a></li>
+    <li><a href="#8-大模型llms进阶面pdf">8-大模型（LLMs）进阶面.pdf</a></li>
+    <li><a href="#9-大模型llms微调面pdf">9-大模型（LLMs）微调面.pdf</a></li>
+    <li><a href="#10-llms-训练经验帖pdf">10-LLMs 训练经验帖.pdf</a></li>
+    <li><a href="#11-大模型llmslangchain-面pdf">11-大模型（LLMs）langchain 面.pdf</a></li>
+    <li><a href="#12-多轮对话中让ai保持长期记忆的8种优化方式篇pdf">12-多轮对话中让AI保持长期记忆的8种优化方式篇.pdf</a></li>
+    <li><a href="#13-基于langchain-rag问答应用实战pdf">13-基于langchain RAG问答应用实战.pdf</a></li>
+    <li><a href="#14-基于llm向量库的文档对话-经验面pdf">14-基于LLM+向量库的文档对话 经验面.pdf</a></li>
+    <li><a href="#15-大模型-rag-经验面pdf">15-大模型 RAG 经验面.pdf</a></li>
+    <li><a href="#16-llm文档对话--pdf解析关键问题pdf">16-LLM文档对话 —— pdf解析关键问题.pdf</a></li>
+    <li><a href="#17-大模型llmsrag-版面分析表格识别方法篇pdf">17-大模型（LLMs）RAG 版面分析——表格识别方法篇.pdf</a></li>
+    <li><a href="#18-大模型llmsrag-版面分析文本分块面pdf">18-大模型（LLMs）RAG 版面分析——文本分块面.pdf</a></li>
+    <li><a href="#19-大模型外挂知识库优化如何利用大模型辅助召回pdf">19-大模型外挂知识库优化——如何利用大模型辅助召回？.pdf</a></li>
+    <li><a href="#20-大模型外挂知识库优化负样本样本挖掘篇pdf">20-大模型外挂知识库优化——负样本样本挖掘篇.pdf</a></li>
+    <li><a href="#21-ragretrieval-augmented-generation评测面pdf">21-RAG（Retrieval-Augmented Generation）评测面.pdf</a></li>
+    <li><a href="#22-检索增强生成rag-优化策略篇pdf">22-检索增强生成(RAG) 优化策略篇.pdf</a></li>
+    <li><a href="#23-大模型llmsrag--关键痛点及对应解决方案pdf">23-大模型（LLMs）RAG —— 关键痛点及对应解决方案.pdf</a></li>
+    <li><a href="#24-大模型llmsrag-优化策略--rag-fusion篇pdf">24-大模型（LLMs）RAG 优化策略 —— RAG-Fusion篇.pdf</a></li>
+    <li><a href="#25-graph-rag-面--一种-基于知识图谱的大模型检索增强实现策略pdf">25-Graph RAG 面 — 一种 基于知识图谱的大模型检索增强实现策略.pdf</a></li>
+    <li><a href="#26-大模型llms参数高效微调peft-面pdf">26-大模型（LLMs）参数高效微调(PEFT) 面.pdf</a></li>
+    <li><a href="#27-适配器微调adapter-tuning篇pdf">27-适配器微调（Adapter-tuning）篇.pdf</a></li>
+    <li><a href="#28-提示学习prompting篇pdf">28-提示学习（Prompting）篇.pdf</a></li>
+    <li><a href="#29-lora-系列篇pdf">29-LoRA 系列篇.pdf</a></li>
+    <li><a href="#30-如何使用-peft库-中-lorapdf">30-如何使用 PEFT库 中 LoRA？.pdf</a></li>
+    <li><a href="#31-大模型llms推理面pdf">31-大模型（LLMs）推理面.pdf</a></li>
+    <li><a href="#32-大模型llms增量预训练篇pdf">32-大模型（LLMs）增量预训练篇.pdf</a></li>
+    <li><a href="#33-增量预训练pretrain样本拼接篇pdf">33-增量预训练（Pretrain）样本拼接篇.pdf</a></li>
+    <li><a href="#34-基于lora的llama2二次预训练pdf">34-基于lora的llama2二次预训练.pdf</a></li>
+    <li><a href="#35-大模型llms评测面pdf">35-大模型（LLMs）评测面.pdf</a></li>
+    <li><a href="#36-大模型llms强化学习面pdf">36-大模型（LLMs）强化学习面.pdf</a></li>
+    <li><a href="#37-大模型llms强化学习rlhf及其变种面pdf">37-大模型（LLMs）强化学习——RLHF及其变种面.pdf</a></li>
+    <li><a href="#38-大模型llms强化学习-ppo-面pdf">38-大模型（LLMs）强化学习—— PPO 面.pdf</a></li>
+    <li><a href="#39-强化学习在自然语言处理下的应用篇pdf">39-强化学习在自然语言处理下的应用篇.pdf</a></li>
+    <li><a href="#40-大模型llms训练集面pdf">40-大模型（LLMs）训练集面.pdf</a></li>
+    <li><a href="#41-大模型llmsllm生成sft数据方法面pdf">41-大模型（LLMs）LLM生成SFT数据方法面.pdf</a></li>
+    <li><a href="#42-大模型llms显存问题面pdf">42-大模型（LLMs）显存问题面.pdf</a></li>
+    <li><a href="#43-显存优化策略篇pdf">43-显存优化策略篇.pdf</a></li>
+    <li><a href="#44-大模型llms分布式训练面pdf">44-大模型（LLMs）分布式训练面.pdf</a></li>
+    <li><a href="#45-图解分布式训练一--流水线并行pipeline-parallelismpdf">45-图解分布式训练（一） —— 流水线并行（Pipeline Parallelism）.pdf</a></li>
+    <li><a href="#46-图解分布式训练二--nndataparallel篇pdf">46-图解分布式训练（二） —— nn.DataParallel篇.pdf</a></li>
+    <li><a href="#47-图解分布式训练三--nnparalleldistributeddataparallelpdf">47-图解分布式训练（三） —— nn.parallel.DistributedDataParallel.pdf</a></li>
+    <li><a href="#48-图解分布式训练四--torchmultiprocessing-详细解析pdf">48-图解分布式训练（四） —— torch.multiprocessing 详细解析.pdf</a></li>
+    <li><a href="#49-图解分布式训练五--amp混合精度训练-详细解析pdf">49-图解分布式训练（五） —— AMP混合精度训练 详细解析.pdf</a></li>
+    <li><a href="#50-图解分布式训练六-pytorch的-deepspeed-详细解析pdf">50-图解分布式训练（六）—— Pytorch的 DeepSpeed 详细解析.pdf</a></li>
+    <li><a href="#51-图解分布式训练七-accelerate-分布式训练-详细解析pdf">51-图解分布式训练（七）—— accelerate 分布式训练 详细解析.pdf</a></li>
+    <li><a href="#52-图解分布式训练八-zero-学习pdf">52-图解分布式训练（八）—— ZeRO 学习.pdf</a></li>
+    <li><a href="#53-大模型分布式训练故障恢复篇pdf">53-大模型分布式训练故障恢复篇.pdf</a></li>
+    <li><a href="#54-pytorch-分布式计算-坑-bug-梳理篇pdf">54-pytorch 分布式计算 坑-bug 梳理篇.pdf</a></li>
+    <li><a href="#55-大模型llmsagent-面pdf">55-大模型（LLMs）agent 面.pdf</a></li>
+    <li><a href="#56-llms-位置编码篇pdf">56-LLMs 位置编码篇.pdf</a></li>
+    <li><a href="#57-llms-tokenizer-篇pdf">57-LLMs Tokenizer 篇.pdf</a></li>
+    <li><a href="#58-怎么让英文大语言模型支持中文一--构建中文tokenizationpdf">58-怎么让英文大语言模型支持中文？（一） —— 构建中文tokenization.pdf</a></li>
+    <li><a href="#59-怎么让英文大语言模型支持中文二--继续预训练篇pdf">59-怎么让英文大语言模型支持中文？（二） —— 继续预训练篇.pdf</a></li>
+    <li><a href="#60-怎么让英文大语言模型支持中文三--对预训练模型进行指令微调pdf">60-怎么让英文大语言模型支持中文？（三） —— 对预训练模型进行指令微调.pdf</a></li>
+    <li><a href="#61-大模型llms加速篇pdf">61-大模型（LLMs）加速篇.pdf</a></li>
+    <li><a href="#62-llms-推理性能面pdf">62-LLMs 推理性能面.pdf</a></li>
+    <li><a href="#63-llm大语言模型部署加速方法pagedattention篇pdf">63-LLM（大语言模型）部署加速方法——PagedAttention篇.pdf</a></li>
+    <li><a href="#64-大模型推理加速工具--vllmpdf">64-大模型推理加速工具 —— vLLM.pdf</a></li>
+    <li><a href="#65-llm大语言模型部署加速方法faster-transformer篇pdf">65-LLM（大语言模型）部署加速方法——Faster Transformer篇.pdf</a></li>
+    <li><a href="#66-纯python超轻量高性能llm推理框架--lightllmpdf">66-纯Python超轻量高性能LLM推理框架 —— LightLLM.pdf</a></li>
+    <li><a href="#67-llm推理技术之streamingllm如何拥有无限长生成能力pdf">67-LLM推理技术之StreamingLLM：如何拥有无限长生成能力.pdf</a></li>
+    <li><a href="#68-swiftinfer--大模型无限流式输入推理飙升46打破多轮对话长度限制pdf">68-SwiftInfer —— 大模型无限流式输入推理飙升46%，打破多轮对话长度限制.pdf</a></li>
+    <li><a href="#69-大模型幻觉llm-hallucination面pdf">69-大模型幻觉（LLM Hallucination）面.pdf</a></li>
+    <li><a href="#70-大模型的幻觉问题篇pdf">70-大模型的幻觉问题篇.pdf</a></li>
+    <li><a href="#71-如何缓解大模型幻觉pdf">71-如何缓解大模型幻觉？.pdf</a></li>
+    <li><a href="#72-llms-对比篇pdf">72-LLMs 对比篇.pdf</a></li>
+    <li><a href="#73-百川智能baichuan7b13b53bbaichuan2-总结篇pdf">73-百川智能baichuan7B、13B、53B、baichuan2 总结篇.pdf</a></li>
+    <li><a href="#74-llama-常见面试题篇pdf">74-LLaMA 常见面试题篇.pdf</a></li>
+    <li><a href="#75-gpt-经验篇pdf">75-GPT 经验篇.pdf</a></li>
+    <li><a href="#76-思维链-chain-of-thoughtcotpdf">76-思维链 Chain-of-Thought（COT）.pdf</a></li>
+    <li><a href="#77-思维链-chain-of-thoughtcot变体篇pdf">77-思维链 Chain-of-Thought（COT）变体篇.pdf</a></li>
+    <li><a href="#78-小样本提示学习篇pdf">78-小样本提示学习篇.pdf</a></li>
+    <li><a href="#79-llms-测试集-中-数据泄露-问题篇pdf">79-LLMs 测试集 中 数据泄露 问题篇.pdf</a></li>
+    <li><a href="#80-moemixture-of-experts篇pdf">80-MOE（Mixture-of-Experts）篇.pdf</a></li>
+    <li><a href="#81-大模型蒸馏篇pdf">81-大模型蒸馏篇.pdf</a></li>
+    <li><a href="#82-llms-浮点数篇pdf">82-LLMs 浮点数篇.pdf</a></li>
+    <li><a href="#83-自定义-cuda-函数的轻量级包装器--bitsandbytes篇pdf">83-自定义 CUDA 函数的轻量级包装器 —— bitsandbytes篇.pdf</a></li>
+    <li><a href="#84-大模型llms软硬件配置面pdf">84-大模型（LLMs）软硬件配置面.pdf</a></li>
+    <li><a href="#85-token及模型参数准备篇pdf">85-Token及模型参数准备篇.pdf</a></li>
+    <li><a href="#86-多模态常见面试篇pdf">86-多模态常见面试篇.pdf</a></li>
+    <li><a href="#87-nlp-trick-篇pdf">87-NLP Trick 篇.pdf</a></li>
+    <li><a href="#88-文本分类常见面试篇pdf">88-文本分类常见面试篇.pdf</a></li>
+    <li><a href="#89-文本摘要常见面试篇pdf">89-文本摘要常见面试篇.pdf</a></li>
+    <li><a href="#90-命名实体识别常见面试篇pdf">90-命名实体识别常见面试篇.pdf</a></li>
+    <li><a href="#91-向量检索常见面试篇pdf">91-向量检索常见面试篇.pdf</a></li>
+    <li><a href="#92-llms-其他-trickpdf">92-LLMs 其他 Trick.pdf</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/huyang/p/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%85%AB%E8%82%A1%E6%96%87/">
+                
+                    <img src="/huyang/img/%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%85%ab%e8%82%a1%e6%96%87_cover.png" loading="lazy" alt="Featured image of post 大模型八股文" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/huyang/categories/%E9%9D%A2%E8%AF%95/" style="background-color: #2a9d8f; color: #fff;">
+                面试
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/huyang/p/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%85%AB%E8%82%A1%E6%96%87/">大模型八股文</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 20, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/math-code.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+<h1 id="深度学习核心架构与技术详解">深度学习核心架构与技术详解
+</h1><h2 id="1-深度神经网络基础架构">1. 深度神经网络基础架构
+</h2><h3 id="深度神经网络-dnn">深度神经网络 (DNN)
+</h3><p><strong>原理</strong>：由多个隐藏层组成的神经网络，通过层级变换实现复杂函数逼近。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 简单DNN实现</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,)),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Dropout</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Dense</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>搭建要点</strong>：</p>
+<ul>
+<li>层数深度决定模型容量</li>
+<li>激活函数引入非线性</li>
+<li>Dropout防止过拟合</li>
+</ul>
+<h2 id="2-卷积神经网络-cnn">2. 卷积神经网络 (CNN)
+</h2><h3 id="原理与架构">原理与架构
+</h3><p><strong>核心思想</strong>：局部连接、权重共享、空间层次化特征提取</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">Flatten</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Flatten</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>关键组件</strong>：</p>
+<ul>
+<li><strong>卷积层</strong>：特征提取，3×3或5×5滤波器</li>
+<li><strong>池化层</strong>：降维，保留主要特征（MaxPooling, AveragePooling）</li>
+<li><strong>全连接层</strong>：最终分类</li>
+</ul>
+<h2 id="3-循环神经网络-rnn-和-lstm">3. 循环神经网络 (RNN) 和 LSTM
+</h2><h3 id="rnn原理">RNN原理
+</h3><p><strong>时序数据处理</strong>：隐藏状态传递历史信息
+</p>
+$$
+h_t = \tanh(W_{hh}h_{t-1} + W_{xh}x_t + b_h)
+$$<h3 id="lstm-长短期记忆网络">LSTM (长短期记忆网络)
+</h3><p><strong>解决梯度消失</strong>：门控机制控制信息流</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">LSTM</span><span class="p">,</span> <span class="n">Embedding</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">LSTM</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">LSTM</span><span class="p">(</span><span class="mi">64</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>LSTM三个门</strong>：</p>
+<ul>
+<li><strong>遗忘门</strong>：决定丢弃哪些信息</li>
+<li><strong>输入门</strong>：决定更新哪些信息</li>
+<li><strong>输出门</strong>：决定输出哪些信息</li>
+</ul>
+<h2 id="4-图神经网络-gnn">4. 图神经网络 (GNN)
+</h2><h3 id="原理">原理
+</h3><p><strong>图结构数据处理</strong>：节点特征聚合邻居信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch_geometric.nn</span> <span class="k">as</span> <span class="nn">pyg_nn</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">(</span><span class="n">GNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">pyg_nn</span><span class="o">.</span><span class="n">GCNConv</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">pyg_nn</span><span class="o">.</span><span class="n">GCNConv</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">x</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>消息传递机制</strong>：</p>
+<ol>
+<li>节点收集邻居信息</li>
+<li>聚合函数（mean, sum, max）</li>
+<li>更新节点特征</li>
+</ol>
+<h2 id="5-transformer-架构">5. Transformer 架构
+</h2><h3 id="核心原理">核心原理
+</h3><p><strong>自注意力机制</strong>：并行计算序列中所有位置的关系</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">Transformer</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TransformerModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">nhead</span><span class="p">,</span> <span class="n">num_layers</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">transformer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Transformer</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">d_model</span><span class="o">=</span><span class="n">d_model</span><span class="p">,</span> <span class="n">nhead</span><span class="o">=</span><span class="n">nhead</span><span class="p">,</span> <span class="n">num_encoder_layers</span><span class="o">=</span><span class="n">num_layers</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">num_decoder_layers</span><span class="o">=</span><span class="n">num_layers</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>自注意力公式</strong>：
+</p>
+$$
+\text{Attention}(Q,K,V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+$$<h2 id="6-词嵌入技术">6. 词嵌入技术
+</h2><h3 id="word2vec">Word2Vec
+</h3><p><strong>两种架构</strong>：</p>
+<ul>
+<li><strong>CBOW</strong>：用上下文预测中心词</li>
+<li><strong>Skip-gram</strong>：用中心词预测上下文</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">gensim.models</span> <span class="kn">import</span> <span class="n">Word2Vec</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sentences</span><span class="o">=</span><span class="n">tokenized_text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vector_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>      <span class="c1"># 嵌入维度</span>
+</span></span><span class="line"><span class="cl">    <span class="n">window</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>            <span class="c1"># 上下文窗口</span>
+</span></span><span class="line"><span class="cl">    <span class="n">min_count</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>         <span class="c1"># 最小词频</span>
+</span></span><span class="line"><span class="cl">    <span class="n">workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>           <span class="c1"># 并行数</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sg</span><span class="o">=</span><span class="mi">1</span>                 <span class="c1"># 1=Skip-gram, 0=CBOW</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="glove-global-vectors">GloVe (Global Vectors)
+</h3><p><strong>基于共现矩阵</strong>：统计全局词共现信息
+</p>
+$$
+J = \sum_{i,j=1}^V f(X_{ij})(w_i^T \tilde{w}_j + b_i + \tilde{b}_j - \log X_{ij})^2
+$$<h2 id="7-gpt-架构">7. GPT 架构
+</h2><h3 id="generative-pre-trained-transformer">Generative Pre-trained Transformer
+</h3><p><strong>自回归语言模型</strong>：从左到右生成文本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">GPT2LMHeadModel</span><span class="p">,</span> <span class="n">GPT2Tokenizer</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">GPT2LMHeadModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;gpt2&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">GPT2Tokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;gpt2&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 文本生成</span>
+</span></span><span class="line"><span class="cl"><span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&#34;Hello, how are you?&#34;</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s1">&#39;pt&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">input_ids</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>特点</strong>：</p>
+<ul>
+<li>仅使用解码器结构</li>
+<li>掩码自注意力防止信息泄露</li>
+<li>预训练+微调范式</li>
+</ul>
+<h2 id="8-bert-架构">8. BERT 架构
+</h2><h3 id="bidirectional-encoder-representations-from-transformers">Bidirectional Encoder Representations from Transformers
+</h3><p><strong>自编码语言模型</strong>：双向上下文理解</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">BertModel</span><span class="p">,</span> <span class="n">BertTokenizer</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">BertModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;bert-base-uncased&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">BertTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;bert-base-uncased&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="s2">&#34;Hello, my dog is cute&#34;</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&#34;pt&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">inputs</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>预训练任务</strong>：</p>
+<ul>
+<li><strong>MLM</strong> (Masked Language Model)：15%词汇掩码预测</li>
+<li><strong>NSP</strong> (Next Sentence Prediction)：句子关系预测</li>
+</ul>
+<h2 id="9-语言模型对比">9. 语言模型对比
+</h2><h3 id="自回归-vs-自编码">自回归 vs 自编码
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>特性</th>
+          <th>自回归 (GPT)</th>
+          <th>自编码 (BERT)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>方向性</td>
+          <td>单向</td>
+          <td>双向</td>
+      </tr>
+      <tr>
+          <td>适合任务</td>
+          <td>文本生成</td>
+          <td>文本理解</td>
+      </tr>
+      <tr>
+          <td>注意力掩码</td>
+          <td>因果掩码</td>
+          <td>全注意力</td>
+      </tr>
+      <tr>
+          <td>典型应用</td>
+          <td>GPT, XLNet</td>
+          <td>BERT, RoBERTa</td>
+      </tr>
+  </tbody>
+</table></div>
+<h2 id="10-模型优化技术">10. 模型优化技术
+</h2><h3 id="长文本处理">长文本处理
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 使用Longformer处理长文本</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">LongformerModel</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">LongformerModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;allenai/longformer-base-4096&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 或者使用Reformer</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">ReformerModel</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">ReformerModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;google/reformer-enwik8&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>长文本技术</strong>：</p>
+<ul>
+<li><strong>稀疏注意力</strong>：只计算重要位置的注意力</li>
+<li><strong>分块处理</strong>：将长文本分割处理</li>
+<li><strong>层次化表示</strong>：多粒度处理</li>
+</ul>
+<h3 id="模型蒸馏与压缩">模型蒸馏与压缩
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">DistilBertConfig</span><span class="p">,</span> <span class="n">DistilBertForSequenceClassification</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">BertTokenizer</span><span class="p">,</span> <span class="n">BertForSequenceClassification</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 教师模型</span>
+</span></span><span class="line"><span class="cl"><span class="n">teacher_model</span> <span class="o">=</span> <span class="n">BertForSequenceClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;bert-base-uncased&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 学生模型</span>
+</span></span><span class="line"><span class="cl"><span class="n">student_config</span> <span class="o">=</span> <span class="n">DistilBertConfig</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;distilbert-base-uncased&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">student_model</span> <span class="o">=</span> <span class="n">DistilBertForSequenceClassification</span><span class="p">(</span><span class="n">student_config</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 知识蒸馏损失</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">distillation_loss</span><span class="p">(</span><span class="n">student_output</span><span class="p">,</span> <span class="n">teacher_output</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">2.0</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">student_logits</span> <span class="o">=</span> <span class="n">student_output</span> <span class="o">/</span> <span class="n">temperature</span>
+</span></span><span class="line"><span class="cl">    <span class="n">teacher_probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">teacher_output</span> <span class="o">/</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">KLDivLoss</span><span class="p">()(</span><span class="n">torch</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">student_logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">teacher_probs</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>蒸馏方法</strong>：</p>
+<ul>
+<li><strong>响应蒸馏</strong>：模仿输出分布</li>
+<li><strong>特征蒸馏</strong>：模仿中间层特征</li>
+<li><strong>关系蒸馏</strong>：模仿样本间关系</li>
+</ul>
+<h3 id="生成模型优化">生成模型优化
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Beam Search 生成</span>
+</span></span><span class="line"><span class="cl"><span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">input_ids</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">num_beams</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>           <span class="c1"># beam search宽度</span>
+</span></span><span class="line"><span class="cl">    <span class="n">early_stopping</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">no_repeat_ngram_size</span><span class="o">=</span><span class="mi">2</span> <span class="c1"># 避免重复n-gram</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 采样策略</span>
+</span></span><span class="line"><span class="cl"><span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">input_ids</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">do_sample</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">top_k</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>              <span class="c1"># top-k采样</span>
+</span></span><span class="line"><span class="cl">    <span class="n">top_p</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>            <span class="c1"># nucleus采样</span>
+</span></span><span class="line"><span class="cl">    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span>        <span class="c1"># 温度参数</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="11-完整搭建流程示例">11. 完整搭建流程示例
+</h2><h3 id="bert文本分类实战">BERT文本分类实战
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">BertTokenizer</span><span class="p">,</span> <span class="n">BertForSequenceClassification</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">Trainer</span><span class="p">,</span> <span class="n">TrainingArguments</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">Dataset</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 1. 数据准备</span>
+</span></span><span class="line"><span class="cl"><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">BertTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;bert-base-uncased&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">tokenize_function</span><span class="p">(</span><span class="n">examples</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">examples</span><span class="p">[</span><span class="s2">&#34;text&#34;</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&#34;max_length&#34;</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&#34;text&#34;</span><span class="p">:</span> <span class="n">texts</span><span class="p">,</span> <span class="s2">&#34;label&#34;</span><span class="p">:</span> <span class="n">labels</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">tokenize_function</span><span class="p">,</span> <span class="n">batched</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. 模型初始化</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">BertForSequenceClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;bert-base-uncased&#39;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">num_labels</span><span class="o">=</span><span class="n">num_classes</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. 训练配置</span>
+</span></span><span class="line"><span class="cl"><span class="n">training_args</span> <span class="o">=</span> <span class="n">TrainingArguments</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_dir</span><span class="o">=</span><span class="s1">&#39;./results&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">num_train_epochs</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">per_device_train_batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">per_device_eval_batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">warmup_steps</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">logging_dir</span><span class="o">=</span><span class="s1">&#39;./logs&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 4. 训练</span>
+</span></span><span class="line"><span class="cl"><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">train_dataset</span><span class="o">=</span><span class="n">tokenized_datasets</span><span class="p">[</span><span class="s2">&#34;train&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="n">eval_dataset</span><span class="o">=</span><span class="n">tokenized_datasets</span><span class="p">[</span><span class="s2">&#34;validation&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="12-性能优化技巧">12. 性能优化技巧
+</h2><h3 id="混合精度训练">混合精度训练
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">torch.cuda.amp</span> <span class="kn">import</span> <span class="n">autocast</span><span class="p">,</span> <span class="n">GradScaler</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">scaler</span> <span class="o">=</span> <span class="n">GradScaler</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="n">autocast</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">scaler</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">scaler</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">scaler</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="梯度累积">梯度累积
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">accumulation_steps</span> <span class="o">=</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="o">/</span> <span class="n">accumulation_steps</span>
+</span></span><span class="line"><span class="cl">    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">accumulation_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="总结">总结
+</h2><p>这些深度学习架构和技术构成了现代NLP和AI系统的核心。理解它们的原理和实现方式对于构建高效的AI应用至关重要。实际应用中通常需要根据具体任务选择合适的架构组合和优化策略。</p>
+<h2 id="1-大模型llms基础面pdf">1-大模型（LLMs）基础面.pdf
+</h2><center><embed src="1-大模型（LLMs）基础面.pdf" width="850" height="1000"></center>
+<h2 id="2-layer-normalization-篇pdf">2-Layer normalization 篇.pdf
+</h2><center><embed src="2-Layer normalization 篇.pdf" width="850" height="1000"></center>
+<h2 id="3-llms-激活函数篇pdf">3-LLMs 激活函数篇.pdf
+</h2><center><embed src="3-LLMs 激活函数篇.pdf" width="850" height="1000"></center>
+<h2 id="4-attention-升级面pdf">4-Attention 升级面.pdf
+</h2><center><embed src="4-Attention 升级面.pdf" width="850" height="1000"></center>
+<h2 id="5-transformers-操作篇pdf">5-transformers 操作篇.pdf
+</h2><center><embed src="5-transformers 操作篇.pdf" width="850" height="1000"></center>
+<h2 id="6-llms-损失函数篇pdf">6-LLMs 损失函数篇.pdf
+</h2><center><embed src="6-LLMs 损失函数篇.pdf" width="850" height="1000"></center>
+<h2 id="7-相似度函数篇pdf">7-相似度函数篇.pdf
+</h2><center><embed src="7-相似度函数篇.pdf" width="850" height="1000"></center>
+<h2 id="8-大模型llms进阶面pdf">8-大模型（LLMs）进阶面.pdf
+</h2><center><embed src="8-大模型（LLMs）进阶面.pdf" width="850" height="1000"></center>
+<h2 id="9-大模型llms微调面pdf">9-大模型（LLMs）微调面.pdf
+</h2><center><embed src="9-大模型（LLMs）微调面.pdf" width="850" height="1000"></center>
+<h2 id="10-llms-训练经验帖pdf">10-LLMs 训练经验帖.pdf
+</h2><center><embed src="10-LLMs 训练经验帖.pdf" width="850" height="1000"></center>
+<h2 id="11-大模型llmslangchain-面pdf">11-大模型（LLMs）langchain 面.pdf
+</h2><center><embed src="11-大模型（LLMs）langchain 面.pdf" width="850" height="1000"></center>
+<h2 id="12-多轮对话中让ai保持长期记忆的8种优化方式篇pdf">12-多轮对话中让AI保持长期记忆的8种优化方式篇.pdf
+</h2><center><embed src="12-多轮对话中让AI保持长期记忆的8种优化方式篇.pdf" width="850" height="1000"></center>
+<h2 id="13-基于langchain-rag问答应用实战pdf">13-基于langchain RAG问答应用实战.pdf
+</h2><center><embed src="13-基于langchain RAG问答应用实战.pdf" width="850" height="1000"></center>
+<h2 id="14-基于llm向量库的文档对话-经验面pdf">14-基于LLM+向量库的文档对话 经验面.pdf
+</h2><center><embed src="14-基于LLM+向量库的文档对话 经验面.pdf" width="850" height="1000"></center>
+<h2 id="15-大模型-rag-经验面pdf">15-大模型 RAG 经验面.pdf
+</h2><center><embed src="15-大模型 RAG 经验面.pdf" width="850" height="1000"></center>
+<h2 id="16-llm文档对话--pdf解析关键问题pdf">16-LLM文档对话 —— pdf解析关键问题.pdf
+</h2><center><embed src="16-LLM文档对话 —— pdf解析关键问题.pdf" width="850" height="1000"></center>
+<h2 id="17-大模型llmsrag-版面分析表格识别方法篇pdf">17-大模型（LLMs）RAG 版面分析——表格识别方法篇.pdf
+</h2><center><embed src="17-大模型（LLMs）RAG 版面分析——表格识别方法篇.pdf" width="850" height="1000"></center>
+<h2 id="18-大模型llmsrag-版面分析文本分块面pdf">18-大模型（LLMs）RAG 版面分析——文本分块面.pdf
+</h2><center><embed src="18-大模型（LLMs）RAG 版面分析——文本分块面.pdf" width="850" height="1000"></center>
+<h2 id="19-大模型外挂知识库优化如何利用大模型辅助召回pdf">19-大模型外挂知识库优化——如何利用大模型辅助召回？.pdf
+</h2><center><embed src="19-大模型外挂知识库优化——如何利用大模型辅助召回？.pdf" width="850" height="1000"></center>
+<h2 id="20-大模型外挂知识库优化负样本样本挖掘篇pdf">20-大模型外挂知识库优化——负样本样本挖掘篇.pdf
+</h2><center><embed src="20-大模型外挂知识库优化——负样本样本挖掘篇.pdf" width="850" height="1000"></center>
+<h2 id="21-ragretrieval-augmented-generation评测面pdf">21-RAG（Retrieval-Augmented Generation）评测面.pdf
+</h2><center><embed src="21-RAG（Retrieval-Augmented Generation）评测面.pdf" width="850" height="1000"></center>
+<h2 id="22-检索增强生成rag-优化策略篇pdf">22-检索增强生成(RAG) 优化策略篇.pdf
+</h2><center><embed src="22-检索增强生成(RAG) 优化策略篇.pdf" width="850" height="1000"></center>
+<h2 id="23-大模型llmsrag--关键痛点及对应解决方案pdf">23-大模型（LLMs）RAG —— 关键痛点及对应解决方案.pdf
+</h2><center><embed src="23-大模型（LLMs）RAG —— 关键痛点及对应解决方案.pdf" width="850" height="1000"></center>
+<h2 id="24-大模型llmsrag-优化策略--rag-fusion篇pdf">24-大模型（LLMs）RAG 优化策略 —— RAG-Fusion篇.pdf
+</h2><center><embed src="24-大模型（LLMs）RAG 优化策略 —— RAG-Fusion篇.pdf" width="850" height="1000"></center>
+<h2 id="25-graph-rag-面--一种-基于知识图谱的大模型检索增强实现策略pdf">25-Graph RAG 面 — 一种 基于知识图谱的大模型检索增强实现策略.pdf
+</h2><center><embed src="25-Graph RAG 面 — 一种 基于知识图谱的大模型检索增强实现策略.pdf" width="850" height="1000"></center>
+<h2 id="26-大模型llms参数高效微调peft-面pdf">26-大模型（LLMs）参数高效微调(PEFT) 面.pdf
+</h2><center><embed src="26-大模型（LLMs）参数高效微调(PEFT) 面.pdf" width="850" height="1000"></center>
+<h2 id="27-适配器微调adapter-tuning篇pdf">27-适配器微调（Adapter-tuning）篇.pdf
+</h2><center><embed src="27-适配器微调（Adapter-tuning）篇.pdf" width="850" height="1000"></center>
+<h2 id="28-提示学习prompting篇pdf">28-提示学习（Prompting）篇.pdf
+</h2><center><embed src="28-提示学习（Prompting）篇.pdf" width="850" height="1000"></center>
+<h2 id="29-lora-系列篇pdf">29-LoRA 系列篇.pdf
+</h2><center><embed src="29-LoRA 系列篇.pdf" width="850" height="1000"></center>
+<h2 id="30-如何使用-peft库-中-lorapdf">30-如何使用 PEFT库 中 LoRA？.pdf
+</h2><center><embed src="30-如何使用 PEFT库 中 LoRA？.pdf" width="850" height="1000"></center>
+<h2 id="31-大模型llms推理面pdf">31-大模型（LLMs）推理面.pdf
+</h2><center><embed src="31-大模型（LLMs）推理面.pdf" width="850" height="1000"></center>
+<h2 id="32-大模型llms增量预训练篇pdf">32-大模型（LLMs）增量预训练篇.pdf
+</h2><center><embed src="32-大模型（LLMs）增量预训练篇.pdf" width="850" height="1000"></center>
+<h2 id="33-增量预训练pretrain样本拼接篇pdf">33-增量预训练（Pretrain）样本拼接篇.pdf
+</h2><center><embed src="33-增量预训练（Pretrain）样本拼接篇.pdf" width="850" height="1000"></center>
+<h2 id="34-基于lora的llama2二次预训练pdf">34-基于lora的llama2二次预训练.pdf
+</h2><center><embed src="34-基于lora的llama2二次预训练.pdf" width="850" height="1000"></center>
+<h2 id="35-大模型llms评测面pdf">35-大模型（LLMs）评测面.pdf
+</h2><center><embed src="35-大模型（LLMs）评测面.pdf" width="850" height="1000"></center>
+<h2 id="36-大模型llms强化学习面pdf">36-大模型（LLMs）强化学习面.pdf
+</h2><center><embed src="36-大模型（LLMs）强化学习面.pdf" width="850" height="1000"></center>
+<h2 id="37-大模型llms强化学习rlhf及其变种面pdf">37-大模型（LLMs）强化学习——RLHF及其变种面.pdf
+</h2><center><embed src="37-大模型（LLMs）强化学习——RLHF及其变种面.pdf" width="850" height="1000"></center>
+<h2 id="38-大模型llms强化学习-ppo-面pdf">38-大模型（LLMs）强化学习—— PPO 面.pdf
+</h2><center><embed src="38-大模型（LLMs）强化学习—— PPO 面.pdf" width="850" height="1000"></center>
+<h2 id="39-强化学习在自然语言处理下的应用篇pdf">39-强化学习在自然语言处理下的应用篇.pdf
+</h2><center><embed src="39-强化学习在自然语言处理下的应用篇.pdf" width="850" height="1000"></center>
+<h2 id="40-大模型llms训练集面pdf">40-大模型（LLMs）训练集面.pdf
+</h2><center><embed src="40-大模型（LLMs）训练集面.pdf" width="850" height="1000"></center>
+<h2 id="41-大模型llmsllm生成sft数据方法面pdf">41-大模型（LLMs）LLM生成SFT数据方法面.pdf
+</h2><center><embed src="41-大模型（LLMs）LLM生成SFT数据方法面.pdf" width="850" height="1000"></center>
+<h2 id="42-大模型llms显存问题面pdf">42-大模型（LLMs）显存问题面.pdf
+</h2><center><embed src="42-大模型（LLMs）显存问题面.pdf" width="850" height="1000"></center>
+<h2 id="43-显存优化策略篇pdf">43-显存优化策略篇.pdf
+</h2><center><embed src="43-显存优化策略篇.pdf" width="850" height="1000"></center>
+<h2 id="44-大模型llms分布式训练面pdf">44-大模型（LLMs）分布式训练面.pdf
+</h2><center><embed src="44-大模型（LLMs）分布式训练面.pdf" width="850" height="1000"></center>
+<h2 id="45-图解分布式训练一--流水线并行pipeline-parallelismpdf">45-图解分布式训练（一） —— 流水线并行（Pipeline Parallelism）.pdf
+</h2><center><embed src="45-图解分布式训练（一） —— 流水线并行（Pipeline Parallelism）.pdf" width="850" height="1000"></center>
+<h2 id="46-图解分布式训练二--nndataparallel篇pdf">46-图解分布式训练（二） —— nn.DataParallel篇.pdf
+</h2><center><embed src="46-图解分布式训练（二） —— nn.DataParallel篇.pdf" width="850" height="1000"></center>
+<h2 id="47-图解分布式训练三--nnparalleldistributeddataparallelpdf">47-图解分布式训练（三） —— nn.parallel.DistributedDataParallel.pdf
+</h2><center><embed src="47-图解分布式训练（三） —— nn.parallel.DistributedDataParallel.pdf" width="850" height="1000"></center>
+<h2 id="48-图解分布式训练四--torchmultiprocessing-详细解析pdf">48-图解分布式训练（四） —— torch.multiprocessing 详细解析.pdf
+</h2><center><embed src="48-图解分布式训练（四） —— torch.multiprocessing 详细解析.pdf" width="850" height="1000"></center>
+<h2 id="49-图解分布式训练五--amp混合精度训练-详细解析pdf">49-图解分布式训练（五） —— AMP混合精度训练 详细解析.pdf
+</h2><center><embed src="49-图解分布式训练（五） —— AMP混合精度训练 详细解析.pdf" width="850" height="1000"></center>
+<h2 id="50-图解分布式训练六-pytorch的-deepspeed-详细解析pdf">50-图解分布式训练（六）—— Pytorch的 DeepSpeed 详细解析.pdf
+</h2><center><embed src="50-图解分布式训练（六）—— Pytorch的 DeepSpeed 详细解析.pdf" width="850" height="1000"></center>
+<h2 id="51-图解分布式训练七-accelerate-分布式训练-详细解析pdf">51-图解分布式训练（七）—— accelerate 分布式训练 详细解析.pdf
+</h2><center><embed src="51-图解分布式训练（七）—— accelerate 分布式训练 详细解析.pdf" width="850" height="1000"></center>
+<h2 id="52-图解分布式训练八-zero-学习pdf">52-图解分布式训练（八）—— ZeRO 学习.pdf
+</h2><center><embed src="52-图解分布式训练（八）—— ZeRO 学习.pdf" width="850" height="1000"></center>
+<h2 id="53-大模型分布式训练故障恢复篇pdf">53-大模型分布式训练故障恢复篇.pdf
+</h2><center><embed src="53-大模型分布式训练故障恢复篇.pdf" width="850" height="1000"></center>
+<h2 id="54-pytorch-分布式计算-坑-bug-梳理篇pdf">54-pytorch 分布式计算 坑-bug 梳理篇.pdf
+</h2><center><embed src="54-pytorch 分布式计算 坑-bug 梳理篇.pdf" width="850" height="1000"></center>
+<h2 id="55-大模型llmsagent-面pdf">55-大模型（LLMs）agent 面.pdf
+</h2><center><embed src="55-大模型（LLMs）agent 面.pdf" width="850" height="1000"></center>
+<h2 id="56-llms-位置编码篇pdf">56-LLMs 位置编码篇.pdf
+</h2><center><embed src="56-LLMs 位置编码篇.pdf" width="850" height="1000"></center>
+<h2 id="57-llms-tokenizer-篇pdf">57-LLMs Tokenizer 篇.pdf
+</h2><center><embed src="57-LLMs Tokenizer 篇.pdf" width="850" height="1000"></center>
+<h2 id="58-怎么让英文大语言模型支持中文一--构建中文tokenizationpdf">58-怎么让英文大语言模型支持中文？（一） —— 构建中文tokenization.pdf
+</h2><center><embed src="58-怎么让英文大语言模型支持中文？（一） —— 构建中文tokenization.pdf" width="850" height="1000"></center>
+<h2 id="59-怎么让英文大语言模型支持中文二--继续预训练篇pdf">59-怎么让英文大语言模型支持中文？（二） —— 继续预训练篇.pdf
+</h2><center><embed src="59-怎么让英文大语言模型支持中文？（二） —— 继续预训练篇.pdf" width="850" height="1000"></center>
+<h2 id="60-怎么让英文大语言模型支持中文三--对预训练模型进行指令微调pdf">60-怎么让英文大语言模型支持中文？（三） —— 对预训练模型进行指令微调.pdf
+</h2><center><embed src="60-怎么让英文大语言模型支持中文？（三） —— 对预训练模型进行指令微调.pdf" width="850" height="1000"></center>
+<h2 id="61-大模型llms加速篇pdf">61-大模型（LLMs）加速篇.pdf
+</h2><center><embed src="61-大模型（LLMs）加速篇.pdf" width="850" height="1000"></center>
+<h2 id="62-llms-推理性能面pdf">62-LLMs 推理性能面.pdf
+</h2><center><embed src="62-LLMs 推理性能面.pdf" width="850" height="1000"></center>
+<h2 id="63-llm大语言模型部署加速方法pagedattention篇pdf">63-LLM（大语言模型）部署加速方法——PagedAttention篇.pdf
+</h2><center><embed src="63-LLM（大语言模型）部署加速方法——PagedAttention篇.pdf" width="850" height="1000"></center>
+<h2 id="64-大模型推理加速工具--vllmpdf">64-大模型推理加速工具 —— vLLM.pdf
+</h2><center><embed src="64-大模型推理加速工具 —— vLLM.pdf" width="850" height="1000"></center>
+<h2 id="65-llm大语言模型部署加速方法faster-transformer篇pdf">65-LLM（大语言模型）部署加速方法——Faster Transformer篇.pdf
+</h2><center><embed src="65-LLM（大语言模型）部署加速方法——Faster Transformer篇.pdf" width="850" height="1000"></center>
+<h2 id="66-纯python超轻量高性能llm推理框架--lightllmpdf">66-纯Python超轻量高性能LLM推理框架 —— LightLLM.pdf
+</h2><center><embed src="66-纯Python超轻量高性能LLM推理框架 —— LightLLM.pdf" width="850" height="1000"></center>
+<h2 id="67-llm推理技术之streamingllm如何拥有无限长生成能力pdf">67-LLM推理技术之StreamingLLM：如何拥有无限长生成能力.pdf
+</h2><center><embed src="67-LLM推理技术之StreamingLLM：如何拥有无限长生成能力.pdf" width="850" height="1000"></center>
+<h2 id="68-swiftinfer--大模型无限流式输入推理飙升46打破多轮对话长度限制pdf">68-SwiftInfer —— 大模型无限流式输入推理飙升46%，打破多轮对话长度限制.pdf
+</h2><center><embed src="68-SwiftInfer —— 大模型无限流式输入推理飙升46%，打破多轮对话长度限制.pdf" width="850" height="1000"></center>
+<h2 id="69-大模型幻觉llm-hallucination面pdf">69-大模型幻觉（LLM Hallucination）面.pdf
+</h2><center><embed src="69-大模型幻觉（LLM Hallucination）面.pdf" width="850" height="1000"></center>
+<h2 id="70-大模型的幻觉问题篇pdf">70-大模型的幻觉问题篇.pdf
+</h2><center><embed src="70-大模型的幻觉问题篇.pdf" width="850" height="1000"></center>
+<h2 id="71-如何缓解大模型幻觉pdf">71-如何缓解大模型幻觉？.pdf
+</h2><center><embed src="71-如何缓解大模型幻觉？.pdf" width="850" height="1000"></center>
+<h2 id="72-llms-对比篇pdf">72-LLMs 对比篇.pdf
+</h2><center><embed src="72-LLMs 对比篇.pdf" width="850" height="1000"></center>
+<h2 id="73-百川智能baichuan7b13b53bbaichuan2-总结篇pdf">73-百川智能baichuan7B、13B、53B、baichuan2 总结篇.pdf
+</h2><center><embed src="73-百川智能baichuan7B、13B、53B、baichuan2 总结篇.pdf" width="850" height="1000"></center>
+<h2 id="74-llama-常见面试题篇pdf">74-LLaMA 常见面试题篇.pdf
+</h2><center><embed src="74-LLaMA 常见面试题篇.pdf" width="850" height="1000"></center>
+<h2 id="75-gpt-经验篇pdf">75-GPT 经验篇.pdf
+</h2><center><embed src="75-GPT 经验篇.pdf" width="850" height="1000"></center>
+<h2 id="76-思维链-chain-of-thoughtcotpdf">76-思维链 Chain-of-Thought（COT）.pdf
+</h2><center><embed src="76-思维链 Chain-of-Thought（COT）.pdf" width="850" height="1000"></center>
+<h2 id="77-思维链-chain-of-thoughtcot变体篇pdf">77-思维链 Chain-of-Thought（COT）变体篇.pdf
+</h2><center><embed src="77-思维链 Chain-of-Thought（COT）变体篇.pdf" width="850" height="1000"></center>
+<h2 id="78-小样本提示学习篇pdf">78-小样本提示学习篇.pdf
+</h2><center><embed src="78-小样本提示学习篇.pdf" width="850" height="1000"></center>
+<h2 id="79-llms-测试集-中-数据泄露-问题篇pdf">79-LLMs 测试集 中 数据泄露 问题篇.pdf
+</h2><center><embed src="79-LLMs 测试集 中 数据泄露 问题篇.pdf" width="850" height="1000"></center>
+<h2 id="80-moemixture-of-experts篇pdf">80-MOE（Mixture-of-Experts）篇.pdf
+</h2><center><embed src="80-MOE（Mixture-of-Experts）篇.pdf" width="850" height="1000"></center>
+<h2 id="81-大模型蒸馏篇pdf">81-大模型蒸馏篇.pdf
+</h2><center><embed src="81-大模型蒸馏篇.pdf" width="850" height="1000"></center>
+<h2 id="82-llms-浮点数篇pdf">82-LLMs 浮点数篇.pdf
+</h2><center><embed src="82-LLMs 浮点数篇.pdf" width="850" height="1000"></center>
+<h2 id="83-自定义-cuda-函数的轻量级包装器--bitsandbytes篇pdf">83-自定义 CUDA 函数的轻量级包装器 —— bitsandbytes篇.pdf
+</h2><center><embed src="83-自定义 CUDA 函数的轻量级包装器 —— bitsandbytes篇.pdf" width="850" height="1000"></center>
+<h2 id="84-大模型llms软硬件配置面pdf">84-大模型（LLMs）软硬件配置面.pdf
+</h2><center><embed src="84-大模型（LLMs）软硬件配置面.pdf" width="850" height="1000"></center>
+<h2 id="85-token及模型参数准备篇pdf">85-Token及模型参数准备篇.pdf
+</h2><center><embed src="85-Token及模型参数准备篇.pdf" width="850" height="1000"></center>
+<h2 id="86-多模态常见面试篇pdf">86-多模态常见面试篇.pdf
+</h2><center><embed src="86-多模态常见面试篇.pdf" width="850" height="1000"></center>
+<h2 id="87-nlp-trick-篇pdf">87-NLP Trick 篇.pdf
+</h2><center><embed src="87-NLP Trick 篇.pdf" width="850" height="1000"></center>
+<h2 id="88-文本分类常见面试篇pdf">88-文本分类常见面试篇.pdf
+</h2><center><embed src="88-文本分类常见面试篇.pdf" width="850" height="1000"></center>
+<h2 id="89-文本摘要常见面试篇pdf">89-文本摘要常见面试篇.pdf
+</h2><center><embed src="89-文本摘要常见面试篇.pdf" width="850" height="1000"></center>
+<h2 id="90-命名实体识别常见面试篇pdf">90-命名实体识别常见面试篇.pdf
+</h2><center><embed src="90-命名实体识别常见面试篇.pdf" width="850" height="1000"></center>
+<h2 id="91-向量检索常见面试篇pdf">91-向量检索常见面试篇.pdf
+</h2><center><embed src="91-向量检索常见面试篇.pdf" width="850" height="1000"></center>
+<h2 id="92-llms-其他-trickpdf">92-LLMs 其他 Trick.pdf
+</h2><center><embed src="92-LLMs 其他 Trick.pdf" width="850" height="1000"></center>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/huyang/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/huyang/p/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/huyang/img/%e9%9d%a2%e8%af%95%e6%8b%b7%e6%89%93_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/面试拷打_cover.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">面试拷打</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E5%85%AB%E8%82%A1%E6%96%87/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">八股文</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Hu Yang
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
+
+    </body>
+</html>
