@@ -868,7 +868,145 @@
 </li>
 </ol>
 <h1 id="真实项目拷打内容">真实项目拷打内容
-</h1>
+</h1><p>对于rag项目进行了拷打:</p>
+<p>8.25 15:00 淘天大模型后端实习面试:</p>
+<p>存在的问题:</p>
+<ol>
+<li>
+<p>项目还不熟练,在介绍模块的时候逻辑混乱,过于紧张</p>
+</li>
+<li>
+<p>效果的测评不知道,这里应该要直接说明使用我们进行了rag的测评:</p>
+<p>这里我是没有学习过相关的测评技术的,需要学习一下rag的测试方法:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">我们使用了ragas Python库来对与我们rag求职系统的生成的信息进行了测试,主要的测试环节有使用Context Relevance 和Faithfulness,这里的Faithfulness大概有0.7,而Context Relanvance大概有0.8;因为我们数据库中的数据都是国外的求职数据,所以当我们针对数据库中的国外数据来构造query的时候,context relevance就有0.8;但是假如我们查询国内的求职信息的时候,就是Context Relavance会掉到0.3左右.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Faithfulness:</p>
+<p><img src="/huyang/p/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93/QQ_1756137849140.png"
+	width="1452"
+	height="824"
+	srcset="/huyang/p/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93/QQ_1756137849140_hu_c439b7712ca2ed00.png 480w, /huyang/p/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93/QQ_1756137849140_hu_1a8da71458906c87.png 1024w"
+	loading="lazy"
+	
+		alt="QQ_1756137849140"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="176"
+		data-flex-basis="422px"
+	
+></p>
+<p>Answer Relevance:</p>
+<p><img src="/huyang/p/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93/QQ_1756138682934.png"
+	width="1480"
+	height="1036"
+	srcset="/huyang/p/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93/QQ_1756138682934_hu_58c228766c4e1c4a.png 480w, /huyang/p/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93/QQ_1756138682934_hu_abb399ae451f7025.png 1024w"
+	loading="lazy"
+	
+		alt="QQ_1756138682934"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+></p>
+</li>
+<li>
+<p>提问了页面置换算法,当时把进程调度的也给说了出去,实际上应该是:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">FIFO,LRU,clock算法,NRU,LRU-k,工作集模型,optimal算法,老化算法
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>什么是虚拟内存:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">虚拟内存是操作系统提供的一种机制，它让每个程序都感觉自己独享一整块连续的内存空间，而无需关心物理内存的实际大小和分配情况。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">好处是:
+</span></span><span class="line"><span class="cl">保护
+</span></span><span class="line"><span class="cl">重定位
+</span></span><span class="line"><span class="cl">数据共享
+</span></span><span class="line"><span class="cl">连续空间的假象
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>最后使用sentencetransformer生成的embedding是稠密向量还是稀疏向量:(没有回答)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">稠密向量：用少数、紧凑的维度（数百到数千维）表示所有信息，每个维度都是一个稠密的浮点数，且大多数维度值都不为零，具有具体的语义。
+</span></span><span class="line"><span class="cl">稀疏向量：用极多、庞大的维度（数万到数百万维）表示信息，但绝大多数维度值都为零，只有少数几个维度有值（通常是1或TF-IDF权重）。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">其中我的项目是中使用的是稠密向量,因为里面主要是涉及到transformer模型
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>milvous向量数据库是怎么进行查询的:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">如果库中有十亿条向量，逐一遍历计算距离（“暴力计算”或“扁平搜索”）在速度上是不可接受的。Milvus 的核心价值就在于使用近似最近邻（ANN）索引来加速这一过程。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">其核心思想是：用精度换速度。不保证100%找到绝对最近的邻居，但能99%的概率找到非常近的邻居，且速度提高几个数量级。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Milvus 支持多种 ANN 索引算法，其查询过程大同小异：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">常用索引类型及查询逻辑：
+</span></span><span class="line"><span class="cl">IVF 类索引 (Inverted File Index，倒排索引)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">预处理（建索引）：使用聚类算法（如K-Means）将所有向量聚成 nlist 个簇（Cluster），并记录每个簇的中心点（Centroid）和每个向量属于哪个簇。
+</span></span><span class="line"><span class="cl">查询过程：
+</span></span><span class="line"><span class="cl">a. 粗筛 (Probing)：计算目标向量与所有簇中心的距离，找到距离最近的 nprobe 个簇。nprobe 是一个关键参数，控制搜索范围和精度（nprobe 越大，精度越高，速度越慢）。
+</span></span><span class="line"><span class="cl">b. 细查 (Search in Cells)：只在这 nprobe 个簇包含的向量中进行精确的暴力计算，找出最近的 K 个向量。
+</span></span><span class="line"><span class="cl">类比：就像你在一个国家找和你最像的人。先看地图，找到和你口音、生活习惯最接近的几个省（nprobe 个簇），然后只在这几个省里逐个找人对比，而不是在全国14亿人里逐个对比。
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
 </section>
 
 
