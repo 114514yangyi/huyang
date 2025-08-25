@@ -46,6 +46,455 @@
 </description>
         </item>
         <item>
+        <title>传输层</title>
+        <link>https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/</link>
+        <pubDate>Tue, 20 May 2025 11:54:10 +0800</pubDate>
+        
+        <guid>https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/</guid>
+        <description>&lt;img src="https://114514yangyi.github.io/huyang/img/%E4%BC%A0%E8%BE%93%E5%B1%82_cover.png" alt="Featured image of post 传输层" /&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;//cdn.jsdelivr.net/npm/katex/dist/katex.min.css&#34;&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/math-code.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/katex.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;h1 id=&#34;tcp的基础简介&#34;&gt;TCP的基础简介
+&lt;/h1&gt;&lt;h2 id=&#34;套接字和端口&#34;&gt;套接字和端口
+&lt;/h2&gt;&lt;p&gt;端口-&amp;gt;是在报文段中用于指示OS中的具体的套接字&lt;/p&gt;
+&lt;p&gt;套接字-&amp;gt;是运行在OS中的&lt;/p&gt;
+&lt;h3 id=&#34;套接字socket&#34;&gt;&lt;strong&gt;套接字(Socket)&lt;/strong&gt;:
+&lt;/h3&gt;&lt;p&gt;套接字是一种软件抽象,它允许应用进程与操作系统的传输层(transport layer)进行网络消息交换。套接字提供了一种标准的编程接口,使得应用程序可以独立于底层网络协议进行通信。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;传输层地址&lt;/strong&gt;:
+套接字由两部分组成:&amp;lt;主机IP, 端口号&amp;gt;。这个地址组合被称为套接字。&lt;/p&gt;
+&lt;h3 id=&#34;端口&#34;&gt;端口:
+&lt;/h3&gt;&lt;p&gt;16位数字用于区分应用程序:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;网络数据包的传输头部中包含源端口号和目的端口号。&lt;/li&gt;
+&lt;li&gt;这些数字有助于路由器和其他网络设备识别和区分不同的应用程序。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;多路复用和反多路复用&#34;&gt;多路复用和反多路复用
+&lt;/h2&gt;&lt;h3 id=&#34;udp协议&#34;&gt;UDP协议
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;是&lt;code&gt;无连接&lt;/code&gt;的协议,只根据目的IP和目的端口来将报文段分配给相应的套接字&lt;/li&gt;
+&lt;li&gt;与TCP相比，UDP是一种更轻量级的传输协议。UDP通常被用于实时应用或对延迟要求较高的情况，因为它不提供像TCP那样的顺序传送和重传机制。通过使用UDP，可以避免TCP中对包序号、重传和流控制等方面带来的开销和延迟.&lt;/li&gt;
+&lt;li&gt;是一种尽力而为的协议&lt;/li&gt;
+&lt;li&gt;有DNS,流媒体应用来使用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;头信息&#34;&gt;头信息
+&lt;/h4&gt;&lt;p&gt;占用8字节&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610102114637-6098018.png&#34;
+	width=&#34;662&#34;
+	height=&#34;518&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610102114637-6098018_hu_dc372b72da07e4f1.png 480w, https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610102114637-6098018_hu_77ca24eb3027d0d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610102114637&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;127&#34;
+		data-flex-basis=&#34;306px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;length:应用报文+头的长度&lt;/li&gt;
+&lt;li&gt;checksum:校验和&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;checksum&#34;&gt;checksum:
+&lt;/h4&gt;&lt;p&gt;将每16bits作为一个加数相加(包括应用报文和头),进位是将1加到个位,最终得到一个16bits的相加和以后,将取反码,得到最终的校验和&lt;/p&gt;
+&lt;h3 id=&#34;tcp协议&#34;&gt;TCP协议
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;是有连接的,以连接为导向的协议,根据源IP地址,源端口,目的地址,目的端口来分配套接字&lt;/li&gt;
+&lt;li&gt;提供可靠的,顺序的字节流服务,流量控制&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;头信息-1&#34;&gt;头信息
+&lt;/h4&gt;&lt;p&gt;占用20字节&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610102733023-6098018.png&#34;
+	width=&#34;1004&#34;
+	height=&#34;777&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610102733023-6098018_hu_eb281ac41813ea52.png 480w, https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610102733023-6098018_hu_1a17d4462223ef5.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610102733023&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;129&#34;
+		data-flex-basis=&#34;310px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;序列号（Sequence Number）&lt;/strong&gt;：对于sender有用,是当前发送的数据包的首位的字节序列号,我要发的数据的SQ是对方上次发送的ack序列号&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;确认号（Acknowledgment Number）&lt;/strong&gt;：对于receiver有用,对于接受的数据包的确认,,我要发送的ack序列号是上次接收到的序列号+报文的长度&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HdrLen&lt;/strong&gt;:表明头部的长度&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;控制位（Flags）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;URG&lt;/strong&gt;（紧急指针有效）：表示紧急指针字段是否有效。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ACK&lt;/strong&gt;（确认序号有效）：&lt;code&gt;表示确认序号字段是否有效。&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PSH&lt;/strong&gt;（立即传输）：表示接收方应用程序应该尽快从接收缓冲区读取数据。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RST&lt;/strong&gt;（连接复位）：用于重置连接。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SYN&lt;/strong&gt;（同步序号）：&lt;code&gt;用于建立连接。&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FIN&lt;/strong&gt;（连接终止）：&lt;code&gt;用于释放连接。&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;窗口大小（Window Size）&lt;/strong&gt;：占用16个比特，指示发送方期望接收的字节数量，用来控制流量和流量控制。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;校验和（Checksum）&lt;/strong&gt;：占用16个比特，用于校验TCP头部和数据段完整性，以检测可能的错误。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;紧急指针（Urgent Pointer）&lt;/strong&gt;：占用16个比特，在URG标志位设置的情况下表明紧急数据的末尾。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;注意这里面的序列号都是按照Byte的顺序去划分的,即发送的数据包的开头是总共发送的数据包的第几个字节.&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id=&#34;tcp的建立和关闭&#34;&gt;TCP的建立和关闭
+&lt;/h1&gt;&lt;h2 id=&#34;tcp三次握手四次挥手&#34;&gt;TCP三次握手,四次挥手
+&lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/m0_56649557/article/details/119492899&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;简单理解TCP三次握手四次挥手（看一遍你就懂）-CSDN博客&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;3次握手&#34;&gt;3次握手:
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;第一次握手（SYN）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;客户端（Client）首先向服务器（Server）发送一个特殊的TCP包，其中包含一个SYN标志（Syn请求连接）。这个包也包含客户端初始化的序列号，用来启动连接。发送该包后，客户端进入SYN_SENT状态，等待服务器的确认。&lt;/li&gt;
+&lt;li&gt;发送(SYN,Sequence=ISN_A,ACK=NA)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第二次握手（SYN + ACK）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;服务器收到客户端的SYN包之后，会回复一个包，其中第二次握手中同时包含了SYN标志和ACK标志（即确认号ACK加上SYN标志）。这个包表示服务器已接收到客户端的请求，并且对客户端的序列号进行了确认。此时，服务器会生成自己的序列号。发送完这个包后，服务器进入SYN_RECV状态。&lt;/li&gt;
+&lt;li&gt;发送(SYN+ACK,Sequence=ISN_B,ACK=ISN+length)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第三次握手（ACK）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;最后，客户端收到服务器的确认包后，也会回复一个包作为第三次握手的确认。这个包中只有ACK标志，确认服务器的序列号。在这一步完成后，客户端和服务器之间的连接建立成功，双方都可以开始传输数据。此时，客户端和服务器都进入ESTABLISHED状态。&lt;/li&gt;
+&lt;li&gt;发送(ACK,Sequence=ISN_A,ACK=ISN_B+length)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610111432241-6098018.png&#34;
+	width=&#34;1358&#34;
+	height=&#34;755&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610111432241-6098018_hu_e0b0f71c1d34067d.png 480w, https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610111432241-6098018_hu_fb367c4814f765c4.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610111432241&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;431px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;四次挥手&#34;&gt;四次挥手
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;第一次挥手（FIN）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;结束方（通常是客户端或服务器一方）首先向对方发送一个FIN（Finish）消息，表示它不再有数据要发送给对方。发送这个包后，结束方进入FIN_WAIT_1状态，等待对方的确认。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第二次挥手（ACK）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;接收方收到结束方发送的FIN消息后，会发送一个确认消息（ACK）作为第二次挥手的响应。此时，接收方进入CLOSE_WAIT状态,结束方进入FIN_WAIT_2阶段.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第三次挥手（FIN）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;接收方发送完最后的数据后，也会向结束方发送一个FIN消息，表示它同意关闭连接。发送这个FIN消息后，接收方进入LAST_ACK状态.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第四次挥手（ACK）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;最后，结束方收到接收方发送的FIN消息后，会发送一个确认消息（ACK），作为最后的确认。一旦双方都发送了ACK，连接就会完全关闭。在此时，结束方进入TIME_WAIT状态，等待一段时间后才会进入CLOSED状态，连接正式关闭。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610112313249-6098018.png&#34;
+	width=&#34;937&#34;
+	height=&#34;565&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610112313249-6098018_hu_115812ce13867d38.png 480w, https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610112313249-6098018_hu_5dbcd473e6aa9662.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610112313249&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;165&#34;
+		data-flex-basis=&#34;398px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;生命周期&#34;&gt;生命周期
+&lt;/h3&gt;&lt;h4 id=&#34;客户端&#34;&gt;客户端
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610112404419-6098018.png&#34;
+	width=&#34;1126&#34;
+	height=&#34;803&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610112404419-6098018_hu_27bca285156d5c87.png 480w, https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610112404419-6098018_hu_a8cdc19a38498a9.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610112404419&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;140&#34;
+		data-flex-basis=&#34;336px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;服务端&#34;&gt;服务端
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610112450437-6098018.png&#34;
+	width=&#34;1186&#34;
+	height=&#34;792&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610112450437-6098018_hu_a81673b50f9bb568.png 480w, https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610112450437-6098018_hu_f432dd94efe76b9c.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610112450437&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;149&#34;
+		data-flex-basis=&#34;359px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;tcp协议传输&#34;&gt;TCP协议传输
+&lt;/h1&gt;&lt;h2 id=&#34;可靠传输&#34;&gt;可靠传输
+&lt;/h2&gt;&lt;h3 id=&#34;可能发生的错误&#34;&gt;可能发生的错误
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;数据包损坏(bit errors):
+&lt;ul&gt;
+&lt;li&gt;TCP 使用校验和(checksum)机制来检测数据包在传输过程中是否发生了错误。&lt;/li&gt;
+&lt;li&gt;如果发现数据包已被损坏,TCP 会自动重传该数据包。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;数据包丢失(why?):
+&lt;ul&gt;
+&lt;li&gt;TCP 使用序列号和确认机制来检测和重传丢失的数据包。&lt;/li&gt;
+&lt;li&gt;当发送端没有收到预期的确认,就会重传数据包。&lt;/li&gt;
+&lt;li&gt;超时会自动重传&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;数据包延迟(why?):
+&lt;ul&gt;
+&lt;li&gt;TCP 使用重传机制和拥塞控制算法来应对网络拥塞导致的延迟问题。&lt;/li&gt;
+&lt;li&gt;发送端会跟踪网络状况,并动态调整发送速率,以避免缓存溢出和网络拥塞。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;数据包乱序(why?):
+&lt;ul&gt;
+&lt;li&gt;TCP 使用序列号来重新排序接收到的数据包。&lt;/li&gt;
+&lt;li&gt;接收端会缓存乱序到达的数据包,并根据序列号将它们重新排序。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;数据包重复(why?):
+&lt;ul&gt;
+&lt;li&gt;TCP 使用序列号和确认机制来检测和丢弃重复的数据包。&lt;/li&gt;
+&lt;li&gt;如果发送端收到重复的确认,就不会重传数据包&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;传输方式接收ack&#34;&gt;传输方式(接收ACK)
+&lt;/h3&gt;&lt;h4 id=&#34;stop-and-wait&#34;&gt;Stop and Wait
+&lt;/h4&gt;&lt;p&gt;每次发送一个请求然后等待ACK,超时重传,相当于发送的窗口为1,接受的窗口为1&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240609214612545-6098018.png&#34;
+	width=&#34;498&#34;
+	height=&#34;152&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240609214612545-6098018_hu_76aa74b08f300bad.png 480w, https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240609214612545-6098018_hu_914244a51daa0c7d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240609214612545&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;327&#34;
+		data-flex-basis=&#34;786px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240609214624490-6098018.png&#34;
+	width=&#34;375&#34;
+	height=&#34;144&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240609214624490-6098018_hu_4f4ced4b79877cea.png 480w, https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240609214624490-6098018_hu_6030ccba580435aa.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240609214624490&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;260&#34;
+		data-flex-basis=&#34;625px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;流水线传输&#34;&gt;流水线传输
+&lt;/h4&gt;&lt;p&gt;接连着发送m个数据包,等待这m个ack.&lt;/p&gt;
+&lt;p&gt;使用滑动窗口技术&lt;/p&gt;
+&lt;p&gt;滑动窗口的工作原理如下:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;发送端维护一个发送窗口,表示可以发送但未被确认的数据包集合。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;接收端维护一个接收窗口,表示可以接收的数据包范围。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;当接收端确认窗口内的数据包时,发送端就可以将这些数据包从发送窗口中移除,并滑动窗口。&lt;/p&gt;
+&lt;p&gt;只有当最左边的数据包被ack以后才能够移动窗口&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;通过动态调整窗口大小,TCP 可以实现流量控制和拥塞控制,提高传输效率和可靠性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;两种接收的方式:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GBN&lt;/li&gt;
+&lt;li&gt;SR&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;gbn协议与sr协议&#34;&gt;GBN协议与SR协议
+&lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/qq_35812205/article/details/108693965&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GBN协议复习_确认分组和确认号-CSDN博客&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;gbn&#34;&gt;GBN
+&lt;/h3&gt;&lt;h4 id=&#34;对于发送端的重传方式是gbn&#34;&gt;对于发送端的重传方式是GBN:
+&lt;/h4&gt;&lt;p&gt;相当于发送方的滑动窗口为n,接收方的滑动窗口为1.&lt;/p&gt;
+&lt;p&gt;为整个的发送的窗口建立一个时钟,当最左边的数据包接收到ACK以后,就重置窗口时钟.当超时的时候就将所有窗口中已经发送过的数据包全部重传.&lt;/p&gt;
+&lt;h4 id=&#34;对于接受端是accumulate-ack&#34;&gt;对于接受端是Accumulate ACK
+&lt;/h4&gt;&lt;p&gt;接收端的滑动窗口只有一个,就是只能够接收一个特定的数据包,当返回ACK(n)的时候,说明该数据帧和之前的所有数据帧都是已经接收.此时发送端应该要发送Sq(n+1).&lt;/p&gt;
+&lt;h3 id=&#34;sr&#34;&gt;SR
+&lt;/h3&gt;&lt;h4 id=&#34;发送方的发送方式是sr&#34;&gt;发送方的发送方式是SR
+&lt;/h4&gt;&lt;p&gt;相当于发送方的滑动窗口为n,接收方的滑动窗口为n&lt;/p&gt;
+&lt;p&gt;对于每一个发送的数据包设置一个时钟,当发生超时的时候只重传这单个的数据包;当接收到NACK的时候,也只是重传这个数据包.&lt;/p&gt;
+&lt;h4 id=&#34;接收方的接受方式是selective-ack&#34;&gt;接收方的接受方式是Selective ACK
+&lt;/h4&gt;&lt;p&gt;接收方的滑动窗口是n.&lt;/p&gt;
+&lt;p&gt;对接收到的每一个数据包都发送一个ACK,假如在接收方对于未正确接受的帧发送NACK&lt;/p&gt;
+&lt;h2 id=&#34;tcp的快速重传机制&#34;&gt;&lt;strong&gt;TCP的快速重传机制&lt;/strong&gt;
+&lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/whgtheone/article/details/80983882&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;TCP的快速重传机制_快重传包括第一个-CSDN博客&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;因为想要唤醒重传的机制,需要等待数据包在sender端超时,所以可以使用冗余的3个ack在receiver端提醒sender端进行快速重传.&lt;/p&gt;
+&lt;p&gt;条件:3个冗余的ack-&amp;gt;&lt;code&gt;即顺序地接受到4个ack(一个ack是正常的)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;情况:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在receiver端,维护一个长度为n的滑动窗口,使用类GBN的协议.(也就是在接收到其他的非ACK但是在滑动窗口中的数据包的时候,会将这个数据包进行缓存)&lt;/li&gt;
+&lt;li&gt;发送端还是继续发送滑动窗口中的数据&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;如何确立timeout&#34;&gt;&lt;strong&gt;如何确立timeout&lt;/strong&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-jsx&#34; data-lang=&#34;jsx&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;EstimatedRTT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;EstimatedRTT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;SampleRTT&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;C:/Users/24165/Downloads/Untitled.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Untitled&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Deviation= | SampleRTT–EstimatedRTT|&lt;/li&gt;
+&lt;li&gt;DevRTT: exponential average of Deviation&lt;/li&gt;
+&lt;li&gt;RTO = EstimatedRTT+ 4 x DevRTT&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;tcp流量控制拥塞控制&#34;&gt;TCP流量控制,拥塞控制:
+&lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/qq_42214953/article/details/105832303&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;浅谈TCP拥塞控制：慢启动和拥塞避免、快速重传和快速恢复_tcp慢启动-CSDN博客&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;流量控制接收端要考虑的事情&#34;&gt;流量控制:(接收端要考虑的事情)
+&lt;/h3&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/qq_46631497/article/details/137252874&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;什么是TCP流量控制？（解释说明+过程+示例）_计算机网络 流量控制-CSDN博客&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;#流量控制是由receiver来控制的,因为可能sender发送的数据过多导致超过了receiver的buffer所以需要控制sender的发送速率.&lt;/p&gt;
+&lt;p&gt;→AWND&lt;/p&gt;
+&lt;h4 id=&#34;接收端&#34;&gt;接收端:
+&lt;/h4&gt;&lt;p&gt;每一次接受者返回ACK的时候都会发送一个Advertised Window的值(RWND),这个值应该是receiver的buffer(Window)的边界距离最后一个接受的数据比特的长度&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610144923197-6098018.png&#34;
+	width=&#34;1299&#34;
+	height=&#34;814&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610144923197-6098018_hu_2780576969e680b0.png 480w, https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610144923197-6098018_hu_454493a05ae44ad4.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610144923197&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;159&#34;
+		data-flex-basis=&#34;382px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;发送端&#34;&gt;发送端
+&lt;/h4&gt;&lt;p&gt;发送端能够发送的数据包只能是RWND的范围,即从发送但是没有ACK的第一个字节到加上RWND的范围.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610145157084-6098018.png&#34;
+	width=&#34;1223&#34;
+	height=&#34;768&#34;
+	srcset=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610145157084-6098018_hu_5852914ae86acaa0.png 480w, https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610145157084-6098018_hu_3e566450cfdf8ba1.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20240610145157084&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;159&#34;
+		data-flex-basis=&#34;382px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;拥塞控制发送端要考虑的事情&#34;&gt;拥塞控制:(发送端要考虑的事情)
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;决定怎么去分配在链路上的不同的终端的流量&lt;/li&gt;
+&lt;li&gt;动态分配流量&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;#根据丢包的数量来决定网络的拥塞状况&lt;/p&gt;
+&lt;p&gt;→CWND&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;slow start :&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;每一个RTT都将CWND进行double,相当于队每一个ACK都加上1; 直到CWND超过了”slow start threshold”→ssthresh&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;“Additive Increase Multiplicative Decrease” (AIMD):&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;对于每一个RTT都将CWND加一,对于每一个ACK都将CWDN加&lt;/code&gt;$\frac{1}{CWND}$​;&lt;/p&gt;
+&lt;p&gt;丢包:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;三次冗余的ACK-&amp;gt;$$ssthresh=\frac{CWND}{2};CWND=ssthresh$$&lt;/li&gt;
+&lt;li&gt;超时-&amp;gt;$ssthresh =\frac{CWND}{2};CWND=1$;initial slow start ;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;能够很好地解决效率和公平性的问题&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;快速恢复&#34;&gt;快速恢复
+&lt;/h3&gt;&lt;p&gt;&lt;code&gt;一般和快速重传一起使用&lt;/code&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;当发送端收到第三个重复确认的报文时，会更新ssthresh的值为$\frac{CWND}{2}$，然后立即重传丢失的报文段，并且设置：cwnd = ssthresh+3*SMSS，进入拥塞避免阶段。&lt;/li&gt;
+&lt;li&gt;拥塞避免阶段:当收到一个重复确认的报文时，设置cwnd = cwnd +SMSS。此时发送端可以发送新的TCP报文（如果新的cwnd允许）(发送接下来上次发送的序列号)&lt;/li&gt;
+&lt;li&gt;当收到新数据的确认时，设置cwnd=ssthresh。进入拥塞避免阶段,此时的$ssthresh=cwnd=\frac{(旧)cwnd}{2}$;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;其他的tcp拥塞控制协议&#34;&gt;其他的TCP拥塞控制协议:
+&lt;/h3&gt;&lt;p&gt;基本的情况:three dupACK and timeout-&amp;gt;ssthresh=$\frac{CWND}{2}$&lt;/p&gt;
+&lt;p&gt;• TCP-Tahoe&lt;br&gt;
+CWND =1 on 3 dupACKs&lt;/p&gt;
+&lt;p&gt;并且只有快速重传,没有快速回复&lt;/p&gt;
+&lt;p&gt;• TCP-Reno
+CWND =1 on timeout
+CWND = CWND/2 on 3 dupACKs&lt;/p&gt;
+&lt;p&gt;有快速恢复机制&lt;/p&gt;
+&lt;p&gt;• TCP-newReno
+TCP-Reno + improved fast recovery Our default  assumption&lt;/p&gt;
+&lt;p&gt;• TCP-SACK
+Incorporates selective acknowledgements&lt;/p&gt;
+&lt;h2 id=&#34;可靠数据传输协议-rdt&#34;&gt;可靠数据传输协议 rdt
+&lt;/h2&gt;&lt;h3 id=&#34;完全可信的信道&#34;&gt;完全可信的信道
+&lt;/h3&gt;&lt;p&gt;信道:没有差错,速率恒定,按照顺序接受&lt;/p&gt;
+&lt;p&gt;使用rdt1.0传输,即&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;发送方:经过调用就直接传输数据&lt;/li&gt;
+&lt;li&gt;接收方:直接接受数据,并且返回给上层&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;具有比特差错的信道&#34;&gt;具有比特差错的信道
+&lt;/h3&gt;&lt;p&gt;信道:有比特差错,按照顺序接受&lt;/p&gt;
+&lt;p&gt;使用rdt2.0,接收方具有比特差错检验:校验和&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;发送端:等待上层调用发送数据后,等待ACK或者NACK;加入收到ACK就直接继续等待上层调用,收到NACK,就重新发送并且继续等待.&lt;/li&gt;
+&lt;li&gt;接受端:接受数据包,进行比特差错检验,假如正确就直接返回给上层,并且返回ACK;否则就发送NACK,并且丢弃数据包.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;具有比特差错的丢包信道&#34;&gt;具有比特差错的丢包信道
+&lt;/h3&gt;&lt;p&gt;信道:具有比特差错,并且会丢包,非顺序接受&lt;/p&gt;
+&lt;p&gt;使用rdt3.0,也叫做&lt;code&gt;比特交替协议&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;就是sender端交替发送包序列号为1,0的包;&lt;/p&gt;
+&lt;p&gt;receiver端交替接受1,0包并发送ack给sender端&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>操作系统</title>
         <link>https://114514yangyi.github.io/huyang/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
         <pubDate>Tue, 20 May 2025 11:54:10 +0800</pubDate>
