@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 项目拷打 RAG项目 我们制作的这个rag项目是一个面向求职招聘的带有rag问答的问答系统.我们可以向AI去询问我们想要求职的岗位,以及面试的技巧之类的,接受类似于pdf数据,markdown数据的上传,在后端使用mysql数据库和milvous向量数据库进行查询岗位信息和面试要点信息,然后将信息作为context传递给AI大模型生成回复.其中主要涉及的技术是RAG流程的的搭建,使用的技术栈是前端REACT,后端使用Python的fastapi模块.除了一个关于求职的AI的问答系统,我们还搭建了一系列的和求职相关的功能性平台,比如说AI面试官,职业性格测试,简历生成之类的附属功能.\n其中主要实现的rag问答功能模块主要是建立了下面的分层形势:\nAPIServer层,主要使用uvicorn运行异步python web应用,然后配置host和端口;使用fastapi模块构建一个具有REASFUL API的WEB应用,对前端的请求使用Pandatic里面的basemodel来将json数据转换为python类型并且进行json的数据格式验证,并且调用后续相应的RAG检索链进行处理返回结果.使用CORS配置跨域处理请求 RAG检索链层,是这个层级中主要处理了对于每一个RAG问答请求,对其中每一个请求都配置一个检索链,使用相应的配置文件去配置在一次的rag请求链中应该使用那些模块.其中主要设计的模块是VectorDatabese模块,WeSearch模块,Format模块,Translation模块,PDF文件解析模块,Prompt模块,Extractor模块,主要的检索链的过程是首先使用Extractor提取请求数据中的history历史信息,使用format模块构造历史信息为合适的可以作为大模型context的string.再将query信息进过Translation模块翻译为英文,使用原始的query进过WebSearch模块查询出网络上的求职信息;将上传的pdf文件提取其中的关键信息,使用Extractor模块提取query中的关键字,将经过翻译的query和关键字传递给VectorDatabase模块,检索相应的top_k数量的求职记录信息,将上面所有的信息都作为Context交给Prompt模块请求使用langchain包Deepseek大模型来给出求职建议. VectorDatabase主要涉及到两个数据库:mysql和milvous向量数据库的信息检索.在进入vectordatabase之前首先会进行query的意图识别,识别query是询问求职岗位信息还是想面试技巧或者是和求职无关信息的询问,然后分别请求不同的mysql数据库表,使用python库mysql.connector连接数据库,然后里面存储这两张表的数据,一个是jobdetail存储所有求职岗位信息,一个jobcontent存储这面试技巧之类的信息.在表中有一个字段是blob二进制类型的,在python中读取后将其转换为numpy向量.然后使用sentencetransformer将英文的queryembedding为numpy向量,然后对于numpy向量进行余弦相似度的求解,排序相似度选出top_k个向量所对应的数据填充到context中.对于milvous向量数据库使用pymilvous库,就是建立docid,text明文,embedding向量的表,然后对于embedding使用L2欧氏距离查询top_k相似的text作为context. 我们的后端前端和数据库都是放到我们当时买的100块的小型Ubuntu服务器,然后接上校园网进行部署的,使用了南大校园内网的gitlab进行gitci,实现了基本的CICD, 对于AI请求呢,我们使用的是ragas库中的prompt模块,也就是pandaticprompt类,使用prompt去引导AI对于我们给定的输入格式,给出我要求格式的输出. 名词解释 fastapi:\n是Python的简单高性能的Web 框架,实现了一系列的REASTFU API.\nuvicorn:\nuvicorn是一个ASGI服务器,用于运行pythonweb应用.\n什么是跨域 跨域指的是当一个网页尝试访问不同网源的资源的时候,就会因为浏览器的同源策略的限制导致跨域的问题,一般来说浏览器要求域名,端口,协议三者完全一致才算是同源.一般解决跨域问题使用的方法是代理服务器,CORS,WebScoket等,我在项目中配置的就是CORS跨域,允许前端的IP地址和端口可以进来,没有限制header和cookie.\nwebsocket WebSocket 是一种在单个 TCP 连接上进行全双工通信的协议，它允许服务器和客户端在建立连接后双向实时传输数据，而不需要像传统 HTTP 请求那样每次通信都要重新建立连接。WebSocket 协议通过 HTTP/HTTPS 的 101 状态码完成初始握手后，升级为一个持久连接\n前后端连接 使用像XMLHTTPRequest,AXios,fetch来配置请求的URL连接,请求header,HTTP body数据.\n怎么做CICD的 修改.git里面的pre-push文件,修改里面的bash命令,建立一个在git push之前的本地集成测试,在所有的测试通过以后,本地的git命令将项目使用ssh.https推送到远程仓库中.远程仓库中触发hook钩子,根据根目录中的gitlab-ci.yam文件来构建流水线,将流水线任务推送到runner服务器中,执行gitlab-ci里面的不同阶段的脚本,完成前后端的构建,单元测试,集成测试,端到端测试,然后将构建信息传递给gitlab,将服务器中构建产物消除(在我们实践中是直接将构建产物部署到服务器中运行的),gitlab在流水线成功部署以后就将代码拼接到分支上.其中我们服务器中数据库是直接部署在数据库的,不在CICD流程中的.\nC++QT项目 以下是一个基于Qt框架，与您描述的课程项目要求相符的&quot;类异形工厂&quot;游戏实现思路：\n1. 游戏架构与核心类\nGameState 类:\n该类是游戏的核心，负责管理游戏状态和逻辑。 [cite_start]在主循环（main 函数中的 while 循环）中，通过调用 update() 函数来更新所有游戏对象的状态，例如设备的运行、物品的移动、任务的进度等 [cite: 11, 44, 52]。 [cite_start]GameState 应该包含 Map、Device 和 Mine 对象，以及当前游戏任务、金币数量和全局强化状态等信息 [cite: 24, 28, 60, 65, 83, 84]。 Engine 类 (继承自 QWidget 或 QMainWindow):\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 项目拷打 RAG项目 我们制作的这个rag项目是一个面向求职招聘的带有rag问答的问答系统.我们可以向AI去询问我们想要求职的岗位,以及面试的技巧之类的,接受类似于pdf数据,markdown数据的上传,在后端使用mysql数据库和milvous向量数据库进行查询岗位信息和面试要点信息,然后将信息作为context传递给AI大模型生成回复.其中主要涉及的技术是RAG流程的的搭建,使用的技术栈是前端REACT,后端使用Python的fastapi模块.除了一个关于求职的AI的问答系统,我们还搭建了一系列的和求职相关的功能性平台,比如说AI面试官,职业性格测试,简历生成之类的附属功能.\n其中主要实现的rag问答功能模块主要是建立了下面的分层形势:\nAPIServer层,主要使用uvicorn运行异步python web应用,然后配置host和端口;使用fastapi模块构建一个具有REASFUL API的WEB应用,对前端的请求使用Pandatic里面的basemodel来将json数据转换为python类型并且进行json的数据格式验证,并且调用后续相应的RAG检索链进行处理返回结果.使用CORS配置跨域处理请求 RAG检索链层,是这个层级中主要处理了对于每一个RAG问答请求,对其中每一个请求都配置一个检索链,使用相应的配置文件去配置在一次的rag请求链中应该使用那些模块.其中主要设计的模块是VectorDatabese模块,WeSearch模块,Format模块,Translation模块,PDF文件解析模块,Prompt模块,Extractor模块,主要的检索链的过程是首先使用Extractor提取请求数据中的history历史信息,使用format模块构造历史信息为合适的可以作为大模型context的string.再将query信息进过Translation模块翻译为英文,使用原始的query进过WebSearch模块查询出网络上的求职信息;将上传的pdf文件提取其中的关键信息,使用Extractor模块提取query中的关键字,将经过翻译的query和关键字传递给VectorDatabase模块,检索相应的top_k数量的求职记录信息,将上面所有的信息都作为Context交给Prompt模块请求使用langchain包Deepseek大模型来给出求职建议. VectorDatabase主要涉及到两个数据库:mysql和milvous向量数据库的信息检索.在进入vectordatabase之前首先会进行query的意图识别,识别query是询问求职岗位信息还是想面试技巧或者是和求职无关信息的询问,然后分别请求不同的mysql数据库表,使用python库mysql.connector连接数据库,然后里面存储这两张表的数据,一个是jobdetail存储所有求职岗位信息,一个jobcontent存储这面试技巧之类的信息.在表中有一个字段是blob二进制类型的,在python中读取后将其转换为numpy向量.然后使用sentencetransformer将英文的queryembedding为numpy向量,然后对于numpy向量进行余弦相似度的求解,排序相似度选出top_k个向量所对应的数据填充到context中.对于milvous向量数据库使用pymilvous库,就是建立docid,text明文,embedding向量的表,然后对于embedding使用L2欧氏距离查询top_k相似的text作为context. 我们的后端前端和数据库都是放到我们当时买的100块的小型Ubuntu服务器,然后接上校园网进行部署的,使用了南大校园内网的gitlab进行gitci,实现了基本的CICD. 对于AI请求呢,我们使用的是ragas库中的prompt模块,也就是pandaticprompt类,使用prompt去引导AI对于我们给定的输入格式,给出我要求格式的输出. 名词解释 fastapi:\n是Python的简单高性能的Web 框架,实现了一系列的REASTFU API.\nuvicorn:\nuvicorn是一个ASGI服务器,用于运行pythonweb应用.\n什么是跨域 跨域指的是当一个网页尝试访问不同网源的资源的时候,就会因为浏览器的同源策略的限制导致跨域的问题,一般来说浏览器要求域名,端口,协议三者完全一致才算是同源.一般解决跨域问题使用的方法是代理服务器,CORS,WebScoket等,我在项目中配置的就是CORS跨域,允许前端的IP地址和端口可以进来,没有限制header和cookie.\nwebsocket WebSocket 是一种在单个 TCP 连接上进行全双工通信的协议，它允许服务器和客户端在建立连接后双向实时传输数据，而不需要像传统 HTTP 请求那样每次通信都要重新建立连接。WebSocket 协议通过 HTTP/HTTPS 的 101 状态码完成初始握手后，升级为一个持久连接\n前后端连接 使用像XMLHTTPRequest,AXios,fetch来配置请求的URL连接,请求header,HTTP body数据.\n怎么做CICD的 修改.git里面的pre-push文件,修改里面的bash命令,建立一个在git push之前的本地集成测试,在所有的测试通过以后,本地的git命令将项目使用ssh.https推送到远程仓库中.远程仓库中触发hook钩子,根据根目录中的gitlab-ci.yam文件来构建流水线,将流水线任务推送到runner服务器中,执行gitlab-ci里面的不同阶段的脚本,完成前后端的构建,单元测试,集成测试,端到端测试,然后将构建信息传递给gitlab,将服务器中构建产物消除(在我们实践中是直接将构建产物部署到服务器中运行的),gitlab在流水线成功部署以后就将代码拼接到分支上.其中我们服务器中数据库是直接部署在数据库的,不在CICD流程中的.\nC++QT项目 以下是一个基于Qt框架，与您描述的课程项目要求相符的&quot;类异形工厂&quot;游戏实现思路：\n1. 游戏架构与核心类\nGameState 类:\n该类是游戏的核心，负责管理游戏状态和逻辑。 [cite_start]在主循环（main 函数中的 while 循环）中，通过调用 update() 函数来更新所有游戏对象的状态，例如设备的运行、物品的移动、任务的进度等 [cite: 11, 44, 52]。 [cite_start]GameState 应该包含 Map、Device 和 Mine 对象，以及当前游戏任务、金币数量和全局强化状态等信息 [cite: 24, 28, 60, 65, 83, 84]。 Engine 类 (继承自 QWidget 或 QMainWindow):\n">
 <title>面试拷打</title>
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93/'>
 
 <link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="面试拷打">
-<meta property='og:description' content=" 项目拷打 RAG项目 我们制作的这个rag项目是一个面向求职招聘的带有rag问答的问答系统.我们可以向AI去询问我们想要求职的岗位,以及面试的技巧之类的,接受类似于pdf数据,markdown数据的上传,在后端使用mysql数据库和milvous向量数据库进行查询岗位信息和面试要点信息,然后将信息作为context传递给AI大模型生成回复.其中主要涉及的技术是RAG流程的的搭建,使用的技术栈是前端REACT,后端使用Python的fastapi模块.除了一个关于求职的AI的问答系统,我们还搭建了一系列的和求职相关的功能性平台,比如说AI面试官,职业性格测试,简历生成之类的附属功能.\n其中主要实现的rag问答功能模块主要是建立了下面的分层形势:\nAPIServer层,主要使用uvicorn运行异步python web应用,然后配置host和端口;使用fastapi模块构建一个具有REASFUL API的WEB应用,对前端的请求使用Pandatic里面的basemodel来将json数据转换为python类型并且进行json的数据格式验证,并且调用后续相应的RAG检索链进行处理返回结果.使用CORS配置跨域处理请求 RAG检索链层,是这个层级中主要处理了对于每一个RAG问答请求,对其中每一个请求都配置一个检索链,使用相应的配置文件去配置在一次的rag请求链中应该使用那些模块.其中主要设计的模块是VectorDatabese模块,WeSearch模块,Format模块,Translation模块,PDF文件解析模块,Prompt模块,Extractor模块,主要的检索链的过程是首先使用Extractor提取请求数据中的history历史信息,使用format模块构造历史信息为合适的可以作为大模型context的string.再将query信息进过Translation模块翻译为英文,使用原始的query进过WebSearch模块查询出网络上的求职信息;将上传的pdf文件提取其中的关键信息,使用Extractor模块提取query中的关键字,将经过翻译的query和关键字传递给VectorDatabase模块,检索相应的top_k数量的求职记录信息,将上面所有的信息都作为Context交给Prompt模块请求使用langchain包Deepseek大模型来给出求职建议. VectorDatabase主要涉及到两个数据库:mysql和milvous向量数据库的信息检索.在进入vectordatabase之前首先会进行query的意图识别,识别query是询问求职岗位信息还是想面试技巧或者是和求职无关信息的询问,然后分别请求不同的mysql数据库表,使用python库mysql.connector连接数据库,然后里面存储这两张表的数据,一个是jobdetail存储所有求职岗位信息,一个jobcontent存储这面试技巧之类的信息.在表中有一个字段是blob二进制类型的,在python中读取后将其转换为numpy向量.然后使用sentencetransformer将英文的queryembedding为numpy向量,然后对于numpy向量进行余弦相似度的求解,排序相似度选出top_k个向量所对应的数据填充到context中.对于milvous向量数据库使用pymilvous库,就是建立docid,text明文,embedding向量的表,然后对于embedding使用L2欧氏距离查询top_k相似的text作为context. 我们的后端前端和数据库都是放到我们当时买的100块的小型Ubuntu服务器,然后接上校园网进行部署的,使用了南大校园内网的gitlab进行gitci,实现了基本的CICD, 对于AI请求呢,我们使用的是ragas库中的prompt模块,也就是pandaticprompt类,使用prompt去引导AI对于我们给定的输入格式,给出我要求格式的输出. 名词解释 fastapi:\n是Python的简单高性能的Web 框架,实现了一系列的REASTFU API.\nuvicorn:\nuvicorn是一个ASGI服务器,用于运行pythonweb应用.\n什么是跨域 跨域指的是当一个网页尝试访问不同网源的资源的时候,就会因为浏览器的同源策略的限制导致跨域的问题,一般来说浏览器要求域名,端口,协议三者完全一致才算是同源.一般解决跨域问题使用的方法是代理服务器,CORS,WebScoket等,我在项目中配置的就是CORS跨域,允许前端的IP地址和端口可以进来,没有限制header和cookie.\nwebsocket WebSocket 是一种在单个 TCP 连接上进行全双工通信的协议，它允许服务器和客户端在建立连接后双向实时传输数据，而不需要像传统 HTTP 请求那样每次通信都要重新建立连接。WebSocket 协议通过 HTTP/HTTPS 的 101 状态码完成初始握手后，升级为一个持久连接\n前后端连接 使用像XMLHTTPRequest,AXios,fetch来配置请求的URL连接,请求header,HTTP body数据.\n怎么做CICD的 修改.git里面的pre-push文件,修改里面的bash命令,建立一个在git push之前的本地集成测试,在所有的测试通过以后,本地的git命令将项目使用ssh.https推送到远程仓库中.远程仓库中触发hook钩子,根据根目录中的gitlab-ci.yam文件来构建流水线,将流水线任务推送到runner服务器中,执行gitlab-ci里面的不同阶段的脚本,完成前后端的构建,单元测试,集成测试,端到端测试,然后将构建信息传递给gitlab,将服务器中构建产物消除(在我们实践中是直接将构建产物部署到服务器中运行的),gitlab在流水线成功部署以后就将代码拼接到分支上.其中我们服务器中数据库是直接部署在数据库的,不在CICD流程中的.\nC++QT项目 以下是一个基于Qt框架，与您描述的课程项目要求相符的&quot;类异形工厂&quot;游戏实现思路：\n1. 游戏架构与核心类\nGameState 类:\n该类是游戏的核心，负责管理游戏状态和逻辑。 [cite_start]在主循环（main 函数中的 while 循环）中，通过调用 update() 函数来更新所有游戏对象的状态，例如设备的运行、物品的移动、任务的进度等 [cite: 11, 44, 52]。 [cite_start]GameState 应该包含 Map、Device 和 Mine 对象，以及当前游戏任务、金币数量和全局强化状态等信息 [cite: 24, 28, 60, 65, 83, 84]。 Engine 类 (继承自 QWidget 或 QMainWindow):\n">
+<meta property='og:description' content=" 项目拷打 RAG项目 我们制作的这个rag项目是一个面向求职招聘的带有rag问答的问答系统.我们可以向AI去询问我们想要求职的岗位,以及面试的技巧之类的,接受类似于pdf数据,markdown数据的上传,在后端使用mysql数据库和milvous向量数据库进行查询岗位信息和面试要点信息,然后将信息作为context传递给AI大模型生成回复.其中主要涉及的技术是RAG流程的的搭建,使用的技术栈是前端REACT,后端使用Python的fastapi模块.除了一个关于求职的AI的问答系统,我们还搭建了一系列的和求职相关的功能性平台,比如说AI面试官,职业性格测试,简历生成之类的附属功能.\n其中主要实现的rag问答功能模块主要是建立了下面的分层形势:\nAPIServer层,主要使用uvicorn运行异步python web应用,然后配置host和端口;使用fastapi模块构建一个具有REASFUL API的WEB应用,对前端的请求使用Pandatic里面的basemodel来将json数据转换为python类型并且进行json的数据格式验证,并且调用后续相应的RAG检索链进行处理返回结果.使用CORS配置跨域处理请求 RAG检索链层,是这个层级中主要处理了对于每一个RAG问答请求,对其中每一个请求都配置一个检索链,使用相应的配置文件去配置在一次的rag请求链中应该使用那些模块.其中主要设计的模块是VectorDatabese模块,WeSearch模块,Format模块,Translation模块,PDF文件解析模块,Prompt模块,Extractor模块,主要的检索链的过程是首先使用Extractor提取请求数据中的history历史信息,使用format模块构造历史信息为合适的可以作为大模型context的string.再将query信息进过Translation模块翻译为英文,使用原始的query进过WebSearch模块查询出网络上的求职信息;将上传的pdf文件提取其中的关键信息,使用Extractor模块提取query中的关键字,将经过翻译的query和关键字传递给VectorDatabase模块,检索相应的top_k数量的求职记录信息,将上面所有的信息都作为Context交给Prompt模块请求使用langchain包Deepseek大模型来给出求职建议. VectorDatabase主要涉及到两个数据库:mysql和milvous向量数据库的信息检索.在进入vectordatabase之前首先会进行query的意图识别,识别query是询问求职岗位信息还是想面试技巧或者是和求职无关信息的询问,然后分别请求不同的mysql数据库表,使用python库mysql.connector连接数据库,然后里面存储这两张表的数据,一个是jobdetail存储所有求职岗位信息,一个jobcontent存储这面试技巧之类的信息.在表中有一个字段是blob二进制类型的,在python中读取后将其转换为numpy向量.然后使用sentencetransformer将英文的queryembedding为numpy向量,然后对于numpy向量进行余弦相似度的求解,排序相似度选出top_k个向量所对应的数据填充到context中.对于milvous向量数据库使用pymilvous库,就是建立docid,text明文,embedding向量的表,然后对于embedding使用L2欧氏距离查询top_k相似的text作为context. 我们的后端前端和数据库都是放到我们当时买的100块的小型Ubuntu服务器,然后接上校园网进行部署的,使用了南大校园内网的gitlab进行gitci,实现了基本的CICD. 对于AI请求呢,我们使用的是ragas库中的prompt模块,也就是pandaticprompt类,使用prompt去引导AI对于我们给定的输入格式,给出我要求格式的输出. 名词解释 fastapi:\n是Python的简单高性能的Web 框架,实现了一系列的REASTFU API.\nuvicorn:\nuvicorn是一个ASGI服务器,用于运行pythonweb应用.\n什么是跨域 跨域指的是当一个网页尝试访问不同网源的资源的时候,就会因为浏览器的同源策略的限制导致跨域的问题,一般来说浏览器要求域名,端口,协议三者完全一致才算是同源.一般解决跨域问题使用的方法是代理服务器,CORS,WebScoket等,我在项目中配置的就是CORS跨域,允许前端的IP地址和端口可以进来,没有限制header和cookie.\nwebsocket WebSocket 是一种在单个 TCP 连接上进行全双工通信的协议，它允许服务器和客户端在建立连接后双向实时传输数据，而不需要像传统 HTTP 请求那样每次通信都要重新建立连接。WebSocket 协议通过 HTTP/HTTPS 的 101 状态码完成初始握手后，升级为一个持久连接\n前后端连接 使用像XMLHTTPRequest,AXios,fetch来配置请求的URL连接,请求header,HTTP body数据.\n怎么做CICD的 修改.git里面的pre-push文件,修改里面的bash命令,建立一个在git push之前的本地集成测试,在所有的测试通过以后,本地的git命令将项目使用ssh.https推送到远程仓库中.远程仓库中触发hook钩子,根据根目录中的gitlab-ci.yam文件来构建流水线,将流水线任务推送到runner服务器中,执行gitlab-ci里面的不同阶段的脚本,完成前后端的构建,单元测试,集成测试,端到端测试,然后将构建信息传递给gitlab,将服务器中构建产物消除(在我们实践中是直接将构建产物部署到服务器中运行的),gitlab在流水线成功部署以后就将代码拼接到分支上.其中我们服务器中数据库是直接部署在数据库的,不在CICD流程中的.\nC++QT项目 以下是一个基于Qt框架，与您描述的课程项目要求相符的&quot;类异形工厂&quot;游戏实现思路：\n1. 游戏架构与核心类\nGameState 类:\n该类是游戏的核心，负责管理游戏状态和逻辑。 [cite_start]在主循环（main 函数中的 while 循环）中，通过调用 update() 函数来更新所有游戏对象的状态，例如设备的运行、物品的移动、任务的进度等 [cite: 11, 44, 52]。 [cite_start]GameState 应该包含 Map、Device 和 Mine 对象，以及当前游戏任务、金币数量和全局强化状态等信息 [cite: 24, 28, 60, 65, 83, 84]。 Engine 类 (继承自 QWidget 或 QMainWindow):\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='原创' /><meta property='article:published_time' content='2025-08-23T01:37:58&#43;08:00'/><meta property='article:modified_time' content='2025-08-23T01:37:58&#43;08:00'/><meta property='og:image' content='https://114514yangyi.github.io/huyang/img/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93_cover.png' />
 <meta name="twitter:title" content="面试拷打">
-<meta name="twitter:description" content=" 项目拷打 RAG项目 我们制作的这个rag项目是一个面向求职招聘的带有rag问答的问答系统.我们可以向AI去询问我们想要求职的岗位,以及面试的技巧之类的,接受类似于pdf数据,markdown数据的上传,在后端使用mysql数据库和milvous向量数据库进行查询岗位信息和面试要点信息,然后将信息作为context传递给AI大模型生成回复.其中主要涉及的技术是RAG流程的的搭建,使用的技术栈是前端REACT,后端使用Python的fastapi模块.除了一个关于求职的AI的问答系统,我们还搭建了一系列的和求职相关的功能性平台,比如说AI面试官,职业性格测试,简历生成之类的附属功能.\n其中主要实现的rag问答功能模块主要是建立了下面的分层形势:\nAPIServer层,主要使用uvicorn运行异步python web应用,然后配置host和端口;使用fastapi模块构建一个具有REASFUL API的WEB应用,对前端的请求使用Pandatic里面的basemodel来将json数据转换为python类型并且进行json的数据格式验证,并且调用后续相应的RAG检索链进行处理返回结果.使用CORS配置跨域处理请求 RAG检索链层,是这个层级中主要处理了对于每一个RAG问答请求,对其中每一个请求都配置一个检索链,使用相应的配置文件去配置在一次的rag请求链中应该使用那些模块.其中主要设计的模块是VectorDatabese模块,WeSearch模块,Format模块,Translation模块,PDF文件解析模块,Prompt模块,Extractor模块,主要的检索链的过程是首先使用Extractor提取请求数据中的history历史信息,使用format模块构造历史信息为合适的可以作为大模型context的string.再将query信息进过Translation模块翻译为英文,使用原始的query进过WebSearch模块查询出网络上的求职信息;将上传的pdf文件提取其中的关键信息,使用Extractor模块提取query中的关键字,将经过翻译的query和关键字传递给VectorDatabase模块,检索相应的top_k数量的求职记录信息,将上面所有的信息都作为Context交给Prompt模块请求使用langchain包Deepseek大模型来给出求职建议. VectorDatabase主要涉及到两个数据库:mysql和milvous向量数据库的信息检索.在进入vectordatabase之前首先会进行query的意图识别,识别query是询问求职岗位信息还是想面试技巧或者是和求职无关信息的询问,然后分别请求不同的mysql数据库表,使用python库mysql.connector连接数据库,然后里面存储这两张表的数据,一个是jobdetail存储所有求职岗位信息,一个jobcontent存储这面试技巧之类的信息.在表中有一个字段是blob二进制类型的,在python中读取后将其转换为numpy向量.然后使用sentencetransformer将英文的queryembedding为numpy向量,然后对于numpy向量进行余弦相似度的求解,排序相似度选出top_k个向量所对应的数据填充到context中.对于milvous向量数据库使用pymilvous库,就是建立docid,text明文,embedding向量的表,然后对于embedding使用L2欧氏距离查询top_k相似的text作为context. 我们的后端前端和数据库都是放到我们当时买的100块的小型Ubuntu服务器,然后接上校园网进行部署的,使用了南大校园内网的gitlab进行gitci,实现了基本的CICD, 对于AI请求呢,我们使用的是ragas库中的prompt模块,也就是pandaticprompt类,使用prompt去引导AI对于我们给定的输入格式,给出我要求格式的输出. 名词解释 fastapi:\n是Python的简单高性能的Web 框架,实现了一系列的REASTFU API.\nuvicorn:\nuvicorn是一个ASGI服务器,用于运行pythonweb应用.\n什么是跨域 跨域指的是当一个网页尝试访问不同网源的资源的时候,就会因为浏览器的同源策略的限制导致跨域的问题,一般来说浏览器要求域名,端口,协议三者完全一致才算是同源.一般解决跨域问题使用的方法是代理服务器,CORS,WebScoket等,我在项目中配置的就是CORS跨域,允许前端的IP地址和端口可以进来,没有限制header和cookie.\nwebsocket WebSocket 是一种在单个 TCP 连接上进行全双工通信的协议，它允许服务器和客户端在建立连接后双向实时传输数据，而不需要像传统 HTTP 请求那样每次通信都要重新建立连接。WebSocket 协议通过 HTTP/HTTPS 的 101 状态码完成初始握手后，升级为一个持久连接\n前后端连接 使用像XMLHTTPRequest,AXios,fetch来配置请求的URL连接,请求header,HTTP body数据.\n怎么做CICD的 修改.git里面的pre-push文件,修改里面的bash命令,建立一个在git push之前的本地集成测试,在所有的测试通过以后,本地的git命令将项目使用ssh.https推送到远程仓库中.远程仓库中触发hook钩子,根据根目录中的gitlab-ci.yam文件来构建流水线,将流水线任务推送到runner服务器中,执行gitlab-ci里面的不同阶段的脚本,完成前后端的构建,单元测试,集成测试,端到端测试,然后将构建信息传递给gitlab,将服务器中构建产物消除(在我们实践中是直接将构建产物部署到服务器中运行的),gitlab在流水线成功部署以后就将代码拼接到分支上.其中我们服务器中数据库是直接部署在数据库的,不在CICD流程中的.\nC++QT项目 以下是一个基于Qt框架，与您描述的课程项目要求相符的&quot;类异形工厂&quot;游戏实现思路：\n1. 游戏架构与核心类\nGameState 类:\n该类是游戏的核心，负责管理游戏状态和逻辑。 [cite_start]在主循环（main 函数中的 while 循环）中，通过调用 update() 函数来更新所有游戏对象的状态，例如设备的运行、物品的移动、任务的进度等 [cite: 11, 44, 52]。 [cite_start]GameState 应该包含 Map、Device 和 Mine 对象，以及当前游戏任务、金币数量和全局强化状态等信息 [cite: 24, 28, 60, 65, 83, 84]。 Engine 类 (继承自 QWidget 或 QMainWindow):\n"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content=" 项目拷打 RAG项目 我们制作的这个rag项目是一个面向求职招聘的带有rag问答的问答系统.我们可以向AI去询问我们想要求职的岗位,以及面试的技巧之类的,接受类似于pdf数据,markdown数据的上传,在后端使用mysql数据库和milvous向量数据库进行查询岗位信息和面试要点信息,然后将信息作为context传递给AI大模型生成回复.其中主要涉及的技术是RAG流程的的搭建,使用的技术栈是前端REACT,后端使用Python的fastapi模块.除了一个关于求职的AI的问答系统,我们还搭建了一系列的和求职相关的功能性平台,比如说AI面试官,职业性格测试,简历生成之类的附属功能.\n其中主要实现的rag问答功能模块主要是建立了下面的分层形势:\nAPIServer层,主要使用uvicorn运行异步python web应用,然后配置host和端口;使用fastapi模块构建一个具有REASFUL API的WEB应用,对前端的请求使用Pandatic里面的basemodel来将json数据转换为python类型并且进行json的数据格式验证,并且调用后续相应的RAG检索链进行处理返回结果.使用CORS配置跨域处理请求 RAG检索链层,是这个层级中主要处理了对于每一个RAG问答请求,对其中每一个请求都配置一个检索链,使用相应的配置文件去配置在一次的rag请求链中应该使用那些模块.其中主要设计的模块是VectorDatabese模块,WeSearch模块,Format模块,Translation模块,PDF文件解析模块,Prompt模块,Extractor模块,主要的检索链的过程是首先使用Extractor提取请求数据中的history历史信息,使用format模块构造历史信息为合适的可以作为大模型context的string.再将query信息进过Translation模块翻译为英文,使用原始的query进过WebSearch模块查询出网络上的求职信息;将上传的pdf文件提取其中的关键信息,使用Extractor模块提取query中的关键字,将经过翻译的query和关键字传递给VectorDatabase模块,检索相应的top_k数量的求职记录信息,将上面所有的信息都作为Context交给Prompt模块请求使用langchain包Deepseek大模型来给出求职建议. VectorDatabase主要涉及到两个数据库:mysql和milvous向量数据库的信息检索.在进入vectordatabase之前首先会进行query的意图识别,识别query是询问求职岗位信息还是想面试技巧或者是和求职无关信息的询问,然后分别请求不同的mysql数据库表,使用python库mysql.connector连接数据库,然后里面存储这两张表的数据,一个是jobdetail存储所有求职岗位信息,一个jobcontent存储这面试技巧之类的信息.在表中有一个字段是blob二进制类型的,在python中读取后将其转换为numpy向量.然后使用sentencetransformer将英文的queryembedding为numpy向量,然后对于numpy向量进行余弦相似度的求解,排序相似度选出top_k个向量所对应的数据填充到context中.对于milvous向量数据库使用pymilvous库,就是建立docid,text明文,embedding向量的表,然后对于embedding使用L2欧氏距离查询top_k相似的text作为context. 我们的后端前端和数据库都是放到我们当时买的100块的小型Ubuntu服务器,然后接上校园网进行部署的,使用了南大校园内网的gitlab进行gitci,实现了基本的CICD. 对于AI请求呢,我们使用的是ragas库中的prompt模块,也就是pandaticprompt类,使用prompt去引导AI对于我们给定的输入格式,给出我要求格式的输出. 名词解释 fastapi:\n是Python的简单高性能的Web 框架,实现了一系列的REASTFU API.\nuvicorn:\nuvicorn是一个ASGI服务器,用于运行pythonweb应用.\n什么是跨域 跨域指的是当一个网页尝试访问不同网源的资源的时候,就会因为浏览器的同源策略的限制导致跨域的问题,一般来说浏览器要求域名,端口,协议三者完全一致才算是同源.一般解决跨域问题使用的方法是代理服务器,CORS,WebScoket等,我在项目中配置的就是CORS跨域,允许前端的IP地址和端口可以进来,没有限制header和cookie.\nwebsocket WebSocket 是一种在单个 TCP 连接上进行全双工通信的协议，它允许服务器和客户端在建立连接后双向实时传输数据，而不需要像传统 HTTP 请求那样每次通信都要重新建立连接。WebSocket 协议通过 HTTP/HTTPS 的 101 状态码完成初始握手后，升级为一个持久连接\n前后端连接 使用像XMLHTTPRequest,AXios,fetch来配置请求的URL连接,请求header,HTTP body数据.\n怎么做CICD的 修改.git里面的pre-push文件,修改里面的bash命令,建立一个在git push之前的本地集成测试,在所有的测试通过以后,本地的git命令将项目使用ssh.https推送到远程仓库中.远程仓库中触发hook钩子,根据根目录中的gitlab-ci.yam文件来构建流水线,将流水线任务推送到runner服务器中,执行gitlab-ci里面的不同阶段的脚本,完成前后端的构建,单元测试,集成测试,端到端测试,然后将构建信息传递给gitlab,将服务器中构建产物消除(在我们实践中是直接将构建产物部署到服务器中运行的),gitlab在流水线成功部署以后就将代码拼接到分支上.其中我们服务器中数据库是直接部署在数据库的,不在CICD流程中的.\nC++QT项目 以下是一个基于Qt框架，与您描述的课程项目要求相符的&quot;类异形工厂&quot;游戏实现思路：\n1. 游戏架构与核心类\nGameState 类:\n该类是游戏的核心，负责管理游戏状态和逻辑。 [cite_start]在主循环（main 函数中的 while 循环）中，通过调用 update() 函数来更新所有游戏对象的状态，例如设备的运行、物品的移动、任务的进度等 [cite: 11, 44, 52]。 [cite_start]GameState 应该包含 Map、Device 和 Mine 对象，以及当前游戏任务、金币数量和全局强化状态等信息 [cite: 24, 28, 60, 65, 83, 84]。 Engine 类 (继承自 QWidget 或 QMainWindow):\n"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://114514yangyi.github.io/huyang/img/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93_cover.png' />
     </head>
     <body class="
@@ -343,6 +343,181 @@
       </ol>
     </li>
   </ol>
+
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#摘要总览">摘要总览</a></li>
+        <li><a href="#各版本详解">各版本详解</a>
+          <ol>
+            <li><a href="#1-http09---单行协议">1. HTTP/0.9 - 单行协议</a></li>
+            <li><a href="#2-http10---构建可扩展性">2. HTTP/1.0 - 构建可扩展性</a></li>
+            <li><a href="#3-http11---标准化和性能优化">3. HTTP/1.1 - 标准化和性能优化</a></li>
+            <li><a href="#4-http2---为了更快的体验">4. HTTP/2 - 为了更快的体验</a></li>
+            <li><a href="#5-http3---基于quic的下一代协议">5. HTTP/3 - 基于QUIC的下一代协议</a></li>
+          </ol>
+        </li>
+        <li><a href="#总结与演进方向">总结与演进方向</a></li>
+        <li><a href="#一fastapi-是什么">一、FastAPI 是什么？</a></li>
+        <li><a href="#二核心知识如何使用-fastapi">二、核心知识：如何使用 FastAPI</a>
+          <ol>
+            <li><a href="#1-安装">1. 安装</a></li>
+            <li><a href="#2-一个最简单的示例">2. 一个最简单的示例</a></li>
+            <li><a href="#3-运行应用">3. 运行应用</a></li>
+            <li><a href="#4-自动交互式-api-文档">4. 自动交互式 API 文档</a></li>
+            <li><a href="#5-核心组件概念">5. 核心组件概念</a></li>
+          </ol>
+        </li>
+        <li><a href="#三实现原理fastapi-为何如此强大">三、实现原理：FastAPI 为何如此强大？</a></li>
+        <li><a href="#四总结">四、总结</a></li>
+        <li><a href="#一restful-api-是什么">一、RESTful API 是什么？</a></li>
+        <li><a href="#二rest-的核心原则约束">二、REST 的核心原则/约束</a>
+          <ol>
+            <li><a href="#1-客户端-服务器client-server">1. 客户端-服务器（Client-Server）</a></li>
+            <li><a href="#2-无状态stateless">2. 无状态（Stateless）</a></li>
+            <li><a href="#3-可缓存cacheable">3. 可缓存（Cacheable）</a></li>
+            <li><a href="#4-统一接口uniform-interface">4. 统一接口（Uniform Interface）</a></li>
+            <li><a href="#5-分层系统layered-system">5. 分层系统（Layered System）</a></li>
+            <li><a href="#6-按需代码code-on-demand可选">6. 按需代码（Code-On-Demand，可选）</a></li>
+          </ol>
+        </li>
+        <li><a href="#三如何设计一个-restful-api实践指南">三、如何设计一个 RESTful API？（实践指南）</a>
+          <ol>
+            <li><a href="#1-一切皆资源everything-is-a-resource">1. 一切皆资源（Everything is a Resource）</a></li>
+            <li><a href="#2-使用-http-方法表示操作crud-操作">2. 使用 HTTP 方法表示操作（CRUD 操作）</a></li>
+            <li><a href="#3-使用名词复数而不是动词">3. 使用名词（复数），而不是动词</a></li>
+            <li><a href="#4-使用合适的-http-状态码">4. 使用合适的 HTTP 状态码</a></li>
+            <li><a href="#5-返回统一格式的数据">5. 返回统一格式的数据</a></li>
+            <li><a href="#6-版本化你的-api">6. 版本化你的 API</a></li>
+            <li><a href="#7-使用过滤排序分页和字段选择">7. 使用过滤、排序、分页和字段选择</a></li>
+          </ol>
+        </li>
+        <li><a href="#四总结restful-api-的优点">四、总结：RESTful API 的优点</a></li>
+        <li><a href="#核心思想">核心思想</a></li>
+        <li><a href="#实现机制详解">实现机制详解</a>
+          <ol>
+            <li><a href="#1-虚函数表-vtable">1. 虚函数表 (vtable)</a></li>
+            <li><a href="#2-虚函数表指针-vptr">2. 虚函数表指针 (vptr)</a></li>
+          </ol>
+        </li>
+        <li><a href="#动态绑定的调用过程运行时多态">动态绑定的调用过程（运行时多态）</a></li>
+        <li><a href="#总结与要点">总结与要点</a></li>
+        <li><a href="#基础概念tcp-报文头部的关键字段">基础概念：TCP 报文头部的关键字段</a></li>
+      </ol>
+    </li>
+    <li><a href="#一三次握手-three-way-handshake">一、三次握手 (Three-Way Handshake)</a>
+      <ol>
+        <li><a href="#过程详解">过程详解：</a></li>
+        <li><a href="#为什么是三次而不是两次">为什么是三次，而不是两次？</a></li>
+      </ol>
+    </li>
+    <li><a href="#二四次挥手-four-way-wavehand">二、四次挥手 (Four-Way Wavehand)</a>
+      <ol>
+        <li><a href="#过程详解-1">过程详解：</a></li>
+        <li><a href="#为什么需要四次挥手">为什么需要四次挥手？</a></li>
+        <li><a href="#为什么客户端最后需要-time-wait-状态并等待-2msl">为什么客户端最后需要 TIME-WAIT 状态并等待 2MSL？</a></li>
+        <li><a href="#总结图示">总结图示</a></li>
+        <li><a href="#概述">概述</a></li>
+        <li><a href="#七层结构">七层结构</a></li>
+        <li><a href="#各层详细功能">各层详细功能</a>
+          <ol>
+            <li><a href="#1-物理层-physical-layer">1. 物理层 (Physical Layer)</a></li>
+            <li><a href="#2-数据链路层-data-link-layer">2. 数据链路层 (Data Link Layer)</a></li>
+            <li><a href="#3-网络层-network-layer">3. 网络层 (Network Layer)</a></li>
+            <li><a href="#4-传输层-transport-layer">4. 传输层 (Transport Layer)</a></li>
+            <li><a href="#5-会话层-session-layer">5. 会话层 (Session Layer)</a></li>
+            <li><a href="#6-表示层-presentation-layer">6. 表示层 (Presentation Layer)</a></li>
+            <li><a href="#7-应用层-application-layer">7. 应用层 (Application Layer)</a></li>
+          </ol>
+        </li>
+        <li><a href="#数据封装与解封装过程">数据封装与解封装过程</a></li>
+        <li><a href="#osi-模型-vs-tcpip-模型">OSI 模型 vs. TCP/IP 模型</a></li>
+        <li><a href="#1-构造函数-constructor">1. 构造函数 (Constructor)</a>
+          <ol>
+            <li><a href="#什么是构造函数">什么是构造函数？</a></li>
+            <li><a href="#构造函数的特点">构造函数的特点：</a></li>
+            <li><a href="#构造函数的类型">构造函数的类型：</a></li>
+          </ol>
+        </li>
+        <li><a href="#2-析构函数-destructor">2. 析构函数 (Destructor)</a>
+          <ol>
+            <li><a href="#什么是析构函数">什么是析构函数？</a></li>
+            <li><a href="#析构函数的特点">析构函数的特点：</a></li>
+          </ol>
+        </li>
+        <li><a href="#总结与对比">总结与对比</a></li>
+        <li><a href="#1-什么是-context-engineering">1. 什么是 Context Engineering？</a></li>
+        <li><a href="#2-为什么需要-context-engineeringwhy-it-matters">2. 为什么需要 Context Engineering？（Why it Matters）</a></li>
+        <li><a href="#3-核心策略与技巧how-to-do-it">3. 核心策略与技巧（How to Do It）</a>
+          <ol>
+            <li><a href="#a-指令工程instruction-engineering">a. 指令工程（Instruction Engineering）</a></li>
+            <li><a href="#b-少样本学习few-shot-learning">b. 少样本学习（Few-Shot Learning）</a></li>
+            <li><a href="#c-提供知识与信息providing-knowledge">c. 提供知识与信息（Providing Knowledge）</a></li>
+            <li><a href="#d-思维链chain-of-thought-cot">d. 思维链（Chain-of-Thought, CoT）</a></li>
+            <li><a href="#e-输出格式化output-formatting">e. 输出格式化（Output Formatting）</a></li>
+          </ol>
+        </li>
+        <li><a href="#4-高级概念上下文窗口context-window与挑战">4. 高级概念：上下文窗口（Context Window）与挑战</a></li>
+        <li><a href="#5-最佳实践总结">5. 最佳实践总结</a></li>
+        <li><a href="#核心结论">核心结论</a></li>
+        <li><a href="#1-演化史从生成器到异步io">1. 演化史：从生成器到异步IO</a></li>
+        <li><a href="#2-关键概念与实现机制">2. 关键概念与实现机制</a>
+          <ol>
+            <li><a href="#a-可等待对象-awaitable">a. 可等待对象 (Awaitable)</a></li>
+            <li><a href="#b-事件循环-event-loop---大脑">b. 事件循环 (Event Loop) - 大脑</a></li>
+            <li><a href="#c-await-关键字---信号灯">c. <code>await</code> 关键字 - 信号灯</a></li>
+          </ol>
+        </li>
+        <li><a href="#3-工作流程详解">3. 工作流程详解</a></li>
+        <li><a href="#4-底层实现与生成器的联系">4. 底层实现：与生成器的联系</a></li>
+        <li><a href="#总结">总结</a></li>
+        <li><a href="#1-为什么需要索引-从暴力搜索说起">1. 为什么需要索引？—— 从暴力搜索说起</a></li>
+        <li><a href="#2-索引的本质是什么">2. 索引的本质是什么？</a></li>
+        <li><a href="#3-milvus中常见的索引类型如何看图索骥">3. Milvus中常见的索引类型（如何“看图索骥”）</a>
+          <ol>
+            <li><a href="#a-基于量化的索引相当于分区">a. 基于量化的索引（相当于“分区”）</a></li>
+            <li><a href="#b-基于图的索引相当于人际关系网">b. 基于图的索引（相当于“人际关系网”）</a></li>
+            <li><a href="#c-基于树的索引相当于决策树">c. 基于树的索引（相当于“决策树”）</a></li>
+          </ol>
+        </li>
+        <li><a href="#4-索引与向量存储的关系">4. 索引与向量存储的关系</a></li>
+        <li><a href="#总结-1">总结</a></li>
+        <li><a href="#1-核心范式与设计哲学">1. 核心范式与设计哲学</a></li>
+        <li><a href="#2-关键特性对比">2. 关键特性对比</a>
+          <ol>
+            <li><a href="#a-面向对象编程-oop">a. 面向对象编程 (OOP)</a></li>
+            <li><a href="#b-内存管理">b. 内存管理</a></li>
+            <li><a href="#c-函数特性">c. 函数特性</a></li>
+            <li><a href="#d-泛型编程">d. 泛型编程</a></li>
+            <li><a href="#e-异常处理">e. 异常处理</a></li>
+            <li><a href="#f-输入输出">f. 输入输出</a></li>
+            <li><a href="#g-其他特性">g. 其他特性</a></li>
+          </ol>
+        </li>
+        <li><a href="#3-兼容性">3. 兼容性</a></li>
+        <li><a href="#4-总结与如何选择">4. 总结与如何选择</a></li>
+        <li><a href="#对比表格">对比表格</a></li>
+        <li><a href="#详细解释与类比">详细解释与类比</a>
+          <ol>
+            <li><a href="#1-栈-stack">1. 栈 (Stack)</a></li>
+            <li><a href="#2-堆-heap">2. 堆 (Heap)</a></li>
+          </ol>
+        </li>
+        <li><a href="#常见问题与误区-faq">常见问题与误区 (FAQ)</a></li>
+        <li><a href="#总结-2">总结</a></li>
+        <li><a href="#一核心概念什么是内存泄漏">一、核心概念：什么是内存泄漏？</a></li>
+        <li><a href="#二为什么会发生内存泄漏">二、为什么会发生内存泄漏？</a></li>
+        <li><a href="#三内存泄漏有什么后果">三、内存泄漏有什么后果？</a></li>
+        <li><a href="#四如何检测和避免内存泄漏">四、如何检测和避免内存泄漏？</a>
+          <ol>
+            <li><a href="#检测工具-detection">检测工具 (Detection)</a></li>
+            <li><a href="#避免策略-prevention">避免策略 (Prevention)</a></li>
+          </ol>
+        </li>
+        <li><a href="#总结-3">总结</a></li>
+      </ol>
+    </li>
+  </ol>
 </nav>
         </div>
     </section>
@@ -414,7 +589,7 @@
 
 
                 <time class="article-time--reading">
-                    5 minute read
+                    25 minute read
                 </time>
             </div>
         
@@ -443,7 +618,7 @@
 <li>APIServer层,主要使用uvicorn运行异步python web应用,然后配置host和端口;使用fastapi模块构建一个具有REASFUL API的WEB应用,对前端的请求使用Pandatic里面的basemodel来将json数据转换为python类型并且进行json的数据格式验证,并且调用后续相应的RAG检索链进行处理返回结果.使用CORS配置跨域处理请求</li>
 <li>RAG检索链层,是这个层级中主要处理了对于每一个RAG问答请求,对其中每一个请求都配置一个检索链,使用相应的配置文件去配置在一次的rag请求链中应该使用那些模块.其中主要设计的模块是VectorDatabese模块,WeSearch模块,Format模块,Translation模块,PDF文件解析模块,Prompt模块,Extractor模块,主要的检索链的过程是首先使用Extractor提取请求数据中的history历史信息,使用format模块构造历史信息为合适的可以作为大模型context的string.再将query信息进过Translation模块翻译为英文,使用原始的query进过WebSearch模块查询出网络上的求职信息;将上传的pdf文件提取其中的关键信息,使用Extractor模块提取query中的关键字,将经过翻译的query和关键字传递给VectorDatabase模块,检索相应的top_k数量的求职记录信息,将上面所有的信息都作为Context交给Prompt模块请求使用langchain包Deepseek大模型来给出求职建议.</li>
 <li>VectorDatabase主要涉及到两个数据库:mysql和milvous向量数据库的信息检索.在进入vectordatabase之前首先会进行query的意图识别,识别query是询问求职岗位信息还是想面试技巧或者是和求职无关信息的询问,然后分别请求不同的mysql数据库表,使用python库mysql.connector连接数据库,然后里面存储这两张表的数据,一个是jobdetail存储所有求职岗位信息,一个jobcontent存储这面试技巧之类的信息.在表中有一个字段是blob二进制类型的,在python中读取后将其转换为numpy向量.然后使用sentencetransformer将英文的queryembedding为numpy向量,然后对于numpy向量进行余弦相似度的求解,排序相似度选出top_k个向量所对应的数据填充到context中.对于milvous向量数据库使用pymilvous库,就是建立docid,text明文,embedding向量的表,然后对于embedding使用L2欧氏距离查询top_k相似的text作为context.</li>
-<li>我们的后端前端和数据库都是放到我们当时买的100块的小型Ubuntu服务器,然后接上校园网进行部署的,使用了南大校园内网的gitlab进行gitci,实现了基本的CICD,</li>
+<li>我们的后端前端和数据库都是放到我们当时买的100块的小型Ubuntu服务器,然后接上校园网进行部署的,使用了南大校园内网的gitlab进行gitci,实现了基本的CICD.</li>
 <li>对于AI请求呢,我们使用的是ragas库中的prompt模块,也就是pandaticprompt类,使用prompt去引导AI对于我们给定的输入格式,给出我要求格式的输出.</li>
 </ol>
 <h3 id="名词解释">名词解释
@@ -1001,10 +1176,2967 @@
 </span></span><span class="line"><span class="cl">查询过程：
 </span></span><span class="line"><span class="cl">a. 粗筛 (Probing)：计算目标向量与所有簇中心的距离，找到距离最近的 nprobe 个簇。nprobe 是一个关键参数，控制搜索范围和精度（nprobe 越大，精度越高，速度越慢）。
 </span></span><span class="line"><span class="cl">b. 细查 (Search in Cells)：只在这 nprobe 个簇包含的向量中进行精确的暴力计算，找出最近的 K 个向量。
-</span></span><span class="line"><span class="cl">类比：就像你在一个国家找和你最像的人。先看地图，找到和你口音、生活习惯最接近的几个省（nprobe 个簇），然后只在这几个省里逐个找人对比，而不是在全国14亿人里逐个对比。
+</span></span><span class="line"><span class="cl">类比：就像你在一个国家找和你最像的人。先看地图，找到和你口音、生活习惯最接近的几个省（nprobe 个簇），然后只在这几个省里逐个找人对比，而不q是在全国14亿人里逐个对比。
 </span></span></code></pre></td></tr></table>
 </div>
 </div></li>
+</ol>
+<p>2025年8月26日早上10:00,时长一个小时</p>
+<p>字节豆包 后端开发日常实习:</p>
+<p>主要是对于rag项目进行拷打:</p>
+<ol>
+<li>首先指明了简历上的问题,然后需要修改简历的内容</li>
+<li>然后就是要去学习和完善简历上所提到的关键字的实现原理</li>
+<li>将主要提问的战线拉到c++上.</li>
+</ol>
+<p>问的问题:</p>
+<ol>
+<li>
+<p>HTTP各个版本的介绍:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>好的，我们来系统地介绍一下 HTTP 各个主要版本的演进、核心特性和优缺点。</p>
+<p>HTTP（超文本传输协议）是万维网的数据通信基础。它的发展是一个不断解决性能和安全问题的过程。</p>
+<hr>
+<h3 id="摘要总览">摘要总览
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">版本</th>
+          <th style="text-align: left">推出时间</th>
+          <th style="text-align: left">核心特性</th>
+          <th style="text-align: left">主要缺点</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>HTTP/0.9</strong></td>
+          <td style="text-align: left">1991年</td>
+          <td style="text-align: left">极其简单，只有GET请求</td>
+          <td style="text-align: left">功能极其有限</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>HTTP/1.0</strong></td>
+          <td style="text-align: left">1996年</td>
+          <td style="text-align: left">引入HEAD、POST方法，支持头部、状态码、多媒体</td>
+          <td style="text-align: left">每请求一个资源都需新建/断开TCP连接，性能差</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>HTTP/1.1</strong></td>
+          <td style="text-align: left">1997年</td>
+          <td style="text-align: left"><strong>持久连接</strong>、管道化、缓存机制、Host头</td>
+          <td style="text-align: left">队头阻塞（Head-of-Line Blocking）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>HTTP/2</strong></td>
+          <td style="text-align: left">2015年</td>
+          <td style="text-align: left"><strong>二进制分帧</strong>、<strong>多路复用</strong>、头部压缩、服务器推送</td>
+          <td style="text-align: left">TCP层的队头阻塞</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>HTTP/3</strong></td>
+          <td style="text-align: left">2022年</td>
+          <td style="text-align: left">基于 <strong>QUIC</strong> (UDP) 协议、零RTT建连、改进的队头阻塞</td>
+          <td style="text-align: left">新协议，部署和普及度仍在进行中</td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<h3 id="各版本详解">各版本详解
+</h3><h4 id="1-http09---单行协议">1. HTTP/0.9 - 单行协议
+</h4><p>这是HTTP的最初版本，极其简单。</p>
+<ul>
+<li><strong>请求</strong>：只有一种方法 <code>GET</code>。</li>
+<li><strong>请求格式</strong>：<code>GET /index.html</code>。</li>
+<li><strong>响应</strong>：只有响应体，没有状态码、没有头部。</li>
+<li><strong>连接</strong>：响应完成后立即关闭TCP连接。</li>
+<li><strong>缺点</strong>：功能太少，无法满足复杂需求。</li>
+</ul>
+<h4 id="2-http10---构建可扩展性">2. HTTP/1.0 - 构建可扩展性
+</h4><p>由于浏览器的快速发展，1.0版本引入了大量新特性来支持富文本（如图片）。</p>
+<ul>
+<li><strong>引入核心概念</strong>：
+<ul>
+<li><strong>HTTP Headers</strong>：在请求和响应中都加入了头部，传递元信息（如 <code>Content-Type</code>, <code>Content-Length</code>, <code>User-Agent</code>）。</li>
+<li><strong>状态码</strong>：在响应中引入状态行（如 <code>200 OK</code>, <code>404 Not Found</code>），让浏览器能知晓请求结果。</li>
+<li><strong>请求方法</strong>：新增了 <code>POST</code> 和 <code>HEAD</code> 方法。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<strong>每个TCP连接只能处理一个请求</strong>。加载一个网页（包含多个图片、CSS、JS文件）需要频繁地建立和断开TCP连接，性能开销巨大（三次握手、慢启动）。</li>
+</ul>
+<h4 id="3-http11---标准化和性能优化">3. HTTP/1.1 - 标准化和性能优化
+</h4><p>这是目前<strong>最常用和最广泛</strong>的版本（尽管HTTP/2正在快速普及）。它解决了1.0的许多性能问题。</p>
+<ul>
+<li><strong>持久连接（Persistent Connections）</strong>：
+<ul>
+<li>默认保持TCP连接不断开（<code>Connection: keep-alive</code>），允许在同一个连接上发送多个请求和响应。显著减少了TCP握手和慢启动的开销。</li>
+</ul>
+</li>
+<li><strong>管道化（Pipelining）</strong>：
+<ul>
+<li>允许客户端在同一个连接上<strong>连续</strong>发送多个请求，而无需等待上一个响应返回。<strong>但存在队头阻塞（HOL Blocking）问题</strong>：如果响应序列中的第一个请求处理得很慢（或丢失），后续所有请求的响应都会被阻塞。</li>
+</ul>
+</li>
+<li><strong>Host头（Host Header）</strong>：
+<ul>
+<li>允许同一台物理服务器上托管多个域名（虚拟主机），这是现代Web托管的基础。</li>
+</ul>
+</li>
+<li><strong>缓存机制</strong>：
+<ul>
+<li>引入了 <code>Cache-Control</code>, <code>ETag</code> 等更强大的缓存头。</li>
+</ul>
+</li>
+<li><strong>分块传输编码（Chunked Transfer Encoding）</strong>：
+<ul>
+<li>允许服务器逐步发送数据，无需一开始就知道总内容大小。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<strong>队头阻塞</strong> 和 <strong>头部冗余</strong>。虽然管道化在实践中很少被使用且通常被禁用，但即使没有管道化，浏览器为了优化，也会为同一个域名开启多个TCP连接（通常是6-8个）来并行下载资源，但这治标不治本。</li>
+</ul>
+<h4 id="4-http2---为了更快的体验">4. HTTP/2 - 为了更快的体验
+</h4><p>HTTP/2专注于性能提升，其所有特性都源于一个基础变革：<strong>二进制分帧层</strong>。</p>
+<ul>
+<li><strong>二进制协议（Binary Protocol）</strong>：
+<ul>
+<li>不再是纯文本格式，而是采用二进制格式解析更高效、更紧凑，减少了错误。</li>
+</ul>
+</li>
+<li><strong>多路复用（Multiplexing）</strong>：
+<ul>
+<li><strong>这是HTTP/2的核心</strong>。在同一个TCP连接上，可以同时交错地发送多个请求和响应帧，而不会互相阻塞。彻底解决了HTTP/1.1的队头阻塞问题（应用层）。</li>
+<li>浏览器不再需要为同一个域名建立多个连接。</li>
+</ul>
+</li>
+<li><strong>头部压缩（HPACK）</strong>：
+<ul>
+<li>使用HPACK算法压缩头部大小，消除了HTTP/1.1中重复和冗余的头部字段，大大减少了开销。</li>
+</ul>
+</li>
+<li><strong>服务器推送（Server Push）</strong>：
+<ul>
+<li>服务器可以主动向客户端发送它可能需要的资源（如CSS、JS文件），而不是等客户端解析HTML后再来请求。这减少了额外的请求延迟。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<strong>TCP层的队头阻塞</strong>。HTTP/2的多路复用是在单个TCP连接上实现的。如果网络中出现一个TCP包丢失，整个TCP连接都会暂停，等待重传这个丢失的包，从而阻塞该连接上的所有HTTP流。</li>
+</ul>
+<h4 id="5-http3---基于quic的下一代协议">5. HTTP/3 - 基于QUIC的下一代协议
+</h4><p>为了解决HTTP/2遗留的TCP队头阻塞问题，HTTP/3做出了一个革命性的改变：<strong>弃用TCP，转而使用基于UDP的QUIC协议</strong>。</p>
+<ul>
+<li><strong>基于QUIC（Quick UDP Internet Connections）</strong>：
+<ul>
+<li>QUIC在用户空间实现，集成了TCP的可靠性、TLS的安全性和HTTP/2的多路复用于一体。</li>
+</ul>
+</li>
+<li><strong>解决TCP队头阻塞</strong>：
+<ul>
+<li>QUIC为每个流（Stream）提供了独立的、可靠的交付。如果一个流出现数据包丢失，只会阻塞该流，其他流不受任何影响。</li>
+</ul>
+</li>
+<li><strong>更快的连接建立</strong>：
+<ul>
+<li>QUIC将加密和连接建立合并。首次连接时，只需1-RTT（甚至0-RTT，通过缓存密钥）即可完成建连和加密握手，比TCP+TLS的1-3个RTT更快。</li>
+</ul>
+</li>
+<li><strong>连接迁移</strong>：
+<ul>
+<li>使用连接ID而非IP+端口来标识连接。当移动设备切换网络（如从WiFi切换到5G）时，连接可以无缝保持，无需重新握手。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="总结与演进方向">总结与演进方向
+</h3><p>HTTP的演进史就是一部性能优化和安全增强的历史：</p>
+<ol>
+<li><strong>性能</strong>：从短连接到持久连接，再到多路复用，最终通过改变传输层协议彻底解决队头阻塞。</li>
+<li><strong>效率</strong>：从无状态到强大的缓存机制，再到头部压缩。</li>
+<li><strong>安全</strong>：从明文传输到通过HTTPS（HTTP over TLS）成为事实上的标准，再到HTTP/3将加密内置于协议核心。</li>
+</ol>
+<p>目前，<strong>HTTP/1.1</strong> 仍是主流，但 <strong>HTTP/2</strong> 的覆盖率已经非常高。<strong>HTTP/3</strong> 作为未来标准，正在被越来越多的主流浏览器（Chrome, Firefox, Edge）、CDN服务商（Cloudflare, Google）和大型网站所支持和部署。</p></blockquote>
+</li>
+<li>
+<p>fastapi的相关知识:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">好的，请看下面这段对 FastAPI 处理一个 HTTP 请求完整过程的解释：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">当你使用 FastAPI 时，整个过程始于你使用 Python 类型提示和 Pydantic 模型来声明路径操作函数的参数、请求体及响应模型；随后，当一个 HTTP 请求到达时，FastAPI 会利用 Starlette 进行核心的 Web 路由与处理，并根据你的类型注解自动从请求的路径、查询字符串、头部或 body 中提取数据；紧接着，框架会调用 Pydantic 对提取到的原始数据进行强制验证与转换，若数据无效则自动生成并返回包含错误详情的 HTTP 422 响应，若验证通过则你的业务逻辑将接收到完全符合预期类型和结构的、干净的数据对象；待你的函数执行完毕并返回一个 Python 对象（如字典或模型实例）后，FastAPI 又会自动地再次利用 Pydantic 和类型提示将该对象序列化为 JSON，并通过 Starlette 构造 HTTP 响应发回客户端；而贯穿始终的是，FastAPI 会同步分析所有类型声明实时生成 OpenAPI 规范，从而自动为你提供始终与代码保持同步的交互式 API 文档。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>好的，我们来系统地讲解一下 Python 的 FastAPI 框架，包括它的核心知识和实现原理。</p>
+<h3 id="一fastapi-是什么">一、FastAPI 是什么？
+</h3><p>FastAPI 是一个用于构建 API 的现代、高性能的 Python Web 框架。它以其<strong>极快的性能</strong>、<strong>简洁的代码</strong>和<strong>强大的开发者体验</strong>而闻名。</p>
+<p>它的核心特性包括：</p>
+<ul>
+<li><strong>快速</strong>：极高的性能，与 <strong>NodeJS</strong> 和 <strong>Go</strong> 相当（得益于 Starlette 和 Pydantic）。</li>
+<li><strong>快速开发</strong>：开发功能速度提高约 200% 至 300%。</li>
+<li><strong>更少的 Bug</strong>：减少约 40% 的人为（开发者）错误。</li>
+<li><strong>直观</strong>：强大的编辑器支持，处处都有代码补全。</li>
+<li><strong>简易</strong>：易于学习和使用，文档丰富。</li>
+<li><strong>简短</strong>：最小化代码重复，每个参数声明多个功能。</li>
+<li><strong>健壮</strong>：生产就绪的代码，带有自动交互式文档。</li>
+</ul>
+<hr>
+<h3 id="二核心知识如何使用-fastapi">二、核心知识：如何使用 FastAPI
+</h3><h4 id="1-安装">1. 安装
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pip install fastapi uvicorn
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>uvicorn</code> 是一个高性能的 ASGI 服务器，用于运行 FastAPI 应用。</li>
+</ul>
+<h4 id="2-一个最简单的示例">2. 一个最简单的示例
+</h4><p>创建一个 <code>main.py</code> 文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 1. 创建 FastAPI 应用实例</span>
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. 定义路径操作装饰器</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@app.get</span><span class="p">(</span><span class="s2">&#34;/&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">async</span> <span class="k">def</span> <span class="nf">root</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 3. 定义路径操作函数</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span><span class="s2">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;Hello World&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.get</span><span class="p">(</span><span class="s2">&#34;/items/</span><span class="si">{item_id}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">async</span> <span class="k">def</span> <span class="nf">read_item</span><span class="p">(</span><span class="n">item_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span> <span class="c1"># 使用类型注解，item_id 会自动被转换为 int 并验证</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span><span class="s2">&#34;item_id&#34;</span><span class="p">:</span> <span class="n">item_id</span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="3-运行应用">3. 运行应用
+</h4><p>在终端执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">uvicorn main:app --reload
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>main:app</code>：<code>main</code> 是模块文件名（<code>main.py</code>），<code>app</code> 是你在代码中创建的 FastAPI 实例的名称。</li>
+<li><code>--reload</code>：让服务器在代码更改后重新启动，仅用于开发环境。</li>
+</ul>
+<p>访问 <code>http://127.0.0.1:8000</code> 即可看到 <code>{&quot;message&quot;: &quot;Hello World&quot;}</code>。</p>
+<h4 id="4-自动交互式-api-文档">4. 自动交互式 API 文档
+</h4><p>FastAPI 基于你的代码自动生成两种交互式 API 文档：</p>
+<ul>
+<li><strong>Swagger UI</strong>：访问 <code>http://127.0.0.1:8000/docs</code></li>
+<li><strong>ReDoc</strong>：访问 <code>http://127.0.0.1:8000/redoc</code></li>
+</ul>
+<p>这些文档允许你直接调用和测试你的 API，无需使用 Postman 等外部工具。</p>
+<h4 id="5-核心组件概念">5. 核心组件概念
+</h4><ul>
+<li><strong>路径操作</strong>：将 URL 路径（如 <code>/items</code>）和 HTTP 方法（如 <code>GET</code>, <code>POST</code>) 组合起来。
+<ul>
+<li><code>@app.get(‘/‘)</code></li>
+<li><code>@app.post(‘/items/‘)</code></li>
+<li><code>@app.put(‘/items/{item_id}’)</code></li>
+</ul>
+</li>
+<li><strong>路径参数</strong>：URL 路径的一部分，用 <code>{}</code> 声明。
+<ul>
+<li><code>@app.get(‘/items/{item_id}’)</code></li>
+<li><code>async def read_item(item_id: int): ...</code> # 类型注解提供验证和转换</li>
+</ul>
+</li>
+<li><strong>查询参数</strong>：作为 URL 中 <code>?</code> 之后的键值对出现的函数参数。
+<ul>
+<li><code>async def read_item(skip: int = 0, limit: int = 10): ...</code></li>
+<li>访问 <code>/items/?skip=20&amp;limit=10</code></li>
+</ul>
+</li>
+<li><strong>请求体（Body）</strong>：用于发送数据（通常用于 POST、PUT 请求）。使用 Pydantic 模型来定义结构。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Item</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span></span><span class="line"><span class="cl">    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">    <span class="n">price</span><span class="p">:</span> <span class="nb">float</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.post</span><span class="p">(</span><span class="err">“</span><span class="o">/</span><span class="n">items</span><span class="o">/</span><span class="err">“</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">async</span> <span class="k">def</span> <span class="nf">create_item</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">Item</span><span class="p">):</span> <span class="c1"># FastAPI 会自动从请求体中读取 JSON 并验证</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">item</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><strong>Pydantic 模型</strong>：这是 FastAPI 的基石。它用于定义数据模型，并自动处理：
+<ul>
+<li><strong>数据验证</strong>：如果数据无效，返回清晰的错误信息。</li>
+<li><strong>数据转换</strong>：将输入的 JSON 转换为 Python 对象，将 Python 对象转换为输出的 JSON。</li>
+<li><strong>文档生成</strong>：自动在交互式文档中展示模型结构。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="三实现原理fastapi-为何如此强大">三、实现原理：FastAPI 为何如此强大？
+</h3><p>FastAPI 本身并不是一个从头实现的全新服务器。它站在三个巨人的肩膀上，巧妙地将它们整合在一起：</p>
+<ol>
+<li><strong>Starlette</strong>：负责 <strong>Web 部分</strong>（路由、中间件、WebSocket 等）。</li>
+<li><strong>Pydantic</strong>：负责 <strong>数据部分</strong>（数据验证、序列化、文档生成）。</li>
+<li><strong>Python 类型提示（Type Hints）</strong>：<strong>连接的胶水</strong>，使上述整合成为可能。</li>
+</ol>
+<p>下图直观地展示了这三者如何协同工作，构成了 FastAPI 的坚实基础：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">flowchart TD
+</span></span><span class="line"><span class="cl">    A[开发者使用&lt;br&gt;类型提示定义参数与模型] --&gt; B[FastAPI 框架]
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">    subgraph B [FastAPI 核心架构]
+</span></span><span class="line"><span class="cl">        direction LR
+</span></span><span class="line"><span class="cl">        C[Starlette&lt;br&gt;处理Web请求响应] &lt;--&gt; D{Pydantic&lt;br&gt;处理数据验证转换};
+</span></span><span class="line"><span class="cl">    end
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    B -- 依据类型提示自动生成 --&gt; E[交互式 API 文档]
+</span></span><span class="line"><span class="cl">    B -- 提供 --&gt; F[高性能 ASGI 服务器]
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">    E -- 可供开发者测试 --&gt; G[浏览器]
+</span></span><span class="line"><span class="cl">    F -- 部署 --&gt; H[生产环境]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其工作流程可以概括为以下几个关键步骤：</p>
+<ol>
+<li><strong>声明与注解</strong>：你使用 Python 类型提示在路径操作函数中声明参数、请求体等的类型和结构。</li>
+<li><strong>依赖注入与解析</strong>：当你发起一个请求时，FastAPI 会接管：
+<ul>
+<li><strong>路由分发</strong>：Starlette 根据 URL 路径和方法将请求分发到正确的路径操作函数。</li>
+<li><strong>参数处理</strong>：对于每个参数，FastAPI 利用类型提示来判断它应该从<strong>路径</strong>、<strong>查询字符串</strong>、<strong>请求头</strong>还是<strong>请求体</strong>中获取数据。</li>
+</ul>
+</li>
+<li><strong>数据验证与转换</strong>：获取到的原始数据会被传递给 Pydantic 模型。
+<ul>
+<li><strong>验证</strong>：Pydantic 会严格检查数据是否符合你定义的字段类型和约束（例如，<code>price</code> 必须是浮点数，<code>name</code> 不能为空）。</li>
+<li><strong>转换</strong>：如果验证通过，数据会被转换成你指定的 Python 类型（如 <code>int</code>, <code>datetime</code>, 或自定义的 Pydantic 模型）。如果验证失败，FastAPI 会<strong>自动返回一个包含详细错误信息的 HTTP 422 响应</strong>，根本不需要你写错误处理代码。</li>
+</ul>
+</li>
+<li><strong>执行函数</strong>：使用经过验证和转换后的、符合预期的数据来执行你的路径操作函数。你可以放心地使用这些数据，因为它们一定是合法的。</li>
+<li><strong>响应生成</strong>：你的函数返回一个 Python 对象（如字典或 Pydantic 模型）。
+<ul>
+<li>FastAPI 会再次利用 Pydantic 和类型提示，<strong>将返回对象序列化为 JSON</strong>。</li>
+<li>Starlette 负责生成正确的 HTTP 响应并将其发送给客户端。</li>
+</ul>
+</li>
+<li><strong>文档生成</strong>：在整个过程中，FastAPI 会<strong>同步分析你的类型提示和 Pydantic 模型</strong>，从而自动生成 OpenAPI Schema（一个描述 API 的规范文件）。Swagger UI 和 ReDoc 都是读取这个 Schema 文件来渲染交互式文档的。这就是为什么你的代码一变，文档立即更新的原因。</li>
+</ol>
+<h3 id="四总结">四、总结
+</h3><ul>
+<li><strong>怎么用</strong>：通过安装库、创建实例、使用装饰器定义路由，并利用 Python 类型提示和 Pydantic 模型来声明参数和请求体，即可快速构建健壮的 API。</li>
+<li><strong>怎么实现的</strong>：其强大能力并非魔法，而是源于其精巧的<strong>架构设计</strong>：
+<ol>
+<li><strong>基于 ASGI（Starlette）</strong>：提供了高性能的异步 Web 基础。</li>
+<li><strong>深度集成 Pydantic</strong>：通过类型提示自动完成所有繁琐的数据验证、转换和序列化工作。</li>
+<li><strong>利用类型提示生成文档</strong>：创建了从代码到文档的闭环，保证了文档的实时性和准确性。</li>
+</ol>
+</li>
+</ul>
+<p>这种设计使得开发者只需关注业务逻辑（<em>What</em> to do），而框架则高效地处理了所有技术细节（<em>How</em> to do）。</p></blockquote>
+</li>
+<li>
+<p>REASFUL接口的知识:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>好的，我们来系统地讲解 <strong>RESTful API</strong> 的知识。这是一个非常重要的 Web 开发概念，理解它对于设计和构建现代、可扩展的 Web 服务至关重要。</p>
+<h3 id="一restful-api-是什么">一、RESTful API 是什么？
+</h3><p><strong>RESTful API</strong> 是一种遵循 <strong>REST</strong> 架构风格来设计的应用程序编程接口（API）。</p>
+<p>首先，要理解 <strong>REST</strong>：</p>
+<ul>
+<li><strong>REST</strong>：<strong>Re</strong>presentational <strong>S</strong>tate <strong>T</strong>ransfer（表现层状态转移）的缩写。它是由 Roy Fielding 博士在 2000 年提出的<strong>一种软件架构风格</strong>，<strong>不是标准也不是协议</strong>。它是一组设计原则和约束的集合。</li>
+</ul>
+<p>而 <strong>RESTful API</strong> 就是符合 REST 架构风格约束的 API。我们通常所说的“REST API”基本上就是指 RESTful API。</p>
+<hr>
+<h3 id="二rest-的核心原则约束">二、REST 的核心原则/约束
+</h3><p>要被称为 RESTful，一个 API 必须满足以下六个核心约束：</p>
+<h4 id="1-客户端-服务器client-server">1. 客户端-服务器（Client-Server）
+</h4><ul>
+<li><strong>关注点分离</strong>：客户端和服务器是独立的，它们之间通过统一的接口（如 HTTP）进行通信。</li>
+<li><strong>好处</strong>：客户端无需关心数据存储等业务逻辑，只需获取和操作数据；服务器也无需关心用户界面，只需处理请求和管理资源。这使得两者可以独立进化。</li>
+</ul>
+<h4 id="2-无状态stateless">2. 无状态（Stateless）
+</h4><ul>
+<li><strong>每个请求必须包含理解该请求所需的所有信息</strong>。服务器不会在请求之间存储任何客户端会话状态。会话状态完全由客户端负责维护（例如，通过 Token 或 API Key）。</li>
+<li><strong>好处</strong>：提高了可见性（每个请求都可以独立查看）、可靠性（更容易从故障中恢复）和可扩展性（服务器不需要在多个请求中保存状态，可以更容易地扩容）。</li>
+</ul>
+<h4 id="3-可缓存cacheable">3. 可缓存（Cacheable）
+</h4><ul>
+<li>服务器响应必须明确表明自己是否可以被缓存，以及可以缓存多久。这可以避免客户端获取过时或不恰当的数据。</li>
+<li><strong>好处</strong>：通过减少一些客户端-服务器交互，提高了效率、性能和可扩展性。例如，使用 HTTP 的 <code>Cache-Control</code> 头。</li>
+</ul>
+<h4 id="4-统一接口uniform-interface">4. 统一接口（Uniform Interface）
+</h4><p>这是 REST 系统设计的基本原则，它本身又包含四个子约束：</p>
+<ul>
+<li><strong>资源的标识</strong>：每个资源（如用户、订单）在系统中都有一个唯一的标识符（URI）来定位。例如：<code>/users/123</code>。</li>
+<li><strong>通过表述操作资源</strong>：客户端通过资源的<strong>表述</strong>（Representation，通常是 JSON 或 XML）来操作资源，而不是直接操作资源本身。同一个资源可以有多种表述。</li>
+<li><strong>自描述消息</strong>：每个消息（请求或响应）都包含足够的信息来描述如何处理自己。例如，使用 HTTP 方法（GET, POST）、状态码（200, 404）、媒体类型（<code>application/json</code>）。</li>
+<li><strong>超媒体作为应用状态的引擎（HATEOAS）</strong>：这是 REST 的最高级形态。客户端通过服务器返回的响应中的超链接（Hyperlinks）来发现和操作可用的动作。例如，获取一个订单资源后，响应里会包含指向“付款”或“取消订单”的链接。</li>
+</ul>
+<h4 id="5-分层系统layered-system">5. 分层系统（Layered System）
+</h4><ul>
+<li>架构可以由多层组成，每个层只知道与其交互的相邻层。例如，客户端不知道它是直接与终端服务器通信，还是与中间的代理、负载均衡器或缓存服务器通信。</li>
+<li><strong>好处</strong>：提高了系统的可扩展性和安全性。</li>
+</ul>
+<h4 id="6-按需代码code-on-demand可选">6. 按需代码（Code-On-Demand，可选）
+</h4><ul>
+<li>服务器可以通过传输可执行代码（如 JavaScript）来临时扩展客户端的功能。这是唯一一个可选的约束。</li>
+</ul>
+<hr>
+<h3 id="三如何设计一个-restful-api实践指南">三、如何设计一个 RESTful API？（实践指南）
+</h3><p>虽然理论上要满足所有约束，但在实践中，我们主要关注<strong>资源导向</strong>和<strong>统一接口</strong>。</p>
+<h4 id="1-一切皆资源everything-is-a-resource">1. 一切皆资源（Everything is a Resource）
+</h4><p>将你的数据或服务建模为“资源”。资源可以是任何名词：用户、产品、订单、甚至是一个计算过程。</p>
+<ul>
+<li><strong>示例</strong>：<code>用户</code>、<code>某个id的用户</code>、<code>某个用户的订单</code>。</li>
+</ul>
+<h4 id="2-使用-http-方法表示操作crud-操作">2. 使用 HTTP 方法表示操作（CRUD 操作）
+</h4><p>这是 RESTful 设计最显著的特征。<strong>URI 标识资源，HTTP 方法定义要对资源执行的操作</strong>。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">HTTP 方法</th>
+          <th style="text-align: left">操作</th>
+          <th style="text-align: left">描述</th>
+          <th style="text-align: left">通常对应的 SQL</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>GET</strong></td>
+          <td style="text-align: left"><strong>Read</strong></td>
+          <td style="text-align: left"><strong>获取</strong>资源（一个或多个）</td>
+          <td style="text-align: left"><code>SELECT</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>POST</strong></td>
+          <td style="text-align: left"><strong>Create</strong></td>
+          <td style="text-align: left"><strong>创建</strong>新资源</td>
+          <td style="text-align: left"><code>INSERT</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>PUT</strong> / <strong>PATCH</strong></td>
+          <td style="text-align: left"><strong>Update</strong></td>
+          <td style="text-align: left"><strong>更新</strong>整个资源（PUT） / 部分资源（PATCH）</td>
+          <td style="text-align: left"><code>UPDATE</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>DELETE</strong></td>
+          <td style="text-align: left"><strong>Delete</strong></td>
+          <td style="text-align: left"><strong>删除</strong>资源</td>
+          <td style="text-align: left"><code>DELETE</code></td>
+      </tr>
+  </tbody>
+</table></div>
+<p><strong>示例</strong>：</p>
+<ul>
+<li><code>GET /books</code>：获取所有书籍列表。</li>
+<li><code>GET /books/1</code>：获取 id 为 1 的书籍。</li>
+<li><code>POST /books</code>：创建一本新书籍。（请求体中包含新书的信息）</li>
+<li><code>PUT /books/1</code>：<strong>整体更新</strong> id 为 1 的书籍。（请求体中包含完整的更新后的信息）</li>
+<li><code>PATCH /books/1</code>：<strong>部分更新</strong> id 为 1 的书籍。（请求体中只包含要更新的字段）</li>
+<li><code>DELETE /books/1</code>：删除 id 为 1 的书籍。</li>
+</ul>
+<h4 id="3-使用名词复数而不是动词">3. 使用名词（复数），而不是动词
+</h4><p>URI 应该标识资源，而不是操作。操作由 HTTP 方法表示。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">不 RESTful</th>
+          <th style="text-align: left"><strong>RESTful</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><code>GET /getUser/1</code></td>
+          <td style="text-align: left"><code>GET /users/1</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>POST /createUser</code></td>
+          <td style="text-align: left"><code>POST /users</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>POST /updateUser/1</code></td>
+          <td style="text-align: left"><code>PUT /users/1</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>GET /deleteUser/1</code></td>
+          <td style="text-align: left"><code>DELETE /users/1</code></td>
+      </tr>
+  </tbody>
+</table></div>
+<h4 id="4-使用合适的-http-状态码">4. 使用合适的 HTTP 状态码
+</h4><p>使用标准的状态码来表示请求的结果。</p>
+<ul>
+<li><code>200 OK</code>：请求成功。</li>
+<li><code>201 Created</code>：创建成功（通常配合 POST 使用）。</li>
+<li><code>204 No Content</code>：操作成功，但无内容返回（通常配合 DELETE 使用）。</li>
+<li><code>400 Bad Request</code>：客户端请求错误（如参数无效）。</li>
+<li><code>401 Unauthorized</code>：未认证。</li>
+<li><code>403 Forbidden</code>：无权限。</li>
+<li><code>404 Not Found</code>：资源不存在。</li>
+<li><code>500 Internal Server Error</code>：服务器内部错误。</li>
+</ul>
+<h4 id="5-返回统一格式的数据">5. 返回统一格式的数据
+</h4><p>通常使用 <strong>JSON</strong> 作为数据交换格式。保持响应结构的一致性（例如，总是包含 <code>data</code>、<code>message</code>、<code>error</code> 等字段）。</p>
+<p><strong>示例响应</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;data&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;John Doe&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;email&#34;</span><span class="p">:</span> <span class="s2">&#34;john@example.com&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;User fetched successfully&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="6-版本化你的-api">6. 版本化你的 API
+</h4><p>将 API 版本号放入 URI 或请求头中，以便在迭代更新时不影响旧客户端。</p>
+<ul>
+<li><strong>URI 路径</strong>：<code>/api/v1/users</code></li>
+<li><strong>请求头</strong>：<code>Accept: application/vnd.myapi.v1+json</code></li>
+</ul>
+<h4 id="7-使用过滤排序分页和字段选择">7. 使用过滤、排序、分页和字段选择
+</h4><p>对于返回集合的接口（如 <code>GET /articles</code>），提供这些参数来优化性能和提高灵活性。</p>
+<ul>
+<li><code>GET /articles?page=2&amp;limit=10</code>：获取第二页，每页10条。</li>
+<li><code>GET /articles?sort=title&amp;order=asc</code>：按标题升序排序。</li>
+<li><code>GET /articles?author=john&amp;published=true</code>：过滤出作者是 john 且已发布的文章。</li>
+<li><code>GET /articles?fields=title,abstract</code>：只返回标题和摘要字段。</li>
+</ul>
+<hr>
+<h3 id="四总结restful-api-的优点">四、总结：RESTful API 的优点
+</h3><ol>
+<li><strong>简单清晰</strong>：通过 URI 和 HTTP 方法，API 的设计意图一目了然。</li>
+<li><strong>可扩展性</strong>：无状态和分层约束使得系统可以轻松地通过增加服务器来扩展。</li>
+<li><strong>松耦合</strong>：客户端和服务器独立发展，只要接口不变，内部实现可以任意修改。</li>
+<li><strong>通用性</strong>：基于 HTTP 协议，任何支持 HTTP 的客户端都可以与之交互，语言无关。</li>
+</ol>
+<p>FastAPI 这样的现代框架极大地简化了构建高质量、符合 RESTful 原则的 API 的过程，帮助你自动处理数据验证、序列化和文档生成，让你能更专注于业务逻辑本身。</p></blockquote>
+</li>
+<li>
+<p>C++构造函数和析构函数能不能被继承:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="err">好的，这是一个关于</span><span class="w"> </span><span class="n">C</span><span class="o">++</span><span class="w"> </span><span class="err">核心特性的经典问题。我将用一段清晰的话来解释整个过程和原理。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">**</span><span class="n">C</span><span class="o">++</span><span class="w"> </span><span class="err">中的构造函数和析构函数不能被继承。</span><span class="o">**</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">这是因为构造函数和析构函数是类与生俱来的、高度特异化的特殊成员函数。构造函数的根本任务是初始化本类对象的实例，它需要精确地了解本类的成员变量（包括其布局、类型和初始化方式），而每个类的成员构成都是独一无二的，因此派生类不可能直接复用基类的构造函数来完整地初始化自己新增的成员部分。同样地，析构函数负责在本类对象生命周期结束时进行清理工作，其清理逻辑同样紧密依赖于本类的成员构成，派生类对象的销毁过程必须是先调用派生类析构函数清理自身成员，再自动调用基类析构函数清理基类部分，以确保资源完全释放，这个过程是固定且自动的，不存在“继承”基类析构函数来替代自身析构逻辑的说法。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">然而，这并不意味着派生类对象无法使用基类的构造和析构逻辑。</span><span class="o">**</span><span class="err">虽然不能“继承”，但可以通过“调用”来组合使用</span><span class="o">**</span><span class="err">：</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="mi">1</span><span class="p">.</span><span class="w">  </span><span class="o">**</span><span class="err">构造过程</span><span class="o">**</span><span class="err">：在派生类构造函数的</span><span class="o">**</span><span class="err">初始化列表</span><span class="o">**</span><span class="err">中，你必须指明如何调用基类的构造函数（无论是调用有参构造还是默认构造），否则编译器会尝试自动调用基类的默认构造函数。整个对象的构建顺序是从最基类开始，沿着继承链向下，直到最终派生类。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="mi">2</span><span class="p">.</span><span class="w">  </span><span class="o">**</span><span class="err">析构过程</span><span class="o">**</span><span class="err">：当派生类对象被销毁时，其析构函数执行完毕后，编译器会自动调用基类的析构函数（顺序与构造相反）。你不需要、也不应该手动显式调用基类析构函数。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">从</span><span class="w"> </span><span class="n">C</span><span class="o">++</span><span class="mi">11</span><span class="w"> </span><span class="err">开始，引入了</span><span class="w"> </span><span class="o">**`</span><span class="k">using</span><span class="w"> </span><span class="n">Base</span><span class="p">::</span><span class="n">Base</span><span class="p">;</span><span class="o">`**</span><span class="w"> </span><span class="err">声明，这有时被称为“继承构造函数”，但这只是一种</span><span class="o">**</span><span class="err">语法糖</span><span class="o">**</span><span class="err">。它的实际效果是：</span><span class="o">**</span><span class="err">编译器会根据基类的构造函数集合，在派生类中自动生成一批与之签名匹配的构造函数。这些生成的派生类构造函数</span><span class="w"> </span><span class="n">simply</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">thing</span><span class="p">:</span><span class="w"> </span><span class="err">用相同的参数调用对应的基类构造函数，然后默认初始化派生类自己的成员。</span><span class="o">**</span><span class="w"> </span><span class="err">它并没有真正“继承”函数体，而是生成了新的函数，本质上是编译器为你节省了重复编写构造函数的代码工作。析构函数则完全没有类似的机制。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">**</span><span class="err">总结一句话：构造函数和析构函数本身不能被继承，但派生类的构造和析构过程必然包含了对基类相应函数的自动调用机制，而</span><span class="w"> </span><span class="o">`</span><span class="k">using</span><span class="o">`</span><span class="w"> </span><span class="err">声明只是一种方便地生成派生类构造函数的快捷方式，并非真正的继承。</span><span class="o">**</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>虚函数的实现机制:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>好的，我们来深入浅出地讲解 C++ 虚函数的实现机制。这是 C++ 实现多态（Polymorphism）的核心。</p>
+<h3 id="核心思想">核心思想
+</h3><p>虚函数的实现机制可以概括为：<strong>通过一张虚函数表（Virtual Table，简称 vtable）和隐藏在对象中的虚函数表指针（vptr），在运行时动态确定应该调用哪个类的函数。</strong></p>
+<hr>
+<h3 id="实现机制详解">实现机制详解
+</h3><h4 id="1-虚函数表-vtable">1. 虚函数表 (vtable)
+</h4><ul>
+<li>编译器会为<strong>每一个包含虚函数的类</strong>（或者从包含虚函数的类派生而来的类）自动生成一个<strong>虚函数表</strong>。</li>
+<li>这是一个静态数组，在编译时就已确定，存放在程序的<strong>只读数据段（如 .rodata）</strong>。</li>
+<li>表中的每一个元素都是一个<strong>函数指针</strong>，指向该类可用的虚函数的实际实现。</li>
+<li>如果一个类重写了基类的虚函数，那么它的虚函数表中对应的函数指针就会指向它自己的重写版本。</li>
+<li>如果它没有重写，那么函数指针就指向其基类的版本。</li>
+<li>如果它定义了新的虚函数，那么新的函数指针会被添加到虚函数表的末尾。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Base</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">func1</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">func2</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="o">~</span><span class="n">Base</span><span class="p">()</span> <span class="p">{}</span> <span class="c1">// 虚析构函数至关重要
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Derived</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 重写基类的 func1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">func1</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 继承了 Base::func2()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 添加一个新的虚函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">func3</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于上面的代码，编译器会生成两张虚函数表：</p>
+<ul>
+<li>
+<p><strong>Base 的 vtable</strong>:</p>
+<ul>
+<li><code>[0]</code>: <code>&amp;Base::func1</code></li>
+<li><code>[1]</code>: <code>&amp;Base::func2</code></li>
+<li><code>[2]</code>: <code>&amp;Base::~Base</code> (析构函数通常也有两个条目，但为了简化这样表示)</li>
+</ul>
+</li>
+<li>
+<p><strong>Derived 的 vtable</strong>:</p>
+<ul>
+<li><code>[0]</code>: <code>&amp;Derived::func1</code>  // <strong>重写了，指向派生类版本</strong></li>
+<li><code>[1]</code>: <code>&amp;Base::func2</code>     // <strong>未重写，指向基类版本</strong></li>
+<li><code>[2]</code>: <code>&amp;Derived::~Derived</code> // 析构函数</li>
+<li><code>[3]</code>: <code>&amp;Derived::func3</code>    // <strong>新增的虚函数</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="2-虚函数表指针-vptr">2. 虚函数表指针 (vptr)
+</h4><ul>
+<li>编译器会向<strong>每一个包含虚函数的类的对象中</strong>，悄悄地添加一个隐藏的成员指针，称为 <strong>vptr</strong>。</li>
+<li>这个 <code>vptr</code> 在对象被创建时（构造函数中），由编译器自动插入的代码将其<strong>初始化</strong>，指向该类对应的虚函数表。
+<ul>
+<li><code>Base</code> 对象的 <code>vptr</code> 指向 <code>Base::vtable</code>。</li>
+<li><code>Derived</code> 对象的 <code>vptr</code> 指向 <code>Derived::vtable</code>。</li>
+</ul>
+</li>
+<li><code>vptr</code> 通常位于对象内存布局的<strong>最开头</strong>（但标准未规定，大部分编译器都这么做），这样可以保证无论通过何种方式访问对象，都能最快地找到 vtable。</li>
+</ul>
+<p><strong>对象内存布局示意图：</strong></p>
+<p><code>Base b;</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">+---------+
+</span></span><span class="line"><span class="cl">|  vptr   |  ----&gt; 指向 Base::vtable
+</span></span><span class="line"><span class="cl">+---------+
+</span></span><span class="line"><span class="cl">| members |...
+</span></span><span class="line"><span class="cl">+---------+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>Derived d;</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">+---------+
+</span></span><span class="line"><span class="cl">|  vptr   |  ----&gt; 指向 Derived::vtable
+</span></span><span class="line"><span class="cl">+---------+
+</span></span><span class="line"><span class="cl">| Base&#39;s  |
+</span></span><span class="line"><span class="cl">| members |
+</span></span><span class="line"><span class="cl">+---------+
+</span></span><span class="line"><span class="cl">| Derived |
+</span></span><span class="line"><span class="cl">| members |
+</span></span><span class="line"><span class="cl">+---------+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="动态绑定的调用过程运行时多态">动态绑定的调用过程（运行时多态）
+</h3><p>当你通过一个<strong>基类指针或引用</strong>调用一个虚函数时，神奇的事情就发生了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Base</span><span class="o">*</span> <span class="n">ptr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Derived</span><span class="p">();</span> <span class="c1">// ptr 静态类型是 Base*，动态类型是 Derived*
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">func1</span><span class="p">();</span> <span class="c1">// 调用的是 Derived::func1()
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个过程在底层被分解为以下几个步骤：</p>
+<ol>
+<li><strong>通过对象找到 vptr</strong>：通过 <code>ptr</code> 找到它所指向的 <code>Derived</code> 对象，并访问该对象开头的 <code>vptr</code>。</li>
+<li><strong>通过 vptr 找到 vtable</strong>：顺着 <code>vptr</code> 找到 <code>Derived</code> 类的虚函数表。</li>
+<li><strong>在 vtable 中找到函数指针</strong>：在虚函数表中找到要调用的函数（例如 <code>func1</code>）对应的槽位（slot）。这个槽位在编译时就已经根据函数声明顺序确定好了（例如 <code>func1</code> 总是在索引 0 的位置）。</li>
+<li><strong>调用函数</strong>：最后，通过找到的函数指针，调用正确的函数（<code>Derived::func1()</code>）。</li>
+</ol>
+<p><strong>关键点</strong>：整个过程都是在<strong>运行时</strong>进行的。调用哪个函数不再由指针的<strong>静态类型（Static Type，即 <code>Base*</code>）</strong> 决定，而是由指针当时<strong>实际指向的对象的类型（Dynamic Type，即 <code>Derived</code>）</strong> 决定。这就是“动态绑定”或“晚期绑定”。</p>
+<hr>
+<h3 id="总结与要点">总结与要点
+</h3><ol>
+<li><strong>核心组件</strong>：<strong>vtable</strong> (每个类一个) 和 <strong>vptr</strong> (每个对象一个)。</li>
+<li><strong>成本</strong>：
+<ul>
+<li><strong>空间成本</strong>：每个对象需要额外存储一个指针（vptr）。每个类需要一块内存存储 vtable。</li>
+<li><strong>时间成本</strong>：每次虚函数调用比普通函数调用多一次间接寻址（通过 vptr 找到 vtable，再找到函数地址）。</li>
+</ul>
+</li>
+<li><strong>构造函数与析构函数</strong>：
+<ul>
+<li>在<strong>构造函数</strong>中，<code>vptr</code> 被一步步初始化。从最基类开始构建，<code>vptr</code> 会依次指向当前构造阶段的类的 vtable。这就是为什么在构造函数中调用虚函数不会呈现多态行为，因为它还没指向最终派生类的 vtable。</li>
+<li>在<strong>析构函数</strong>中，<code>vptr</code> 也会被一步步修改回当前类的 vtable，直到最终基类。因此在析构函数中调用虚函数同样没有多态效果。</li>
+</ul>
+</li>
+<li><strong>为何析构函数应为虚函数</strong>：如果基类析构函数不是虚的，那么通过基类指针删除一个派生类对象，只会调用基类的析构函数，导致<strong>派生类的部分资源泄漏</strong>。定义为虚函数后，调用过程会通过 vtable 正确找到派生类的析构函数，从而保证完整的析构流程。</li>
+</ol>
+<p>这个机制是 C++ 高效实现运行时常量的经典设计，理解它对于编写正确的面向对象 C++ 程序至关重要。</p></blockquote>
+</li>
+<li>
+<p>TCP的三次握手和四次挥手:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>好的，我们来详细讲解 TCP 的三次握手（建立连接）和四次挥手（断开连接）。这是 TCP 协议保证可靠传输的核心机制。</p>
+<hr>
+<h3 id="基础概念tcp-报文头部的关键字段">基础概念：TCP 报文头部的关键字段
+</h3><p>在理解握手和挥手之前，需要先知道 TCP 报文段中的几个关键标志位（Flags）：</p>
+<ul>
+<li><strong>SYN</strong> (Synchronize Sequence Numbers)：同步序列号。用于<strong>建立连接</strong>，发起一个新的会话。</li>
+<li><strong>ACK</strong> (Acknowledgment)：确认。表示确认号字段是有效的。一旦连接建立，<strong>几乎所有报文段都会设置 ACK 位</strong>。</li>
+<li><strong>FIN</strong> (Finish)：终止。用于<strong>断开连接</strong>，表示发送方没有更多数据要发送了。</li>
+<li><strong>seq</strong> (Sequence Number)：序列号。标识本报文段所发送数据的第一个字节的序号。</li>
+<li><strong>ack</strong> (Acknowledgment Number)：确认号。期望收到对方下一个报文段的第一个数据字节的序号。表示 <code>ack</code> 之前的所有数据都已正确接收。</li>
+</ul>
+<hr>
+<h2 id="一三次握手-three-way-handshake">一、三次握手 (Three-Way Handshake)
+</h2><p><strong>目的</strong>：客户端和服务器之间建立 TCP 连接，同步双方的序列号，并交换 TCP 窗口大小信息。</p>
+<h3 id="过程详解">过程详解：
+</h3><p>假设客户端（Client）想要与服务器（Server）建立连接。</p>
+<ol>
+<li>
+<p><strong>第一次握手 (SYN)</strong></p>
+<ul>
+<li><strong>发起方</strong>：客户端</li>
+<li><strong>动作</strong>：客户端发送一个 TCP 报文段。
+<ul>
+<li>设置 <code>SYN = 1</code>，表示这是一个连接请求。</li>
+<li>选择一个初始序列号 <code>seq = x</code> (Client ISN)。</li>
+<li><code>ACK = 0</code>（因为还没有东西需要确认）。</li>
+</ul>
+</li>
+<li><strong>状态变化</strong>：客户端进入 <code>SYN-SENT</code> (同步已发送) 状态。</li>
+</ul>
+</li>
+<li>
+<p><strong>第二次握手 (SYN + ACK)</strong></p>
+<ul>
+<li><strong>发起方</strong>：服务器</li>
+<li><strong>动作</strong>：服务器收到客户端的 SYN 报文后，如果同意建立连接，则回复一个报文段。
+<ul>
+<li>设置 <code>SYN = 1</code> 和 <code>ACK = 1</code>。</li>
+<li>选择自己的初始序列号 <code>seq = y</code> (Server ISN)。</li>
+<li>确认号 <code>ack = x + 1</code> (表示期望下次收到客户端从 x+1 开始的数据，同时也确认了客户端的 SYN)。</li>
+</ul>
+</li>
+<li><strong>状态变化</strong>：服务器进入 <code>SYN-RCVD</code> (同步已收到) 状态。</li>
+</ul>
+</li>
+<li>
+<p><strong>第三次握手 (ACK)</strong></p>
+<ul>
+<li><strong>发起方</strong>：客户端</li>
+<li><strong>动作</strong>：客户端收到服务器的 SYN-ACK 报文后。
+<ul>
+<li>发送一个确认报文，设置 <code>ACK = 1</code>。</li>
+<li>序列号 <code>seq = x + 1</code> (因为第一次握手的 SYN 包消耗了一个序列号)。</li>
+<li>确认号 <code>ack = y + 1</code> (表示期望下次收到服务器从 y+1 开始的数据，同时也确认了服务器的 SYN)。</li>
+</ul>
+</li>
+<li><strong>状态变化</strong>：客户端进入 <code>ESTABLISHED</code> (已建立连接) 状态。服务器收到这个 ACK 后，也进入 <code>ESTABLISHED</code> 状态。</li>
+</ul>
+</li>
+</ol>
+<p>至此，连接建立成功，双方可以开始数据传输。</p>
+<h3 id="为什么是三次而不是两次">为什么是三次，而不是两次？
+</h3><p><strong>核心原因：为了防止已失效的连接请求报文突然又传送到服务器，从而产生错误。</strong></p>
+<p><strong>经典场景</strong>：</p>
+<blockquote>
+<p>客户端发送了一个 SYN 请求，但这个报文在网络中滞留了（失效了）。客户端超时后重发了一个新的 SYN 并成功建立连接、传输数据、关闭连接。此时，那个滞留在网络中的旧 SYN 报文终于到达了服务器。如果只有两次握手，服务器会认为这是一个新的连接请求，于是回复 SYN-ACK 并进入连接状态，一直等待客户端发送数据，从而<strong>浪费了服务器资源</strong>。</p>
+<p>而采用三次握手，客户端收到这个陈旧的 SYN-ACK 后，知道自己没有发起这个连接（序列号对不上），就不会发送第三次的 ACK，服务器也就无法进入连接状态，从而避免了资源浪费。</p></blockquote>
+<p><strong>简单总结</strong>：三次握手是<strong>相互确认</strong>的最小次数，确保了双方都具有发送和接收的能力，并且同步了初始序列号。</p>
+<hr>
+<h2 id="二四次挥手-four-way-wavehand">二、四次挥手 (Four-Way Wavehand)
+</h2><p><strong>目的</strong>：客户端和服务器之间断开 TCP 连接。由于 TCP 连接是<strong>全双工</strong>的（数据可以双向独立传输），因此每个方向都必须单独进行关闭。</p>
+<h3 id="过程详解-1">过程详解：
+</h3><p>假设客户端（Client）主动发起关闭连接。</p>
+<ol>
+<li>
+<p><strong>第一次挥手 (FIN)</strong></p>
+<ul>
+<li><strong>发起方</strong>：客户端（也可以是服务器）</li>
+<li><strong>动作</strong>：客户端发送一个 TCP 报文段。
+<ul>
+<li>设置 <code>FIN = 1</code>，<code>seq = u</code> (u 等于客户端已传送数据的最后一个字节的序号加1)。</li>
+</ul>
+</li>
+<li><strong>含义</strong>：“我没有数据要发送给你了（但我还可以接收你发来的数据）。”</li>
+<li><strong>状态变化</strong>：客户端进入 <code>FIN-WAIT-1</code> (终止等待1) 状态。</li>
+</ul>
+</li>
+<li>
+<p><strong>第二次挥手 (ACK)</strong></p>
+<ul>
+<li><strong>发起方</strong>：服务器</li>
+<li><strong>动作</strong>：服务器收到 FIN 报文后，立即回复一个确认报文。
+<ul>
+<li>设置 <code>ACK = 1</code>, <code>ack = u + 1</code> (确认客户端的 FIN)。</li>
+<li>序列号 <code>seq = v</code> (v 等于服务器已传送数据的最后一个字节的序号加1)。</li>
+</ul>
+</li>
+<li><strong>含义</strong>：“我知道你要关闭连接了。”</li>
+<li><strong>状态变化</strong>：服务器进入 <code>CLOSE-WAIT</code> (关闭等待) 状态。客户端收到这个 ACK 后，进入 <code>FIN-WAIT-2</code> (终止等待2) 状态。</li>
+<li><strong>注意</strong>：此时处于<strong>半关闭状态 (Half-Close)</strong>，客户端到服务器的通道关闭了，但服务器到客户端的通道仍然可以传输数据。</li>
+</ul>
+</li>
+<li>
+<p><strong>第三次挥手 (FIN)</strong></p>
+<ul>
+<li><strong>发起方</strong>：服务器</li>
+<li><strong>动作</strong>：当服务器也没有数据要发送给客户端时，它发送一个 FIN 报文。
+<ul>
+<li>设置 <code>FIN = 1</code>, <code>ACK = 1</code>, <code>ack = u + 1</code> (依然确认最初的 FIN)。</li>
+<li>序列号 <code>seq = w</code> (w 可能等于 v，也可能大于 v，取决于在 CLOSE-WAIT 期间服务器是否又发送了数据)。</li>
+</ul>
+</li>
+<li><strong>含义</strong>：“我这边也没有数据要发送了。”</li>
+<li><strong>状态变化</strong>：服务器进入 <code>LAST-ACK</code> (最后确认) 状态。</li>
+</ul>
+</li>
+<li>
+<p><strong>第四次挥手 (ACK)</strong></p>
+<ul>
+<li><strong>发起方</strong>：客户端</li>
+<li><strong>动作</strong>：客户端收到服务器的 FIN 报文后，发送一个确认报文。
+<ul>
+<li>设置 <code>ACK = 1</code>, <code>ack = w + 1</code>。</li>
+<li>序列号 <code>seq = u + 1</code>。</li>
+</ul>
+</li>
+<li><strong>状态变化</strong>：客户端进入 <code>TIME-WAIT</code> (时间等待) 状态。<strong>客户端会等待 2MSL</strong> (Maximum Segment Lifetime, 报文最大生存时间) 后，才真正进入 <code>CLOSED</code> 状态。服务器收到这个 ACK 后，立即进入 <code>CLOSED</code> 状态。</li>
+</ul>
+</li>
+</ol>
+<h3 id="为什么需要四次挥手">为什么需要四次挥手？
+</h3><p>因为 TCP 连接是全双工的，关闭连接需要两个独立的步骤：</p>
+<ol>
+<li>A 对 B 说：“我说完了”（FIN）。</li>
+<li>B 对 A 说：“好的，我知道你说完了”（ACK）。—— <strong>此时 A -&gt; B 方向关闭。</strong></li>
+<li>B 可能还有数据要传给 A，等 B 也说完了，它对 A 说：“我也说完了”（FIN）。</li>
+<li>A 对 B 说：“好的，我知道你说完了”（ACK）。—— <strong>此时 B -&gt; A 方向关闭。</strong></li>
+</ol>
+<p>将第二次和第三次挥手合并成一次，只有在服务器收到 FIN 后也<strong>立即没有任何数据要发送</strong>的情况下才可能，但通常无法保证，所以必须分开。</p>
+<h3 id="为什么客户端最后需要-time-wait-状态并等待-2msl">为什么客户端最后需要 TIME-WAIT 状态并等待 2MSL？
+</h3><ol>
+<li><strong>可靠地终止连接</strong>：确保最后一个 ACK 能到达服务器。如果服务器没有收到第四次挥手的 ACK，它会重传第三次挥手的 FIN。客户端在 TIME-WAIT 状态下收到这个重传的 FIN 后，会重发 ACK。</li>
+<li><strong>让旧的报文段在网络中消逝</strong>：等待 2MSL 时间，可以确保本次连接所产生的所有报文段都从网络中消失，从而不会影响下一次新建的连接（避免了之前提到的“旧连接报文”问题）。</li>
+</ol>
+<hr>
+<h3 id="总结图示">总结图示
+</h3><p><strong>三次握手 (建立连接)</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Client（主动打开）          Server（被动打开）
+</span></span><span class="line"><span class="cl">      |-------- SYN (seq=x) -------&gt;|   #1
+</span></span><span class="line"><span class="cl">      |&lt;-- SYN (seq=y) + ACK (x+1)-|   #2
+</span></span><span class="line"><span class="cl">      |-------- ACK (y+1) --------&gt;|   #3
+</span></span><span class="line"><span class="cl">      (ESTABLISHED)           (ESTABLISHED)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>四次挥手 (断开连接 - 以客户端主动关闭为例)</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Client（主动关闭）          Server（被动关闭）
+</span></span><span class="line"><span class="cl">      |-------- FIN (seq=u) -------&gt;|   #1
+</span></span><span class="line"><span class="cl">      |&lt;------- ACK (u+1) ---------|   #2 (半关闭)
+</span></span><span class="line"><span class="cl">      |&lt;------- FIN (seq=w) -------|   #3
+</span></span><span class="line"><span class="cl">      |-------- ACK (w+1) --------&gt;|   #4
+</span></span><span class="line"><span class="cl">      (TIME-WAIT -&gt; CLOSED)    (CLOSED)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+</li>
+<li>
+<p>OSI模型:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>好的，我们来详细讲解 OSI（Open Systems Interconnection）模型，即开放式系统互联模型。</p>
+<h3 id="概述">概述
+</h3><p><strong>OSI 模型</strong>是一个由国际标准化组织（ISO）提出的<strong>概念性框架</strong>，用于描述网络通信系统中各种功能应该如何被划分和组织。它的核心目的是使不同厂商生产的各种硬件和软件能够相互通信，实现** interoperability（互操作性）**。</p>
+<p>它并不是一个具体的协议，而是一个理解和设计网络体系的<strong>理论模型</strong>。现实中，TCP/IP 协议簇是互联网的实际执行标准，但 OSI 模型因其清晰的结构，仍然是理解和排查网络问题的黄金标准。</p>
+<hr>
+<h3 id="七层结构">七层结构
+</h3><p>OSI 模型将网络通信过程划分为七个层次，每一层都建立在下一层之上，并为其上一层提供服务。每一层只与相邻的上下两层进行通信。</p>
+<p><strong>记忆口诀</strong>（从底层到顶层）：</p>
+<blockquote>
+<p><strong>Please Do Not Throw Sausage Pizza Away</strong>
+（物理层 -&gt; 数据链路层 -&gt; 网络层 -&gt; 传输层 -&gt; 会话层 -&gt; 表示层 -&gt; 应用层）</p></blockquote>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">OSI 层</th>
+          <th style="text-align: left">层名称</th>
+          <th style="text-align: left">功能简介</th>
+          <th style="text-align: left">协议数据单元 (PDU)</th>
+          <th style="text-align: left">常见协议/设备</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>7</strong></td>
+          <td style="text-align: left"><strong>应用层</strong> (Application)</td>
+          <td style="text-align: left">为<strong>应用程序</strong>提供网络服务接口</td>
+          <td style="text-align: left"><strong>Data</strong></td>
+          <td style="text-align: left">HTTP, HTTPS, FTP, SMTP, DNS, Telnet</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>6</strong></td>
+          <td style="text-align: left"><strong>表示层</strong> (Presentation)</td>
+          <td style="text-align: left"><strong>数据翻译</strong>（加密、解密、压缩、解压缩）、格式化</td>
+          <td style="text-align: left"><strong>Data</strong></td>
+          <td style="text-align: left">SSL/TLS, JPEG, MPEG, ASCII</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>5</strong></td>
+          <td style="text-align: left"><strong>会话层</strong> (Session)</td>
+          <td style="text-align: left">建立、管理、终止<strong>应用程序之间的会话</strong></td>
+          <td style="text-align: left"><strong>Data</strong></td>
+          <td style="text-align: left">NetBIOS, RPC, PPTP</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>4</strong></td>
+          <td style="text-align: left"><strong>传输层</strong> (Transport)</td>
+          <td style="text-align: left">提供<strong>端到端</strong>的可靠或不可靠传输、<strong>流量控制</strong>、<strong>差错校验</strong></td>
+          <td style="text-align: left"><strong>Segment</strong> (TCP) / <strong>Datagram</strong> (UDP)</td>
+          <td style="text-align: left"><strong>TCP, UDP</strong></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>3</strong></td>
+          <td style="text-align: left"><strong>网络层</strong> (Network)</td>
+          <td style="text-align: left">提供<strong>逻辑寻址</strong>（IP地址）、<strong>路径选择</strong>（路由）</td>
+          <td style="text-align: left"><strong>Packet</strong></td>
+          <td style="text-align: left"><strong>IP, ICMP, ARP</strong> (跨层), <strong>路由器</strong></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>2</strong></td>
+          <td style="text-align: left"><strong>数据链路层</strong> (Data Link)</td>
+          <td style="text-align: left">提供<strong>物理寻址</strong>（MAC地址）、<strong>差错校验</strong>、<strong>介质访问控制</strong></td>
+          <td style="text-align: left"><strong>Frame</strong></td>
+          <td style="text-align: left"><strong>Ethernet, PPP, Switch, Bridge, NIC</strong></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>1</strong></td>
+          <td style="text-align: left"><strong>物理层</strong> (Physical)</td>
+          <td style="text-align: left">定义<strong>电气、机械、功能和规程</strong>特性，传输<strong>比特流</strong></td>
+          <td style="text-align: left"><strong>Bit</strong></td>
+          <td style="text-align: left"><strong>Hub, Repeater, Cable, Fiber</strong></td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<h3 id="各层详细功能">各层详细功能
+</h3><h4 id="1-物理层-physical-layer">1. 物理层 (Physical Layer)
+</h4><ul>
+<li><strong>功能</strong>：负责在物理介质上透明地传输原始的<strong>比特流</strong>（0 和 1）。它关心的是电压高低、光信号闪灭、线缆接口形状、传输速率等物理特性。</li>
+<li><strong>关键概念</strong>：比特同步、带宽、调制解调。</li>
+<li><strong>设备</strong>：<strong>集线器 (Hub)</strong>、<strong>中继器 (Repeater)</strong>、网线、光纤、无线电波。</li>
+</ul>
+<h4 id="2-数据链路层-data-link-layer">2. 数据链路层 (Data Link Layer)
+</h4><ul>
+<li><strong>功能</strong>：将物理层传来的比特流组装成<strong>帧</strong>，提供<strong>结点到结点</strong>的可靠传输。
+<ul>
+<li><strong>物理寻址</strong>：在帧头添加<strong>MAC地址</strong>（源MAC和目的MAC）。</li>
+<li><strong>差错控制</strong>：通过 CRC（循环冗余校验）检查帧是否在传输中出错。</li>
+<li><strong>流量控制</strong>：协调发送方和接收方的速度。</li>
+<li><strong>介质访问控制</strong>：决定共享信道（如以太网）上谁可以发送数据。</li>
+</ul>
+</li>
+<li><strong>设备</strong>：<strong>交换机 (Switch)</strong>、<strong>网桥 (Bridge)</strong>、<strong>网卡 (NIC)</strong>。</li>
+</ul>
+<h4 id="3-网络层-network-layer">3. 网络层 (Network Layer)
+</h4><ul>
+<li><strong>功能</strong>：提供<strong>主机到主机</strong>的通信，负责将数据包从源主机跨越多个网络（路由）传输到目的主机。
+<ul>
+<li><strong>逻辑寻址</strong>：使用<strong>IP地址</strong>来唯一标识网络上的设备。</li>
+<li><strong>路由</strong>：根据网络状况为数据包选择最佳路径。</li>
+<li><strong>拥塞控制</strong>：避免网络因数据过多而性能下降。</li>
+</ul>
+</li>
+<li><strong>设备</strong>：<strong>路由器 (Router)</strong>。</li>
+</ul>
+<h4 id="4-传输层-transport-layer">4. 传输层 (Transport Layer)
+</h4><ul>
+<li><strong>功能</strong>：提供<strong>端到端</strong>（应用程序到应用程序）的通信服务，是承上启下的关键一层。
+<ul>
+<li><strong>服务寻址</strong>：使用<strong>端口号</strong>来标识主机上的特定应用程序（如 80 端口对应 Web 服务）。</li>
+<li><strong>分段与重组</strong>：将上层传来的大块数据分割成更小的<strong>段</strong>，并在接收端重组。</li>
+<li><strong>连接管理</strong>：<strong>TCP</strong> 提供面向连接的、可靠的传输（三次握手、确认重传）。<strong>UDP</strong> 提供无连接的、尽最大努力交付的传输。</li>
+<li><strong>流量控制与差错控制</strong>：确保数据完整、有序地到达。</li>
+</ul>
+</li>
+<li><strong>核心协议</strong>：<strong>TCP</strong> (可靠), <strong>UDP</strong> (不可靠)。</li>
+</ul>
+<h4 id="5-会话层-session-layer">5. 会话层 (Session Layer)
+</h4><ul>
+<li><strong>功能</strong>：负责建立、管理和终止两个通信主机之间的<strong>会话</strong>。
+<ul>
+<li>它像一个大项目的<strong>协调员</strong>，确保不同应用程序之间的对话有序进行。</li>
+<li>例如，在传输一个大文件时，如果网络中断，会话层可以在恢复连接后从中断点继续，而不必重新开始。</li>
+</ul>
+</li>
+</ul>
+<h4 id="6-表示层-presentation-layer">6. 表示层 (Presentation Layer)
+</h4><ul>
+<li><strong>功能</strong>：充当应用程序和网络之间的“<strong>翻译官</strong>”，确保一个系统应用层发出的信息能被另一个系统的应用层读懂。
+<ul>
+<li><strong>数据翻译</strong>：不同系统可能有不同的字符编码（如 ASCII, Unicode），表示层负责转换。</li>
+<li><strong>数据加密/解密</strong>：如 SSL/TLS 的加密过程可以认为发生在此层。</li>
+<li><strong>数据压缩/解压缩</strong>：减少传输的数据量。</li>
+</ul>
+</li>
+</ul>
+<h4 id="7-应用层-application-layer">7. 应用层 (Application Layer)
+</h4><ul>
+<li><strong>功能</strong>：最靠近用户的一层，为<strong>应用程序</strong>（如浏览器、电子邮件客户端）提供网络访问的接口。它提供各种网络服务。
+<ul>
+<li><strong>注意</strong>：它并不是指像 Excel 或 Word 这样的应用程序本身，而是指应用程序用来实现网络功能的<strong>协议</strong>。</li>
+<li><strong>协议</strong>：<strong>HTTP</strong> (网页浏览), <strong>SMTP</strong> (发送邮件), <strong>FTP</strong> (文件传输), <strong>DNS</strong> (域名解析)。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="数据封装与解封装过程">数据封装与解封装过程
+</h3><p>这是理解 OSI 模型如何工作的关键。</p>
+<p><strong>发送方（封装过程 - 从上到下）</strong>：</p>
+<ol>
+<li>用户在应用程序（如浏览器）中产生<strong>数据</strong>。</li>
+<li>数据经过应用层、表示层、会话层，每层可能会添加自己的<strong>头部信息</strong>。</li>
+<li>传输层将数据分成<strong>段</strong>，添加 TCP/UDP 头部（包含源/目的端口号）。</li>
+<li>网络层添加 IP 头部（包含源/目的 IP 地址），形成<strong>包</strong>。</li>
+<li>数据链路层添加帧头部（包含源/目的 MAC 地址）和帧尾部（CRC校验），形成<strong>帧</strong>。</li>
+<li>物理层将帧转换成<strong>比特流</strong>，通过物理介质发送出去。</li>
+</ol>
+<p><strong>接收方（解封装过程 - 从下到上）</strong>：</p>
+<ol>
+<li>物理层接收到<strong>比特流</strong>，将其重组为<strong>帧</strong>。</li>
+<li>数据链路层检查帧的 MAC 地址和校验和，无误后去掉帧头和帧尾，将<strong>包</strong>上传给网络层。</li>
+<li>网络层检查 IP 地址，决定是否路由，然后去掉 IP 头，将<strong>段</strong>上传给传输层。</li>
+<li>传输层处理序列号、确认等，去掉 TCP/UDP 头，将<strong>数据</strong>上传给会话层。</li>
+<li>会话层、表示层、应用层依次处理各自的头部信息，最终将原始数据交给目标应用程序。</li>
+</ol>
+<hr>
+<h3 id="osi-模型-vs-tcpip-模型">OSI 模型 vs. TCP/IP 模型
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">特性</th>
+          <th style="text-align: left">OSI 模型</th>
+          <th style="text-align: left">TCP/IP 模型（实际应用）</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>诞生</strong></td>
+          <td style="text-align: left">理论先行的标准</td>
+          <td style="text-align: left">从实践中发展而来的协议</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>层数</strong></td>
+          <td style="text-align: left"><strong>7</strong> 层</td>
+          <td style="text-align: left"><strong>4</strong> 层（或 5 层）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>对应关系</strong></td>
+          <td style="text-align: left">应用层、表示层、会话层</td>
+          <td style="text-align: left"><strong>应用层</strong></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">传输层</td>
+          <td style="text-align: left"><strong>传输层</strong>（主机到主机层）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">网络层</td>
+          <td style="text-align: left"><strong>互联网层</strong></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">数据链路层、物理层</td>
+          <td style="text-align: left"><strong>网络接入层</strong></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>重要性</strong></td>
+          <td style="text-align: left"><strong>理论模型</strong>，用于教学和故障排除</td>
+          <td style="text-align: left"><strong>实际标准</strong>，用于构建互联网</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><strong>总结</strong>：OSI 模型是一个完美的、逻辑清晰的理论框架，帮助我们模块化地理解和设计网络。虽然现实中的网络协议并不完全严格遵循它，但它提供的分层思想是所有网络技术的基础。</p></blockquote>
+</li>
+<li>
+<p>C++构造函数和析构函数讲解:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>好的，我们来详细讲解 C++ 中的构造函数和析构函数。它们是面向对象编程中类的重要组成部分，负责对象的<strong>初始化</strong>和<strong>清理</strong>工作。</p>
+<hr>
+<h3 id="1-构造函数-constructor">1. 构造函数 (Constructor)
+</h3><h4 id="什么是构造函数">什么是构造函数？
+</h4><p>构造函数是一种特殊的成员函数，它在<strong>创建类的新对象时自动调用</strong>。它的主要目的是<strong>初始化对象</strong>，即为对象的数据成员设置初始值。</p>
+<h4 id="构造函数的特点">构造函数的特点：
+</h4><ol>
+<li><strong>与类同名</strong>：构造函数的名称必须与类名完全相同。</li>
+<li><strong>无返回类型</strong>：它没有返回值，甚至不能使用 <code>void</code>。</li>
+<li><strong>自动调用</strong>：当对象被创建时（例如通过 <code>ClassName obj;</code> 或 <code>new ClassName</code>），编译器会自动调用构造函数。</li>
+<li><strong>可以重载</strong>：一个类可以有多个参数列表不同的构造函数（即重载构造函数），从而提供多种初始化对象的方式。</li>
+</ol>
+<h4 id="构造函数的类型">构造函数的类型：
+</h4><h5 id="a-默认构造函数-default-constructor">a. 默认构造函数 (Default Constructor)
+</h5><ul>
+<li><strong>定义</strong>：不接受任何参数的构造函数。</li>
+<li><strong>作用</strong>：当你不提供任何初始化值时，用于创建对象。</li>
+<li><strong>注意</strong>：如果你没有为类定义<strong>任何</strong>构造函数，编译器会自动为你生成一个空的默认构造函数（不做任何初始化）。但如果你定义了<strong>任何一个</strong>构造函数，编译器就不再提供默认构造函数。此时，如果你还需要无参创建对象，就必须手动定义一个默认构造函数。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 1. 默认构造函数 (手动定义)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">MyClass</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// 初始化 value 为 0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Default constructor called!&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MyClass</span> <span class="n">obj1</span><span class="p">;</span> <span class="c1">// 调用默认构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="b-参数化构造函数-parameterized-constructor">b. 参数化构造函数 (Parameterized Constructor)
+</h5><ul>
+<li><strong>定义</strong>：接受一个或多个参数的构造函数。</li>
+<li><strong>作用</strong>：在创建对象的同时，用提供的参数初始化对象。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 2. 参数化构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">MyClass</span><span class="p">(</span><span class="kt">int</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">value</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Parameterized constructor called! Value: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">value</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MyClass</span> <span class="n">obj2</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="c1">// 调用参数化构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="c-拷贝构造函数-copy-constructor">c. 拷贝构造函数 (Copy Constructor)
+</h5><ul>
+<li><strong>定义</strong>：接受一个<strong>同类型对象引用</strong>作为参数的构造函数。通常使用 <code>const</code> 引用。</li>
+<li><strong>作用</strong>：使用一个已存在的对象来初始化一个新创建的对象（创建一个副本）。</li>
+<li><strong>注意</strong>：如果你没有定义拷贝构造函数，编译器会自动生成一个，进行<strong>浅拷贝</strong>。如果类中有指针成员并管理动态内存，你必须手动定义拷贝构造函数以实现<strong>深拷贝</strong>，避免潜在问题。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 3. 拷贝构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">MyClass</span><span class="p">(</span><span class="k">const</span> <span class="n">MyClass</span> <span class="o">&amp;</span><span class="n">other</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">value</span> <span class="o">=</span> <span class="n">other</span><span class="p">.</span><span class="n">value</span><span class="p">;</span> <span class="c1">// 将 other 对象的 value 拷贝给新对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Copy constructor called! Copied value: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">value</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MyClass</span> <span class="n">original</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MyClass</span> <span class="n">copy</span> <span class="o">=</span> <span class="n">original</span><span class="p">;</span> <span class="c1">// 调用拷贝构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>调用拷贝构造函数的常见场景</strong>：</p>
+<ol>
+<li>用一个对象初始化另一个对象：<code>MyClass obj2 = obj1;</code> 或 <code>MyClass obj2(obj1);</code></li>
+<li>对象作为函数参数<strong>按值传递</strong>时。</li>
+<li>对象作为函数返回值<strong>按值返回</strong>时。</li>
+</ol>
+<h5 id="d-委托构造函数-c11">d. 委托构造函数 (C++11)
+</h5><ul>
+<li><strong>定义</strong>：一个构造函数可以调用同一个类中的另一个构造函数。</li>
+<li><strong>作用</strong>：避免代码重复，简化构造函数的设计。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">grade</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 主构造函数，完成所有初始化工作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">MyClass</span><span class="p">(</span><span class="kt">int</span> <span class="n">v</span><span class="p">,</span> <span class="kt">char</span> <span class="n">g</span><span class="p">)</span> <span class="o">:</span> <span class="n">value</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">grade</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 委托构造函数：委托给主构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">MyClass</span><span class="p">(</span><span class="kt">int</span> <span class="n">v</span><span class="p">)</span> <span class="o">:</span> <span class="n">MyClass</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="sc">&#39;A&#39;</span><span class="p">)</span> <span class="p">{}</span> <span class="c1">// 默认 grade 为 &#39;A&#39;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">MyClass</span><span class="p">()</span> <span class="o">:</span> <span class="n">MyClass</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="sc">&#39;N&#39;</span><span class="p">)</span> <span class="p">{}</span>      <span class="c1">// 默认 value=0, grade=&#39;N&#39;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="e-初始化列表-initializer-list">e. 初始化列表 (Initializer List)
+</h5><ul>
+<li><strong>作用</strong>：在构造函数体执行<strong>之前</strong>初始化成员变量。这是初始化 <code>const</code> 成员、引用成员以及没有默认构造函数的类成员的<strong>唯一方式</strong>。它也通常比在构造函数体内赋值<strong>效率更高</strong>。</li>
+<li><strong>语法</strong>：在构造函数参数列表后使用冒号 <code>:</code>，后面跟上用逗号分隔的初始化语句。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Example</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">int</span> <span class="n">constMember</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="o">&amp;</span><span class="n">refMember</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">normalMember</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 使用初始化列表初始化 const 成员、引用成员和其他成员
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Example</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r</span><span class="p">)</span> <span class="o">:</span> <span class="n">constMember</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">refMember</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">normalMember</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// normalMember 也可以在函数体内赋值，但 constMember 和 refMember 必须在这里初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// normalMember = 100; // 这是赋值，不是初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="2-析构函数-destructor">2. 析构函数 (Destructor)
+</h3><h4 id="什么是析构函数">什么是析构函数？
+</h4><p>析构函数是另一种特殊的成员函数，它在<strong>对象被销毁时自动调用</strong>。它的主要目的是<strong>释放对象在生命周期内获取的资源</strong>，如动态分配的内存、文件句柄、网络连接等。</p>
+<h4 id="析构函数的特点">析构函数的特点：
+</h4><ol>
+<li><strong>名称是 <code>~</code> 加类名</strong>：例如 <code>~MyClass()</code>。</li>
+<li><strong>无参数，无返回类型</strong>：析构函数不能接受任何参数，也不能被重载（一个类只有一个析构函数）。</li>
+<li><strong>自动调用</strong>：对于栈上的对象，当它离开作用域时调用；对于堆上的对象（用 <code>new</code> 创建），当使用 <code>delete</code> 时调用。</li>
+<li><strong>如果不显式定义</strong>，编译器会自动生成一个空的析构函数。对于管理资源的类，你必须手动定义析构函数来释放资源。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span><span class="o">*</span> <span class="n">ptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 构造函数：动态分配内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">MyClass</span><span class="p">(</span><span class="kt">int</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ptr</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">size</span><span class="p">];</span> <span class="c1">// 获取资源
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Constructor: Memory allocated.&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 析构函数：释放动态分配的内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">~</span><span class="n">MyClass</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">delete</span><span class="p">[]</span> <span class="n">ptr</span><span class="p">;</span> <span class="c1">// 释放资源
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Destructor: Memory freed.&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">MyClass</span> <span class="n">obj</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span> <span class="c1">// 进入作用域，构造函数被调用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span> <span class="c1">// 离开作用域，析构函数被自动调用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">MyClass</span><span class="o">*</span> <span class="n">heapObj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyClass</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">delete</span> <span class="n">heapObj</span><span class="p">;</span> <span class="c1">// 手动 delete，析构函数被调用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 输出：
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Constructor: Memory allocated.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Destructor: Memory freed.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Constructor: Memory allocated.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Destructor: Memory freed.
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="总结与对比">总结与对比
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">特性</th>
+          <th style="text-align: left">构造函数 (Constructor)</th>
+          <th style="text-align: left">析构函数 (Destructor)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>目的</strong></td>
+          <td style="text-align: left"><strong>初始化</strong>对象，获取资源</td>
+          <td style="text-align: left"><strong>清理</strong>对象，释放资源</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>函数名</strong></td>
+          <td style="text-align: left">与<strong>类名相同</strong></td>
+          <td style="text-align: left"><strong><code>~</code></strong> 加类名</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>参数</strong></td>
+          <td style="text-align: left">可以有参数（可重载）</td>
+          <td style="text-align: left"><strong>无</strong>参数（不可重载）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>调用时机</strong></td>
+          <td style="text-align: left">创建对象时 (<code>new</code>, 声明)</td>
+          <td style="text-align: left">销毁对象时 (<code>delete</code>, 离开作用域)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>返回值</strong></td>
+          <td style="text-align: left">无</td>
+          <td style="text-align: left">无</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>编译器生成</strong></td>
+          <td style="text-align: left">如果未定义，生成默认版本</td>
+          <td style="text-align: left">如果未定义，生成空版本</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><strong>核心原则（RAII）</strong>：
+构造函数和析构函数是 C++ <strong>资源获取即初始化 (RAII)</strong> 理念的核心。资源（如内存）的获取应该在构造函数中完成，而资源的释放则在析构函数中完成。这确保了资源的生命周期与对象的生命周期严格绑定，<strong>避免了资源泄漏</strong>，是编写安全、高效 C++ 代码的关键。</p></blockquote>
+</li>
+<li>
+<p>讲解CONTEXT工程:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>好的，您问的是大语言模型（LLM）领域的 <strong>Context Engineering（上下文工程）</strong>。这是一个非常核心且高级的提示工程（Prompt Engineering）概念，对于有效使用大模型至关重要。</p>
+<p>我将从是什么、为什么、核心策略和最佳实践几个方面为您详细讲解。</p>
+<hr>
+<h3 id="1-什么是-context-engineering">1. 什么是 Context Engineering？
+</h3><p><strong>Context Engineering（上下文工程）</strong> 是指通过精心设计和构建输入给大模型的<strong>上下文信息（Context）</strong>，来精确地引导和控制模型输出行为与质量的技术和艺术。</p>
+<p>这里的 <strong>“上下文”</strong> 指的是在<strong>用户问题（Query）</strong> 之前，提供给模型的所有文本信息。它可以包括：</p>
+<ul>
+<li><strong>指令（Instructions）</strong>：告诉模型要扮演的角色、要遵循的规则、要执行的步骤。</li>
+<li><strong>示例（Examples）</strong>：提供一些输入-输出的例子（即少样本学习，Few-Shot Learning）。</li>
+<li><strong>相关知识和信息（Knowledge/Information）</strong>：提供模型生成答案所需的外部知识、数据或背景信息。</li>
+<li><strong>之前的对话历史（Conversation History）</strong>：在多轮对话中，保持对话的连贯性。</li>
+</ul>
+<p><strong>核心思想</strong>：大模型就像一个极其聪明但缺乏背景知识的新员工。Context Engineering 就是你作为管理者，为他提供的<strong>工作说明书、公司资料、过往案例和沟通记录</strong>。你提供的上下文越清晰、越相关，他的工作成果就越好。</p>
+<hr>
+<h3 id="2-为什么需要-context-engineeringwhy-it-matters">2. 为什么需要 Context Engineering？（Why it Matters）
+</h3><ol>
+<li><strong>突破模型固有知识局限</strong>：模型的训练数据是有截止日期的（例如，GPT-4 可能是 2023 年底）。通过上下文，你可以为模型注入最新的、私有的或非常专业的知识，让它回答训练时不知道的事情。</li>
+<li><strong>控制输出格式和风格</strong>：模型可以生成 JSON、XML、HTML、Markdown 等各种格式的文本。通过上下文中的指令和示例，你可以精确指定输出的结构，便于后续的程序化处理。</li>
+<li><strong>引导复杂的推理过程</strong>：对于复杂的多步推理问题，模型可能会“跳步”或出错。通过上下文，你可以引导它使用“思维链”（Chain-of-Thought）等推理模式，一步步地解决问题，提高准确率。</li>
+<li><strong>实现定制化和角色扮演</strong>：你可以通过上下文让模型扮演一个特定的角色（如严格的面试官、友好的客服、某个历史人物），使其行为更具个性化和专业性。</li>
+<li><strong>节省 Token，降低成本</strong>：精心设计的上下文更高效，避免了冗长的提示和重复的交互，从而节省了 API 调用费用（因为费用通常按输入+输出的总 Token 数计算）。</li>
+</ol>
+<hr>
+<h3 id="3-核心策略与技巧how-to-do-it">3. 核心策略与技巧（How to Do It）
+</h3><h4 id="a-指令工程instruction-engineering">a. 指令工程（Instruction Engineering）
+</h4><p>在最开始给出清晰、具体、无歧义的指令。</p>
+<ul>
+<li><strong>差</strong>：<code>总结一下这篇文章。</code>（过于模糊）</li>
+<li><strong>优</strong>：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">你是一个专注于AI领域的资深编辑。请用中文为专业人士总结下面这篇文章。
+</span></span><span class="line"><span class="cl">【要求】
+</span></span><span class="line"><span class="cl">1.  总结核心观点，不超过200字。
+</span></span><span class="line"><span class="cl">2.  提取3个最关键的技术术语并加以解释。
+</span></span><span class="line"><span class="cl">3.  指出文章结论中可能存在的一个偏见或局限性。
+</span></span><span class="line"><span class="cl">【文章】：&lt;粘贴文章&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="b-少样本学习few-shot-learning">b. 少样本学习（Few-Shot Learning）
+</h4><p>提供几个高质量的输入-输出示例，让模型通过示例来学习任务模式。这是非常强大的技巧。</p>
+<ul>
+<li><strong>示例</strong>（情感分析任务）：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">请判断以下文本的情感倾向（积极/消极/中立）。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">示例1：
+</span></span><span class="line"><span class="cl">输入： &#34;这个电影真是太精彩了，演员演技炸裂！&#34;
+</span></span><span class="line"><span class="cl">输出： 积极
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">示例2：
+</span></span><span class="line"><span class="cl">输入： &#34;产品还行吧，就是送货有点慢。&#34;
+</span></span><span class="line"><span class="cl">输出： 中立
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">示例3：
+</span></span><span class="line"><span class="cl">输入： &#34;完全浪费了我的时间，剧情一塌糊涂。&#34;
+</span></span><span class="line"><span class="cl">输出： 消极
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">现在请判断：
+</span></span><span class="line"><span class="cl">输入： &#34;&lt;用户的新评论&gt;&#34;
+</span></span><span class="line"><span class="cl">输出：
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="c-提供知识与信息providing-knowledge">c. 提供知识与信息（Providing Knowledge）
+</h4><p>将模型不知道的信息直接放在上下文里。</p>
+<ul>
+<li><strong>场景</strong>：查询公司内部数据。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">根据以下2024年第一季度的销售数据回答问题。
+</span></span><span class="line"><span class="cl">【数据】：
+</span></span><span class="line"><span class="cl">- 产品A: 销售额 $150,000， 同比增长 15%
+</span></span><span class="line"><span class="cl">- 产品B: 销售额 $95,000， 同比下降 5%
+</span></span><span class="line"><span class="cl">- 产品C: 销售额 $200,000， 同比增长 25%
+</span></span><span class="line"><span class="cl">【问题】：增长率最高的产品是哪一款？它的销售额是多少？
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="d-思维链chain-of-thought-cot">d. 思维链（Chain-of-Thought, CoT）
+</h4><p>引导模型展示其推理步骤，而不是直接给出最终答案。这对于数学、逻辑问题尤其有效。</p>
+<ul>
+<li><strong>示例</strong>：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Q: 食堂有23个苹果，如果午餐用了20个，又买了6个，现在还有多少个？
+</span></span><span class="line"><span class="cl">A: 我们一步步思考：
+</span></span><span class="line"><span class="cl">1. 最开始有23个苹果。
+</span></span><span class="line"><span class="cl">2. 午餐用了20个，所以剩下 23 - 20 = 3个。
+</span></span><span class="line"><span class="cl">3. 又买了6个，所以现在有 3 + 6 = 9个。
+</span></span><span class="line"><span class="cl">所以，现在还有9个苹果。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Q: 会议室有40把椅子，搬进来15把，又搬走10把，还剩多少把？
+</span></span><span class="line"><span class="cl">A:
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="e-输出格式化output-formatting">e. 输出格式化（Output Formatting）
+</h4><p>明确指定你想要的输出格式，如 JSON、列表、表格等。</p>
+<ul>
+<li><strong>示例</strong>：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">请分析以下段落中提到的所有人物、地点和组织，并以JSON格式输出。
+</span></span><span class="line"><span class="cl">JSON格式要求：
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#34;people&#34;: [&#34;名单&#34;],
+</span></span><span class="line"><span class="cl">  &#34;locations&#34;: [&#34;名单&#34;],
+</span></span><span class="line"><span class="cl">  &#34;organizations&#34;: [&#34;名单&#34;]
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">段落：&lt;待分析的文本&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h3 id="4-高级概念上下文窗口context-window与挑战">4. 高级概念：上下文窗口（Context Window）与挑战
+</h3><ul>
+<li><strong>上下文窗口（Context Window）</strong>：这是模型单次交互能处理的<strong>文本总长度上限</strong>（包括提示和补全）。例如，128K 的上下文窗口意味着可以处理约 10 万汉字的文本。</li>
+<li><strong>挑战</strong>：
+<ol>
+<li><strong>“中间失忆”问题</strong>：当上下文非常长时，模型可能会忽略或遗忘放在上下文窗口中间部分的信息，更关注开头和结尾的内容。</li>
+<li><strong>成本与延迟</strong>：更长的上下文意味着更多的 Token 消耗（更贵）和更长的处理时间（更慢）。</li>
+<li><strong>信息检索质量</strong>：并非所有信息都同等重要。如何从海量上下文中最快速、最准确地找到最相关的信息来指导生成，是一个核心挑战。这催生了 <strong>RAG（检索增强生成）</strong> 技术。</li>
+</ol>
+</li>
+</ul>
+<h3 id="5-最佳实践总结">5. 最佳实践总结
+</h3><ol>
+<li><strong>把最重要的信息放在最前和最后</strong>：指令和关键要求放在开头，希望模型执行的动作放在最后，以减少“中间失忆”的影响。</li>
+<li><strong>清晰重于简洁</strong>：不要为了节省几个 Token 而使用模糊不清的指令，这往往会导致更差的输出，最终需要更多轮交互来修正，得不偿失。</li>
+<li><strong>使用 XML/HTML 标签或分隔符</strong>：用 <code>### 指令 ###</code>、<code>&lt;context&gt;...&lt;/context&gt;</code>、<code>&lt;example&gt;</code> 等标签明确区分上下文的不同部分，帮助模型理解结构。</li>
+<li><strong>迭代优化</strong>：Context Engineering 是一个迭代过程。很少有一次性就完美的提示。需要根据模型的输出不断测试、调整和优化你的上下文设计。</li>
+</ol>
+<p><strong>总而言之，Context Engineering 是大模型应用时代的核心技能。它要求使用者不仅是一个提问者，更成为一个好的“沟通者”和“引导者”，通过提供丰富的背景信息来激发模型的最佳性能。</strong></p></blockquote>
+</li>
+<li>
+<p>python async和await机制:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>好的，我们来深入探讨 Python 中 <code>async</code> 和 <code>await</code> 的实现机制。这是一个从语法糖到底层原理的深度讲解。</p>
+<h3 id="核心结论">核心结论
+</h3><p>Python 的 <code>async</code>/<code>await</code> 本质上是一个<strong>用户态的高效并发编程模型</strong>，其核心是<strong>协程 (Coroutine)</strong> 和<strong>事件循环 (Event Loop)</strong>。它通过<strong>生成器 (Generators)</strong> 和 <strong><code>yield</code></strong> 机制实现，而不是使用操作系统线程，因此避免了线程切换的开销和复杂性。</p>
+<hr>
+<h3 id="1-演化史从生成器到异步io">1. 演化史：从生成器到异步IO
+</h3><p>要理解 <code>async</code>/<code>await</code>，必须知道它的前身：<strong>生成器</strong>。</p>
+<ol>
+<li>
+<p><strong>生成器 (Generator)</strong>： 使用 <code>yield</code> 关键字的函数。它可以<strong>暂停</strong>执行并向调用者<strong>返回一个值</strong>，后续可以从暂停的地方<strong>恢复</strong>执行。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">simple_generator</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Start&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="mi">1</span>  <span class="c1"># Pause and return 1</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Resumed with </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">yield</span> <span class="mi">2</span>      <span class="c1"># Pause and return 2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">gen</span> <span class="o">=</span> <span class="n">simple_generator</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">value1</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>   <span class="c1"># Output: &#34;Start&#34;, value1 is 1</span>
+</span></span><span class="line"><span class="cl"><span class="n">value2</span> <span class="o">=</span> <span class="n">gen</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># Output: &#34;Resumed with 42&#34;, value2 is 2</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>yield</code>： 暂停函数，返回一个值。</li>
+<li><code>.send(value)</code>： 恢复函数，并传入一个值（该值成为 <code>yield</code> 表达式的结果）。</li>
+</ul>
+</li>
+<li>
+<p><strong>协程 (Coroutine)</strong>： Python 3.4 的 <code>asyncio</code> 库利用生成器的这个“暂停和恢复”的特性，将其<strong>强化为协程</strong>。一个生成器函数被 <code>@asyncio.coroutine</code> 装饰，并使用 <code>yield from</code> 来等待其他协程。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Python 3.4 style</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@asyncio.coroutine</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">old_style_coroutine</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">yield from</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Done&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这时，“生成器”正式变成了可以相互协作调度的“协程”。</p>
+</li>
+<li>
+<p><strong>原生协程 (Native Coroutine)</strong>： Python 3.5 引入了专用的关键字 <code>async</code> 和 <code>await</code>，使语法更清晰，并与生成器彻底区分开。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Python 3.5+ style</span>
+</span></span><span class="line"><span class="cl"><span class="k">async</span> <span class="k">def</span> <span class="nf">native_coroutine</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Done&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>async def</code> 定义的函数是<strong>原生协程函数</strong>，调用它返回一个<strong>协程对象</strong>，而不是直接执行。<code>await</code> 的作用类似于 <code>yield from</code>，但专门用于等待可等待对象。</p>
+</li>
+</ol>
+<hr>
+<h3 id="2-关键概念与实现机制">2. 关键概念与实现机制
+</h3><h4 id="a-可等待对象-awaitable">a. 可等待对象 (Awaitable)
+</h4><p>任何实现了 <code>__await__()</code> 方法的对象。<code>await</code> 关键字后面必须是一个可等待对象。主要分为三类：</p>
+<ol>
+<li><strong>协程 (Coroutine)</strong>： <code>async def</code> 定义的函数返回的对象。</li>
+<li><strong>任务 (Task)</strong>： 用于并发地调度协程。<code>asyncio.create_task()</code> 的返回值。</li>
+<li><strong>Future</strong>： 一个<strong>底层回调对象</strong>，代表一个异步操作的<strong>最终结果</strong>。它是 <code>Task</code> 的基类。通常用户不直接操作。</li>
+</ol>
+<h4 id="b-事件循环-event-loop---大脑">b. 事件循环 (Event Loop) - 大脑
+</h4><p>这是整个异步机制的核心，是一个<strong>无限循环</strong>。它做两件事：</p>
+<ol>
+<li><strong>轮询</strong>： 不断地检查哪些 <code>Future</code> 对象已经完成（例如，一个网络请求收到了响应，一个定时器超时了）。</li>
+<li><strong>调度</strong>： 一旦某个 <code>Future</code> 完成，事件循环就<strong>恢复</strong>正在等待这个 <code>Future</code> 的<strong>协程</strong>。</li>
+</ol>
+<p>可以把事件循环想象成一个高效的<strong>调度员</strong>，它管理着一个任务列表（协程、回调等），知道每个任务在等待什么（IO操作、睡眠等）。当某个资源就绪时，它就通知对应的任务：“你要等的东西准备好了，继续干吧”。</p>
+<h4 id="c-await-关键字---信号灯">c. <code>await</code> 关键字 - 信号灯
+</h4><p><code>await some_awaitable</code> 做了以下几件事：</p>
+<ol>
+<li><strong>暂停当前协程</strong>： 执行到 <code>await</code> 时，当前协程立即<strong>暂停</strong>。</li>
+<li><strong>向事件循环注册回调</strong>： 它告诉事件循环：“我（当前协程）现在要等 <code>some_awaitable</code> 完成。等它完成后，<strong>请你回调我，让我继续执行</strong>。”</li>
+<li><strong>交出控制权</strong>： 将 CPU 的控制权<strong>交还给事件循环</strong>。事件循环此时可以去找其他已经准备就绪的协程来执行。</li>
+</ol>
+<p><strong>这就是单线程实现并发的关键</strong>：一个协程在等待 IO 时，线程不会傻等，而是去执行其他协程。</p>
+<hr>
+<h3 id="3-工作流程详解">3. 工作流程详解
+</h3><p>让我们通过一个例子，拆解整个生命周期：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">asyncio</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">async</span> <span class="k">def</span> <span class="nf">say_after</span><span class="p">(</span><span class="n">delay</span><span class="p">,</span> <span class="n">what</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span> <span class="c1"># 1. 遇到第一个 await</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">what</span><span class="p">)</span>                <span class="c1"># 4. 被事件循环唤醒后，继续执行</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">task1</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">say_after</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;hello&#39;</span><span class="p">))</span> <span class="c1"># 创建任务1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">task2</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">say_after</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;world&#39;</span><span class="p">))</span> <span class="c1"># 创建任务2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">await</span> <span class="n">task1</span> <span class="c1"># 2. 等待任务1完成</span>
+</span></span><span class="line"><span class="cl">    <span class="k">await</span> <span class="n">task2</span> <span class="c1"># 5. 等待任务2完成</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span> <span class="c1"># 启动事件循环</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><strong>启动</strong>： <code>asyncio.run(main())</code> 创建一个新的事件循环，并开始运行 <code>main()</code> 协程。</li>
+<li><strong>创建任务</strong>： <code>asyncio.create_task()</code> 将 <code>say_after</code> 协程<strong>包装成一个 <code>Task</code> 对象</strong>，并<strong>立即将其加入到事件循环的调度队列中</strong>。此时，两个 <code>say_after</code> 协程都开始执行。</li>
+<li><strong>首次 <code>await</code></strong>：
+<ul>
+<li><code>task1</code> 和 <code>task2</code> 几乎同时执行到 <code>await asyncio.sleep(delay)</code>。</li>
+<li>它们都暂停执行，并向事件循环注册：“请在哪哪毫秒后唤醒我”。</li>
+<li><strong>控制权回到事件循环</strong>。</li>
+</ul>
+</li>
+<li><strong>事件循环工作</strong>：
+<ul>
+<li>事件循环发现现在没有立刻可以运行的协程（都在睡眠），但它有两个定时器在倒计时。</li>
+<li>它等待（通过 <code>selectors</code> 模块），直到 <strong>1 秒后</strong>，<code>task1</code> 的睡眠到期。</li>
+<li>事件循环将 <code>task1</code> 的状态标记为“完成”，并将其<strong>放回可运行队列</strong>。</li>
+<li>事件循环找到 <code>task1</code> 并恢复其执行。<code>task1</code> 打印 <code>'hello'</code>，然后真正执行完毕。</li>
+</ul>
+</li>
+<li><strong>等待完成</strong>：
+<ul>
+<li><code>main</code> 函数中的 <code>await task1</code> 发现 <code>task1</code> 已经完成，于是继续向下执行。</li>
+<li>它遇到 <code>await task2</code>，此时 <code>task2</code> 可能还在睡眠（才过去1秒，它要睡2秒）。</li>
+<li><code>main</code> 协程因此暂停，<strong>控制权再次交还给事件循环</strong>。</li>
+</ul>
+</li>
+<li><strong>最终结束</strong>：
+<ul>
+<li>事件循环又等了1秒，<code>task2</code> 的睡眠到期。</li>
+<li>事件循环唤醒 <code>task2</code>，它打印 <code>'world'</code> 并完成。</li>
+<li>事件循环看到 <code>main</code> 在等待的 <code>task2</code> 也完成了，就恢复 <code>main</code> 协程。</li>
+<li><code>main</code> 执行完毕，事件循环退出。</li>
+</ul>
+</li>
+</ol>
+<p>整个过程只在 <strong>1 个线程</strong>中完成，总耗时约 <strong>2 秒</strong>（而不是 1+2=3 秒），实现了并发。</p>
+<hr>
+<h3 id="4-底层实现与生成器的联系">4. 底层实现：与生成器的联系
+</h3><p>尽管用了新语法，底层依然与生成器密切相关。</p>
+<ul>
+<li><code>async def</code> 函数在底层创建的是一个<strong>生成器函数</strong>的变种。</li>
+<li><code>await</code> 语句编译后，本质上就是一个 <code>yield from</code>。</li>
+<li>当你 <code>await</code> 一个 <code>Future</code> 时，代码大致相当于：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 伪代码：await future 的近似实现</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="fm">__await__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">done</span><span class="p">():</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="bp">self</span>  <span class="c1"># 这里将 Future 本身 yield 出去，暂停协程</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="c1"># 恢复后，返回结果</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>事件循环在 <code>yield self</code> 这里拿到这个 <code>Future</code>，并将其添加到监视列表中。</li>
+</ul>
+<h3 id="总结">总结
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">特性</th>
+          <th style="text-align: left">实现机制</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>如何暂停？</strong></td>
+          <td style="text-align: left">通过 <code>await</code> 关键字，其底层是 <code>yield</code> 或 <code>yield from</code>，将协程的执行状态（帧栈、指令指针等）冻结。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>如何恢复？</strong></td>
+          <td style="text-align: left">事件循环在它等待的资源就绪后（如 IO 完成、超时），通过 <code>.send(None)</code> 或类似方法恢复协程。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>如何并发？</strong></td>
+          <td style="text-align: left">单线程内，一个协程因 <code>await</code> 暂停时，事件循环立即调度执行另一个已就绪的协程。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>为何高效？</strong></td>
+          <td style="text-align: left"><strong>用户态调度</strong>，切换代价极低（只是一个函数调用）。<strong>非阻塞IO</strong>，等待期间线程不被占用。</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>简单来说，<strong><code>async</code>/<code>await</code> 是提供给开发者的一套友好语法糖，其背后是一套基于生成器、Future 和事件循环的成熟并发框架</strong>。它让开发者可以用看似同步的代码风格，写出高性能的异步应用程序。</p></blockquote>
+</li>
+<li>
+<p>Milvous向量数据库向量存储(索引)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>好的，这是一个非常核心的问题。我们来彻底讲清楚 Milvus（以及几乎所有向量数据库）中的“索引”是什么。</p>
+<p>简单来说，<strong>向量数据库中的索引是一种为了加速“向量相似性搜索”而专门设计的数据结构。</strong> 它通过预先对原始向量进行某种形式的整理、排序或转换，将原本“大海捞针”式的暴力计算，变成了“按图索骥”式的快速查询。</p>
+<hr>
+<h3 id="1-为什么需要索引-从暴力搜索说起">1. 为什么需要索引？—— 从暴力搜索说起
+</h3><p>首先，想象一下如果没有索引会怎样：</p>
+<ul>
+<li><strong>暴力搜索 (Brute-force Search)</strong>：当你查询一个向量时，数据库必须将这个查询向量与库中的<strong>每一个</strong>向量都计算一次相似度（比如计算欧氏距离或余弦相似度），然后进行排序，返回最相似的前K个。</li>
+<li><strong>问题</strong>：这种方式虽然能保证100%的准确率，但其计算量是 <strong>O(N)</strong>（N是向量总数）。当N达到百万、千万甚至亿级时，每次查询都会非常非常慢，完全无法满足实时检索的需求（比如推荐系统、以图搜图等）。</li>
+</ul>
+<p><strong>索引就是为了解决这个性能瓶颈而生的。</strong> 它的核心思想是：<strong>用空间换时间，用精度换速度</strong>。</p>
+<ul>
+<li><strong>空间换时间</strong>：预先计算并存储索引结构，虽然占用了更多的磁盘/内存空间，但使得后续的查询速度快了几个数量级。</li>
+<li><strong>精度换速度</strong>：大多数索引算法属于<strong>近似最近邻搜索 (ANN - Approximate Nearest Neighbor)</strong>，它不保证一定能找到绝对最相似的向量，但能以极高的概率找到非常相似的向量，同时速度极快。</li>
+</ul>
+<hr>
+<h3 id="2-索引的本质是什么">2. 索引的本质是什么？
+</h3><p>在Milvus中，索引不是一个像传统数据库（如MySQL的B+树）那样的“目录”。它更像是一种<strong>对向量数据的预处理和重排规则</strong>。</p>
+<p>你可以把它想象成：</p>
+<ul>
+<li><strong>传统书 vs 书籍索引</strong>：没有索引的书，你只能一页一页翻（暴力搜索）。有了索引，你可以直接根据关键词找到对应的页码（快速查询）。</li>
+<li><strong>词典 vs 拼音检索表</strong>：词典本身是按字母顺序排列的（一种索引）。而拼音检索表是另一种索引方式，它帮你快速定位到某个发音的字在词典的哪一页。</li>
+</ul>
+<p><strong>创建索引的过程，就是Milvus根据你选择的算法，对你的向量数据进行预处理，并生成一种特定的、利于快速搜索的数据结构的过程。</strong></p>
+<hr>
+<h3 id="3-milvus中常见的索引类型如何看图索骥">3. Milvus中常见的索引类型（如何“看图索骥”）
+</h3><p>Milvus支持多种索引类型，适用于不同的场景（精度/速度/内存的权衡）。以下是几种主流的：</p>
+<h4 id="a-基于量化的索引相当于分区">a. 基于量化的索引（相当于“分区”）
+</h4><p><strong>思想</strong>：将高维向量空间划分成多个“区域”（聚类），每个区域用一个代表向量（质心）来表示。搜索时，先找到查询向量所在的或附近的区域，然后只在这个区域的向量里进行精细搜索。</p>
+<ul>
+<li><strong>IVF_FLAT / IVF_SQ8 / IVF_PQ</strong>：
+<ul>
+<li><strong>工作原理</strong>：
+<ol>
+<li><strong>训练</strong>：先用K-Means等算法对所有向量进行聚类，得到<code>nlist</code>个聚类中心（比如1024个）。</li>
+<li><strong>分配</strong>：将每个原始向量分配到离它最近的那个聚类中心所在的“桶”里。</li>
+<li><strong>搜索</strong>：查询时，先计算查询向量与所有聚类中心的距离，找到最近的<code>nprobe</code>个（比如8个）聚类中心。然后只在这<code>nprobe</code>个“桶”内部的向量中进行精确（或进一步量化）搜索。</li>
+</ol>
+</li>
+<li><strong>类比</strong>：好比在一个大型图书馆里，先把书按主题（历史、科学、文学&hellip;）分到不同的房间（聚类）。你要找一本历史书，就不用去科学和文学房间里翻了，直接去历史房间找就行。<code>nprobe</code>相当于你决定去“历史”和“考古”这两个最相关的房间找。</li>
+</ul>
+</li>
+</ul>
+<h4 id="b-基于图的索引相当于人际关系网">b. 基于图的索引（相当于“人际关系网”）
+</h4><p><strong>思想</strong>：将向量构建成一张图，每个向量是一个节点，节点之间通过边连接，相似的向量之间才有边。搜索时，从一些入口节点开始，沿着“越来越相似”的边进行“漫步”式搜索，快速逼近目标。</p>
+<ul>
+<li><strong>HNSW（Hierarchical Navigable Small World）</strong>： 这是目前最流行、性能最好的ANN索引之一。
+<ul>
+<li><strong>工作原理</strong>：
+<ol>
+<li><strong>分层</strong>：构建一个多层图结构。底层（第0层）包含所有向量，越高层包含的向量越少，相当于一个“高速公路”网络。</li>
+<li><strong>搜索</strong>：从最高层的某个节点开始，因为节点少，可以快速定位到目标的大致区域。然后逐层向下，在更精细的层中搜索，直到最底层找到最相似的邻居。</li>
+</ol>
+</li>
+<li><strong>类比</strong>：想象你要在全球找人。
+<ul>
+<li><strong>底层</strong>：所有街道（所有向量）。</li>
+<li><strong>最高层</strong>：国际航班线路（少量核心枢纽）。
+你先坐国际航班（最高层）飞到目标国家，再转国内航班（中间层），最后打车在街道（底层）上找到具体地址。这比一条街一条街找快无数倍。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="c-基于树的索引相当于决策树">c. 基于树的索引（相当于“决策树”）
+</h4><ul>
+<li><strong>ANNOY（Approximate Nearest Neighbors Oh Yeah）</strong>：
+<ul>
+<li><strong>工作原理</strong>：通过不断递归地随机超平面来分割向量空间，构建一颗或多颗二叉树。搜索时，从根节点开始向下遍历，找到所在的叶子节点，然后在这个叶子节点内进行搜索。</li>
+<li><strong>类比</strong>：玩“20个问题”游戏：“是动物吗？” -&gt; “是哺乳动物吗？” -&gt; &hellip; 通过一系列问题快速缩小范围。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="4-索引与向量存储的关系">4. 索引与向量存储的关系
+</h3><p>这是一个非常重要的点：</p>
+<ul>
+<li><strong>索引 (Index)</strong>：是<strong>加速查询</strong>的数据结构（如HNSW图、IVF的聚类中心列表）。它通常保存在<strong>内存 (RAM)</strong> 中，因为搜索需要极快的随机访问速度。</li>
+<li><strong>原始向量数据 (Vector Data)</strong>：是原始的向量本身。它可以有不同的存储方式以平衡性能和成本：
+<ul>
+<li><strong>FLAT</strong>：原样存储，不压缩。用于保证100%精确率的暴力搜索，或作为其他索引的底层数据。</li>
+<li><strong>SQ8</strong>：将原始<code>float</code>向量压缩为<code>8-bit integer</code>，显著减少内存占用，精度损失很小。</li>
+<li><strong>磁盘</strong>：甚至可以只将索引加载到内存，而将原始向量数据放在磁盘上，需要时再通过索引定位到磁盘位置去读取，极大节省内存成本。</li>
+</ul>
+</li>
+</ul>
+<p>在Milvus中，你<strong>先插入数据（向量）</strong>，<strong>后创建索引</strong>。创建索引后，Milvus会自动管理索引和原始数据之间的关系。</p>
+<h3 id="总结-1">总结
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">特性</th>
+          <th style="text-align: left">解释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>是什么？</strong></td>
+          <td style="text-align: left">一种为了<strong>加速相似性搜索</strong>而预先构建的<strong>专用数据结构</strong>。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>为什么需要？</strong></td>
+          <td style="text-align: left">避免暴力搜索的<strong>性能灾难</strong>，实现毫秒级的海量向量检索。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>核心权衡？</strong></td>
+          <td style="text-align: left"><strong>精度 vs 速度 vs 内存</strong>。索引都是近似搜索，需要在三者之间取得平衡。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>在Milvus中如何工作？</strong></td>
+          <td style="text-align: left">1. <strong>插入</strong>原始向量数据。<br>2. <strong>选择</strong>一种索引类型（如HNSW, IVF_PQ）和参数。<br>3. <strong>创建</strong>索引，Milvus后台进行预处理。<br>4. <strong>搜索</strong>时，使用索引快速定位候选集，极大减少计算量。</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>所以，当你在Milvus中为一个集合（Collection）创建索引时，你本质上是在告诉Milvus：“请用我选择的这种算法和参数，为我整理好这些数据，以便我以后能飞快地找到相似的东西。”</p></blockquote>
+</li>
+<li>
+<p>C和C++的区别:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>好的，这是一个经典且重要的问题。C 和 C++ 虽然名字相似，且 C++ 是作为 C 的增强版出现的，但它们在设计哲学、特性和适用场景上有着根本的区别。</p>
+<p>简单来说：</p>
+<ul>
+<li><strong>C</strong> 是一种<strong>过程式</strong>编程语言，核心是“函数”和“过程”。</li>
+<li><strong>C++</strong> 是一种<strong>多范式</strong>编程语言，支持过程式、面向对象（Object-Oriented）和泛型（Generic）编程。</li>
+</ul>
+<p>你可以把 C 看作是一把精准、高效的手术刀，而 C++ 则是一整套功能各异、威力强大的瑞士军刀。</p>
+<p>下面我们从多个维度进行详细对比。</p>
+<hr>
+<h3 id="1-核心范式与设计哲学">1. 核心范式与设计哲学
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">特性</th>
+          <th style="text-align: left">C</th>
+          <th style="text-align: left">C++</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>核心范式</strong></td>
+          <td style="text-align: left"><strong>过程式编程 (Procedural)</strong></td>
+          <td style="text-align: left"><strong>多范式编程 (Multi-paradigm)</strong></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>设计哲学</strong></td>
+          <td style="text-align: left">“相信程序员”，提供最大限度的灵活性和控制力，追求极致的性能和简洁。</td>
+          <td style="text-align: left">在提供 C 的性能和灵活性的同时，增加高级特性以支持更复杂的软件工程，如<strong>抽象</strong>、<strong>代码复用</strong>和<strong>模块化</strong>。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>核心概念</strong></td>
+          <td style="text-align: left">函数、变量、指针、结构体。程序由一系列的函数调用组成。</td>
+          <td style="text-align: left">类、对象、继承、多态、模板、异常。程序是相互作用的对象集合。</td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<h3 id="2-关键特性对比">2. 关键特性对比
+</h3><h4 id="a-面向对象编程-oop">a. 面向对象编程 (OOP)
+</h4><p>这是最显著的区别。</p>
+<ul>
+<li>
+<p><strong>C</strong>：<strong>不支持</strong>面向对象。没有类的概念。你可以用 <code>struct</code> 来封装数据，但 <code>struct</code> 不能包含函数（方法）。要实现类似“对象”的行为，需要手动将函数指针放在结构体里，这是一种非常原始和容易出错的模拟。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">// C 语言，使用结构体和函数指针模拟“类”
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">print</span><span class="p">)(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span> <span class="c1">// 函数指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span> <span class="n">Point</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print_point</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Point(%d, %d)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Point</span> <span class="n">p1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">print_point</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p1</span><span class="p">.</span><span class="nf">print</span><span class="p">(</span><span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">);</span> <span class="c1">// 笨拙的调用方式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>C++</strong>：<strong>原生支持</strong>面向对象。提供了 <code>class</code> 关键字，可以将<strong>数据（成员变量）</strong> 和<strong>操作（成员函数）</strong> 绑定在一起。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// C++ 语言，真正的类
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">Point</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 成员函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Point(&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;, &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">y</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;)&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Point</span> <span class="n">p1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p1</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p1</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p1</span><span class="p">.</span><span class="n">print</span><span class="p">();</span> <span class="c1">// 简洁自然的调用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>C++ 还支持<strong>封装</strong>（通过 <code>public</code>, <code>private</code>, <code>protected</code>）、<strong>继承</strong>和<strong>多态</strong>（通过虚函数），这些都是大型软件工程的基石。</p>
+</li>
+</ul>
+<h4 id="b-内存管理">b. 内存管理
+</h4><ul>
+<li><strong>C</strong>： 只有 <code>malloc()</code>, <code>calloc()</code>, <code>realloc()</code> 和 <code>free()</code>。需要手动计算内存大小并进行类型转换。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">arr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="nf">free</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><strong>C++</strong>： 除了支持 C 的方式，还引入了<strong>运算符 <code>new</code> 和 <code>delete</code></strong>。它们更安全、更方便，因为它们会自动计算类型大小、进行类型转换，并会调用对象的<strong>构造函数</strong>和<strong>析构函数</strong>。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">delete</span><span class="p">[]</span> <span class="n">arr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 对于对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">MyClass</span> <span class="o">*</span><span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyClass</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="k">delete</span> <span class="n">obj</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="c-函数特性">c. 函数特性
+</h4><ul>
+<li><strong>C</strong>： 不支持函数重载（同一作用域内不能有同名函数）、默认参数或引用传递。</li>
+<li><strong>C++</strong>：
+<ul>
+<li><strong>函数重载</strong>：允许同名函数，只要参数列表不同。</li>
+<li><strong>默认参数</strong>：函数参数可以指定默认值。</li>
+<li><strong>引用传递</strong>：提供了“引用” (<code>&amp;</code>) 的概念，作为指针的替代品，语法更简洁安全。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 函数重载
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="kt">double</span> <span class="n">d</span><span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 默认参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">init</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 引用传递 (交换两个数)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">swap</span><span class="p">(</span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">b</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="d-泛型编程">d. 泛型编程
+</h4><ul>
+<li><strong>C</strong>： 不支持。要实现通用操作（比如一个能处理任何类型的排序函数），通常需要使用 <code>void*</code> 指针和函数指针，代码复杂且极不安全。</li>
+<li><strong>C++</strong>： 通过<strong>模板 (Templates)</strong> 支持。可以编写与类型无关的通用代码。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 模板函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">T</span> <span class="n">max</span><span class="p">(</span><span class="n">T</span> <span class="n">a</span><span class="p">,</span> <span class="n">T</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="o">?</span> <span class="nl">a</span> <span class="p">:</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 模板类 - 标准库中的vector就是一个模板类
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MyVector</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">T</span><span class="o">*</span> <span class="n">data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">MyVector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">intVec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">MyVector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">strVec</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>C++ 标准库（STL）的容器（如 <code>vector</code>, <code>map</code>）和算法（如 <code>sort</code>, <code>find</code>）都是基于模板构建的，这是 C++ 强大功能的体现。</li>
+</ul>
+<h4 id="e-异常处理">e. 异常处理
+</h4><ul>
+<li><strong>C</strong>： 没有内置的异常机制。通常通过函数返回值（错误码）或设置全局变量（如 <code>errno</code>）来处理错误。</li>
+<li><strong>C++</strong>： 提供了 <code>try</code>, <code>catch</code>, <code>throw</code> 关键字用于结构化异常处理，可以将正常代码和错误处理代码分离，使逻辑更清晰。</li>
+</ul>
+<h4 id="f-输入输出">f. 输入输出
+</h4><ul>
+<li><strong>C</strong>： 使用 <code>printf</code>, <code>scanf</code> 等函数。需要指定格式符（如 <code>%d</code>, <code>%s</code>），类型不安全（如果格式符和变量类型不匹配会导致运行时错误）。</li>
+<li><strong>C++</strong>： 使用<strong>流（Stream）</strong> 对象 <code>cin</code>, <code>cout</code>, <code>cerr</code>。使用 <code>&lt;&lt;</code>（输出操作符）和 <code>&gt;&gt;</code>（输入操作符），编译器会自动处理类型，更安全、更现代。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">age</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Enter your name and age: &#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">name</span> <span class="o">&gt;&gt;</span> <span class="n">age</span><span class="p">;</span> <span class="c1">// 无需指定格式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Hello, &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;. You are &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">age</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; years old.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="g-其他特性">g. 其他特性
+</h4><p>C++ 还包含很多 C 没有的特性，例如：</p>
+<ul>
+<li><strong>命名空间 (Namespace)</strong>： 解决命名冲突问题。</li>
+<li><strong>bool 类型</strong>： 原生的布尔类型 <code>true</code>/<code>false</code>。</li>
+<li><strong>STL (Standard Template Library)</strong>： 一个强大的标准库，包含容器、算法、迭代器等。</li>
+</ul>
+<hr>
+<h3 id="3-兼容性">3. 兼容性
+</h3><p><strong>C++ 几乎是 C 的超集</strong>。这意味着绝大多数（约99%）的 C 代码可以不经过修改或只经过少量修改就在 C++ 编译器下编译通过。</p>
+<p><strong>但是，重要的例外情况</strong>：</p>
+<ul>
+<li>C++ 的关键字（如 <code>class</code>, <code>throw</code>, <code>catch</code>）在 C 中不能作为变量名。</li>
+<li>C++ 对类型检查更加严格。例如，将 <code>void*</code> 指针赋值给其他类型的指针时，在 C 中隐式转换，在 C++ 中必须<strong>显式转换</strong>。</li>
+<li>函数声明：在 C 中，<code>int func();</code> 表示可以接受任意参数；在 C++ 中，它表示不接受任何参数。</li>
+</ul>
+<hr>
+<h3 id="4-总结与如何选择">4. 总结与如何选择
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">方面</th>
+          <th style="text-align: left">C</th>
+          <th style="text-align: left">C++</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>范式</strong></td>
+          <td style="text-align: left">过程式</td>
+          <td style="text-align: left">多范式（过程式、面向对象、泛型）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>核心</strong></td>
+          <td style="text-align: left">函数</td>
+          <td style="text-align: left">类、模板</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>内存管理</strong></td>
+          <td style="text-align: left"><code>malloc/free</code></td>
+          <td style="text-align: left"><code>new/delete</code> + 智能指针（现代C++）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>安全性</strong></td>
+          <td style="text-align: left">较低，更依赖程序员</td>
+          <td style="text-align: left">较高（类型检查更严，特性更安全）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>性能</strong></td>
+          <td style="text-align: left">极致性能，贴近硬件</td>
+          <td style="text-align: left">同等高效，但抽象可能带来轻微开销（通常可通过优化消除）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>代码复用</strong></td>
+          <td style="text-align: left">较差</td>
+          <td style="text-align: left">极佳（继承、模板）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>复杂度</strong></td>
+          <td style="text-align: left">相对简单</td>
+          <td style="text-align: left">非常复杂，语言特性繁多</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>典型应用</strong></td>
+          <td style="text-align: left"><strong>操作系统内核</strong>（Linux, Windows）、<strong>嵌入式系统</strong>、<strong>驱动程序</strong>、<strong>对性能和控制力要求极高的系统</strong></td>
+          <td style="text-align: left"><strong>大型应用程序</strong>（Adobe, MS Office）、<strong>游戏引擎</strong>（Unreal）、<strong>浏览器</strong>（Chrome, Firefox）、<strong>高频交易</strong>、<strong>中间件</strong></td>
+      </tr>
+  </tbody>
+</table></div>
+<p><strong>如何选择？</strong></p>
+<ul>
+<li>
+<p><strong>选择 C，如果</strong>：</p>
+<ul>
+<li>你开发的是操作系统、嵌入式固件、硬件驱动程序等底层系统软件。</li>
+<li>项目极度追求性能和控制，需要手动管理每一个字节。</li>
+<li>目标平台的资源极其有限（如单片机），容不下 C++ 运行时的开销。</li>
+<li>项目非常小，或者需要与大量现有的 C 代码库集成。</li>
+</ul>
+</li>
+<li>
+<p><strong>选择 C++，如果</strong>：</p>
+<ul>
+<li>你开发的是大型、复杂的应用程序（如桌面软件、游戏、数据库）。</li>
+<li>你需要构建复杂的抽象，并希望提高代码的可维护性、可复用性和可扩展性。</li>
+<li>你希望利用丰富的标准库（STL）和第三方库来提升开发效率。</li>
+<li>项目需要面向对象或泛型编程的特性来更好地建模问题。</li>
+</ul>
+</li>
+</ul>
+<p>总而言之，C 是“基础”和“控制”，而 C++ 是“工程”和“抽象”。两者都是极其强大且经久不衰的语言。</p></blockquote>
+</li>
+<li>
+<p>栈和堆的区别:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>好的，这是一个计算机科学中非常核心的概念。<strong>栈（Stack）</strong> 和 <strong>堆（Heap）</strong> 是程序运行时用于管理内存的两个重要区域，它们在分配方式、生命周期、性能和特性上有着根本的区别。</p>
+<p>简单来说：</p>
+<ul>
+<li><strong>栈</strong>：就像自助餐厅的餐盘架。你取用和放回的都是最顶上的那个（<strong>后进先出</strong>）。分配和回收速度极快，但空间有限，生命周期由系统自动管理。</li>
+<li><strong>堆</strong>：就像一个大仓库。你可以申请任意大小的空间，并且可以随时存取（<strong>自由存取</strong>）。空间巨大，但分配和回收速度较慢，生命周期必须由程序员手动管理（或由垃圾回收器管理），否则会导致内存泄漏。</li>
+</ul>
+<p>下面我们从多个维度进行详细对比。</p>
+<hr>
+<h3 id="对比表格">对比表格
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">特性</th>
+          <th style="text-align: left">栈 (Stack)</th>
+          <th style="text-align: left">堆 (Heap)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>管理方式</strong></td>
+          <td style="text-align: left"><strong>自动</strong>由编译器管理</td>
+          <td style="text-align: left"><strong>手动</strong>由程序员管理（C/C++）或由<strong>垃圾回收器（GC）</strong> 管理（Java, Go, C#等）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>分配/释放速度</strong></td>
+          <td style="text-align: left"><strong>非常快</strong>。只需移动栈指针。</td>
+          <td style="text-align: left"><strong>相对较慢</strong>。需要寻找合适的内存块，并可能涉及复杂的系统调用。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>生命周期</strong></td>
+          <td style="text-align: left"><strong>函数作用域</strong>。变量在函数执行结束时<strong>自动</strong>释放。</td>
+          <td style="text-align: left"><strong>动态</strong>。从 <code>malloc</code>/<code>new</code> 开始，到 <code>free</code>/<code>delete</code>（或GC回收）结束。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>空间大小</strong></td>
+          <td style="text-align: left"><strong>较小</strong>。通常大小在几MB左右（取决于操作系统和编译器设置）。</td>
+          <td style="text-align: left"><strong>很大</strong>。只受限于计算机的可用虚拟内存大小。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>数据结构</strong></td>
+          <td style="text-align: left"><strong>线性结构，后进先出（LIFO）</strong>。</td>
+          <td style="text-align: left"><strong>非线性结构，自由链表</strong>。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>碎片问题</strong></td>
+          <td style="text-align: left"><strong>无</strong>。分配和释放严格按照顺序，非常高效。</td>
+          <td style="text-align: left"><strong>有</strong>。频繁的分配和释放会造成内存碎片。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>性能</strong></td>
+          <td style="text-align: left"><strong>高</strong>。硬件通常有直接支持，缓存命中率高。</td>
+          <td style="text-align: left"><strong>低</strong>。可能涉及系统调用，访问模式更分散，缓存不友好。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>主要用途</strong></td>
+          <td style="text-align: left">存储<strong>局部变量</strong>、<strong>函数参数</strong>、<strong>函数调用地址</strong>等。</td>
+          <td style="text-align: left">存储<strong>动态分配的数据</strong>、<strong>大小在编译期未知的对象</strong>（如可变长数组）、<strong>需要跨函数使用的数据</strong>。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>安全性</strong></td>
+          <td style="text-align: left"><strong>更安全</strong>。生命周期自动管理，不会内存泄漏。</td>
+          <td style="text-align: left"><strong>较不安全</strong>。容易发生内存泄漏（忘释放）、野指针（释放后访问）、重复释放等问题。</td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<h3 id="详细解释与类比">详细解释与类比
+</h3><h4 id="1-栈-stack">1. 栈 (Stack)
+</h4><p>栈内存的管理方式非常像我们生活中叠放的盘子：你总是取最上面的盘子（<strong>弹出，pop</strong>），用完后也总是放回最上面（<strong>压入，push</strong>）。这种结构决定了它的特性。</p>
+<ul>
+<li>
+<p><strong>工作原理</strong>：CPU提供一个专门的寄存器（<strong>栈指针</strong>）来跟踪栈的顶部。当一个函数被调用时：</p>
+<ol>
+<li>参数和返回地址被<strong>压入</strong>栈。</li>
+<li>函数内的局部变量也在栈上分配空间（移动栈指针）。</li>
+<li>函数执行结束时，所有这些数据都被自动<strong>弹出</strong>（移动栈指针回去），内存立即被回收用于下一个函数调用。</li>
+</ol>
+</li>
+<li>
+<p><strong>代码示例 (C++)</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">stackVar</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">// &#39;stackVar&#39; 在栈上分配
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// ... 函数结束，&#39;stackVar&#39; 被自动释放
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>优点</strong>：极速、自动管理、无碎片。</p>
+</li>
+<li>
+<p><strong>缺点</strong>：空间有限、生命周期短暂、数据大小必须在编译期确定。</p>
+</li>
+</ul>
+<h4 id="2-堆-heap">2. 堆 (Heap)
+</h4><p>堆更像是一个巨大的“全局内存池”。程序可以在运行时申请任意大小的内存块，并且可以以任何顺序释放它们。</p>
+<ul>
+<li>
+<p><strong>工作原理</strong>：程序通过调用如 <code>malloc()</code> (C) 或 <code>new</code> (C++) 来向操作系统申请一块指定大小的内存。操作系统在堆中找到一个足够大的空闲块分配给它，并返回一个指向该内存块的<strong>指针</strong>。程序员负责在数据不再使用时，通过 <code>free()</code> (C) 或 <code>delete</code> (C++) 释放该内存。</p>
+</li>
+<li>
+<p><strong>代码示例 (C++)</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">bar</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 在堆上分配一个整数，用指针heapPtr管理它
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span><span class="o">*</span> <span class="n">heapPtr</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// ... 使用这个整数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">delete</span> <span class="n">heapPtr</span><span class="p">;</span> <span class="c1">// **必须手动释放**，否则内存泄漏！
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">heapPtr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span> <span class="c1">// 避免成为野指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>优点</strong>：空间巨大、生命周期灵活、大小在运行时决定。</p>
+</li>
+<li>
+<p><strong>缺点</strong>：分配和释放速度慢、可能产生内存碎片、管理不当会导致严重错误（内存泄漏、野指针）。</p>
+</li>
+</ul>
+<hr>
+<h3 id="常见问题与误区-faq">常见问题与误区 (FAQ)
+</h3><ol>
+<li>
+<p><strong>数据结构中的“堆”和内存中的“堆”是一个概念吗？</strong></p>
+<ul>
+<li><strong>不是</strong>。这是中文翻译造成的歧义。</li>
+<li>数据结构中的堆（Heap）是一种特殊的<strong>树形结构</strong>（如二叉堆），常用于实现优先队列。</li>
+<li>内存中的堆（Heap）指的是<strong>内存管理区域</strong>，名称来源于“一堆可用的内存”。</li>
+<li>两者是完全不同的概念。</li>
+</ul>
+</li>
+<li>
+<p><strong>“栈溢出”和“内存泄漏”是什么意思？</strong></p>
+<ul>
+<li><strong>栈溢出 (Stack Overflow)</strong>：通常由过深的递归或过大的局部变量（如 <code>int hugeArray[1000000]</code>）导致，耗尽了有限的栈空间。</li>
+<li><strong>内存泄漏 (Memory Leak)</strong>：发生在<strong>堆</strong>上。程序申请了内存（<code>new</code>）但忘记了释放（<code>delete</code>），导致这块内存无法被再次使用，最终可能耗尽所有可用内存。</li>
+</ul>
+</li>
+<li>
+<p><strong>Java/Python/Go 这些语言也有堆和栈吗？</strong></p>
+<ul>
+<li><strong>有</strong>。这些语言在运行时同样需要栈来管理函数调用和局部变量。<strong>对象</strong>（Object）也几乎总是分配在堆上。</li>
+<li><strong>关键区别</strong>在于：这些语言引入了<strong>垃圾回收（Garbage Collection, GC）</strong> 机制。程序员不需要手动 <code>delete</code>，GC 会自动追踪不再被引用的堆内存并进行回收。这大大减少了内存管理的负担，但代价是额外的性能开销和回收时机的不确定性。</li>
+</ul>
+</li>
+</ol>
+<h3 id="总结-2">总结
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">场景</th>
+          <th style="text-align: left">选择</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>生命周期随函数结束而结束的、小的、确定的数据</strong></td>
+          <td style="text-align: left">使用<strong>栈</strong>（如局部变量、函数参数）。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>生命周期需要跨函数、大的、编译期大小未知的数据</strong></td>
+          <td style="text-align: left">使用<strong>堆</strong>（如动态数组、大型对象、需要在函数间共享的数据）。</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>理解栈和堆的区别对于写出高效、安全、稳定的程序至关重要，尤其是在使用 C/C++ 这类需要手动管理内存的语言时。</p></blockquote>
+</li>
+<li>
+<p>内存泄漏:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>好的，我们来详细讲解一下<strong>内存泄漏（Memory Leak）</strong>。</p>
+<p>这是一个在编程中，尤其是手动管理内存的语言（如 C/C++）中，非常常见且棘手的问题。</p>
+<hr>
+<h3 id="一核心概念什么是内存泄漏">一、核心概念：什么是内存泄漏？
+</h3><p><strong>内存泄漏</strong>指的是程序在运行时，<strong>未能释放不再使用的已分配内存</strong>的一种情况。</p>
+<p>你可以把它想象成：</p>
+<ul>
+<li>你去图书馆借了一本书（<strong>申请内存</strong> <code>malloc</code>/<code>new</code>）。</li>
+<li>你看完了，这本书对你没用了（<strong>内存不再被需要</strong>）。</li>
+<li>但你既没有还书，也没有告诉图书馆这本书不要了（<strong>没有释放内存</strong> <code>free</code>/<code>delete</code>）。</li>
+<li>结果就是，这本书一直放在你家，别人也无法借阅，图书馆的库存看起来总是少一本（<strong>可用内存减少</strong>）。</li>
+</ul>
+<p>从技术上讲，就是程序通过 <code>malloc</code>、<code>calloc</code>、<code>new</code> 等函数在<strong>堆（Heap）</strong> 上申请了内存，但在使用完毕后，没有通过对应的 <code>free</code> 或 <code>delete</code> 将其释放。导致这块内存一直被该程序占用，无法被操作系统重新分配给其他程序或该程序的其他部分使用。</p>
+<hr>
+<h3 id="二为什么会发生内存泄漏">二、为什么会发生内存泄漏？
+</h3><p>内存泄漏的根本原因是<strong>内存管理不当</strong>。常见的情况有：</p>
+<ol>
+<li>
+<p><strong>直接遗忘</strong> (Most Common)
+程序员分配了内存，但后来完全忘记了需要释放它。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">leak</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">);</span> <span class="c1">// 分配了内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// ... 使用 ptr
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span><span class="p">;</span> <span class="c1">// 函数结束，ptr 是局部变量被销毁了，但它指向的堆内存还在！
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>             <span class="c1">// 没有 free(ptr)，内存泄漏了。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>丢失地址（Lost Address）</strong>
+指针被重新赋值，覆盖了之前分配的内存地址，导致再也找不到那块内存来释放它。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">);</span> <span class="c1">// 分配内存A，ptr指向A
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">ptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">20</span><span class="p">);</span>      <span class="c1">// 分配内存B，ptr现在指向B
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 此时，内存A的地址已经丢失了，无法被释放，造成泄漏。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nf">free</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span> <span class="c1">// 这只能释放内存B
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>异常导致未释放</strong>
+在 <code>try</code> 块中分配内存，但在释放之前发生异常，跳转到 <code>catch</code> 块，导致释放代码未被执行。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="n">some_function_that_might_throw</span><span class="p">();</span> <span class="c1">// 如果这里抛出异常...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">delete</span><span class="p">[]</span> <span class="n">ptr</span><span class="p">;</span> <span class="c1">// ...这行代码就不会被执行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span> <span class="k">catch</span> <span class="p">(...)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 处理异常，但ptr指向的内存已经泄漏
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>解决方法</strong>：使用智能指针（如 <code>std::unique_ptr</code>），它们会在析构时自动释放内存，即使发生异常。</p>
+</li>
+<li>
+<p><strong>未调用析构函数</strong>
+在 C++ 中，对由 <code>new</code> 创建的对象数组使用 <code>delete</code> 而非 <code>delete[]</code>，会导致只有第一个对象的析构函数被调用，其余对象的内存泄漏。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">MyClass</span> <span class="o">*</span><span class="n">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyClass</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span> <span class="c1">// 调用10次构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">delete</span> <span class="n">arr</span><span class="p">;</span>   <span class="c1">// 错误！只调用了一次析构函数，泄漏了9个对象的内存。
+</span></span></span><span class="line"><span class="cl"><span class="c1">// delete[] arr; // 正确写法
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<hr>
+<h3 id="三内存泄漏有什么后果">三、内存泄漏有什么后果？
+</h3><p>内存泄漏的后果取决于泄漏的<strong>速度</strong>和程序的<strong>运行时间</strong>。</p>
+<ol>
+<li>
+<p><strong>性能下降</strong>：随着泄漏的积累，可用内存越来越少。操作系统会更多地进行<strong>分页（Paging）</strong> 和<strong>交换（Swapping）</strong>（将内存数据挪到硬盘上），导致程序运行速度急剧下降。</p>
+</li>
+<li>
+<p><strong>程序崩溃</strong>：最终，当程序再次尝试分配内存而系统中已无可用内存时，分配函数（如 <code>malloc</code> 或 <code>new</code>）会返回 <code>NULL</code> 或抛出 <code>std::bad_alloc</code> 异常。如果程序没有正确处理这个错误，就会导致崩溃。</p>
+</li>
+<li>
+<p><strong>系统卡死</strong>：在严重的情况下，不仅仅是你的程序，整个操作系统的可用内存都会被耗尽，导致其他应用程序也无法运行，系统变得卡顿甚至无响应。</p>
+</li>
+</ol>
+<p><strong>注意</strong>：对于运行时间很短的程序（例如一个计算器工具，用完就关闭），即使有微小的内存泄漏，也会在程序结束时被操作系统<strong>全部回收</strong>，因此影响不大。内存泄漏的真正危害在于那些<strong>长时间运行</strong>的服务程序，如：</p>
+<ul>
+<li>Web 服务器（Apache, Nginx）</li>
+<li>数据库服务器（MySQL, PostgreSQL）</li>
+<li>操作系统内核</li>
+<li>嵌入式系统（路由器、智能设备）</li>
+<li>游戏服务器</li>
+<li>7x24 小时运行的科学计算程序</li>
+</ul>
+<p>这些程序一旦发生内存泄漏，就像有一个“看不见的水龙头”在滴水，终有一天会把“水池”滴满。</p>
+<hr>
+<h3 id="四如何检测和避免内存泄漏">四、如何检测和避免内存泄漏？
+</h3><h4 id="检测工具-detection">检测工具 (Detection)
+</h4><ul>
+<li><strong>Valgrind (Linux/Mac)</strong>： 神器级别的内存调试工具。可以非常精确地定位泄漏的位置和大小。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">valgrind --leak-check<span class="o">=</span>full ./your_program
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><strong>AddressSanitizer (ASan)</strong>： Google 开发的高速内存错误检测器，被集成在 GCC 和 Clang 编译器中。性能开销比 Valgrind 小。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">g++ -fsanitize<span class="o">=</span>address -g your_program.cpp -o your_program
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><strong>Visual Studio Debugger (Windows)</strong>： 内置了强大的内存泄漏检测功能。</li>
+<li><strong>智能指针</strong>： 使用它们本身就是一种“避免”泄漏的方法。</li>
+</ul>
+<h4 id="避免策略-prevention">避免策略 (Prevention)
+</h4><ol>
+<li>
+<p><strong>养成良好习惯</strong>：在写 <code>malloc</code> 的时候，立刻把 <code>free</code> 写上；在写 <code>new</code> 的时候，立刻把 <code>delete</code> 写上。然后再在中间填代码。</p>
+</li>
+<li>
+<p><strong>使用 RAII 原则</strong>：这是 C++ 最重要的编程理念之一。<strong>资源获取即初始化（Resource Acquisition Is Initialization）</strong>。利用对象的生命周期来管理资源（如内存、文件句柄、锁等）。当对象被创建时获取资源，当对象被销毁时自动释放资源。</p>
+<ul>
+<li><strong>核心工具：智能指针（Smart Pointers）</strong>
+<ul>
+<li><code>std::unique_ptr</code>： 独占所有权的指针，离开作用域自动释放。</li>
+<li><code>std::shared_ptr</code>： 共享所有权的指针，通过引用计数自动管理生命周期。</li>
+<li><code>std::weak_ptr</code>： 配合 <code>shared_ptr</code> 使用，解决循环引用问题。</li>
+</ul>
+</li>
+</ul>
+<p><strong>示例：告别手动管理！</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">no_leak</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 无需手动delete！当unique_ptr离开作用域时，内存会自动释放。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">auto</span> <span class="n">ptr</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 即使发生异常，或者函数有多个返回点，内存也一定能被释放。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">some_condition</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span> <span class="c1">// 自动释放
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="c1">// 自动释放
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>尽量使用标准库容器</strong>：如 <code>std::vector</code>, <code>std::string</code>, <code>std::map</code> 等。它们内部自己管理内存，你几乎不需要直接 <code>new</code>/<code>delete</code>。</p>
+</li>
+</ol>
+<h3 id="总结-3">总结
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">特性</th>
+          <th style="text-align: left">描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>本质</strong></td>
+          <td style="text-align: left">已分配的<strong>堆内存</strong>在使用完毕后<strong>未被释放</strong>。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>根本原因</strong></td>
+          <td style="text-align: left">内存管理不当（遗忘、地址覆盖、异常中断等）。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>主要危害</strong></td>
+          <td style="text-align: left">对<strong>长时间运行</strong>的程序：<strong>性能下降、崩溃、系统卡死</strong>。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>检测工具</strong></td>
+          <td style="text-align: left">Valgrind, AddressSanitizer, IDE 调试器。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>终极解决方案</strong></td>
+          <td style="text-align: left"><strong>良好的编程习惯</strong> + <strong>RAII原则</strong>（尤其是C++的<strong>智能指针</strong>）。</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>理解并避免内存泄漏，是成为一名成熟程序员的关键一步。</p></blockquote>
+</li>
 </ol>
 
 </section>
