@@ -322,24 +322,24 @@
   <ol>
     <li>
       <ol>
-        <li><a href="#amdahl-定律">Amdahl 定律:</a></li>
-        <li><a href="#原子化的丧失">原子化的丧失：</a></li>
-        <li><a href="#顺序性丧失">顺序性丧失：</a></li>
-        <li><a href="#全局一致性的丧失">全局一致性的丧失：</a></li>
+        <li><a href="#amdahl-定律">Amdahl 定律</a></li>
+        <li><a href="#原子化的丧失">原子化的丧失</a></li>
+        <li><a href="#顺序性丧失">顺序性丧失</a></li>
+        <li><a href="#全局一致性的丧失">全局一致性的丧失</a></li>
       </ol>
     </li>
-    <li><a href="#多线程编程">多线程编程:</a></li>
-    <li><a href="#互斥">互斥:</a>
+    <li><a href="#多线程编程">多线程编程</a></li>
+    <li><a href="#互斥">互斥</a>
       <ol>
         <li><a href="#实现的尝试">实现的尝试</a>
           <ol>
-            <li><a href="#术语">术语:</a></li>
-            <li><a href="#软件实现">软件实现:</a></li>
+            <li><a href="#术语">术语</a></li>
+            <li><a href="#软件实现">软件实现</a></li>
           </ol>
         </li>
       </ol>
     </li>
-    <li><a href="#硬件实现">硬件实现:</a>
+    <li><a href="#硬件实现">硬件实现</a>
       <ol>
         <li><a href="#ticket-lock">Ticket Lock</a></li>
         <li><a href="#span_lock">span_lock</a></li>
@@ -511,7 +511,7 @@
             <li><a href="#连续分配">连续分配</a></li>
           </ol>
         </li>
-        <li><a href="#inode中存储的内容">Inode中存储的内容：</a></li>
+        <li><a href="#inode中存储的内容">Inode中存储的内容</a></li>
         <li><a href="#操作系统中-inode-信息详解">操作系统中 inode 信息详解</a>
           <ol>
             <li><a href="#1-基础标识信息"><strong>1. 基础标识信息</strong></a></li>
@@ -594,8 +594,8 @@
     
     <header class="article-category">
         
-            <a href="/huyang/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="background-color: #2a9d8f; color: #fff;">
-                未分类
+            <a href="/huyang/categories/%E9%9D%A2%E8%AF%95/" style="background-color: #2a9d8f; color: #fff;">
+                面试
             </a>
         
     </header>
@@ -797,11 +797,11 @@ CPU会转移到另外的指令流⼊⼝</p>
 </h2><p>切换状态机是“分时”操作系统的核⼼</p>
 <p>操作系统就是状态机</p>
 <h1 id="操作系统-1">操作系统
-</h1><h3 id="amdahl-定律">Amdahl 定律:
+</h1><h3 id="amdahl-定律">Amdahl 定律
 </h3><p>$Speedup =\frac{1-thread time}{n-thread time}$</p>
 <p>或者:</p>
 <p>$Speedup=\frac{1}{1-p+\frac{p}{n}}$</p>
-<h3 id="原子化的丧失">原子化的丧失：
+<h3 id="原子化的丧失">原子化的丧失
 </h3><ul>
 <li>定义：
 <ul>
@@ -811,7 +811,7 @@ CPU会转移到另外的指令流⼊⼝</p>
 </li>
 <li>解决方法：互斥-》lock and unlock，使临界区绝对串化，维护队列进入临界区。</li>
 </ul>
-<h3 id="顺序性丧失">顺序性丧失：
+<h3 id="顺序性丧失">顺序性丧失
 </h3><ul>
 <li>定义：
 ==程序语句按照既定的顺序执⾏==</li>
@@ -825,7 +825,7 @@ asm volatile (“”:::”memory)
 </ul>
 </li>
 </ul>
-<h3 id="全局一致性的丧失">全局一致性的丧失：
+<h3 id="全局一致性的丧失">全局一致性的丧失
 </h3><ul>
 <li>
 <p>定义：</p>
@@ -840,7 +840,7 @@ asm volatile (“”:::”memory)
 <p>==TSO==(Total Store Ordering)：
 只支持不同地址的无依赖的“读读”，“写写”，“读写”顺序的全局可见顺序，并==不会保证“写读”的全局可见顺序==。</p>
 <p>当个处理器的局部写读顺序会变。</p>
-<p>​	所以在一个线程中的先写再读的顺序可能会混乱。</p>
+<p>​ 所以在一个线程中的先写再读的顺序可能会混乱。</p>
 </li>
 <li>
 <p>==Relaxed Memory Model==：宽松内存模型
@@ -850,7 +850,7 @@ asm volatile (“”:::”memory)
 </ol>
 </li>
 </ul>
-<h2 id="多线程编程">多线程编程:
+<h2 id="多线程编程">多线程编程
 </h2><p><strong>线程:</strong></p>
 <p>==共享内存的执⾏流==</p>
 <p><strong>进程</strong></p>
@@ -858,7 +858,7 @@ asm volatile (“”:::”memory)
 <img src="image-20240601190213892.png" alt="image-20240601190213892"  />
 <p>所有的线程共享一个heap,全局变量,代码区;而每一个线程都有自己的TCB(Thread Control Block),还有Stack.当共享的部分发生了改变的时候,线程的状态也改变.</p>
 <img src="image-20240601190538227.png" alt="image-20240601190538227"  />
-<h2 id="互斥">互斥:
+<h2 id="互斥">互斥
 </h2><h3 id="实现的尝试">实现的尝试
 </h3><p><strong>概念：</strong></p>
 <ul>
@@ -875,7 +875,7 @@ asm volatile (“”:::”memory)
 <p>活性：程序终将终止输出正确答案</p>
 </li>
 </ul>
-<h4 id="术语">术语:
+<h4 id="术语">术语
 </h4><ul>
 <li>安全性:不会发生错误-&gt;多个线程不会同时访问临界区</li>
 <li>活性:程序终将会终结-&gt;不会发生不可挽回的事情</li>
@@ -886,7 +886,7 @@ asm volatile (“”:::”memory)
 <li>行进:假如一个线程想要进入临界区,并且临界区没有线程,那么它就会进入</li>
 <li>有界等待:一个线程等待临界区的时间是有限的</li>
 </ul>
-<h4 id="软件实现">软件实现:
+<h4 id="软件实现">软件实现
 </h4><p>错误的peterson算法:</p>
 <p><img src="/huyang/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/image-20240622174505686.png"
 	width="1234"
@@ -991,7 +991,7 @@ asm volatile (“”:::”memory)
 </div><p>flag的作用是==当出现了多个的线程想要进入的时候决定到底哪一个线程可以进入==</p>
 <p>正确性的证明:==既证明假如出现了两个线程同时进入了临界区的情况,证明这种情况是不可能出现的.==</p>
 <p>然而peterson算法在现代的计算机模型上面是不正确的,因为peterson算法需要满足SC内存顺序一致性模型</p>
-<h2 id="硬件实现">硬件实现:
+<h2 id="硬件实现">硬件实现
 </h2><p>可以使用原子性的操作去完成:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2166,10 +2166,10 @@ signal(SIGCHLD,SIG_IGN) 就表示忽略掉⼦进程的终⽌信号，此时⼦�
 <blockquote>
 <p>Linux下默认的优先级(转换之后)：</p>
 <p>‣实时任务(real time): ⾼优先级 (0 - 99)</p>
-<p>​	-试试chrt命令:  chrt -r -p priority PID</p>
+<p>​ -试试chrt命令:  chrt -r -p priority PID</p>
 <p>‣普通任务(normal ones): 低优先级 (100 - 139)</p>
-<p>​	-试试renice命令 renice [-n] priority [-g|-p|-u] identifier</p>
-<p>​	-试试nice命令 nice [option] [command [ARG]…]</p></blockquote>
+<p>​ -试试renice命令 renice [-n] priority [-g|-p|-u] identifier</p>
+<p>​ -试试nice命令 nice [option] [command [ARG]…]</p></blockquote>
 <p><img src="/huyang/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/image-20240621151440907.png"
 	width="1098"
 	height="277"
@@ -3530,8 +3530,8 @@ PTE）包含⼀个物理⻚号(Physical Page Number, PPN)，即帧（Frame）指
 <p>但==不能链接到另⼀个⽂件系统上的⽂件==</p>
 <p>‣因为 ==inode 号只在⼀个⽂件系统内是唯⼀的==</p>
 <p>==不允许链接到⽬录==（简化管理）</p>
-<p>​	这防⽌了在⽬录层次结构中创建循环</p>
-<p>​	避免了⽗⽬录的不明确性</p></blockquote>
+<p>​ 这防⽌了在⽬录层次结构中创建循环</p>
+<p>​ 避免了⽗⽬录的不明确性</p></blockquote>
 <p><strong>软链接</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -3876,7 +3876,7 @@ boot, swap, /</li>
 		data-flex-basis="397px"
 	
 ></p>
-<h3 id="inode中存储的内容">Inode中存储的内容：
+<h3 id="inode中存储的内容">Inode中存储的内容
 </h3><h3 id="操作系统中-inode-信息详解">操作系统中 inode 信息详解
 </h3><p>在类 Unix 文件系统（如 ext4、XFS、Btrfs）中，<strong>inode（索引节点）</strong> 是文件系统的核心数据结构，存储文件或目录的<strong>元数据</strong>（metadata）。每个文件/目录对应一个唯一的 inode，包含除文件名外的所有关键信息：</p>
 <hr>
@@ -4874,18 +4874,18 @@ boot, swap, /</li>
             
                 
 <article class="has-image">
-    <a href="/huyang/p/hugo%E6%90%AD%E5%BB%BA/">
+    <a href="/huyang/p/%E9%9D%A2%E8%AF%95%E6%8B%B7%E6%89%93/">
         
         
             <div class="article-image">
                 
-                    <img src="/huyang/img/Hugo%e6%90%ad%e5%bb%ba_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/Hugo搭建_cover.png"/>
+                    <img src="/huyang/img/%e9%9d%a2%e8%af%95%e6%8b%b7%e6%89%93_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/面试拷打_cover.png"/>
                 
             </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">Hugo搭建</h2>
+            <h2 class="article-title">面试拷打</h2>
         </div>
     </a>
 </article>
@@ -4912,18 +4912,31 @@ boot, swap, /</li>
             
                 
 <article class="has-image">
-    <a href="/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/">
+    <a href="/huyang/p/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%85%AB%E8%82%A1%E6%96%87/">
         
         
             <div class="article-image">
                 
-                    <img src="/huyang/img/%e4%bc%a0%e8%be%93%e5%b1%82_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/传输层_cover.png"/>
+                    <img src="/huyang/img/%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%85%ab%e8%82%a1%e6%96%87_cover.png" loading="lazy" data-key="" data-hash="/huyang/img/大模型八股文_cover.png"/>
                 
             </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">传输层</h2>
+            <h2 class="article-title">大模型八股文</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/huyang/p/%E5%85%AB%E8%82%A1%E6%96%87/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">八股文</h2>
         </div>
     </a>
 </article>

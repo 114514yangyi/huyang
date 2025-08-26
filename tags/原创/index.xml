@@ -10646,11 +10646,11 @@ DevOps 需要弹性云资源支持频繁部署测试。&lt;/p&gt;
 &lt;/h1&gt;&lt;h2 id=&#34;套接字和端口&#34;&gt;套接字和端口
 &lt;/h2&gt;&lt;p&gt;端口-&amp;gt;是在报文段中用于指示OS中的具体的套接字&lt;/p&gt;
 &lt;p&gt;套接字-&amp;gt;是运行在OS中的&lt;/p&gt;
-&lt;h3 id=&#34;套接字socket&#34;&gt;&lt;strong&gt;套接字(Socket)&lt;/strong&gt;:
+&lt;h3 id=&#34;套接字socket&#34;&gt;&lt;strong&gt;套接字(Socket)&lt;/strong&gt;
 &lt;/h3&gt;&lt;p&gt;套接字是一种软件抽象,它允许应用进程与操作系统的传输层(transport layer)进行网络消息交换。套接字提供了一种标准的编程接口,使得应用程序可以独立于底层网络协议进行通信。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;传输层地址&lt;/strong&gt;:
 套接字由两部分组成:&amp;lt;主机IP, 端口号&amp;gt;。这个地址组合被称为套接字。&lt;/p&gt;
-&lt;h3 id=&#34;端口&#34;&gt;端口:
+&lt;h3 id=&#34;端口&#34;&gt;端口
 &lt;/h3&gt;&lt;p&gt;16位数字用于区分应用程序:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;网络数据包的传输头部中包含源端口号和目的端口号。&lt;/li&gt;
@@ -10684,7 +10684,7 @@ DevOps 需要弹性云资源支持频繁部署测试。&lt;/p&gt;
 &lt;li&gt;length:应用报文+头的长度&lt;/li&gt;
 &lt;li&gt;checksum:校验和&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;checksum&#34;&gt;checksum:
+&lt;h4 id=&#34;checksum&#34;&gt;checksum
 &lt;/h4&gt;&lt;p&gt;将每16bits作为一个加数相加(包括应用报文和头),进位是将1加到个位,最终得到一个16bits的相加和以后,将取反码,得到最终的校验和&lt;/p&gt;
 &lt;h3 id=&#34;tcp协议&#34;&gt;TCP协议
 &lt;/h3&gt;&lt;ol&gt;
@@ -10730,7 +10730,7 @@ DevOps 需要弹性云资源支持频繁部署测试。&lt;/p&gt;
 &lt;/h1&gt;&lt;h2 id=&#34;tcp三次握手四次挥手&#34;&gt;TCP三次握手,四次挥手
 &lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/m0_56649557/article/details/119492899&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;简单理解TCP三次握手四次挥手（看一遍你就懂）-CSDN博客&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;3次握手&#34;&gt;3次握手:
+&lt;h3 id=&#34;3次握手&#34;&gt;3次握手
 &lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;第一次握手（SYN）&lt;/strong&gt;：
 &lt;ul&gt;
@@ -10928,7 +10928,7 @@ DevOps 需要弹性云资源支持频繁部署测试。&lt;/p&gt;
 &lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/qq_35812205/article/details/108693965&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;GBN协议复习_确认分组和确认号-CSDN博客&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;gbn&#34;&gt;GBN
-&lt;/h3&gt;&lt;h4 id=&#34;对于发送端的重传方式是gbn&#34;&gt;对于发送端的重传方式是GBN:
+&lt;/h3&gt;&lt;h4 id=&#34;对于发送端的重传方式是gbn&#34;&gt;对于发送端的重传方式是GBN
 &lt;/h4&gt;&lt;p&gt;相当于发送方的滑动窗口为n,接收方的滑动窗口为1.&lt;/p&gt;
 &lt;p&gt;为整个的发送的窗口建立一个时钟,当最左边的数据包接收到ACK以后,就重置窗口时钟.当超时的时候就将所有窗口中已经发送过的数据包全部重传.&lt;/p&gt;
 &lt;h4 id=&#34;对于接受端是accumulate-ack&#34;&gt;对于接受端是Accumulate ACK
@@ -10974,7 +10974,7 @@ DevOps 需要弹性云资源支持频繁部署测试。&lt;/p&gt;
 &lt;li&gt;DevRTT: exponential average of Deviation&lt;/li&gt;
 &lt;li&gt;RTO = EstimatedRTT+ 4 x DevRTT&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;tcp流量控制拥塞控制&#34;&gt;TCP流量控制,拥塞控制:
+&lt;h2 id=&#34;tcp流量控制拥塞控制&#34;&gt;TCP流量控制,拥塞控制
 &lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/qq_42214953/article/details/105832303&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;浅谈TCP拥塞控制：慢启动和拥塞避免、快速重传和快速恢复_tcp慢启动-CSDN博客&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;流量控制接收端要考虑的事情&#34;&gt;流量控制:(接收端要考虑的事情)
@@ -10982,7 +10982,7 @@ DevOps 需要弹性云资源支持频繁部署测试。&lt;/p&gt;
     &gt;什么是TCP流量控制？（解释说明+过程+示例）_计算机网络 流量控制-CSDN博客&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;#流量控制是由receiver来控制的,因为可能sender发送的数据过多导致超过了receiver的buffer所以需要控制sender的发送速率.&lt;/p&gt;
 &lt;p&gt;→AWND&lt;/p&gt;
-&lt;h4 id=&#34;接收端&#34;&gt;接收端:
+&lt;h4 id=&#34;接收端&#34;&gt;接收端
 &lt;/h4&gt;&lt;p&gt;每一次接受者返回ACK的时候都会发送一个Advertised Window的值(RWND),这个值应该是receiver的buffer(Window)的边界距离最后一个接受的数据比特的长度&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E4%BC%A0%E8%BE%93%E5%B1%82/image-20240610144923197-6098018.png&#34;
 	width=&#34;1299&#34;
@@ -11044,7 +11044,7 @@ DevOps 需要弹性云资源支持频繁部署测试。&lt;/p&gt;
 &lt;li&gt;拥塞避免阶段:当收到一个重复确认的报文时，设置cwnd = cwnd +SMSS。此时发送端可以发送新的TCP报文（如果新的cwnd允许）(发送接下来上次发送的序列号)&lt;/li&gt;
 &lt;li&gt;当收到新数据的确认时，设置cwnd=ssthresh。进入拥塞避免阶段,此时的$ssthresh=cwnd=\frac{(旧)cwnd}{2}$;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;其他的tcp拥塞控制协议&#34;&gt;其他的TCP拥塞控制协议:
+&lt;h3 id=&#34;其他的tcp拥塞控制协议&#34;&gt;其他的TCP拥塞控制协议
 &lt;/h3&gt;&lt;p&gt;基本的情况:three dupACK and timeout-&amp;gt;ssthresh=$\frac{CWND}{2}$&lt;/p&gt;
 &lt;p&gt;• TCP-Tahoe&lt;br&gt;
 CWND =1 on 3 dupACKs&lt;/p&gt;
@@ -12899,11 +12899,11 @@ CPU会转移到另外的指令流⼊⼝&lt;/p&gt;
 &lt;/h2&gt;&lt;p&gt;切换状态机是“分时”操作系统的核⼼&lt;/p&gt;
 &lt;p&gt;操作系统就是状态机&lt;/p&gt;
 &lt;h1 id=&#34;操作系统-1&#34;&gt;操作系统
-&lt;/h1&gt;&lt;h3 id=&#34;amdahl-定律&#34;&gt;Amdahl 定律:
+&lt;/h1&gt;&lt;h3 id=&#34;amdahl-定律&#34;&gt;Amdahl 定律
 &lt;/h3&gt;&lt;p&gt;$Speedup =\frac{1-thread time}{n-thread time}$&lt;/p&gt;
 &lt;p&gt;或者:&lt;/p&gt;
 &lt;p&gt;$Speedup=\frac{1}{1-p+\frac{p}{n}}$&lt;/p&gt;
-&lt;h3 id=&#34;原子化的丧失&#34;&gt;原子化的丧失：
+&lt;h3 id=&#34;原子化的丧失&#34;&gt;原子化的丧失
 &lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;定义：
 &lt;ul&gt;
@@ -12913,7 +12913,7 @@ CPU会转移到另外的指令流⼊⼝&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;解决方法：互斥-》lock and unlock，使临界区绝对串化，维护队列进入临界区。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;顺序性丧失&#34;&gt;顺序性丧失：
+&lt;h3 id=&#34;顺序性丧失&#34;&gt;顺序性丧失
 &lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;定义：
 ==程序语句按照既定的顺序执⾏==&lt;/li&gt;
@@ -12927,7 +12927,7 @@ asm volatile (“”:::”memory)
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;全局一致性的丧失&#34;&gt;全局一致性的丧失：
+&lt;h3 id=&#34;全局一致性的丧失&#34;&gt;全局一致性的丧失
 &lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;定义：&lt;/p&gt;
@@ -12942,7 +12942,7 @@ asm volatile (“”:::”memory)
 &lt;p&gt;==TSO==(Total Store Ordering)：
 只支持不同地址的无依赖的“读读”，“写写”，“读写”顺序的全局可见顺序，并==不会保证“写读”的全局可见顺序==。&lt;/p&gt;
 &lt;p&gt;当个处理器的局部写读顺序会变。&lt;/p&gt;
-&lt;p&gt;​	所以在一个线程中的先写再读的顺序可能会混乱。&lt;/p&gt;
+&lt;p&gt;​ 所以在一个线程中的先写再读的顺序可能会混乱。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;==Relaxed Memory Model==：宽松内存模型
@@ -12952,7 +12952,7 @@ asm volatile (“”:::”memory)
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;多线程编程&#34;&gt;多线程编程:
+&lt;h2 id=&#34;多线程编程&#34;&gt;多线程编程
 &lt;/h2&gt;&lt;p&gt;&lt;strong&gt;线程:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;==共享内存的执⾏流==&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;进程&lt;/strong&gt;&lt;/p&gt;
@@ -12960,7 +12960,7 @@ asm volatile (“”:::”memory)
 &lt;img src=&#34;image-20240601190213892.png&#34; alt=&#34;image-20240601190213892&#34;  /&gt;
 &lt;p&gt;所有的线程共享一个heap,全局变量,代码区;而每一个线程都有自己的TCB(Thread Control Block),还有Stack.当共享的部分发生了改变的时候,线程的状态也改变.&lt;/p&gt;
 &lt;img src=&#34;image-20240601190538227.png&#34; alt=&#34;image-20240601190538227&#34;  /&gt;
-&lt;h2 id=&#34;互斥&#34;&gt;互斥:
+&lt;h2 id=&#34;互斥&#34;&gt;互斥
 &lt;/h2&gt;&lt;h3 id=&#34;实现的尝试&#34;&gt;实现的尝试
 &lt;/h3&gt;&lt;p&gt;&lt;strong&gt;概念：&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -12977,7 +12977,7 @@ asm volatile (“”:::”memory)
 &lt;p&gt;活性：程序终将终止输出正确答案&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;术语&#34;&gt;术语:
+&lt;h4 id=&#34;术语&#34;&gt;术语
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;安全性:不会发生错误-&amp;gt;多个线程不会同时访问临界区&lt;/li&gt;
 &lt;li&gt;活性:程序终将会终结-&amp;gt;不会发生不可挽回的事情&lt;/li&gt;
@@ -12988,7 +12988,7 @@ asm volatile (“”:::”memory)
 &lt;li&gt;行进:假如一个线程想要进入临界区,并且临界区没有线程,那么它就会进入&lt;/li&gt;
 &lt;li&gt;有界等待:一个线程等待临界区的时间是有限的&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;软件实现&#34;&gt;软件实现:
+&lt;h4 id=&#34;软件实现&#34;&gt;软件实现
 &lt;/h4&gt;&lt;p&gt;错误的peterson算法:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/image-20240622174505686.png&#34;
 	width=&#34;1234&#34;
@@ -13093,7 +13093,7 @@ asm volatile (“”:::”memory)
 &lt;/div&gt;&lt;p&gt;flag的作用是==当出现了多个的线程想要进入的时候决定到底哪一个线程可以进入==&lt;/p&gt;
 &lt;p&gt;正确性的证明:==既证明假如出现了两个线程同时进入了临界区的情况,证明这种情况是不可能出现的.==&lt;/p&gt;
 &lt;p&gt;然而peterson算法在现代的计算机模型上面是不正确的,因为peterson算法需要满足SC内存顺序一致性模型&lt;/p&gt;
-&lt;h2 id=&#34;硬件实现&#34;&gt;硬件实现:
+&lt;h2 id=&#34;硬件实现&#34;&gt;硬件实现
 &lt;/h2&gt;&lt;p&gt;可以使用原子性的操作去完成:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -14268,10 +14268,10 @@ signal(SIGCHLD,SIG_IGN) 就表示忽略掉⼦进程的终⽌信号，此时⼦�
 &lt;blockquote&gt;
 &lt;p&gt;Linux下默认的优先级(转换之后)：&lt;/p&gt;
 &lt;p&gt;‣实时任务(real time): ⾼优先级 (0 - 99)&lt;/p&gt;
-&lt;p&gt;​	-试试chrt命令:  chrt -r -p priority PID&lt;/p&gt;
+&lt;p&gt;​ -试试chrt命令:  chrt -r -p priority PID&lt;/p&gt;
 &lt;p&gt;‣普通任务(normal ones): 低优先级 (100 - 139)&lt;/p&gt;
-&lt;p&gt;​	-试试renice命令 renice [-n] priority [-g|-p|-u] identifier&lt;/p&gt;
-&lt;p&gt;​	-试试nice命令 nice [option] [command [ARG]…]&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;​ -试试renice命令 renice [-n] priority [-g|-p|-u] identifier&lt;/p&gt;
+&lt;p&gt;​ -试试nice命令 nice [option] [command [ARG]…]&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://114514yangyi.github.io/huyang/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/image-20240621151440907.png&#34;
 	width=&#34;1098&#34;
 	height=&#34;277&#34;
@@ -15632,8 +15632,8 @@ PTE）包含⼀个物理⻚号(Physical Page Number, PPN)，即帧（Frame）指
 &lt;p&gt;但==不能链接到另⼀个⽂件系统上的⽂件==&lt;/p&gt;
 &lt;p&gt;‣因为 ==inode 号只在⼀个⽂件系统内是唯⼀的==&lt;/p&gt;
 &lt;p&gt;==不允许链接到⽬录==（简化管理）&lt;/p&gt;
-&lt;p&gt;​	这防⽌了在⽬录层次结构中创建循环&lt;/p&gt;
-&lt;p&gt;​	避免了⽗⽬录的不明确性&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;​ 这防⽌了在⽬录层次结构中创建循环&lt;/p&gt;
+&lt;p&gt;​ 避免了⽗⽬录的不明确性&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;软链接&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -15978,7 +15978,7 @@ boot, swap, /&lt;/li&gt;
 		data-flex-basis=&#34;397px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h3 id=&#34;inode中存储的内容&#34;&gt;Inode中存储的内容：
+&lt;h3 id=&#34;inode中存储的内容&#34;&gt;Inode中存储的内容
 &lt;/h3&gt;&lt;h3 id=&#34;操作系统中-inode-信息详解&#34;&gt;操作系统中 inode 信息详解
 &lt;/h3&gt;&lt;p&gt;在类 Unix 文件系统（如 ext4、XFS、Btrfs）中，&lt;strong&gt;inode（索引节点）&lt;/strong&gt; 是文件系统的核心数据结构，存储文件或目录的&lt;strong&gt;元数据&lt;/strong&gt;（metadata）。每个文件/目录对应一个唯一的 inode，包含除文件名外的所有关键信息：&lt;/p&gt;
 &lt;hr&gt;
