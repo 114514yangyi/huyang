@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" ">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" Hugo建站的一些问题: 新文章的发布: 在搭建hugo的时候遇到了很多的问题,比如说像是怎么做图片的封面图片的生成,怎么自动创建page的时候生成模板,下面是我使用的一些脚本和方法:\n首先是我使用的是一个python脚本来创建页面的,会自动按照我给出的模板来生成,并且从目录中选择随机的图片作为封面:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210 #!/usr/bin/env python3 # -*- coding: utf-8 -*- import os import sys import random import subprocess import shutil from pathlib import Path def get_random_cover_image(cover_dir=&#34;~/tcardgen/cover&#34;): &#34;&#34;&#34; 从封面目录中随机选择一个图片文件 &#34;&#34;&#34; # 扩展用户目录的 ~ cover_path = os.path.expanduser(cover_dir) if not os.path.exists(cover_path): print(f&#34;错误: 封面目录不存在: {cover_path}&#34;) return None # 获取所有图片文件 image_extensions = {&#34;.png&#34;, &#34;.jpg&#34;, &#34;.jpeg&#34;, &#34;.webp&#34;, &#34;.gif&#34;} image_files = [] for file in os.listdir(cover_path): if os.path.isfile(os.path.join(cover_path, file)): ext = os.path.splitext(file)[1].lower() if ext in image_extensions: image_files.append(file) if not image_files: print(f&#34;错误: 在目录 {cover_path} 中没有找到图片文件&#34;) return None # 随机选择一个图片 selected_image = random.choice(image_files) return selected_image def run_hugo_new_post(cardname, blog_dir=&#34;/Users/mac/study/HyBlog&#34;): &#34;&#34;&#34; 执行 hugo new post 命令创建新文章 &#34;&#34;&#34; try: # 构建命令 cmd = [ &#34;hugo&#34;, &#34;new&#34;, f&#34;post/{cardname}/{cardname}.md&#34; ] print(f&#34;正在创建新文章: {cardname}&#34;) print(f&#34;执行命令: {&#39; &#39;.join(cmd)}&#34;) # 切换到博客目录执行命令 result = subprocess.run(cmd, cwd=blog_dir, capture_output=True, text=True, timeout=30) if result.returncode == 0: print(f&#34;✓ 文章创建成功: {cardname}&#34;) return True else: print(f&#34;✗ 文章创建失败:&#34;) print(f&#34;错误输出: {result.stderr}&#34;) return False except subprocess.TimeoutExpired: print(f&#34;✗ 命令执行超时&#34;) return False except FileNotFoundError: print(&#34;✗ 找不到 hugo 命令，请确保已安装 Hugo&#34;) return False except Exception as e: print(f&#34;✗ 执行命令时发生错误: {e}&#34;) return False def generate_cover(cardname, cover_image, config_dir=&#34;/Users/mac/tcardgen&#34;, blog_dir=&#34;/Users/mac/study/HyBlog&#34;): &#34;&#34;&#34; 使用 tcardgen 生成封面 &#34;&#34;&#34; try: # 构建路径 config_path = os.path.join(config_dir, &#34;config.yaml&#34;) font_dir = os.path.expanduser(&#34;~/tcardgen/font&#34;) cover_template = os.path.expanduser(f&#34;~/tcardgen/cover/{cover_image}&#34;) output_path = os.path.join(blog_dir, &#34;static&#34;, &#34;img&#34;, f&#34;{cardname}_cover.png&#34;) md_file_path = os.path.join(blog_dir, &#34;content&#34;, &#34;post&#34;, cardname, &#34;index.md&#34;) # 确保输出目录存在 os.makedirs(os.path.dirname(output_path), exist_ok=True) # 构建命令 cmd = [ &#34;tcardgen&#34;, &#34;-c&#34;, config_path, &#34;-f&#34;, font_dir, &#34;-o&#34;, output_path, &#34;-t&#34;, cover_template, md_file_path ] print(f&#34;正在生成封面: {cardname}&#34;) print(f&#34;使用模板: {cover_template}&#34;) print(f&#34;输出到: {output_path}&#34;) print(f&#34;执行命令: {&#39; &#39;.join(cmd)}&#34;) # 执行命令 result = subprocess.run(cmd, capture_output=True, text=True, timeout=60) if result.returncode == 0: print(f&#34;✓ 封面生成成功: {output_path}&#34;) return True else: print(f&#34;✗ 封面生成失败:&#34;) print(f&#34;错误输出: {result.stderr}&#34;) return False except subprocess.TimeoutExpired: print(f&#34;✗ 命令执行超时&#34;) return False except FileNotFoundError: print(&#34;✗ 找不到 tcardgen 命令，请确保已安装 tcardgen&#34;) return False except Exception as e: print(f&#34;✗ 执行命令时发生错误: {e}&#34;) return False def rename_md_file(cardname, blog_dir=&#34;/Users/mac/study/HyBlog&#34;): &#34;&#34;&#34; 重命名 .md 文件为 index.md &#34;&#34;&#34; try: original_path = os.path.join(blog_dir, &#34;content&#34;, &#34;post&#34;, cardname, f&#34;{cardname}.md&#34;) new_path = os.path.join(blog_dir, &#34;content&#34;, &#34;post&#34;, cardname, &#34;index.md&#34;) # 检查原文件是否存在 if not os.path.exists(original_path): print(f&#34;✗ 原文件不存在: {original_path}&#34;) return False # 重命名文件 shutil.move(original_path, new_path) print(f&#34;✓ 文件重命名成功: {original_path} -&gt; {new_path}&#34;) return True except Exception as e: print(f&#34;✗ 重命名文件时发生错误: {e}&#34;) return False def main(): &#34;&#34;&#34; 主函数 &#34;&#34;&#34; print(&#34;=&#34; * 50) print(&#34;Hugo 文章创建与封面生成工具&#34;) print(&#34;=&#34; * 50) # 检查参数 if len(sys.argv) != 2: print(&#34;使用方法: python posthugo.py &lt;cardname&gt;&#34;) print(&#34;示例: python posthugo.py my-new-post&#34;) sys.exit(1) cardname = sys.argv[1] # 检查 cardname 是否合法 if not cardname or not cardname.isalnum() and &#39;-&#39; not in cardname and &#39;_&#39; not in cardname: print(&#34;错误: cardname 只能包含字母、数字、连字符和下划线&#34;) sys.exit(1) print(f&#34;处理文章: {cardname}&#34;) # 1. 创建新文章 if not run_hugo_new_post(cardname): print(&#34;✗ 文章创建失败，退出&#34;) sys.exit(1) # 2. 重命名文件 if not rename_md_file(cardname): print(&#34;✗ 文件重命名失败，退出&#34;) sys.exit(1) # 3. 随机选择封面图片 print(&#34;\\n正在选择随机封面...&#34;) cover_image = get_random_cover_image() if not cover_image: print(&#34;✗ 无法获取封面图片，退出&#34;) sys.exit(1) print(f&#34;选择的封面模板: {cover_image}&#34;) # 4. 生成封面 if not generate_cover(cardname, cover_image): print(&#34;✗ 封面生成失败&#34;) # 不退出，因为文章已经创建成功 print(&#34;\\n&#34; + &#34;=&#34; * 50) print(f&#34;处理完成!&#34;) print(f&#34;文章位置: /Users/mac/study/HyBlog/content/post/{cardname}/index.md&#34;) print(f&#34;封面位置: /Users/mac/study/HyBlog/static/img/{cardname}_cover.png&#34;) print(&#34;=&#34; * 50) if __name__ == &#34;__main__&#34;: main() 会从~/tcardgen/cover中选择一个动漫图片,然后使用tcardgen来生成封面,最后调用相应的hugo new post/文章.md 来生成新的文章,将照片放入./static/cover/目录中.\n">
 <title>Hugo搭建</title>
 
 <link rel='canonical' href='https://114514yangyi.github.io/huyang/p/hugo%E6%90%AD%E5%BB%BA/'>
 
 <link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="Hugo搭建">
-<meta property='og:description' content=" ">
+<meta property='og:description' content=" Hugo建站的一些问题: 新文章的发布: 在搭建hugo的时候遇到了很多的问题,比如说像是怎么做图片的封面图片的生成,怎么自动创建page的时候生成模板,下面是我使用的一些脚本和方法:\n首先是我使用的是一个python脚本来创建页面的,会自动按照我给出的模板来生成,并且从目录中选择随机的图片作为封面:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210 #!/usr/bin/env python3 # -*- coding: utf-8 -*- import os import sys import random import subprocess import shutil from pathlib import Path def get_random_cover_image(cover_dir=&#34;~/tcardgen/cover&#34;): &#34;&#34;&#34; 从封面目录中随机选择一个图片文件 &#34;&#34;&#34; # 扩展用户目录的 ~ cover_path = os.path.expanduser(cover_dir) if not os.path.exists(cover_path): print(f&#34;错误: 封面目录不存在: {cover_path}&#34;) return None # 获取所有图片文件 image_extensions = {&#34;.png&#34;, &#34;.jpg&#34;, &#34;.jpeg&#34;, &#34;.webp&#34;, &#34;.gif&#34;} image_files = [] for file in os.listdir(cover_path): if os.path.isfile(os.path.join(cover_path, file)): ext = os.path.splitext(file)[1].lower() if ext in image_extensions: image_files.append(file) if not image_files: print(f&#34;错误: 在目录 {cover_path} 中没有找到图片文件&#34;) return None # 随机选择一个图片 selected_image = random.choice(image_files) return selected_image def run_hugo_new_post(cardname, blog_dir=&#34;/Users/mac/study/HyBlog&#34;): &#34;&#34;&#34; 执行 hugo new post 命令创建新文章 &#34;&#34;&#34; try: # 构建命令 cmd = [ &#34;hugo&#34;, &#34;new&#34;, f&#34;post/{cardname}/{cardname}.md&#34; ] print(f&#34;正在创建新文章: {cardname}&#34;) print(f&#34;执行命令: {&#39; &#39;.join(cmd)}&#34;) # 切换到博客目录执行命令 result = subprocess.run(cmd, cwd=blog_dir, capture_output=True, text=True, timeout=30) if result.returncode == 0: print(f&#34;✓ 文章创建成功: {cardname}&#34;) return True else: print(f&#34;✗ 文章创建失败:&#34;) print(f&#34;错误输出: {result.stderr}&#34;) return False except subprocess.TimeoutExpired: print(f&#34;✗ 命令执行超时&#34;) return False except FileNotFoundError: print(&#34;✗ 找不到 hugo 命令，请确保已安装 Hugo&#34;) return False except Exception as e: print(f&#34;✗ 执行命令时发生错误: {e}&#34;) return False def generate_cover(cardname, cover_image, config_dir=&#34;/Users/mac/tcardgen&#34;, blog_dir=&#34;/Users/mac/study/HyBlog&#34;): &#34;&#34;&#34; 使用 tcardgen 生成封面 &#34;&#34;&#34; try: # 构建路径 config_path = os.path.join(config_dir, &#34;config.yaml&#34;) font_dir = os.path.expanduser(&#34;~/tcardgen/font&#34;) cover_template = os.path.expanduser(f&#34;~/tcardgen/cover/{cover_image}&#34;) output_path = os.path.join(blog_dir, &#34;static&#34;, &#34;img&#34;, f&#34;{cardname}_cover.png&#34;) md_file_path = os.path.join(blog_dir, &#34;content&#34;, &#34;post&#34;, cardname, &#34;index.md&#34;) # 确保输出目录存在 os.makedirs(os.path.dirname(output_path), exist_ok=True) # 构建命令 cmd = [ &#34;tcardgen&#34;, &#34;-c&#34;, config_path, &#34;-f&#34;, font_dir, &#34;-o&#34;, output_path, &#34;-t&#34;, cover_template, md_file_path ] print(f&#34;正在生成封面: {cardname}&#34;) print(f&#34;使用模板: {cover_template}&#34;) print(f&#34;输出到: {output_path}&#34;) print(f&#34;执行命令: {&#39; &#39;.join(cmd)}&#34;) # 执行命令 result = subprocess.run(cmd, capture_output=True, text=True, timeout=60) if result.returncode == 0: print(f&#34;✓ 封面生成成功: {output_path}&#34;) return True else: print(f&#34;✗ 封面生成失败:&#34;) print(f&#34;错误输出: {result.stderr}&#34;) return False except subprocess.TimeoutExpired: print(f&#34;✗ 命令执行超时&#34;) return False except FileNotFoundError: print(&#34;✗ 找不到 tcardgen 命令，请确保已安装 tcardgen&#34;) return False except Exception as e: print(f&#34;✗ 执行命令时发生错误: {e}&#34;) return False def rename_md_file(cardname, blog_dir=&#34;/Users/mac/study/HyBlog&#34;): &#34;&#34;&#34; 重命名 .md 文件为 index.md &#34;&#34;&#34; try: original_path = os.path.join(blog_dir, &#34;content&#34;, &#34;post&#34;, cardname, f&#34;{cardname}.md&#34;) new_path = os.path.join(blog_dir, &#34;content&#34;, &#34;post&#34;, cardname, &#34;index.md&#34;) # 检查原文件是否存在 if not os.path.exists(original_path): print(f&#34;✗ 原文件不存在: {original_path}&#34;) return False # 重命名文件 shutil.move(original_path, new_path) print(f&#34;✓ 文件重命名成功: {original_path} -&gt; {new_path}&#34;) return True except Exception as e: print(f&#34;✗ 重命名文件时发生错误: {e}&#34;) return False def main(): &#34;&#34;&#34; 主函数 &#34;&#34;&#34; print(&#34;=&#34; * 50) print(&#34;Hugo 文章创建与封面生成工具&#34;) print(&#34;=&#34; * 50) # 检查参数 if len(sys.argv) != 2: print(&#34;使用方法: python posthugo.py &lt;cardname&gt;&#34;) print(&#34;示例: python posthugo.py my-new-post&#34;) sys.exit(1) cardname = sys.argv[1] # 检查 cardname 是否合法 if not cardname or not cardname.isalnum() and &#39;-&#39; not in cardname and &#39;_&#39; not in cardname: print(&#34;错误: cardname 只能包含字母、数字、连字符和下划线&#34;) sys.exit(1) print(f&#34;处理文章: {cardname}&#34;) # 1. 创建新文章 if not run_hugo_new_post(cardname): print(&#34;✗ 文章创建失败，退出&#34;) sys.exit(1) # 2. 重命名文件 if not rename_md_file(cardname): print(&#34;✗ 文件重命名失败，退出&#34;) sys.exit(1) # 3. 随机选择封面图片 print(&#34;\\n正在选择随机封面...&#34;) cover_image = get_random_cover_image() if not cover_image: print(&#34;✗ 无法获取封面图片，退出&#34;) sys.exit(1) print(f&#34;选择的封面模板: {cover_image}&#34;) # 4. 生成封面 if not generate_cover(cardname, cover_image): print(&#34;✗ 封面生成失败&#34;) # 不退出，因为文章已经创建成功 print(&#34;\\n&#34; + &#34;=&#34; * 50) print(f&#34;处理完成!&#34;) print(f&#34;文章位置: /Users/mac/study/HyBlog/content/post/{cardname}/index.md&#34;) print(f&#34;封面位置: /Users/mac/study/HyBlog/static/img/{cardname}_cover.png&#34;) print(&#34;=&#34; * 50) if __name__ == &#34;__main__&#34;: main() 会从~/tcardgen/cover中选择一个动漫图片,然后使用tcardgen来生成封面,最后调用相应的hugo new post/文章.md 来生成新的文章,将照片放入./static/cover/目录中.\n">
 <meta property='og:url' content='https://114514yangyi.github.io/huyang/p/hugo%E6%90%AD%E5%BB%BA/'>
 <meta property='og:site_name' content='Hu Yang&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='原创' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='og:image' content='https://114514yangyi.github.io/huyang/img/Hugo%E6%90%AD%E5%BB%BA_cover.png' />
 <meta name="twitter:title" content="Hugo搭建">
-<meta name="twitter:description" content=" "><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content=" Hugo建站的一些问题: 新文章的发布: 在搭建hugo的时候遇到了很多的问题,比如说像是怎么做图片的封面图片的生成,怎么自动创建page的时候生成模板,下面是我使用的一些脚本和方法:\n首先是我使用的是一个python脚本来创建页面的,会自动按照我给出的模板来生成,并且从目录中选择随机的图片作为封面:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210 #!/usr/bin/env python3 # -*- coding: utf-8 -*- import os import sys import random import subprocess import shutil from pathlib import Path def get_random_cover_image(cover_dir=&#34;~/tcardgen/cover&#34;): &#34;&#34;&#34; 从封面目录中随机选择一个图片文件 &#34;&#34;&#34; # 扩展用户目录的 ~ cover_path = os.path.expanduser(cover_dir) if not os.path.exists(cover_path): print(f&#34;错误: 封面目录不存在: {cover_path}&#34;) return None # 获取所有图片文件 image_extensions = {&#34;.png&#34;, &#34;.jpg&#34;, &#34;.jpeg&#34;, &#34;.webp&#34;, &#34;.gif&#34;} image_files = [] for file in os.listdir(cover_path): if os.path.isfile(os.path.join(cover_path, file)): ext = os.path.splitext(file)[1].lower() if ext in image_extensions: image_files.append(file) if not image_files: print(f&#34;错误: 在目录 {cover_path} 中没有找到图片文件&#34;) return None # 随机选择一个图片 selected_image = random.choice(image_files) return selected_image def run_hugo_new_post(cardname, blog_dir=&#34;/Users/mac/study/HyBlog&#34;): &#34;&#34;&#34; 执行 hugo new post 命令创建新文章 &#34;&#34;&#34; try: # 构建命令 cmd = [ &#34;hugo&#34;, &#34;new&#34;, f&#34;post/{cardname}/{cardname}.md&#34; ] print(f&#34;正在创建新文章: {cardname}&#34;) print(f&#34;执行命令: {&#39; &#39;.join(cmd)}&#34;) # 切换到博客目录执行命令 result = subprocess.run(cmd, cwd=blog_dir, capture_output=True, text=True, timeout=30) if result.returncode == 0: print(f&#34;✓ 文章创建成功: {cardname}&#34;) return True else: print(f&#34;✗ 文章创建失败:&#34;) print(f&#34;错误输出: {result.stderr}&#34;) return False except subprocess.TimeoutExpired: print(f&#34;✗ 命令执行超时&#34;) return False except FileNotFoundError: print(&#34;✗ 找不到 hugo 命令，请确保已安装 Hugo&#34;) return False except Exception as e: print(f&#34;✗ 执行命令时发生错误: {e}&#34;) return False def generate_cover(cardname, cover_image, config_dir=&#34;/Users/mac/tcardgen&#34;, blog_dir=&#34;/Users/mac/study/HyBlog&#34;): &#34;&#34;&#34; 使用 tcardgen 生成封面 &#34;&#34;&#34; try: # 构建路径 config_path = os.path.join(config_dir, &#34;config.yaml&#34;) font_dir = os.path.expanduser(&#34;~/tcardgen/font&#34;) cover_template = os.path.expanduser(f&#34;~/tcardgen/cover/{cover_image}&#34;) output_path = os.path.join(blog_dir, &#34;static&#34;, &#34;img&#34;, f&#34;{cardname}_cover.png&#34;) md_file_path = os.path.join(blog_dir, &#34;content&#34;, &#34;post&#34;, cardname, &#34;index.md&#34;) # 确保输出目录存在 os.makedirs(os.path.dirname(output_path), exist_ok=True) # 构建命令 cmd = [ &#34;tcardgen&#34;, &#34;-c&#34;, config_path, &#34;-f&#34;, font_dir, &#34;-o&#34;, output_path, &#34;-t&#34;, cover_template, md_file_path ] print(f&#34;正在生成封面: {cardname}&#34;) print(f&#34;使用模板: {cover_template}&#34;) print(f&#34;输出到: {output_path}&#34;) print(f&#34;执行命令: {&#39; &#39;.join(cmd)}&#34;) # 执行命令 result = subprocess.run(cmd, capture_output=True, text=True, timeout=60) if result.returncode == 0: print(f&#34;✓ 封面生成成功: {output_path}&#34;) return True else: print(f&#34;✗ 封面生成失败:&#34;) print(f&#34;错误输出: {result.stderr}&#34;) return False except subprocess.TimeoutExpired: print(f&#34;✗ 命令执行超时&#34;) return False except FileNotFoundError: print(&#34;✗ 找不到 tcardgen 命令，请确保已安装 tcardgen&#34;) return False except Exception as e: print(f&#34;✗ 执行命令时发生错误: {e}&#34;) return False def rename_md_file(cardname, blog_dir=&#34;/Users/mac/study/HyBlog&#34;): &#34;&#34;&#34; 重命名 .md 文件为 index.md &#34;&#34;&#34; try: original_path = os.path.join(blog_dir, &#34;content&#34;, &#34;post&#34;, cardname, f&#34;{cardname}.md&#34;) new_path = os.path.join(blog_dir, &#34;content&#34;, &#34;post&#34;, cardname, &#34;index.md&#34;) # 检查原文件是否存在 if not os.path.exists(original_path): print(f&#34;✗ 原文件不存在: {original_path}&#34;) return False # 重命名文件 shutil.move(original_path, new_path) print(f&#34;✓ 文件重命名成功: {original_path} -&gt; {new_path}&#34;) return True except Exception as e: print(f&#34;✗ 重命名文件时发生错误: {e}&#34;) return False def main(): &#34;&#34;&#34; 主函数 &#34;&#34;&#34; print(&#34;=&#34; * 50) print(&#34;Hugo 文章创建与封面生成工具&#34;) print(&#34;=&#34; * 50) # 检查参数 if len(sys.argv) != 2: print(&#34;使用方法: python posthugo.py &lt;cardname&gt;&#34;) print(&#34;示例: python posthugo.py my-new-post&#34;) sys.exit(1) cardname = sys.argv[1] # 检查 cardname 是否合法 if not cardname or not cardname.isalnum() and &#39;-&#39; not in cardname and &#39;_&#39; not in cardname: print(&#34;错误: cardname 只能包含字母、数字、连字符和下划线&#34;) sys.exit(1) print(f&#34;处理文章: {cardname}&#34;) # 1. 创建新文章 if not run_hugo_new_post(cardname): print(&#34;✗ 文章创建失败，退出&#34;) sys.exit(1) # 2. 重命名文件 if not rename_md_file(cardname): print(&#34;✗ 文件重命名失败，退出&#34;) sys.exit(1) # 3. 随机选择封面图片 print(&#34;\\n正在选择随机封面...&#34;) cover_image = get_random_cover_image() if not cover_image: print(&#34;✗ 无法获取封面图片，退出&#34;) sys.exit(1) print(f&#34;选择的封面模板: {cover_image}&#34;) # 4. 生成封面 if not generate_cover(cardname, cover_image): print(&#34;✗ 封面生成失败&#34;) # 不退出，因为文章已经创建成功 print(&#34;\\n&#34; + &#34;=&#34; * 50) print(f&#34;处理完成!&#34;) print(f&#34;文章位置: /Users/mac/study/HyBlog/content/post/{cardname}/index.md&#34;) print(f&#34;封面位置: /Users/mac/study/HyBlog/static/img/{cardname}_cover.png&#34;) print(&#34;=&#34; * 50) if __name__ == &#34;__main__&#34;: main() 会从~/tcardgen/cover中选择一个动漫图片,然后使用tcardgen来生成封面,最后调用相应的hugo new post/文章.md 来生成新的文章,将照片放入./static/cover/目录中.\n"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://114514yangyi.github.io/huyang/img/Hugo%E6%90%AD%E5%BB%BA_cover.png' />
     </head>
     <body class="
@@ -288,7 +288,40 @@
     </ol>
 </aside>
 
-    
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#新文章的发布">新文章的发布:</a></li>
+    <li><a href="#站点的样式">站点的样式:</a></li>
+    <li><a href="#pdf嵌入的方法">pdf嵌入的方法:</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
             <main class="main full-width">
     <article class="has-image main-article">
@@ -306,7 +339,7 @@
     
     <header class="article-category">
         
-            <a href="/huyang/categories/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/" >
+            <a href="/huyang/categories/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/" style="background-color: #2a9d8f; color: #fff;">
                 网站搭建
             </a>
         
@@ -352,7 +385,7 @@
 
 
                 <time class="article-time--reading">
-                    0 minute read
+                    10 minute read
                 </time>
             </div>
         
@@ -373,6 +406,1528 @@
 <script src="//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+<h1 id="hugo建站的一些问题">Hugo建站的一些问题:
+</h1><h2 id="新文章的发布">新文章的发布:
+</h2><p>在搭建hugo的时候遇到了很多的问题,比如说像是怎么做图片的封面图片的生成,怎么自动创建page的时候生成模板,下面是我使用的一些脚本和方法:</p>
+<p>首先是我使用的是一个python脚本来创建页面的,会自动按照我给出的模板来生成,并且从目录中选择随机的图片作为封面:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/env python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -*- coding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">random</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">subprocess</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">shutil</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_random_cover_image</span><span class="p">(</span><span class="n">cover_dir</span><span class="o">=</span><span class="s2">&#34;~/tcardgen/cover&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    从封面目录中随机选择一个图片文件
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 扩展用户目录的 ~</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cover_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">cover_dir</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cover_path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;错误: 封面目录不存在: </span><span class="si">{</span><span class="n">cover_path</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取所有图片文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">image_extensions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;.png&#34;</span><span class="p">,</span> <span class="s2">&#34;.jpg&#34;</span><span class="p">,</span> <span class="s2">&#34;.jpeg&#34;</span><span class="p">,</span> <span class="s2">&#34;.webp&#34;</span><span class="p">,</span> <span class="s2">&#34;.gif&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">image_files</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">cover_path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cover_path</span><span class="p">,</span> <span class="n">file</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">image_extensions</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">image_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">image_files</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;错误: 在目录 </span><span class="si">{</span><span class="n">cover_path</span><span class="si">}</span><span class="s2"> 中没有找到图片文件&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 随机选择一个图片</span>
+</span></span><span class="line"><span class="cl">    <span class="n">selected_image</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">image_files</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">selected_image</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">run_hugo_new_post</span><span class="p">(</span><span class="n">cardname</span><span class="p">,</span> <span class="n">blog_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mac/study/HyBlog&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    执行 hugo new post 命令创建新文章
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 构建命令</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;hugo&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;new&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="sa">f</span><span class="s2">&#34;post/</span><span class="si">{</span><span class="n">cardname</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">cardname</span><span class="si">}</span><span class="s2">.md&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;正在创建新文章: </span><span class="si">{</span><span class="n">cardname</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;执行命令: </span><span class="si">{</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 切换到博客目录执行命令</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">blog_dir</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✓ 文章创建成功: </span><span class="si">{</span><span class="n">cardname</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✗ 文章创建失败:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;错误输出: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">TimeoutExpired</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✗ 命令执行超时&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;✗ 找不到 hugo 命令，请确保已安装 Hugo&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✗ 执行命令时发生错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">generate_cover</span><span class="p">(</span><span class="n">cardname</span><span class="p">,</span> <span class="n">cover_image</span><span class="p">,</span> <span class="n">config_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mac/tcardgen&#34;</span><span class="p">,</span> <span class="n">blog_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mac/study/HyBlog&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    使用 tcardgen 生成封面
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 构建路径</span>
+</span></span><span class="line"><span class="cl">        <span class="n">config_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config_dir</span><span class="p">,</span> <span class="s2">&#34;config.yaml&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">font_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&#34;~/tcardgen/font&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cover_template</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;~/tcardgen/cover/</span><span class="si">{</span><span class="n">cover_image</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">blog_dir</span><span class="p">,</span> <span class="s2">&#34;static&#34;</span><span class="p">,</span> <span class="s2">&#34;img&#34;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">cardname</span><span class="si">}</span><span class="s2">_cover.png&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">md_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">blog_dir</span><span class="p">,</span> <span class="s2">&#34;content&#34;</span><span class="p">,</span> <span class="s2">&#34;post&#34;</span><span class="p">,</span> <span class="n">cardname</span><span class="p">,</span> <span class="s2">&#34;index.md&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 确保输出目录存在</span>
+</span></span><span class="line"><span class="cl">        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">output_path</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 构建命令</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;tcardgen&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;-c&#34;</span><span class="p">,</span> <span class="n">config_path</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;-f&#34;</span><span class="p">,</span> <span class="n">font_dir</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;-o&#34;</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;-t&#34;</span><span class="p">,</span> <span class="n">cover_template</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">md_file_path</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;正在生成封面: </span><span class="si">{</span><span class="n">cardname</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;使用模板: </span><span class="si">{</span><span class="n">cover_template</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;输出到: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;执行命令: </span><span class="si">{</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 执行命令</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✓ 封面生成成功: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✗ 封面生成失败:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;错误输出: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">TimeoutExpired</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✗ 命令执行超时&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;✗ 找不到 tcardgen 命令，请确保已安装 tcardgen&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✗ 执行命令时发生错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">rename_md_file</span><span class="p">(</span><span class="n">cardname</span><span class="p">,</span> <span class="n">blog_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mac/study/HyBlog&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    重命名 .md 文件为 index.md
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">original_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">blog_dir</span><span class="p">,</span> <span class="s2">&#34;content&#34;</span><span class="p">,</span> <span class="s2">&#34;post&#34;</span><span class="p">,</span> <span class="n">cardname</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">cardname</span><span class="si">}</span><span class="s2">.md&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">blog_dir</span><span class="p">,</span> <span class="s2">&#34;content&#34;</span><span class="p">,</span> <span class="s2">&#34;post&#34;</span><span class="p">,</span> <span class="n">cardname</span><span class="p">,</span> <span class="s2">&#34;index.md&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 检查原文件是否存在</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">original_path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✗ 原文件不存在: </span><span class="si">{</span><span class="n">original_path</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 重命名文件</span>
+</span></span><span class="line"><span class="cl">        <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">original_path</span><span class="p">,</span> <span class="n">new_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✓ 文件重命名成功: </span><span class="si">{</span><span class="n">original_path</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">new_path</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✗ 重命名文件时发生错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    主函数
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;=&#34;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Hugo 文章创建与封面生成工具&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;=&#34;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 检查参数</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;使用方法: python posthugo.py &lt;cardname&gt;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;示例: python posthugo.py my-new-post&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">cardname</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 检查 cardname 是否合法</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">cardname</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">cardname</span><span class="o">.</span><span class="n">isalnum</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;-&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cardname</span> <span class="ow">and</span> <span class="s1">&#39;_&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cardname</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;错误: cardname 只能包含字母、数字、连字符和下划线&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;处理文章: </span><span class="si">{</span><span class="n">cardname</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 1. 创建新文章</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">run_hugo_new_post</span><span class="p">(</span><span class="n">cardname</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;✗ 文章创建失败，退出&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 2. 重命名文件</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">rename_md_file</span><span class="p">(</span><span class="n">cardname</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;✗ 文件重命名失败，退出&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 3. 随机选择封面图片</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">正在选择随机封面...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cover_image</span> <span class="o">=</span> <span class="n">get_random_cover_image</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">cover_image</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;✗ 无法获取封面图片，退出&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;选择的封面模板: </span><span class="si">{</span><span class="n">cover_image</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 4. 生成封面</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">generate_cover</span><span class="p">(</span><span class="n">cardname</span><span class="p">,</span> <span class="n">cover_image</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;✗ 封面生成失败&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 不退出，因为文章已经创建成功</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span> <span class="o">+</span> <span class="s2">&#34;=&#34;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;处理完成!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;文章位置: /Users/mac/study/HyBlog/content/post/</span><span class="si">{</span><span class="n">cardname</span><span class="si">}</span><span class="s2">/index.md&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;封面位置: /Users/mac/study/HyBlog/static/img/</span><span class="si">{</span><span class="n">cardname</span><span class="si">}</span><span class="s2">_cover.png&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;=&#34;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>会从~/tcardgen/cover中选择一个动漫图片,然后使用tcardgen来生成封面,最后调用相应的hugo new post/文章.md 来生成新的文章,将照片放入./static/cover/目录中.</p>
+<p>其中使用的hugo博客的模板如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">title: &#34;{{ replace .TranslationBaseName &#34;-&#34; &#34; &#34; | title }}&#34;
+</span></span><span class="line"><span class="cl">subtitle: &#34;&#34;
+</span></span><span class="line"><span class="cl">date: 2025-05-20T11:54:10+08:00
+</span></span><span class="line"><span class="cl">draft: false
+</span></span><span class="line"><span class="cl">author: &#34;胡杨&#34;
+</span></span><span class="line"><span class="cl">authorLink: &#34;&#34;
+</span></span><span class="line"><span class="cl">authorEmail: &#34;&#34;
+</span></span><span class="line"><span class="cl">description: &#34;&#34;
+</span></span><span class="line"><span class="cl">keywords: &#34;&#34;
+</span></span><span class="line"><span class="cl">license: &#34;&#34;
+</span></span><span class="line"><span class="cl">comment: false
+</span></span><span class="line"><span class="cl">weight: 0
+</span></span><span class="line"><span class="cl">categories:	
+</span></span><span class="line"><span class="cl">  <span class="k">-</span> 未分类
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">hiddenFromHomePage: false
+</span></span><span class="line"><span class="cl">hiddenFromSearch: false
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">toc:
+</span></span><span class="line"><span class="cl">enable: true
+</span></span><span class="line"><span class="cl">math:
+</span></span><span class="line"><span class="cl">enable: false
+</span></span><span class="line"><span class="cl">lightgallery: false
+</span></span><span class="line"><span class="cl">seo:
+</span></span><span class="line"><span class="cl">images: []
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">repost:
+</span></span><span class="line"><span class="cl">enable: true
+</span></span><span class="line"><span class="cl">url: &#34;&#34;
+</span></span><span class="line"><span class="cl">tags: [&#34;原创&#34;]
+</span></span><span class="line"><span class="cl">image: img/{{ replace .TranslationBaseName &#34;-&#34; &#34; &#34; | title }}_cover.png
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;//cdn.jsdelivr.net/npm/katex/dist/katex.min.css&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;//cdn.jsdelivr.net/npm/</span><span class="ni">@xiee/utils/js/math</span><span class="s">-code.min.js&#34;</span> <span class="na">defer</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;//cdn.jsdelivr.net/npm/katex/dist/katex.min.js&#34;</span> <span class="na">defer</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js&#34;</span> <span class="na">defer</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;//cdn.jsdelivr.net/npm/</span><span class="ni">@xiee/utils/js/render</span><span class="s">-katex.js&#34;</span> <span class="na">defer</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;//cdn.jsdelivr.net/npm/</span><span class="ni">@xiee/utils/js/center</span><span class="s">-img.min.js&#34;</span> <span class="na">defer</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如上的模板会自动生成一系列的注入名字,时间日期,封面图之类的信息,并且新的文章一开始在未分类中.</p>
+<h2 id="站点的样式">站点的样式:
+</h2><p>在theme/hugo-theme-stack/assets/scss/custom.scss中的内容如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
+</span><span class="lnt">305
+</span><span class="lnt">306
+</span><span class="lnt">307
+</span><span class="lnt">308
+</span><span class="lnt">309
+</span><span class="lnt">310
+</span><span class="lnt">311
+</span><span class="lnt">312
+</span><span class="lnt">313
+</span><span class="lnt">314
+</span><span class="lnt">315
+</span><span class="lnt">316
+</span><span class="lnt">317
+</span><span class="lnt">318
+</span><span class="lnt">319
+</span><span class="lnt">320
+</span><span class="lnt">321
+</span><span class="lnt">322
+</span><span class="lnt">323
+</span><span class="lnt">324
+</span><span class="lnt">325
+</span><span class="lnt">326
+</span><span class="lnt">327
+</span><span class="lnt">328
+</span><span class="lnt">329
+</span><span class="lnt">330
+</span><span class="lnt">331
+</span><span class="lnt">332
+</span><span class="lnt">333
+</span><span class="lnt">334
+</span><span class="lnt">335
+</span><span class="lnt">336
+</span><span class="lnt">337
+</span><span class="lnt">338
+</span><span class="lnt">339
+</span><span class="lnt">340
+</span><span class="lnt">341
+</span><span class="lnt">342
+</span><span class="lnt">343
+</span><span class="lnt">344
+</span><span class="lnt">345
+</span><span class="lnt">346
+</span><span class="lnt">347
+</span><span class="lnt">348
+</span><span class="lnt">349
+</span><span class="lnt">350
+</span><span class="lnt">351
+</span><span class="lnt">352
+</span><span class="lnt">353
+</span><span class="lnt">354
+</span><span class="lnt">355
+</span><span class="lnt">356
+</span><span class="lnt">357
+</span><span class="lnt">358
+</span><span class="lnt">359
+</span><span class="lnt">360
+</span><span class="lnt">361
+</span><span class="lnt">362
+</span><span class="lnt">363
+</span><span class="lnt">364
+</span><span class="lnt">365
+</span><span class="lnt">366
+</span><span class="lnt">367
+</span><span class="lnt">368
+</span><span class="lnt">369
+</span><span class="lnt">370
+</span><span class="lnt">371
+</span><span class="lnt">372
+</span><span class="lnt">373
+</span><span class="lnt">374
+</span><span class="lnt">375
+</span><span class="lnt">376
+</span><span class="lnt">377
+</span><span class="lnt">378
+</span><span class="lnt">379
+</span><span class="lnt">380
+</span><span class="lnt">381
+</span><span class="lnt">382
+</span><span class="lnt">383
+</span><span class="lnt">384
+</span><span class="lnt">385
+</span><span class="lnt">386
+</span><span class="lnt">387
+</span><span class="lnt">388
+</span><span class="lnt">389
+</span><span class="lnt">390
+</span><span class="lnt">391
+</span><span class="lnt">392
+</span><span class="lnt">393
+</span><span class="lnt">394
+</span><span class="lnt">395
+</span><span class="lnt">396
+</span><span class="lnt">397
+</span><span class="lnt">398
+</span><span class="lnt">399
+</span><span class="lnt">400
+</span><span class="lnt">401
+</span><span class="lnt">402
+</span><span class="lnt">403
+</span><span class="lnt">404
+</span><span class="lnt">405
+</span><span class="lnt">406
+</span><span class="lnt">407
+</span><span class="lnt">408
+</span><span class="lnt">409
+</span><span class="lnt">410
+</span><span class="lnt">411
+</span><span class="lnt">412
+</span><span class="lnt">413
+</span><span class="lnt">414
+</span><span class="lnt">415
+</span><span class="lnt">416
+</span><span class="lnt">417
+</span><span class="lnt">418
+</span><span class="lnt">419
+</span><span class="lnt">420
+</span><span class="lnt">421
+</span><span class="lnt">422
+</span><span class="lnt">423
+</span><span class="lnt">424
+</span><span class="lnt">425
+</span><span class="lnt">426
+</span><span class="lnt">427
+</span><span class="lnt">428
+</span><span class="lnt">429
+</span><span class="lnt">430
+</span><span class="lnt">431
+</span><span class="lnt">432
+</span><span class="lnt">433
+</span><span class="lnt">434
+</span><span class="lnt">435
+</span><span class="lnt">436
+</span><span class="lnt">437
+</span><span class="lnt">438
+</span><span class="lnt">439
+</span><span class="lnt">440
+</span><span class="lnt">441
+</span><span class="lnt">442
+</span><span class="lnt">443
+</span><span class="lnt">444
+</span><span class="lnt">445
+</span><span class="lnt">446
+</span><span class="lnt">447
+</span><span class="lnt">448
+</span><span class="lnt">449
+</span><span class="lnt">450
+</span><span class="lnt">451
+</span><span class="lnt">452
+</span><span class="lnt">453
+</span><span class="lnt">454
+</span><span class="lnt">455
+</span><span class="lnt">456
+</span><span class="lnt">457
+</span><span class="lnt">458
+</span><span class="lnt">459
+</span><span class="lnt">460
+</span><span class="lnt">461
+</span><span class="lnt">462
+</span><span class="lnt">463
+</span><span class="lnt">464
+</span><span class="lnt">465
+</span><span class="lnt">466
+</span><span class="lnt">467
+</span><span class="lnt">468
+</span><span class="lnt">469
+</span><span class="lnt">470
+</span><span class="lnt">471
+</span><span class="lnt">472
+</span><span class="lnt">473
+</span><span class="lnt">474
+</span><span class="lnt">475
+</span><span class="lnt">476
+</span><span class="lnt">477
+</span><span class="lnt">478
+</span><span class="lnt">479
+</span><span class="lnt">480
+</span><span class="lnt">481
+</span><span class="lnt">482
+</span><span class="lnt">483
+</span><span class="lnt">484
+</span><span class="lnt">485
+</span><span class="lnt">486
+</span><span class="lnt">487
+</span><span class="lnt">488
+</span><span class="lnt">489
+</span><span class="lnt">490
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">页面基本配色</span>
+</span></span><span class="line"><span class="cl"><span class="p">:</span><span class="nd">root</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="err">//</span> <span class="err">全局顶部边距</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">--main-top-padding</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="err">//</span> <span class="err">全局卡片圆角</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">--card-border-radius</span><span class="p">:</span> <span class="mi">25</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="err">//</span> <span class="err">标签云卡片圆角</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">--tag-border-radius</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="err">//</span> <span class="err">卡片间距</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">--section-separation</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="err">//</span> <span class="err">全局字体大小</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">--article-font-size</span><span class="p">:</span> <span class="mf">1.8</span><span class="kt">rem</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="err">//</span> <span class="err">行内代码背景色</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">--code-background-color</span><span class="p">:</span> <span class="mh">#f8f8f8</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="err">//</span> <span class="err">行内代码前景色</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">--code-text-color</span><span class="p">:</span> <span class="mh">#e96900</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="err">//</span> <span class="err">暗色模式下样式</span>
+</span></span><span class="line"><span class="cl">  <span class="err">&amp;[data-scheme=&#34;dark&#34;]</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">//</span> <span class="err">行内代码背景色</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--code-background-color</span><span class="p">:</span> <span class="mh">#ff6d1b</span><span class="mi">17</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="err">//</span> <span class="err">行内代码前景色</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--code-text-color</span><span class="p">:</span> <span class="mh">#e96900</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">修复引用块内容窄页面显示问题</span>
+</span></span><span class="line"><span class="cl"><span class="nt">a</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">word-break</span><span class="p">:</span> <span class="n">break-all</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nt">code</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">word-break</span><span class="p">:</span> <span class="n">break-all</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">---------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">文章内容图片圆角阴影</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">article-page</span> <span class="p">.</span><span class="nc">main-article</span> <span class="p">.</span><span class="nc">article-content</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="err">img</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">max-width</span><span class="p">:</span> <span class="mi">96</span><span class="kt">%</span> <span class="cp">!important</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">height</span><span class="p">:</span> <span class="kc">auto</span> <span class="cp">!important</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">border-radius</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">文章内容引用块样式</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">article-content</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="err">blockquote</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">border-left</span><span class="p">:</span> <span class="mi">6</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#358b9a</span><span class="mi">1</span><span class="n">f</span> <span class="cp">!important</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background</span><span class="p">:</span> <span class="mh">#3a9743</span><span class="mi">1</span><span class="n">f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">---------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">代码块基础样式修改</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">highlight</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">max-width</span><span class="p">:</span> <span class="mi">102</span><span class="kt">%</span> <span class="cp">!important</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">pre</span><span class="o">-</span><span class="n">background</span><span class="o">-</span><span class="kc">color</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">padding</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">card</span><span class="o">-</span><span class="n">padding</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">border-radius</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">margin-left</span><span class="p">:</span> <span class="mi">-7</span><span class="kt">px</span> <span class="cp">!important</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">margin-right</span><span class="p">:</span> <span class="mi">-12</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">box-shadow</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">shadow</span><span class="o">-</span><span class="n">l1</span><span class="p">)</span> <span class="cp">!important</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">&amp;:hover</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">.copyCodeButton</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">opacity</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="o">//</span> <span class="nt">keep</span> <span class="nt">Codeblocks</span> <span class="nt">LTR</span>
+</span></span><span class="line"><span class="cl">  <span class="o">[</span><span class="nt">dir</span><span class="o">=</span><span class="s2">&#34;rtl&#34;</span><span class="o">]</span> <span class="o">&amp;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">direction</span><span class="p">:</span> <span class="kc">ltr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nt">pre</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">margin</span><span class="p">:</span> <span class="kc">initial</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">width</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">light模式下的代码块样式调整</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span><span class="nt">data-scheme</span><span class="o">=</span><span class="s2">&#34;light&#34;</span><span class="o">]</span> <span class="p">.</span><span class="nc">article-content</span> <span class="p">.</span><span class="nc">highlight</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background-color</span><span class="p">:</span> <span class="mh">#fff9f3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span><span class="nt">data-scheme</span><span class="o">=</span><span class="s2">&#34;light&#34;</span><span class="o">]</span> <span class="p">.</span><span class="nc">chroma</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">color</span><span class="p">:</span> <span class="mh">#ff6f00</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background-color</span><span class="p">:</span> <span class="mh">#fff9f3</span><span class="n">cc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">-------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">设置选中字体的区域背景颜色</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">修改选中颜色</span>
+</span></span><span class="line"><span class="cl"><span class="p">::</span><span class="nd">selection</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">color</span><span class="p">:</span> <span class="mh">#fff</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background</span><span class="p">:</span> <span class="mh">#34495e</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nt">a</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">text-decoration</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">accent</span><span class="o">-</span><span class="kc">color</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">&amp;:hover</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">accent</span><span class="o">-</span><span class="kc">color</span><span class="o">-</span><span class="n">darker</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="o">&amp;</span><span class="p">.</span><span class="nc">link</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">color</span><span class="p">:</span> <span class="mh">#4288b9</span><span class="n">ad</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">font-weight</span><span class="p">:</span> <span class="mi">600</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">2</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">text-decoration</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="err">&amp;:hover</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">text-decoration</span><span class="p">:</span> <span class="kc">underline</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">-------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">文章封面高度更改</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">article-list</span> <span class="nt">article</span> <span class="p">.</span><span class="nc">article-image</span> <span class="nt">img</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">height</span><span class="p">:</span> <span class="mi">150</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">object-fit</span><span class="p">:</span> <span class="kc">cover</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">@include</span> <span class="err">respond(md)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">height</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="p">@</span><span class="k">include</span> <span class="nt">respond</span><span class="o">(</span><span class="nt">xl</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">height</span><span class="o">:</span> <span class="nt">305px</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">---------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">全局页面布局间距调整</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">main-container</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">min-height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">vh</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">align-items</span><span class="p">:</span> <span class="kc">flex-start</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">gap</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">section</span><span class="o">-</span><span class="n">separation</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">padding-top</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">main</span><span class="o">-</span><span class="kc">top</span><span class="o">-</span><span class="n">padding</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">@include</span> <span class="err">respond(md)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">37</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">--------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">页面三栏宽度调整</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">margin-left</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">margin-right</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">.left-sidebar</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">order</span><span class="p">:</span> <span class="mi">-3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">max-width</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">left</span><span class="o">-</span><span class="n">sidebar</span><span class="o">-</span><span class="n">max</span><span class="o">-</span><span class="n">width</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="p">.</span><span class="nc">right-sidebar</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">order</span><span class="p">:</span> <span class="mi">-1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">max-width</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">right</span><span class="o">-</span><span class="n">sidebar</span><span class="o">-</span><span class="n">max</span><span class="o">-</span><span class="n">width</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="err">///</span> <span class="err">Display</span> <span class="err">right</span> <span class="err">sidebar</span> <span class="err">when</span> <span class="k">min-width</span><span class="p">:</span> <span class="n">lg</span>
+</span></span><span class="line"><span class="cl">    <span class="o">@</span><span class="n">include</span> <span class="nf">respond</span><span class="p">(</span><span class="n">lg</span><span class="p">)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">display</span><span class="o">:</span> <span class="kc">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="o">&amp;</span><span class="p">.</span><span class="nc">extended</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@include</span> <span class="err">respond(md)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">max-width</span><span class="p">:</span> <span class="mi">1024</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="nv">--left-sidebar-max-width</span><span class="p">:</span> <span class="mi">25</span><span class="kt">%</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="nv">--right-sidebar-max-width</span><span class="p">:</span> <span class="mi">22</span><span class="kt">%</span> <span class="cp">!important</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">@</span><span class="k">include</span> <span class="nt">respond</span><span class="o">(</span><span class="nt">lg</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">max-width</span><span class="o">:</span> <span class="nt">1280px</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">--left-sidebar-max-width</span><span class="o">:</span> <span class="nt">20</span><span class="o">%;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">--right-sidebar-max-width</span><span class="o">:</span> <span class="nt">30</span><span class="o">%;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">@</span><span class="k">include</span> <span class="nt">respond</span><span class="o">(</span><span class="nt">xl</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">max-width</span><span class="o">:</span> <span class="nt">1453px</span><span class="o">;</span> <span class="o">//</span><span class="nt">1536px</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">--left-sidebar-max-width</span><span class="o">:</span> <span class="nt">15</span><span class="o">%;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">--right-sidebar-max-width</span><span class="o">:</span> <span class="nt">25</span><span class="o">%;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="o">&amp;</span><span class="p">.</span><span class="nc">compact</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@include</span> <span class="err">respond(md)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nv">--left-sidebar-max-width</span><span class="p">:</span> <span class="mi">25</span><span class="kt">%</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">max-width</span><span class="p">:</span> <span class="mi">768</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">@</span><span class="k">include</span> <span class="nt">respond</span><span class="o">(</span><span class="nt">lg</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">max-width</span><span class="o">:</span> <span class="nt">1024px</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">--left-sidebar-max-width</span><span class="o">:</span> <span class="nt">20</span><span class="o">%;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">@</span><span class="k">include</span> <span class="nt">respond</span><span class="o">(</span><span class="nt">xl</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">max-width</span><span class="o">:</span> <span class="nt">1280px</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">-------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">全局页面小图片样式微调</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">article-list--compact</span> <span class="nt">article</span> <span class="p">.</span><span class="nc">article-image</span> <span class="nt">img</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">width</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">image</span><span class="o">-</span><span class="n">size</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">height</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">image</span><span class="o">-</span><span class="n">size</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">object-fit</span><span class="p">:</span> <span class="kc">cover</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">border-radius</span><span class="p">:</span> <span class="mi">17</span><span class="kt">%</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">菜单栏样式</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">下拉菜单改圆角样式</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">menu</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">padding-left</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">list-style</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">overflow-x</span><span class="p">:</span> <span class="kc">hidden</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">overflow-y</span><span class="p">:</span> <span class="kc">scroll</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">flex-grow</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-size</span><span class="p">:</span> <span class="mf">1.6</span><span class="kt">rem</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">card</span><span class="o">-</span><span class="n">background</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">box-shadow</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">shadow</span><span class="o">-</span><span class="n">l2</span><span class="p">);</span> <span class="err">//改个阴影</span>
+</span></span><span class="line"><span class="cl">  <span class="k">display</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span> <span class="err">//改为0</span>
+</span></span><span class="line"><span class="cl">  <span class="k">border-radius</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span> <span class="err">//加个圆角</span>
+</span></span><span class="line"><span class="cl">  <span class="k">padding</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">@include</span> <span class="err">respond(xl)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">padding</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="o">&amp;,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">.</span><span class="nc">menu-bottom-section</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">gap</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="err">@include</span> <span class="err">respond(xl)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">gap</span><span class="p">:</span> <span class="mi">25</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="o">&amp;</span><span class="p">.</span><span class="nc">show</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="p">@</span><span class="k">include</span> <span class="nt">respond</span><span class="o">(</span><span class="nt">md</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">align-items</span><span class="o">:</span> <span class="nt">flex-end</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">display</span><span class="o">:</span> <span class="nt">flex</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">background-color</span><span class="o">:</span> <span class="nt">transparent</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">padding</span><span class="o">:</span> <span class="nt">0</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">box-shadow</span><span class="o">:</span> <span class="nt">none</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">margin</span><span class="o">:</span> <span class="nt">0</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nt">li</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">vertical-align</span><span class="p">:</span> <span class="kc">middle</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="err">@include</span> <span class="err">respond(md)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">svg</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stroke-width</span><span class="p">:</span> <span class="mf">1.33</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="k">width</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">height</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">a</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">display</span><span class="p">:</span> <span class="kc">inline-flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">body</span><span class="o">-</span><span class="kc">text</span><span class="o">-</span><span class="kc">color</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">gap</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">menu</span><span class="o">-</span><span class="kc">icon</span><span class="o">-</span><span class="n">separation</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">span</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">flex</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">&amp;</span><span class="p">.</span><span class="nc">current</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="err">a</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">accent</span><span class="o">-</span><span class="kc">color</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">font-weight</span><span class="p">:</span> <span class="kc">bold</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="err">}</span>
+</span></span><span class="line"><span class="cl">  <span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">将滚动条修改为圆角样式</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">菜单滚动条美化</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">menu</span><span class="p">::</span><span class="nd">-webkit-scrollbar</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">display</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">全局滚动条美化</span>
+</span></span><span class="line"><span class="cl"><span class="nt">html</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="err">::</span><span class="kp">-webkit-</span><span class="err">scrollbar</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">width</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="p">::</span><span class="nd">-webkit-scrollbar-track</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background-color</span><span class="p">:</span> <span class="kc">transparent</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="p">::</span><span class="nd">-webkit-scrollbar-thumb</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background-color</span><span class="p">:</span> <span class="mh">#d6dee1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">border-radius</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">border</span><span class="p">:</span> <span class="mi">6</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">transparent</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background-clip</span><span class="p">:</span> <span class="kc">content-box</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="p">::</span><span class="nd">-webkit-scrollbar-thumb</span><span class="p">:</span><span class="nd">hover</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background-color</span><span class="p">:</span> <span class="mh">#a8bbbf</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">macOS</span> <span class="nt">风格代码块</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">article-content</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="err">.</span><span class="n">highlight</span><span class="p">:</span><span class="n">before</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">content</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background</span><span class="p">:</span> <span class="nb">url</span><span class="p">(</span><span class="sx">/code-header.svg</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">height</span><span class="p">:</span> <span class="mi">32</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background-size</span><span class="p">:</span> <span class="mi">57</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background-repeat</span><span class="p">:</span> <span class="kc">no-repeat</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">margin-bottom</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background-position</span><span class="p">:</span> <span class="mi">-1</span><span class="kt">px</span> <span class="mi">2</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">/*-----------归档页面----------*/</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">归档页面卡片缩放</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">article-list--tile</span> <span class="nt">article</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transition</span><span class="p">:</span> <span class="mf">.6</span><span class="kt">s</span> <span class="kc">ease</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">article-list--tile</span> <span class="nt">article</span><span class="p">:</span><span class="nd">hover</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mf">1.03</span><span class="p">,</span> <span class="mf">1.03</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">友情链接三栏</span>
+</span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">1024px</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="p">.</span><span class="nc">article-list--compact</span><span class="p">.</span><span class="nc">links</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="k">grid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">grid-template-columns</span><span class="p">:</span> <span class="mi">1</span><span class="n">fr</span> <span class="mi">1</span><span class="n">fr</span> <span class="mi">1</span><span class="n">fr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">box-shadow</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">gap</span><span class="p">:</span> <span class="mi">1</span><span class="kt">rem</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="err">article</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">background</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">card</span><span class="o">-</span><span class="n">background</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">border</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">box-shadow</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">shadow</span><span class="o">-</span><span class="n">l2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">margin-bottom</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">border-radius</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">card</span><span class="o">-</span><span class="n">border</span><span class="o">-</span><span class="n">radius</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="err">&amp;:nth-child(odd)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">margin-right</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">/*主页布局间距调整*/</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">main-container</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">gap</span><span class="p">:</span> <span class="mi">50</span><span class="kt">px</span><span class="p">;</span> <span class="err">//文章宽度</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">@include</span> <span class="err">respond(md)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">gap</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span> <span class="err">//中等屏幕时的文章宽度</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">related-contents</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">overflow-x</span><span class="p">:</span> <span class="kc">visible</span><span class="p">;</span> <span class="err">//显示隐藏的图标</span>
+</span></span><span class="line"><span class="cl">  <span class="k">padding-bottom</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">/*------------------右侧导航栏--------------*/</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">搜索菜单动画</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">search-form</span><span class="p">.</span><span class="nc">widget</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transition</span><span class="p">:</span> <span class="k">transform</span> <span class="mf">0.6</span><span class="kt">s</span> <span class="kc">ease</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">search-form</span><span class="p">.</span><span class="nc">widget</span><span class="p">:</span><span class="nd">hover</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">归档小图标放大动画</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">widget</span><span class="p">.</span><span class="nc">archives</span> <span class="p">.</span><span class="nc">widget-archive--list</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transition</span><span class="p">:</span> <span class="k">transform</span> <span class="mf">.3</span><span class="kt">s</span> <span class="kc">ease</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">widget</span><span class="p">.</span><span class="nc">archives</span> <span class="p">.</span><span class="nc">widget-archive--list</span><span class="p">:</span><span class="nd">hover</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">右侧标签放大动画</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">tagCloud</span> <span class="p">.</span><span class="nc">tagCloud-tags</span> <span class="nt">a</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">border-radius</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-size</span><span class="p">:</span> <span class="mf">1.4</span><span class="kt">rem</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transition</span><span class="p">:</span> <span class="k">transform</span> <span class="mf">.3</span><span class="kt">s</span> <span class="kc">ease</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">tagCloud</span> <span class="p">.</span><span class="nc">tagCloud-tags</span> <span class="nt">a</span><span class="p">:</span><span class="nd">hover</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="nt">代码复制按钮</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">article-content</span> <span class="p">.</span><span class="nc">copyCodeButton</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">top</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">right</span><span class="p">:</span> <span class="mi">18</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">border-radius</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">opacity</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">color</span><span class="p">:</span> <span class="mh">#ffffff</span><span class="n">ad</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">border</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-weight</span><span class="p">:</span> <span class="mi">500</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">article-content</span> <span class="p">.</span><span class="nc">languageCodeButton</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">border</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">top</span><span class="p">:</span> <span class="mi">9</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">right</span><span class="p">:</span> <span class="mi">69</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">border-radius</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">opacity</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">color</span><span class="p">:</span> <span class="mh">#ffffff</span><span class="n">ad</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-family</span><span class="p">:</span> <span class="n">lato</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-size</span><span class="p">:</span> <span class="mf">1.5</span><span class="kt">rem</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="nt">头像旋转动画</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">sidebar</span> <span class="nt">header</span> <span class="p">.</span><span class="nc">site-avatar</span> <span class="p">.</span><span class="nc">site-logo</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transition</span><span class="p">:</span> <span class="k">transform</span> <span class="mf">1.65</span><span class="kt">s</span> <span class="kc">ease-in-out</span><span class="p">;</span> <span class="err">//</span> <span class="err">旋转时间</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">sidebar</span> <span class="nt">header</span> <span class="p">.</span><span class="nc">site-avatar</span> <span class="p">.</span><span class="nc">site-logo</span><span class="p">:</span><span class="nd">hover</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transform</span><span class="p">:</span> <span class="nb">rotate</span><span class="p">(</span><span class="mi">360</span><span class="kt">deg</span><span class="p">);</span> <span class="err">//</span> <span class="err">旋转角度为360度</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">/*----------------归档页面---------------*/</span>
+</span></span><span class="line"><span class="cl"><span class="c">/*归档页面卡片缩放*/</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">article-list--tile</span> <span class="nt">article</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transition</span><span class="p">:</span> <span class="mf">.6</span><span class="kt">s</span> <span class="kc">ease</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">article-list--tile</span> <span class="nt">article</span><span class="p">:</span><span class="nd">hover</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mf">1.03</span><span class="p">,</span> <span class="mf">1.03</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">/* 归档页面两栏 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">1024px</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="p">.</span><span class="nc">article-list--compact</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="k">grid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">grid-template-columns</span><span class="p">:</span> <span class="mi">1</span><span class="n">fr</span> <span class="mi">1</span><span class="n">fr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">box-shadow</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">gap</span><span class="p">:</span> <span class="mi">1</span><span class="kt">rem</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="err">article</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">background</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">card</span><span class="o">-</span><span class="n">background</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">border</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">box-shadow</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">shadow</span><span class="o">-</span><span class="n">l2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">margin-bottom</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">border-radius</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="pdf嵌入的方法">pdf嵌入的方法:
+</h2><p>主要是使用下面的html语句添加到markdown中就可以了:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;center&gt;&lt;embed src=&#34;code1.pdf&#34; width=&#34;1000&#34; height=&#34;1000&#34;&gt;&lt;/center&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中pdf放在文章的目录下就可以了.</p>
 
 </section>
 
