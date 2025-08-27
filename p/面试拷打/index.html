@@ -447,19 +447,6 @@
           </ol>
         </li>
         <li><a href="#总结与对比">总结与对比</a></li>
-        <li><a href="#1-什么是-context-engineering">1. 什么是 Context Engineering？</a></li>
-        <li><a href="#2-为什么需要-context-engineeringwhy-it-matters">2. 为什么需要 Context Engineering？（Why it Matters）</a></li>
-        <li><a href="#3-核心策略与技巧how-to-do-it">3. 核心策略与技巧（How to Do It）</a>
-          <ol>
-            <li><a href="#a-指令工程instruction-engineering">a. 指令工程（Instruction Engineering）</a></li>
-            <li><a href="#b-少样本学习few-shot-learning">b. 少样本学习（Few-Shot Learning）</a></li>
-            <li><a href="#c-提供知识与信息providing-knowledge">c. 提供知识与信息（Providing Knowledge）</a></li>
-            <li><a href="#d-思维链chain-of-thought-cot">d. 思维链（Chain-of-Thought, CoT）</a></li>
-            <li><a href="#e-输出格式化output-formatting">e. 输出格式化（Output Formatting）</a></li>
-          </ol>
-        </li>
-        <li><a href="#4-高级概念上下文窗口context-window与挑战">4. 高级概念：上下文窗口（Context Window）与挑战</a></li>
-        <li><a href="#5-最佳实践总结">5. 最佳实践总结</a></li>
         <li><a href="#核心结论">核心结论</a></li>
         <li><a href="#1-演化史从生成器到异步io">1. 演化史：从生成器到异步IO</a></li>
         <li><a href="#2-关键概念与实现机制">2. 关键概念与实现机制</a>
@@ -591,7 +578,7 @@
 
 
                 <time class="article-time--reading">
-                    25 minute read
+                    24 minute read
                 </time>
             </div>
         
@@ -2770,66 +2757,6 @@
 <p>讲解CONTEXT工程:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>好的，您问的是大语言模型（LLM）领域的 <strong>Context Engineering（上下文工程）</strong>。这是一个非常核心且高级的提示工程（Prompt Engineering）概念，对于有效使用大模型至关重要。</p>
-<p>我将从是什么、为什么、核心策略和最佳实践几个方面为您详细讲解。</p>
-<hr>
-<h3 id="1-什么是-context-engineering">1. 什么是 Context Engineering？
-</h3><p><strong>Context Engineering（上下文工程）</strong> 是指通过精心设计和构建输入给大模型的<strong>上下文信息（Context）</strong>，来精确地引导和控制模型输出行为与质量的技术和艺术。</p>
-<p>这里的 <strong>“上下文”</strong> 指的是在<strong>用户问题（Query）</strong> 之前，提供给模型的所有文本信息。它可以包括：</p>
-<ul>
-<li><strong>指令（Instructions）</strong>：告诉模型要扮演的角色、要遵循的规则、要执行的步骤。</li>
-<li><strong>示例（Examples）</strong>：提供一些输入-输出的例子（即少样本学习，Few-Shot Learning）。</li>
-<li><strong>相关知识和信息（Knowledge/Information）</strong>：提供模型生成答案所需的外部知识、数据或背景信息。</li>
-<li><strong>之前的对话历史（Conversation History）</strong>：在多轮对话中，保持对话的连贯性。</li>
-</ul>
-<p><strong>核心思想</strong>：大模型就像一个极其聪明但缺乏背景知识的新员工。Context Engineering 就是你作为管理者，为他提供的<strong>工作说明书、公司资料、过往案例和沟通记录</strong>。你提供的上下文越清晰、越相关，他的工作成果就越好。</p>
-<hr>
-<h3 id="2-为什么需要-context-engineeringwhy-it-matters">2. 为什么需要 Context Engineering？（Why it Matters）
-</h3><ol>
-<li><strong>突破模型固有知识局限</strong>：模型的训练数据是有截止日期的（例如，GPT-4 可能是 2023 年底）。通过上下文，你可以为模型注入最新的、私有的或非常专业的知识，让它回答训练时不知道的事情。</li>
-<li><strong>控制输出格式和风格</strong>：模型可以生成 JSON、XML、HTML、Markdown 等各种格式的文本。通过上下文中的指令和示例，你可以精确指定输出的结构，便于后续的程序化处理。</li>
-<li><strong>引导复杂的推理过程</strong>：对于复杂的多步推理问题，模型可能会“跳步”或出错。通过上下文，你可以引导它使用“思维链”（Chain-of-Thought）等推理模式，一步步地解决问题，提高准确率。</li>
-<li><strong>实现定制化和角色扮演</strong>：你可以通过上下文让模型扮演一个特定的角色（如严格的面试官、友好的客服、某个历史人物），使其行为更具个性化和专业性。</li>
-<li><strong>节省 Token，降低成本</strong>：精心设计的上下文更高效，避免了冗长的提示和重复的交互，从而节省了 API 调用费用（因为费用通常按输入+输出的总 Token 数计算）。</li>
-</ol>
-<hr>
-<h3 id="3-核心策略与技巧how-to-do-it">3. 核心策略与技巧（How to Do It）
-</h3><h4 id="a-指令工程instruction-engineering">a. 指令工程（Instruction Engineering）
-</h4><p>在最开始给出清晰、具体、无歧义的指令。</p>
-<ul>
-<li><strong>差</strong>：<code>总结一下这篇文章。</code>（过于模糊）</li>
-<li><strong>优</strong>：
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">你是一个专注于AI领域的资深编辑。请用中文为专业人士总结下面这篇文章。
-</span></span><span class="line"><span class="cl">【要求】
-</span></span><span class="line"><span class="cl">1.  总结核心观点，不超过200字。
-</span></span><span class="line"><span class="cl">2.  提取3个最关键的技术术语并加以解释。
-</span></span><span class="line"><span class="cl">3.  指出文章结论中可能存在的一个偏见或局限性。
-</span></span><span class="line"><span class="cl">【文章】：&lt;粘贴文章&gt;
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-<h4 id="b-少样本学习few-shot-learning">b. 少样本学习（Few-Shot Learning）
-</h4><p>提供几个高质量的输入-输出示例，让模型通过示例来学习任务模式。这是非常强大的技巧。</p>
-<ul>
-<li><strong>示例</strong>（情感分析任务）：
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
@@ -2847,134 +2774,30 @@
 </span><span class="lnt">15
 </span><span class="lnt">16
 </span><span class="lnt">17
+</span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">请判断以下文本的情感倾向（积极/消极/中立）。
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="err">首先讲解提示词工程</span><span class="p">,</span><span class="err">在我们使用</span><span class="n">llm的时候</span><span class="p">,</span><span class="err">给</span><span class="n">llm传递的信息就是提示词</span><span class="p">;</span><span class="err">但是假如我们想要让</span><span class="n">llm返回一些特定格式或者风格的回答的时候通常会使用像角色扮演之类的方法</span><span class="p">,</span><span class="err">但此时假如我们将这种用于约束</span><span class="n">llm的提示词和用户真正意图的提示词混合起来就会导致概念不清</span><span class="p">,</span><span class="err">所以这里就将提示词分为了</span><span class="n">system</span> <span class="n">prompt和user</span> <span class="n">prompt</span><span class="p">,</span><span class="err">而修改</span><span class="n">system</span> <span class="n">prompt中的内容来约束和引导llm的回答</span><span class="p">,</span><span class="err">使其回答减少错误和意外</span><span class="p">,</span><span class="err">这种方式就是提示词工程</span><span class="p">;</span><span class="err">一般的提示词工程有角色扮演</span><span class="p">,</span><span class="err">思维连</span><span class="p">,</span><span class="err">规定输入输出</span><span class="p">(</span><span class="n">few</span><span class="o">-</span><span class="n">shot</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">示例1：
-</span></span><span class="line"><span class="cl">输入： &#34;这个电影真是太精彩了，演员演技炸裂！&#34;
-</span></span><span class="line"><span class="cl">输出： 积极
+</span></span><span class="line"><span class="cl"><span class="err">而对于上下文来说</span><span class="p">,</span><span class="err">向我们给</span><span class="n">llm发送信息的时候</span><span class="p">,</span><span class="n">llm的每一次回复都是无状态的</span><span class="p">,</span><span class="err">这样会导致</span><span class="n">llm没有记忆功能</span><span class="p">,</span><span class="err">不能处理复杂任务</span><span class="o">.</span><span class="err">所以我们会使用</span><span class="n">context上下文将历史信息进行管理</span><span class="o">.</span><span class="err">在我们发送给</span><span class="n">llm的问题会首先进入到AI</span> <span class="n">agent</span><span class="p">,</span><span class="n">agent会将用户的问题和模型之前的回答构造一个上下文</span><span class="p">,</span><span class="err">在每一次询问问题的时候</span><span class="p">,</span><span class="err">都会将整个的</span><span class="n">context也一起传给llm</span><span class="o">.</span><span class="err">而对于</span><span class="n">AI</span> <span class="n">agegnt来说</span><span class="p">,</span><span class="err">他也有一个工具包</span><span class="p">,</span><span class="err">用于进行</span><span class="n">toolcall的</span><span class="p">,</span><span class="err">在每次传送给</span><span class="n">llm的信息context中不仅包含着历史信息</span><span class="p">,</span><span class="err">也包含着</span><span class="n">toolcalllist</span><span class="p">,</span><span class="err">也就是告诉</span><span class="n">llm你能够调用什么样的工具</span><span class="p">,</span><span class="err">在每一次</span><span class="n">llm调用toolcall的时候都会由agent来解决请求并且返回toolresponse</span><span class="p">,</span><span class="n">agent会将toolcall和toolresponse也记录在context中</span><span class="o">.</span><span class="err">而因为</span><span class="n">llm频繁调用toolcall和上下文信息过长</span><span class="p">,</span><span class="err">可能就会导致</span><span class="n">llm忘记用户的真正需求</span><span class="p">,</span><span class="err">所以我们需要对于这个</span><span class="n">context进行管理</span><span class="p">,</span><span class="err">而这个就叫做上下文工程</span><span class="o">.</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">示例2：
-</span></span><span class="line"><span class="cl">输入： &#34;产品还行吧，就是送货有点慢。&#34;
-</span></span><span class="line"><span class="cl">输出： 中立
+</span></span><span class="line"><span class="cl"><span class="err">最后提示词中就会包含</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="mf">1.</span> <span class="n">system</span> <span class="n">prompt</span><span class="p">,</span><span class="err">其中包含有角色扮演</span><span class="p">,</span><span class="err">思维链</span><span class="p">,</span><span class="err">输入输出示例</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="mf">2.</span> <span class="n">user</span> <span class="n">prompt</span>
+</span></span><span class="line"><span class="cl"><span class="mf">3.</span> <span class="n">tollcall</span>
+</span></span><span class="line"><span class="cl"><span class="mf">4.</span> <span class="n">toolresponse</span>
+</span></span><span class="line"><span class="cl"><span class="mf">5.</span> <span class="err">笔记内容</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">示例3：
-</span></span><span class="line"><span class="cl">输入： &#34;完全浪费了我的时间，剧情一塌糊涂。&#34;
-</span></span><span class="line"><span class="cl">输出： 消极
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">现在请判断：
-</span></span><span class="line"><span class="cl">输入： &#34;&lt;用户的新评论&gt;&#34;
-</span></span><span class="line"><span class="cl">输出：
+</span></span><span class="line"><span class="cl"><span class="err">像上下文工程的方法有</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="mf">1.</span> <span class="err">提供一个可以让</span><span class="n">AI记笔记的toolcall</span><span class="p">,</span><span class="err">然后写</span><span class="n">system</span> <span class="n">prompt</span><span class="p">,</span><span class="err">让</span><span class="n">AI先将任务进行分解</span><span class="p">,</span><span class="err">然后在笔记中写下</span><span class="n">llm要执行的任务</span><span class="p">,</span><span class="n">llm需要严格执行笔记中的任务</span><span class="p">,</span><span class="err">并且每完成一项就更新任务的状态</span><span class="o">.</span><span class="err">将笔记的内容插入到</span><span class="n">system</span> <span class="n">prompt之后</span><span class="p">,</span><span class="err">或者是</span><span class="n">prompt的结尾</span><span class="p">[</span><span class="err">因为现在的</span><span class="n">llm大多采用transformer架构</span><span class="p">,</span><span class="err">他会对于输入信息的开头和结尾特别敏感</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mf">3.</span> <span class="err">对于一些特别长的</span><span class="n">toolresponse</span><span class="p">,</span><span class="err">就可以将原始的信息存储到一个向量数据库中</span><span class="p">,</span><span class="err">在存入之后</span><span class="p">,</span><span class="n">agent就会修改原来的toolresponse</span><span class="p">,</span><span class="err">里面不在包含原文</span><span class="p">,</span><span class="err">用一句话来代替</span><span class="p">,</span><span class="err">比如说</span><span class="p">,</span><span class="err">文章已经被存入知识库中</span><span class="o">.</span><span class="err">我为你提供了一个新的工具</span><span class="p">,</span><span class="err">叫做</span><span class="n">query</span> <span class="n">document</span><span class="p">,</span><span class="err">你可以用它来查询相关的文章片段</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mf">4.</span> <span class="err">或者是直接优化</span><span class="n">toolresponse的返回值</span><span class="p">,</span><span class="err">对于一些返回的</span><span class="n">html页面</span><span class="p">,</span><span class="err">可以去掉不必要的</span><span class="n">html标签</span><span class="p">,</span><span class="err">只保存关键的信息</span><span class="o">.</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div></li>
-</ul>
-<h4 id="c-提供知识与信息providing-knowledge">c. 提供知识与信息（Providing Knowledge）
-</h4><p>将模型不知道的信息直接放在上下文里。</p>
-<ul>
-<li><strong>场景</strong>：查询公司内部数据。
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">根据以下2024年第一季度的销售数据回答问题。
-</span></span><span class="line"><span class="cl">【数据】：
-</span></span><span class="line"><span class="cl">- 产品A: 销售额 $150,000， 同比增长 15%
-</span></span><span class="line"><span class="cl">- 产品B: 销售额 $95,000， 同比下降 5%
-</span></span><span class="line"><span class="cl">- 产品C: 销售额 $200,000， 同比增长 25%
-</span></span><span class="line"><span class="cl">【问题】：增长率最高的产品是哪一款？它的销售额是多少？
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-<h4 id="d-思维链chain-of-thought-cot">d. 思维链（Chain-of-Thought, CoT）
-</h4><p>引导模型展示其推理步骤，而不是直接给出最终答案。这对于数学、逻辑问题尤其有效。</p>
-<ul>
-<li><strong>示例</strong>：
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Q: 食堂有23个苹果，如果午餐用了20个，又买了6个，现在还有多少个？
-</span></span><span class="line"><span class="cl">A: 我们一步步思考：
-</span></span><span class="line"><span class="cl">1. 最开始有23个苹果。
-</span></span><span class="line"><span class="cl">2. 午餐用了20个，所以剩下 23 - 20 = 3个。
-</span></span><span class="line"><span class="cl">3. 又买了6个，所以现在有 3 + 6 = 9个。
-</span></span><span class="line"><span class="cl">所以，现在还有9个苹果。
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Q: 会议室有40把椅子，搬进来15把，又搬走10把，还剩多少把？
-</span></span><span class="line"><span class="cl">A:
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-<h4 id="e-输出格式化output-formatting">e. 输出格式化（Output Formatting）
-</h4><p>明确指定你想要的输出格式，如 JSON、列表、表格等。</p>
-<ul>
-<li><strong>示例</strong>：
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">请分析以下段落中提到的所有人物、地点和组织，并以JSON格式输出。
-</span></span><span class="line"><span class="cl">JSON格式要求：
-</span></span><span class="line"><span class="cl">{
-</span></span><span class="line"><span class="cl">  &#34;people&#34;: [&#34;名单&#34;],
-</span></span><span class="line"><span class="cl">  &#34;locations&#34;: [&#34;名单&#34;],
-</span></span><span class="line"><span class="cl">  &#34;organizations&#34;: [&#34;名单&#34;]
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">段落：&lt;待分析的文本&gt;
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-<hr>
-<h3 id="4-高级概念上下文窗口context-window与挑战">4. 高级概念：上下文窗口（Context Window）与挑战
-</h3><ul>
-<li><strong>上下文窗口（Context Window）</strong>：这是模型单次交互能处理的<strong>文本总长度上限</strong>（包括提示和补全）。例如，128K 的上下文窗口意味着可以处理约 10 万汉字的文本。</li>
-<li><strong>挑战</strong>：
-<ol>
-<li><strong>“中间失忆”问题</strong>：当上下文非常长时，模型可能会忽略或遗忘放在上下文窗口中间部分的信息，更关注开头和结尾的内容。</li>
-<li><strong>成本与延迟</strong>：更长的上下文意味着更多的 Token 消耗（更贵）和更长的处理时间（更慢）。</li>
-<li><strong>信息检索质量</strong>：并非所有信息都同等重要。如何从海量上下文中最快速、最准确地找到最相关的信息来指导生成，是一个核心挑战。这催生了 <strong>RAG（检索增强生成）</strong> 技术。</li>
-</ol>
-</li>
-</ul>
-<h3 id="5-最佳实践总结">5. 最佳实践总结
-</h3><ol>
-<li><strong>把最重要的信息放在最前和最后</strong>：指令和关键要求放在开头，希望模型执行的动作放在最后，以减少“中间失忆”的影响。</li>
-<li><strong>清晰重于简洁</strong>：不要为了节省几个 Token 而使用模糊不清的指令，这往往会导致更差的输出，最终需要更多轮交互来修正，得不偿失。</li>
-<li><strong>使用 XML/HTML 标签或分隔符</strong>：用 <code>### 指令 ###</code>、<code>&lt;context&gt;...&lt;/context&gt;</code>、<code>&lt;example&gt;</code> 等标签明确区分上下文的不同部分，帮助模型理解结构。</li>
-<li><strong>迭代优化</strong>：Context Engineering 是一个迭代过程。很少有一次性就完美的提示。需要根据模型的输出不断测试、调整和优化你的上下文设计。</li>
-</ol>
-<p><strong>总而言之，Context Engineering 是大模型应用时代的核心技能。它要求使用者不仅是一个提问者，更成为一个好的“沟通者”和“引导者”，通过提供丰富的背景信息来激发模型的最佳性能。</strong></p></blockquote>
-</li>
 <li>
 <p>python async和await机制:</p>
 <div class="highlight"><div class="chroma">

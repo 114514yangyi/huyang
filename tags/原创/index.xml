@@ -2177,66 +2177,6 @@
 &lt;p&gt;讲解CONTEXT工程:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;好的，您问的是大语言模型（LLM）领域的 &lt;strong&gt;Context Engineering（上下文工程）&lt;/strong&gt;。这是一个非常核心且高级的提示工程（Prompt Engineering）概念，对于有效使用大模型至关重要。&lt;/p&gt;
-&lt;p&gt;我将从是什么、为什么、核心策略和最佳实践几个方面为您详细讲解。&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;1-什么是-context-engineering&#34;&gt;1. 什么是 Context Engineering？
-&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Context Engineering（上下文工程）&lt;/strong&gt; 是指通过精心设计和构建输入给大模型的&lt;strong&gt;上下文信息（Context）&lt;/strong&gt;，来精确地引导和控制模型输出行为与质量的技术和艺术。&lt;/p&gt;
-&lt;p&gt;这里的 &lt;strong&gt;“上下文”&lt;/strong&gt; 指的是在&lt;strong&gt;用户问题（Query）&lt;/strong&gt; 之前，提供给模型的所有文本信息。它可以包括：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;指令（Instructions）&lt;/strong&gt;：告诉模型要扮演的角色、要遵循的规则、要执行的步骤。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;示例（Examples）&lt;/strong&gt;：提供一些输入-输出的例子（即少样本学习，Few-Shot Learning）。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;相关知识和信息（Knowledge/Information）&lt;/strong&gt;：提供模型生成答案所需的外部知识、数据或背景信息。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;之前的对话历史（Conversation History）&lt;/strong&gt;：在多轮对话中，保持对话的连贯性。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;核心思想&lt;/strong&gt;：大模型就像一个极其聪明但缺乏背景知识的新员工。Context Engineering 就是你作为管理者，为他提供的&lt;strong&gt;工作说明书、公司资料、过往案例和沟通记录&lt;/strong&gt;。你提供的上下文越清晰、越相关，他的工作成果就越好。&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;2-为什么需要-context-engineeringwhy-it-matters&#34;&gt;2. 为什么需要 Context Engineering？（Why it Matters）
-&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;突破模型固有知识局限&lt;/strong&gt;：模型的训练数据是有截止日期的（例如，GPT-4 可能是 2023 年底）。通过上下文，你可以为模型注入最新的、私有的或非常专业的知识，让它回答训练时不知道的事情。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;控制输出格式和风格&lt;/strong&gt;：模型可以生成 JSON、XML、HTML、Markdown 等各种格式的文本。通过上下文中的指令和示例，你可以精确指定输出的结构，便于后续的程序化处理。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;引导复杂的推理过程&lt;/strong&gt;：对于复杂的多步推理问题，模型可能会“跳步”或出错。通过上下文，你可以引导它使用“思维链”（Chain-of-Thought）等推理模式，一步步地解决问题，提高准确率。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;实现定制化和角色扮演&lt;/strong&gt;：你可以通过上下文让模型扮演一个特定的角色（如严格的面试官、友好的客服、某个历史人物），使其行为更具个性化和专业性。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;节省 Token，降低成本&lt;/strong&gt;：精心设计的上下文更高效，避免了冗长的提示和重复的交互，从而节省了 API 调用费用（因为费用通常按输入+输出的总 Token 数计算）。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;3-核心策略与技巧how-to-do-it&#34;&gt;3. 核心策略与技巧（How to Do It）
-&lt;/h3&gt;&lt;h4 id=&#34;a-指令工程instruction-engineering&#34;&gt;a. 指令工程（Instruction Engineering）
-&lt;/h4&gt;&lt;p&gt;在最开始给出清晰、具体、无歧义的指令。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;差&lt;/strong&gt;：&lt;code&gt;总结一下这篇文章。&lt;/code&gt;（过于模糊）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;优&lt;/strong&gt;：
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;你是一个专注于AI领域的资深编辑。请用中文为专业人士总结下面这篇文章。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;【要求】
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;1.  总结核心观点，不超过200字。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2.  提取3个最关键的技术术语并加以解释。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;3.  指出文章结论中可能存在的一个偏见或局限性。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;【文章】：&amp;lt;粘贴文章&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;b-少样本学习few-shot-learning&#34;&gt;b. 少样本学习（Few-Shot Learning）
-&lt;/h4&gt;&lt;p&gt;提供几个高质量的输入-输出示例，让模型通过示例来学习任务模式。这是非常强大的技巧。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;示例&lt;/strong&gt;（情感分析任务）：
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
@@ -2254,134 +2194,30 @@
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;请判断以下文本的情感倾向（积极/消极/中立）。
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;首先讲解提示词工程&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;在我们使用&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm的时候&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;给&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm传递的信息就是提示词&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;但是假如我们想要让&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm返回一些特定格式或者风格的回答的时候通常会使用像角色扮演之类的方法&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;但此时假如我们将这种用于约束&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm的提示词和用户真正意图的提示词混合起来就会导致概念不清&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;所以这里就将提示词分为了&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;system&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prompt和user&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prompt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;而修改&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;system&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prompt中的内容来约束和引导llm的回答&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;使其回答减少错误和意外&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;这种方式就是提示词工程&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;一般的提示词工程有角色扮演&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;思维连&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;规定输入输出&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;few&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;示例1：
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输入： &amp;#34;这个电影真是太精彩了，演员演技炸裂！&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输出： 积极
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;而对于上下文来说&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;向我们给&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm发送信息的时候&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm的每一次回复都是无状态的&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;这样会导致&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm没有记忆功能&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;不能处理复杂任务&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;所以我们会使用&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;context上下文将历史信息进行管理&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;在我们发送给&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm的问题会首先进入到AI&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;agent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;agent会将用户的问题和模型之前的回答构造一个上下文&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;在每一次询问问题的时候&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;都会将整个的&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;context也一起传给llm&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;而对于&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AI&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;agegnt来说&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;他也有一个工具包&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;用于进行&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;toolcall的&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;在每次传送给&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm的信息context中不仅包含着历史信息&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;也包含着&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;toolcalllist&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;也就是告诉&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm你能够调用什么样的工具&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;在每一次&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm调用toolcall的时候都会由agent来解决请求并且返回toolresponse&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;agent会将toolcall和toolresponse也记录在context中&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;而因为&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm频繁调用toolcall和上下文信息过长&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;可能就会导致&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm忘记用户的真正需求&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;所以我们需要对于这个&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;context进行管理&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;而这个就叫做上下文工程&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;示例2：
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输入： &amp;#34;产品还行吧，就是送货有点慢。&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输出： 中立
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;最后提示词中就会包含&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mf&#34;&gt;1.&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;system&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prompt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;其中包含有角色扮演&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;思维链&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;输入输出示例&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mf&#34;&gt;2.&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;user&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prompt&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mf&#34;&gt;3.&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tollcall&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mf&#34;&gt;4.&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;toolresponse&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mf&#34;&gt;5.&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;笔记内容&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;示例3：
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输入： &amp;#34;完全浪费了我的时间，剧情一塌糊涂。&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输出： 消极
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;现在请判断：
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输入： &amp;#34;&amp;lt;用户的新评论&amp;gt;&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;输出：
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;像上下文工程的方法有&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mf&#34;&gt;1.&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;提供一个可以让&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AI记笔记的toolcall&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;然后写&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;system&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prompt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;让&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AI先将任务进行分解&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;然后在笔记中写下&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm要执行的任务&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm需要严格执行笔记中的任务&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;并且每完成一项就更新任务的状态&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;将笔记的内容插入到&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;system&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prompt之后&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;或者是&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;prompt的结尾&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;因为现在的&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;llm大多采用transformer架构&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;他会对于输入信息的开头和结尾特别敏感&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mf&#34;&gt;3.&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;对于一些特别长的&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;toolresponse&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;就可以将原始的信息存储到一个向量数据库中&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;在存入之后&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;agent就会修改原来的toolresponse&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;里面不在包含原文&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;用一句话来代替&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;比如说&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;文章已经被存入知识库中&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;我为你提供了一个新的工具&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;叫做&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;query&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;你可以用它来查询相关的文章片段&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mf&#34;&gt;4.&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;或者是直接优化&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;toolresponse的返回值&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;对于一些返回的&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;html页面&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;可以去掉不必要的&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;html标签&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;只保存关键的信息&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;c-提供知识与信息providing-knowledge&#34;&gt;c. 提供知识与信息（Providing Knowledge）
-&lt;/h4&gt;&lt;p&gt;将模型不知道的信息直接放在上下文里。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;场景&lt;/strong&gt;：查询公司内部数据。
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;根据以下2024年第一季度的销售数据回答问题。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;【数据】：
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- 产品A: 销售额 $150,000， 同比增长 15%
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- 产品B: 销售额 $95,000， 同比下降 5%
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- 产品C: 销售额 $200,000， 同比增长 25%
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;【问题】：增长率最高的产品是哪一款？它的销售额是多少？
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;d-思维链chain-of-thought-cot&#34;&gt;d. 思维链（Chain-of-Thought, CoT）
-&lt;/h4&gt;&lt;p&gt;引导模型展示其推理步骤，而不是直接给出最终答案。这对于数学、逻辑问题尤其有效。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;示例&lt;/strong&gt;：
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Q: 食堂有23个苹果，如果午餐用了20个，又买了6个，现在还有多少个？
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;A: 我们一步步思考：
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;1. 最开始有23个苹果。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2. 午餐用了20个，所以剩下 23 - 20 = 3个。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;3. 又买了6个，所以现在有 3 + 6 = 9个。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;所以，现在还有9个苹果。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Q: 会议室有40把椅子，搬进来15把，又搬走10把，还剩多少把？
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;A:
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;e-输出格式化output-formatting&#34;&gt;e. 输出格式化（Output Formatting）
-&lt;/h4&gt;&lt;p&gt;明确指定你想要的输出格式，如 JSON、列表、表格等。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;示例&lt;/strong&gt;：
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;请分析以下段落中提到的所有人物、地点和组织，并以JSON格式输出。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;JSON格式要求：
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &amp;#34;people&amp;#34;: [&amp;#34;名单&amp;#34;],
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &amp;#34;locations&amp;#34;: [&amp;#34;名单&amp;#34;],
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &amp;#34;organizations&amp;#34;: [&amp;#34;名单&amp;#34;]
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;段落：&amp;lt;待分析的文本&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;4-高级概念上下文窗口context-window与挑战&#34;&gt;4. 高级概念：上下文窗口（Context Window）与挑战
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;上下文窗口（Context Window）&lt;/strong&gt;：这是模型单次交互能处理的&lt;strong&gt;文本总长度上限&lt;/strong&gt;（包括提示和补全）。例如，128K 的上下文窗口意味着可以处理约 10 万汉字的文本。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;挑战&lt;/strong&gt;：
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;“中间失忆”问题&lt;/strong&gt;：当上下文非常长时，模型可能会忽略或遗忘放在上下文窗口中间部分的信息，更关注开头和结尾的内容。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;成本与延迟&lt;/strong&gt;：更长的上下文意味着更多的 Token 消耗（更贵）和更长的处理时间（更慢）。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;信息检索质量&lt;/strong&gt;：并非所有信息都同等重要。如何从海量上下文中最快速、最准确地找到最相关的信息来指导生成，是一个核心挑战。这催生了 &lt;strong&gt;RAG（检索增强生成）&lt;/strong&gt; 技术。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;5-最佳实践总结&#34;&gt;5. 最佳实践总结
-&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;把最重要的信息放在最前和最后&lt;/strong&gt;：指令和关键要求放在开头，希望模型执行的动作放在最后，以减少“中间失忆”的影响。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;清晰重于简洁&lt;/strong&gt;：不要为了节省几个 Token 而使用模糊不清的指令，这往往会导致更差的输出，最终需要更多轮交互来修正，得不偿失。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;使用 XML/HTML 标签或分隔符&lt;/strong&gt;：用 &lt;code&gt;### 指令 ###&lt;/code&gt;、&lt;code&gt;&amp;lt;context&amp;gt;...&amp;lt;/context&amp;gt;&lt;/code&gt;、&lt;code&gt;&amp;lt;example&amp;gt;&lt;/code&gt; 等标签明确区分上下文的不同部分，帮助模型理解结构。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;迭代优化&lt;/strong&gt;：Context Engineering 是一个迭代过程。很少有一次性就完美的提示。需要根据模型的输出不断测试、调整和优化你的上下文设计。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;总而言之，Context Engineering 是大模型应用时代的核心技能。它要求使用者不仅是一个提问者，更成为一个好的“沟通者”和“引导者”，通过提供丰富的背景信息来激发模型的最佳性能。&lt;/strong&gt;&lt;/p&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;python async和await机制:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
