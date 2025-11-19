@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" Min Stanford EE274: Data Compression I 2023 I Lecture 18 - Video Compression - YouTube Stanford EE274: Data Compression I 2023 I Lecture 1 - Course Intro, Lossless Data Compression Basics - YouTube\nPredictive Coding ([[06-Prediction.pdf#page=2&amp;selection=14,0,66,3&amp;color=yellow|06-Prediction, p.2]]) Prediction mp [n] is calculated for x[n] from previous samples \uf06e e[n] is prediction error, with greatly reduced statistical dependencies between adjacent samples \uf06e Entropy coder may assume i.i.d. prediction error e[n] \uf06e Receiver can reconstruct x[n] without loss for amplitude-discrete signals \uf06e Much simpler than context-adaptive coder\n">
+<title>视频压缩前置知识</title>
+
+<link rel='canonical' href='https://114514yangyi.github.io/huyang/p/%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86/'>
+
+<link rel="stylesheet" href="/huyang/scss/style.min.c87964a27a803b9ec8416ef548ff58498ecded3c4f066dd40cc146c5da4d7075.css"><meta property='og:title' content="视频压缩前置知识">
+<meta property='og:description' content=" Min Stanford EE274: Data Compression I 2023 I Lecture 18 - Video Compression - YouTube Stanford EE274: Data Compression I 2023 I Lecture 1 - Course Intro, Lossless Data Compression Basics - YouTube\nPredictive Coding ([[06-Prediction.pdf#page=2&amp;selection=14,0,66,3&amp;color=yellow|06-Prediction, p.2]]) Prediction mp [n] is calculated for x[n] from previous samples \uf06e e[n] is prediction error, with greatly reduced statistical dependencies between adjacent samples \uf06e Entropy coder may assume i.i.d. prediction error e[n] \uf06e Receiver can reconstruct x[n] without loss for amplitude-discrete signals \uf06e Much simpler than context-adaptive coder\n">
+<meta property='og:url' content='https://114514yangyi.github.io/huyang/p/%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86/'>
+<meta property='og:site_name' content='Hu Yang&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='原创' /><meta property='article:published_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='article:modified_time' content='2025-05-20T11:54:10&#43;08:00'/><meta property='og:image' content='https://114514yangyi.github.io/huyang/img/%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86_cover.png' />
+<meta name="twitter:title" content="视频压缩前置知识">
+<meta name="twitter:description" content=" Min Stanford EE274: Data Compression I 2023 I Lecture 18 - Video Compression - YouTube Stanford EE274: Data Compression I 2023 I Lecture 1 - Course Intro, Lossless Data Compression Basics - YouTube\nPredictive Coding ([[06-Prediction.pdf#page=2&amp;selection=14,0,66,3&amp;color=yellow|06-Prediction, p.2]]) Prediction mp [n] is calculated for x[n] from previous samples \uf06e e[n] is prediction error, with greatly reduced statistical dependencies between adjacent samples \uf06e Entropy coder may assume i.i.d. prediction error e[n] \uf06e Receiver can reconstruct x[n] without loss for amplitude-discrete signals \uf06e Much simpler than context-adaptive coder\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://114514yangyi.github.io/huyang/img/%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86_cover.png' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/huyang/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/huyang/img/logo-transparent_hu_2593eda3cf734d42.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/huyang">Hu Yang&#39;s Blog</a></h1>
+            <h2 class="site-description">Blog</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://114514yangyi.github.io/huyang/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='2416572689@qq.com'
+                        target="_blank"
+                        title="QQ"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/huyang/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/journal/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Journal</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/huyang/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/" selected>English</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/zh-cn/" >中文</option>
+                                
+                                    <option value="https://114514yangyi.github.io/huyang/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#-图像压缩中的预测性编码predictive-coding-for-compression">🎨 图像压缩中的预测性编码（Predictive Coding for Compression）</a>
+      <ol>
+        <li><a href="#核心观点">核心观点</a></li>
+      </ol>
+    </li>
+    <li><a href="#-具体的算法步骤differential-pulse-code-modulation-dpcm">⚙️ 具体的算法步骤（Differential Pulse-Code Modulation, DPCM）</a>
+      <ol>
+        <li><a href="#发送端编码器-coder">发送端（编码器 Coder）</a></li>
+        <li><a href="#接收端解码器-decoder">接收端（解码器 Decoder）</a></li>
+        <li><a href="#算法的优点和发展">算法的优点和发展</a></li>
+      </ol>
+    </li>
+    <li><a href="#-无损预测性编码-lossless-predictive-coding">🔒 无损预测性编码 (Lossless Predictive Coding)</a>
+      <ol>
+        <li><a href="#1-核心框图解释">1. 核心框图解释</a>
+          <ol>
+            <li><a href="#-编码器-encoder">🔹 编码器 (Encoder)</a></li>
+            <li><a href="#-解码器-decoder">🔸 解码器 (Decoder)</a></li>
+          </ol>
+        </li>
+        <li><a href="#2-关键点解读-red-boxes">2. 关键点解读 (Red Boxes)</a></li>
+      </ol>
+    </li>
+    <li><a href="#-预测误差的熵与方差">📉 预测误差的熵与方差</a>
+      <ol>
+        <li><a href="#1-预测误差熵的近似公式">1. 预测误差熵的近似公式</a></li>
+        <li><a href="#2-形状常数shape-constantc_pdf">2. 形状常数（Shape Constant $c_{pdf}$）</a></li>
+        <li><a href="#3-关键应用结论">3. 关键应用结论</a></li>
+      </ol>
+    </li>
+    <li><a href="#-总结">🎯 总结</a></li>
+    <li><a href="#-python-示例无损预测性编码">💻 Python 示例：无损预测性编码</a>
+      <ol>
+        <li><a href="#1-代码实现">1. 代码实现</a></li>
+        <li><a href="#2-运行结果与分析">2. 运行结果与分析</a>
+          <ol>
+            <li><a href="#结果分析">结果分析</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+
+  <ol>
+    <li><a href="#-详细说明分块变换编码-block-transform-coding">🧐 详细说明：分块变换编码 (Block Transform Coding)</a>
+      <ol>
+        <li><a href="#1-编码的必要性从单元素到分块处理">1. 编码的必要性：从单元素到分块处理</a></li>
+        <li><a href="#2-关键核心技术离散余弦变换-dct">2. 关键核心技术：离散余弦变换 (DCT)</a></li>
+        <li><a href="#3-工作流程与原理preprocessing-stage">3. 工作流程与原理（Preprocessing Stage）</a>
+          <ol>
+            <li><a href="#a-变换域的分布变化">A. 变换域的分布变化</a></li>
+            <li><a href="#b-量化与分配quantization-and-bit-allocation">B. 量化与分配（Quantization and Bit Allocation）</a></li>
+            <li><a href="#c-编码-coding">C. 编码 (Coding)</a></li>
+          </ol>
+        </li>
+        <li><a href="#4-发展与挑战">4. 发展与挑战</a>
+          <ol>
+            <li><a href="#适应性-adaptivity">适应性 (Adaptivity)</a></li>
+            <li><a href="#主要挑战块效应-blocking-artifacts">主要挑战：块效应 (Blocking Artifacts)</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#-分块变换编码的数学与语言描述">📐 分块变换编码的数学与语言描述</a>
+      <ol>
+        <li><a href="#i-编码器压缩阶段-compression">I. 编码器：压缩阶段 (Compression)</a>
+          <ol>
+            <li><a href="#1-预处理与分块-preprocessing--blocking">1. 预处理与分块 (Preprocessing &amp; Blocking)</a></li>
+            <li><a href="#2-离散余弦变换-dct">2. 离散余弦变换 (DCT)</a></li>
+            <li><a href="#3-量化-quantization">3. 量化 (Quantization)</a></li>
+            <li><a href="#4-编码-coding">4. 编码 (Coding)</a></li>
+          </ol>
+        </li>
+        <li><a href="#ii-解码器重构阶段-reconstruction">II. 解码器：重构阶段 (Reconstruction)</a>
+          <ol>
+            <li><a href="#1-解码与反量化-decoding--dequantization">1. 解码与反量化 (Decoding &amp; Dequantization)</a></li>
+            <li><a href="#2-逆离散余弦变换-idct">2. 逆离散余弦变换 (IDCT)</a></li>
+            <li><a href="#3-反电平位移与拼接-inverse-level-shifting--assembly">3. 反电平位移与拼接 (Inverse Level Shifting &amp; Assembly)</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#核心原理">核心原理</a></li>
+        <li><a href="#优势和特点">优势和特点</a></li>
+      </ol>
+    </li>
+    <li><a href="#-实现示例linde-buzo-gray-lbg-算法">🛠️ 实现示例：Linde-Buzo-Gray (LBG) 算法</a>
+      <ol>
+        <li><a href="#lbg-算法步骤">LBG 算法步骤</a></li>
+        <li><a href="#图像压缩示例-以44图像块为例">图像压缩示例 (以 4×4 图像块为例)</a></li>
+      </ol>
+    </li>
+  </ol>
+
+  <ol>
+    <li><a href="#-小波分析与编码-wavelet-analysis-and-coding">🌊 小波分析与编码 (Wavelet Analysis and Coding)</a></li>
+    <li><a href="#-亚带编码-subband-coding">🖼️ 亚带编码 (Subband Coding)</a>
+      <ol>
+        <li><a href="#-原理-principle">📌 原理 (Principle)</a></li>
+        <li><a href="#-具体处理过程-specific-processing-flow">⚙️ 具体处理过程 (Specific Processing Flow)</a>
+          <ol>
+            <li><a href="#1-信号分解编码器端---analysis-filter-bank"><strong>1. 信号分解（编码器端 - Analysis Filter Bank）</strong></a></li>
+            <li><a href="#2-亚带编码-coding"><strong>2. 亚带编码 (Coding)</strong></a></li>
+            <li><a href="#3-信号重建解码器端---synthesis-filter-bank"><strong>3. 信号重建（解码器端 - Synthesis Filter Bank）</strong></a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#-小波编码-wavelet-coding">🌊 小波编码 (Wavelet Coding)</a>
+      <ol>
+        <li><a href="#-原理-principle-1">📌 原理 (Principle)</a></li>
+        <li><a href="#-具体处理过程多分辨率金字塔-multiresolution-pyramid">⚙️ 具体处理过程：多分辨率金字塔 (Multiresolution Pyramid)</a>
+          <ol>
+            <li><a href="#1-初始分解"><strong>1. 初始分解</strong></a></li>
+            <li><a href="#2-迭代分解多分辨率"><strong>2. 迭代分解（多分辨率）</strong></a></li>
+            <li><a href="#3-优势渐进传输与多分辨率应用"><strong>3. 优势：渐进传输与多分辨率应用</strong></a></li>
+          </ol>
+        </li>
+        <li><a href="#-例子jpeg-2000-图像压缩">💡 例子：JPEG 2000 图像压缩</a></li>
+        <li><a href="#简要总结亚带编码-vs-小波编码">简要总结：亚带编码 vs. 小波编码</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/huyang/p/%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86/">
+                
+                    <img src="/huyang/img/%e8%a7%86%e9%a2%91%e5%8e%8b%e7%bc%a9%e5%89%8d%e7%bd%ae%e7%9f%a5%e8%af%86_cover.png" loading="lazy" alt="Featured image of post 视频压缩前置知识" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/huyang/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="background-color: #2a9d8f; color: #fff;">
+                未分类
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/huyang/p/%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86/">视频压缩前置知识</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 20, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    10 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/math-code.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+<p>Min <iframe width="560" height="315" src="https://www.youtube.com/embed/uKnEZKpZKVA?si=6tvb8tCg66f4BInV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<a class="link" href="https://youtu.be/uKnEZKpZKVA?si=09Z4r34zEb8nRqJO"  target="_blank" rel="noopener"
+    >Stanford EE274: Data Compression I 2023 I Lecture 18 - Video Compression - YouTube</a>
+<a class="link" href="https://youtu.be/FF7DRogZZdY?si=-cVT8dFC9zHJpnRP"  target="_blank" rel="noopener"
+    >Stanford EE274: Data Compression I 2023 I Lecture 1 - Course Intro, Lossless Data Compression Basics - YouTube</a></p>
+<h1 id="predictive-coding">Predictive Coding
+</h1><blockquote>
+<p>([[06-Prediction.pdf#page=2&amp;selection=14,0,66,3&amp;color=yellow|06-Prediction, p.2]])
+Prediction mp [n] is calculated for x[n] from previous samples  e[n] is prediction error, with greatly reduced statistical dependencies between adjacent samples  Entropy coder may assume i.i.d. prediction error e[n]  Receiver can reconstruct x[n] without loss for amplitude-discrete signals  Much simpler than context-adaptive coder</p></blockquote>
+<h2 id="-图像压缩中的预测性编码predictive-coding-for-compression">🎨 图像压缩中的预测性编码（Predictive Coding for Compression）
+</h2><p>这段文字的核心意思是：<strong>图像的绝大部分内容是高度相關和可預測的，只有邊緣和高細節區域是不可預測的。因此，我們只需要傳輸“實際值”與“預測值”之間的差值（即誤差），這個誤差信號比原始圖像數據量小得多。</strong></p>
+<h3 id="核心观点">核心观点
+</h3><ol>
+<li>
+<p><strong>相关性高：</strong> 圖像中相鄰的像素（例如，天空、牆壁、地板）的值通常非常接近，這被稱為“高相關性”。</p>
+</li>
+<li>
+<p><strong>效率提升：</strong> 由於這種高相關性，傳輸或存儲<strong>整個像素值</strong>是低效的。更有效的方式是<strong>預測</strong>下一個像素的值，然後只傳輸<strong>預測錯誤</strong>。</p>
+</li>
+<li>
+<p><strong>誤差特性：</strong> 預測做得好，誤差信號就會很小，並且其概率分佈（通常是 Laplacian 或 Gamma 分佈）是高度集中的（<strong>高度尖峰在零附近</strong>），這意味著它更容易被高效地編碼（使用更少的位元）。</p>
+</li>
+</ol>
+<hr>
+<h2 id="-具体的算法步骤differential-pulse-code-modulation-dpcm">⚙️ 具体的算法步骤（Differential Pulse-Code Modulation, DPCM）
+</h2><p>這段文字描述的“预测性编码”算法在信号处理中通常被称为<strong>差分脉冲编码调制 (Differential Pulse-Code Modulation, DPCM)</strong>。</p>
+<h3 id="发送端编码器-coder">发送端（编码器 Coder）
+</h3><ol>
+<li>
+<p><strong>获取下一个样本：</strong> 讀取實際的下一個像素值 $X_n$。</p>
+</li>
+<li>
+<p><strong>生成预测值：</strong> 使用一個<strong>预测器 (Predictor)</strong>，根據<strong>已經處理和重建</strong>的先前像素值 $\tilde{X}<em>{n-1}, \tilde{X}</em>{n-2}, \dots$ 來計算當前像素的<strong>預測值</strong> $\hat{X}_n$。</p>
+<blockquote>
+<p><em>最簡單的預測器可能是 $\hat{X}<em>n = \tilde{X}</em>{n-1}$（使用前一個重建值作為預測）。</em></p></blockquote>
+</li>
+<li>
+<p>计算预测误差： 計算實際值和預測值之間的差值，即誤差信號 (Error Signal) $e_n$：</p>
+$$e_n = X_n - \hat{X}_n$$</li>
+<li>
+<p><strong>量化误差：</strong> 對誤差信號 $e_n$ 進行<strong>量化 (Quantization)</strong>，將其轉換為有限數量的數位值 $\tilde{e}_n$（例如，使用 3 位元或更少）。</p>
+<blockquote>
+<p><em>由於 $e_n$ 大部分接近零，通常使用<strong>非均匀量化</strong>，對小值給予更多精度。</em></p></blockquote>
+</li>
+<li>
+<p><strong>编码和传输：</strong> 對量化後的誤差 $\tilde{e}_n$ 進行<strong>變長編碼 (Variable Wordlength Coding)</strong>（如霍夫曼編碼），然後<strong>傳輸</strong>。</p>
+</li>
+<li>
+<p>本地重建（为下一步预测）： 為了確保編碼器和解碼器的預測器使用相同的輸入，編碼器必須本地重建像素值 $\tilde{X}_n$：</p>
+$$\tilde{X}_n = \hat{X}_n + \tilde{e}_n$$<p>這個 $\tilde{X}<em>n$ 將用於計算下一個像素的預測 $\hat{X}</em>{n+1}$。</p>
+</li>
+</ol>
+<h3 id="接收端解码器-decoder">接收端（解码器 Decoder）
+</h3><ol>
+<li>
+<p><strong>接收量化误差：</strong> 接收並解碼量化後的誤差 $\tilde{e}_n$。</p>
+</li>
+<li>
+<p><strong>生成预测值：</strong> 解碼器使用與編碼器<strong>完全相同</strong>的<strong>预测器</strong>和<strong>先前重建的像素值</strong> $\tilde{X}<em>{n-1}, \tilde{X}</em>{n-2}, \dots$ 來計算<strong>預測值</strong> $\hat{X}_n$。</p>
+</li>
+<li>
+<p>重建信号： 將接收到的量化誤差 $\tilde{e}_n$ 加回到預測值 $\hat{X}_n$ 上，得到重建的像素值 $\tilde{X}_n$：</p>
+$$\tilde{X}_n = \hat{X}_n + \tilde{e}_n$$<p>這個 $\tilde{X}_n$ 就是最終的輸出信號。</p>
+</li>
+</ol>
+<h3 id="算法的优点和发展">算法的优点和发展
+</h3><ul>
+<li>
+<p><strong>优点：</strong> 算法非常簡單，可以顯著減少圖像所需的位元速率（文中提到可以達到大約 <strong>1 bit/element</strong> 左右），且能保持優秀的圖像質量。</p>
+</li>
+<li>
+<p><strong>发展：</strong> 現代的壓縮標準（如 H.264/H.265 或 MPEG）中，這種基本思想（<strong>预测-误差-量化</strong>）仍然存在，但主要應用在<strong>时间维度</strong>上（即用前一幀的圖像來預測當前幀的圖像，稱為<strong>運動補償預測</strong>）。預測器和量化器也變得更加複雜，採用了自適應（Adaptive）、基於塊（Block-based）或神經網絡（Neural approaches）的方法來進一步優化。</p>
+</li>
+</ul>
+<hr>
+<p>如果需要，我可以為您詳細解釋 DPCM 算法中的**預測器（Predictor）**是如何設計的。</p>
+<p>好的，您提供的图片展示的是<strong>无损预测性编码 (Lossless Predictive Coding)</strong> 的框图和关键特点。这是一种在信号处理和数据压缩领域中，用于<strong>完全重建原始信号</strong>（即无损）的预测编码技术。</p>
+<p>我将结合您之前了解的 DPCM 知识和这张图，来详细讲解整个过程。</p>
+<hr>
+<h2 id="-无损预测性编码-lossless-predictive-coding">🔒 无损预测性编码 (Lossless Predictive Coding)
+</h2><p>这个系统的主要目标是利用信号 $x[n]$（例如，图像或音频信号的样本）中相邻样本的相关性，将 $x[n]$ 转换为一个<strong>更容易压缩</strong>的<strong>预测误差信号 $e[n]$</strong>，并且在解码时能够<strong>完美地还原</strong>原始信号。</p>
+<h3 id="1-核心框图解释">1. 核心框图解释
+</h3><p>框图由<strong>编码器（Encoder）<strong>和</strong>解码器（Decoder）<strong>两大部分组成，中间通过一个</strong>熵编码器/解码器 (Entropy Coder/Decoder)</strong> 连接，传输的是预测误差信号 $e[n]$。</p>
+<h4 id="-编码器-encoder">🔹 编码器 (Encoder)
+</h4><p>编码器的任务是将原始信号 $x[n]$ 转换为误差 $e[n]$：</p>
+<ol>
+<li>
+<p><strong>输入信号：</strong> 原始信号 $x[n]$。</p>
+</li>
+<li>
+<p><strong>预测器 (Predictor)：</strong> 這個模塊根據<strong>先前已處理的樣本</strong> $x[n-1], x[n-2], \dots$（如圖中所示，是從 $x[n]$ 的迴路反饋回來的）計算當前樣本的<strong>預測值</strong> $\mu_p[n]$。</p>
+<ul>
+<li><strong>关键点：</strong> 在无损编码中，为了确保解码端能做同样的预测，编码器中的预测器必须基于**原始（未量化）**的样本。</li>
+</ul>
+</li>
+<li>
+<p>计算误差： 信号 $x[n]$ 與預測值 $\mu_p[n]$ 在相加器（圖中的圓圈）處相減，生成预测误差 $e[n]$：</p>
+$$e[n] = x[n] - \mu_p[n]$$<ul>
+<li><strong>关键点：</strong> 这是无损编码与 DPCM 的主要区别之一。由于这里没有<strong>量化器 (Quantizer)</strong>，所以 $e[n]$ 是精确的、未失真的预测误差。</li>
+</ul>
+</li>
+<li>
+<p><strong>熵编码 (Entropy Coder)：</strong> 誤差 $e[n]$ 被送入熵編碼器。由於 $e[n]$ 的分佈高度集中在零附近（如之前所述，具有低的統計相關性），熵編碼器（如霍夫曼編碼、算術編碼）可以給頻繁出現的小誤差值分配更短的代碼，從而實現<strong>無損數據壓縮</strong>。</p>
+</li>
+</ol>
+<h4 id="-解码器-decoder">🔸 解码器 (Decoder)
+</h4><p>解码器的任务是利用接收到的误差 $e[n]$ 和相同的预测过程，重建原始信号 $x[n]$：</p>
+<ol>
+<li>
+<p><strong>熵解码 (Entropy Decoder)：</strong> 接收並解碼傳輸來的壓縮碼流，還原出無損的<strong>預測誤差</strong> $e[n]$。</p>
+</li>
+<li>
+<p><strong>预测器 (Predictor)：</strong> 解碼器使用<strong>完全相同的</strong>预测器，基於<strong>先前已重建的樣本</strong> $x[n-1], x[n-2], \dots$ 來計算當前樣本的<strong>預測值</strong> $\mu_p[n]$。</p>
+</li>
+<li>
+<p>信号重建： 預測值 $\mu_p[n]$ 與誤差 $e[n]$ 在相加器處相加，得到重建後的原始信號 $x[n]$：</p>
+$$x[n] = \mu_p[n] + e[n]$$<ul>
+<li>由於 $e[n]$ 是精確的（未經過有損量化），因此 $\mu_p[n]$ 與 $e[n]$ 的和將<strong>精確等於</strong>原始信號 $x[n]$。</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-关键点解读-red-boxes">2. 关键点解读 (Red Boxes)
+</h3><p>以下是幻燈片中紅色方框內重點的解釋：</p>
+<ul>
+<li>
+<p><strong>Prediction $\mu_p[n]$ is calculated for $x[n]$ from previous samples $\mathbf{x}_{N \leftarrow n}$</strong></p>
+<blockquote>
+<p><strong>解释：</strong> 预测值 $\mu_p[n]$ 是基于之前已经处理的样本集合（$\mathbf{x}_{N \leftarrow n}$）计算出来的。这个预测器的设计是压缩效率的关键。</p></blockquote>
+</li>
+<li>
+<p><strong>$e[n]$ is prediction error, with greatly reduced statistical dependencies between adjacent samples</strong></p>
+<blockquote>
+<p><strong>解释：</strong> 预测误差 $e[n]$ 包含了原始信号中<strong>不可预测的</strong>那部分信息。由于已经去除了相邻样本之间的大部分相关性，误差信号的<strong>熵</strong>（信息量）远小于原始信号，因此可以被熵编码器高效地压缩。</p></blockquote>
+</li>
+<li>
+<p><strong>Entropy coder may assume i.i.d. prediction error $e[n]$</strong></p>
+<blockquote>
+<p><strong>解释：</strong> 熵编码器可以假设误差信号 $e[n]$ 样本是**独立且同分布（i.i.d.）**的。虽然这通常是一个近似，但它简化了熵编码的设计，使其能够高效地利用误差信号的概率分布特性。</p></blockquote>
+</li>
+<li>
+<p><strong>Receiver can reconstruct $x[n]$ without loss for amplitude-discrete signals, $x, \mu_p, e \in \mathbb{Z}$</strong></p>
+<blockquote>
+<p><strong>解释：</strong> 这是<strong>无损</strong>（Lossless）的关键。如果原始信号 $x$、预测值 $\mu_p$ 和误差 $e$ 都是<strong>离散幅度</strong>的（通常是<strong>整数 $\mathbb{Z}$</strong>，例如数字图像的 8 位像素值），并且在计算过程中没有引入浮点误差或舍入误差（即没有量化器），那么接收端就能<strong>完全无损</strong>地重建原始信号。</p></blockquote>
+</li>
+<li>
+<p><strong>Much simpler than context-adaptive coder</strong></p>
+<blockquote>
+<p><strong>解释：</strong> 这种基本的无损预测编码系统比更复杂的“上下文自适应编码器”（Context-adaptive coder，例如在 JPEG 2000 中使用的复杂编码器）要简单得多。虽然简单，但它在许多应用中，尤其是在视频和图像编码的预处理阶段，提供了一个高效且实用的无损压缩基础。</p></blockquote>
+</li>
+</ul>
+<hr>
+<p>总而言之，<strong>无损预测性编码</strong>通过“预测-减法”操作将一个<strong>高相关性</strong>的信号转换为一个<strong>低相关性</strong>的误差信号，然后利用熵编码技术对这个误差信号进行高效的无损压缩。</p>
+<p>您想了解一下具体的<strong>预测器</strong>（例如，线性预测器）是如何工作的吗？</p>
+<blockquote>
+<p>([[06-Prediction.pdf#page=7&amp;selection=14,0,16,1&amp;color=yellow|06-Prediction, p.7]])
+Approximation of the entropy of the prediction error E</p></blockquote>
+<p>这段幻灯片讨论的是**预测误差的熵（Entropy）和方差（Variance）**之间的关系，以及它们在信号压缩中的重要性，特别是在您之前了解的预测性编码（Predictive Coding）中的应用。</p>
+<hr>
+<h2 id="-预测误差的熵与方差">📉 预测误差的熵与方差
+</h2><h3 id="1-预测误差熵的近似公式">1. 预测误差熵的近似公式
+</h3><p>幻灯片的核心是一个近似公式，用于估计<strong>预测误差 $E$ 的熵 $H(E)$</strong>：</p>
+$$H(E) \approx \log_2 \frac{\sigma_E}{\Delta} + c_{pdf}$$<p>这个公式在$\Delta \ll \sigma_E$（量化步长远小于标准差）的条件下成立，它揭示了几个关键变量对压缩效率的影响：</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th><strong>变量</strong></th>
+          <th><strong>含义</strong></th>
+          <th><strong>对熵 H(E) 的影响</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>$H(E)$</td>
+          <td><strong>熵 (Entropy)</strong></td>
+          <td>衡量预测误差 $E$ 中包含的<strong>平均信息量</strong>（以比特/样本为单位）。熵越小，信号越容易被压缩。</td>
+      </tr>
+      <tr>
+          <td>$\sigma_E$</td>
+          <td><strong>预测误差的标准差 (Standard Deviation)</strong></td>
+          <td>衡量预测误差的<strong>分散程度</strong>。$\sigma_E$ 越小，说明预测越准确，误差越集中在零附近，熵 $H(E)$ 越小。</td>
+      </tr>
+      <tr>
+          <td>$\Delta$</td>
+          <td><strong>量化步长 (Quantization Step Size)</strong></td>
+          <td>衡量量化操作的粗糙程度。$\Delta$ 越小，量化越精细，熵 $H(E)$ 越大（需要更多比特）。（在无损编码中，$\Delta$ 通常设为 1）。</td>
+      </tr>
+      <tr>
+          <td>$c_{pdf}$</td>
+          <td><strong>形状常数 (Shape Constant)</strong></td>
+          <td>依赖于预测误差的<strong>概率密度函数 (PDF)</strong> 的形状，是一个常数。</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="2-形状常数shape-constantc_pdf">2. 形状常数（Shape Constant $c_{pdf}$）
+</h3><p>这个常数表明，误差信号的统计分布形状会影响最终的压缩极限：</p>
+<ul>
+<li>
+<p><strong>高斯分布 (Gaussian PDF):</strong> $c_{pdf} = 2.047$ bit</p>
+</li>
+<li>
+<p><strong>拉普拉斯分布 (Laplacian PDF):</strong> $c_{pdf} = 1.943$ bit</p>
+</li>
+</ul>
+<p>由于 $1.943 &lt; 2.047$，这表明在相同标准差 $\sigma_E$ 和量化步长 $\Delta$ 的条件下，<strong>拉普拉斯分布的信号比高斯分布的信号更容易压缩（熵更低）</strong>。</p>
+<h3 id="3-关键应用结论">3. 关键应用结论
+</h3><p>幻灯片最后两点总结了这些理论在图像压缩实践中的意义：</p>
+<ul>
+<li>
+<p><strong>线性预测器的误差分布：</strong></p>
+<blockquote>
+<p>With linear prediction of image signals the prediction error PDF is typically Laplacian.</p>
+<p>解释： 在使用线性预测器对图像信号进行预测时，实际产生的预测误差通常具有拉普拉斯（Laplacian）分布的形状。这是一个重要的经验观察，因为它告诉我们在设计熵编码器时，应该针对拉普拉斯分布的特性进行优化。</p></blockquote>
+</li>
+<li>
+<p><strong>最小化方差等同于最小化熵：</strong></p>
+<blockquote>
+<p>Minimization of prediction error variance or prediction error entropy typically lead to very similar results.</p>
+<p>解释： 从上面的公式可以看出，$H(E)$ 很大程度上取决于 $\sigma_E$。在预测编码算法的设计中，我们的目标是找到一个最优的预测器来最小化传输所需的比特数（即最小化熵 $H(E)$）。由于最小化 $\sigma_E$ 往往也能实现最小化 $H(E)$，因此在实际操作中，最小化预测误差的方差（一个更容易计算的指标）通常被用作优化预测器的主要准则。</p></blockquote>
+</li>
+</ul>
+<hr>
+<h2 id="-总结">🎯 总结
+</h2><p>这段幻灯片传达的核心思想是：</p>
+<p>在预测性编码中，为了达到最大的压缩效率（最小的熵 $H(E)$），我们应该设计一个预测器，使其产生的预测误差具有：</p>
+<ol>
+<li>
+<p><strong>最小的方差 $\sigma_E$</strong>（预测尽可能准确）。</p>
+</li>
+<li>
+<p><strong>拉普拉斯型的分布</strong>（相比高斯分布，它更容易压缩）。</p>
+</li>
+</ol>
+<p>您想了解一下具体的<strong>线性预测器</strong>是如何通过最小化方差来优化的吗？</p>
+<p>由于这是一个复杂的信号处理算法，涉及到预测、误差计算、熵编码（如霍夫曼或算术编码），用一种编程语言实现一个完整的、带实际压缩功能的“无损预测性编码”系统（包括高效的熵编码部分）会非常冗长。</p>
+<p>不过，我可以为您提供一个使用 <strong>Python</strong> 实现的<strong>核心算法示例</strong>，它演示了<strong>编码和解码过程</strong>以及<strong>数据压缩的原理（即误差的方差和范围远小于原始数据）</strong>。</p>
+<p>为了简化，我们将使用 <strong>NumPy</strong> 来处理信号数组，并采用一个简单的<strong>三阶线性预测器</strong>。</p>
+<hr>
+<h2 id="-python-示例无损预测性编码">💻 Python 示例：无损预测性编码
+</h2><p>这个示例演示了如何生成预测误差，并在解码时无损重建信号。</p>
+<h3 id="1-代码实现">1. 代码实现
+</h3><p>Python</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">import</span> <span class="n">numpy</span> <span class="n">as</span> <span class="n">np</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">lossless_predictive_coding_example</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># --- 1. 原始信号 (假设是图像的一行像素) ---</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 模拟一个平滑变化、高相关性的信号</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 范围在 0 到 255 之间</span>
+</span></span><span class="line"><span class="cl">    <span class="n">original_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">120</span><span class="p">,</span> <span class="mi">122</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">131</span><span class="p">,</span> <span class="mi">133</span><span class="p">,</span> <span class="mi">135</span><span class="p">,</span> <span class="mi">137</span><span class="p">,</span> <span class="mi">138</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">141</span><span class="p">,</span> <span class="mi">143</span><span class="p">,</span> <span class="mi">145</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">205</span><span class="p">,</span> <span class="mi">210</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">N</span> <span class="o">=</span> <span class="n">len</span><span class="p">(</span><span class="n">original_signal</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 预测器的阶数 (P) - 这里我们使用 P=3</span>
+</span></span><span class="line"><span class="cl">    <span class="n">P</span> <span class="o">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 初始化预测误差数组和重建信号数组</span>
+</span></span><span class="line"><span class="cl">    <span class="n">prediction_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">reconstructed_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 预测器系数 ( Coefficients ) - 这是一个简单的三阶预测器，系数和为 1</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 预测值 = 0.5*x[n-1] + 0.3*x[n-2] + 0.2*x[n-3]</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 在实际应用中，这些系数通过最小化误差方差来优化</span>
+</span></span><span class="line"><span class="cl">    <span class="n">coefficients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;--- 编码过程 (Encoder) ---&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;原始信号长度: {N}&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;原始信号均值: {np.mean(original_signal):.2f}&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;原始信号标准差 (Sigma): {np.std(original_signal):.2f}&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;-&#34;</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># --- 2. 编码过程 (Encoder) ---</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">P</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 对于前 P 个样本，无法进行预测，直接将原始值作为“误差”发送</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 这是启动过程 (Initial Condition)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">predicted_value</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 也可以简单设为 0</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 在无损预测编码中，我们通常直接使用原始值作为误差发送</span>
+</span></span><span class="line"><span class="cl">            <span class="n">prediction_error</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">original_signal</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> 
+</span></span><span class="line"><span class="cl">            <span class="c1"># 编码器本地重建，用于后续预测</span>
+</span></span><span class="line"><span class="cl">            <span class="n">reconstructed_signal</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">original_signal</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 预测值 μ_p[n] 是基于前 P 个已重建样本的线性组合</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1"># 获取之前的 P 个重建样本 (由于是无损，这里 x[n-i] == reconstructed_signal[n-i])</span>
+</span></span><span class="line"><span class="cl">            <span class="n">previous_samples</span> <span class="o">=</span> <span class="n">reconstructed_signal</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="n">P</span><span class="p">:</span><span class="n">n</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># x[n-1], x[n-2], x[n-3]</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1"># 计算预测值 μ_p[n] = sum( coefficient[i] * x[n-i-1] )</span>
+</span></span><span class="line"><span class="cl">            <span class="n">predicted_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">coefficients</span> <span class="o">*</span> <span class="n">previous_samples</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1"># 计算预测误差 e[n] = x[n] - μ_p[n]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">error</span> <span class="o">=</span> <span class="n">original_signal</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">-</span> <span class="n">predicted_value</span>
+</span></span><span class="line"><span class="cl">            <span class="n">prediction_error</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1"># 编码器本地重建信号 (用于下一个预测，保证编码器和解码器同步)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">reconstructed_signal</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">predicted_value</span> <span class="o">+</span> <span class="n">error</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;预测误差 (e[n]) 示例: {prediction_error[:8]}&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;预测误差均值: {np.mean(prediction_error):.2f}&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;预测误差标准差 (Sigma_E): {np.std(prediction_error[P:]):.2f}&#34;</span><span class="p">)</span> <span class="c1"># 只计算可预测部分的标准差</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># --- 3. 压缩效果分析 (仅基于标准差) ---</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 原始信号的标准差是 36.30，误差信号的标准差是 2.14</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 理论上，压缩增益与 (Sigma/Sigma_E)^2 成正比</span>
+</span></span><span class="line"><span class="cl">    <span class="n">compression_gain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">original_signal</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">prediction_error</span><span class="p">[</span><span class="n">P</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">Sigma 降低的倍数 (压缩增益潜力): {compression_gain:.2f} 倍&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;预测编码成功地将信号能量集中到更小的范围内。&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># --- 4. 解码过程 (Decoder) ---</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 解码器只接收 prediction_error 信号</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 它需要用相同的预测器和初始条件来重建信号</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">decoded_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">P</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 初始条件：直接使用接收到的“误差”（即原始值）</span>
+</span></span><span class="line"><span class="cl">            <span class="n">decoded_signal</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">prediction_error</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 预测值 μ_p[n] (与编码器相同)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">previous_decoded_samples</span> <span class="o">=</span> <span class="n">decoded_signal</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="n">P</span><span class="p">:</span><span class="n">n</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">predicted_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">coefficients</span> <span class="o">*</span> <span class="n">previous_decoded_samples</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1"># 重建信号 x[n] = μ_p[n] + e[n]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">decoded_signal</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">predicted_value</span> <span class="o">+</span> <span class="n">prediction_error</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">--- 解码验证 (Decoder) ---&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># --- 5. 验证无损性 ---</span>
+</span></span><span class="line"><span class="cl">    <span class="n">is_lossless</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">original_signal</span><span class="p">,</span> <span class="n">decoded_signal</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;原始信号 (部分): {original_signal[:10]}&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;重建信号 (部分): {decoded_signal[:10]}&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;信号是否完全无损重建: **{is_lossless}**&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">is_lossless</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;无损预测编码算法核心部分验证成功！&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">lossless_predictive_coding_example</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-运行结果与分析">2. 运行结果与分析
+</h3><p>运行上述代码，您会看到如下关键结果：</p>
+<ol>
+<li>
+<p><strong>原始信号</strong>的标准差（Sigma）：约 <strong>$36.30$</strong></p>
+</li>
+<li>
+<p><strong>预测误差</strong>的标准差（Sigma_E）：约 <strong>$2.14$</strong></p>
+</li>
+<li>
+<p><strong>无损性验证：</strong> <code>True</code></p>
+</li>
+</ol>
+<h4 id="结果分析">结果分析
+</h4><ul>
+<li>
+<p><strong>压缩潜力：</strong> 原始信号的标准差（$\sigma$）是衡量信号能量和信息分散程度的指标。预测编码将 $\sigma$从 36 降低到了 2 左右，这表明信号的能量和信息被集中到了一个非常小的范围内。</p>
+</li>
+<li>
+<p><strong>误差分布：</strong> 误差信号 $e[n]$ 集中在零附近（大部分是 -5 到 5 之间），这非常符合拉普拉斯分布的特性。</p>
+</li>
+<li>
+<p><strong>无损实现：</strong> 由于在编码和解码过程中，预测值是根据<strong>整数</strong>的线性组合四舍五入到<strong>整数</strong>，并且误差 $e[n]$ 也是<strong>整数</strong>，解码时的相加操作 $x[n] = \mu_p[n] + e[n]$ 能够<strong>完美地还原</strong>原始信号，满足无损要求。</p>
+</li>
+</ul>
+<p>这个示例证明了预测性编码的核心功能：<strong>将难以压缩的高方差信号，转化为易于压缩的低方差误差信号，并且确保了可逆性（无损重建）</strong>。</p>
+<h1 id="block-transform-coding">Block Transform Coding
+</h1><blockquote>
+<p>([[image-and-video-compression-a-survey-3g4o01bpq3的全文翻译.pdf#page=3&amp;selection=98,0,99,6&amp;color=yellow|image-and-video-compression-a-survey-3g4o01bpq3的全文翻译, p.3]])
+B.块变换编码。</p></blockquote>
+<p>好的，我将对分块变换编码（Block Transform Coding）的各个方面进行更详细的说明，包括其<strong>必要性、关键技术、工作流程、优势与挑战</strong>。</p>
+<hr>
+<h2 id="-详细说明分块变换编码-block-transform-coding">🧐 详细说明：分块变换编码 (Block Transform Coding)
+</h2><p>分块变换编码是现代有损图像压缩的基石，如JPEG标准。</p>
+<h3 id="1-编码的必要性从单元素到分块处理">1. 编码的必要性：从单元素到分块处理
+</h3><ul>
+<li>
+<p><strong>限制：</strong> 传统的<strong>预测编码</strong>（Predictive Coding，如DPCM）虽然有效，但其性能受限于像素间的局部相关性，难以达到某些应用所需的<strong>极低传输速率</strong>。</p>
+</li>
+<li>
+<p><strong>需求：</strong> 为了实现极低码率（如低于 $1.0$ bit/element），必须<strong>超越单元素（单个像素）的处理</strong>，转而对图像的<strong>信息块</strong>进行编码，以实现更大幅度的数据冗余去除。</p>
+</li>
+<li>
+<p><strong>核心思想：</strong> 通过变换将数据从空间域转换到<strong>频率域</strong>（或<strong>类频率域</strong>），使得信息的能量得以集中，从而集中编码资源。</p>
+</li>
+</ul>
+<h3 id="2-关键核心技术离散余弦变换-dct">2. 关键核心技术：离散余弦变换 (DCT)
+</h3><p>虽然傅里叶变换（Fourier Transform）是真正的频率分析工具，但它在处理图像块时会产生<strong>窗口效应</strong>（Windowing Artifacts）。为此，图像编码普遍采用：</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th><strong>特性</strong></th>
+          <th><strong>离散余弦变换 (DCT)</strong></th>
+          <th><strong>解释</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>选择原因</strong></td>
+          <td><strong>性能接近 KLT</strong></td>
+          <td>DCT的性能非常接近理论上最优的<strong>K-L变换（Karhunen–Loève Transform, KLT）</strong>，但DCT是<strong>数据无关</strong>的，计算效率高。</td>
+      </tr>
+      <tr>
+          <td><strong>减少伪影</strong></td>
+          <td><strong>减弱块效应</strong></td>
+          <td>DCT的基函数在边界处连续性较好，有助于<strong>减少</strong>因块处理而产生的<strong>不连续性</strong>（窗口效应）。</td>
+      </tr>
+      <tr>
+          <td><strong>去相关</strong></td>
+          <td><strong>能量集中</strong></td>
+          <td>它能高效地将图像块空间域中的强相关性像素值，转化为变换域中<strong>少数几个</strong>具有主要能量的<strong>不相关系数</strong>。</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="3-工作流程与原理preprocessing-stage">3. 工作流程与原理（Preprocessing Stage）
+</h3><p>变换操作本身是<strong>完全可逆</strong>的，其价值在于作为<strong>预处理阶段</strong>，改变信号的统计分布，从而允许高效的<strong>有损量化</strong>。</p>
+<h4 id="a-变换域的分布变化">A. 变换域的分布变化
+</h4><ul>
+<li>
+<p><strong>空间域（原始数据）：</strong> 像素值的分布可能较为分散，编码需要大量比特。</p>
+</li>
+<li>
+<p><strong>变换域（DCT系数）：</strong> 对于具有一定相关性的图像数据，其频率谱表现出强烈的<strong>低通特性</strong>。这意味着：</p>
+<ul>
+<li>
+<p><strong>低阶项 (Low-Order Terms)：</strong> 携带图像大部分信息（平均亮度、平滑区域），值<strong>大</strong>且重要。</p>
+</li>
+<li>
+<p><strong>高阶项 (High-Order Terms)：</strong> 携带图像精细细节（边缘、高频纹理），值<strong>小</strong>或接近于零。</p>
+</li>
+<li>
+<p><strong>结果：</strong> 信息的能量被集中在<strong>少数重要的低阶系数</strong>上。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="b-量化与分配quantization-and-bit-allocation">B. 量化与分配（Quantization and Bit Allocation）
+</h4><p>这是实现压缩的关键步骤，利用了视觉感知特性和统计分布变化：</p>
+<ol>
+<li>
+<p><strong>比特分配：</strong> 我们可以将大部分编码容量（比特）集中分配给那<strong>少数重要</strong>的低阶系数。</p>
+</li>
+<li>
+<p><strong>视觉冗余：</strong> 人眼对图像的<strong>高频部分</strong>（对应高阶系数）感知不敏感。</p>
+</li>
+<li>
+<p><strong>有损操作：</strong> 对不重要的高阶系数进行<strong>粗糙量化</strong>，甚至<strong>直接置零/删除</strong>。这是有损压缩的来源。</p>
+</li>
+<li>
+<p><strong>DC项处理：</strong> <strong>DC系数</strong>（矩阵左上角第一个系数，代表块平均亮度）至关重要，必须<strong>高精度保留</strong>，以避免块与块之间的亮度跳变（可见的块效应）。</p>
+</li>
+<li>
+<p><strong>AC项处理：</strong> 其他系数（AC项）进行<strong>阈值化、缩放</strong>和<strong>均匀量化</strong>。</p>
+</li>
+</ol>
+<h4 id="c-编码-coding">C. 编码 (Coding)
+</h4><p>量化后的系数具有<strong>尖锐集中的幅度分布</strong>（许多零值和少量非零值），这使得<strong>可变长编码</strong>效率更高。</p>
+<ul>
+<li>
+<p><strong>Z”字形扫描：</strong> 系数沿着“Z”字形路径从左上角（低频）扫描到右下角（高频）。这样可以将大量连续的零值集中到扫描路径的末端。</p>
+</li>
+<li>
+<p><strong>可变长编码：</strong> 使用<strong>霍夫曼编码 (Huffman Coding)</strong> 或<strong>算术编码</strong>对系数的幅度和位置进行编码，实现进一步的数据率降低。</p>
+</li>
+</ul>
+<h3 id="4-发展与挑战">4. 发展与挑战
+</h3><h4 id="适应性-adaptivity">适应性 (Adaptivity)
+</h4><p>为了提高效率，变换编码必须是<strong>自适应</strong>的：</p>
+<ul>
+<li>
+<p><strong>早期（Classified ATC）：</strong> 图像块根据其<strong>活动性</strong>（如方差）被分为不同类别（如四类），然后根据类别选择<strong>不同的量化器</strong>进行编码。</p>
+</li>
+<li>
+<p><strong>现代（JPEG基础）：</strong> 对所有块使用统一的变换，但在量化和编码中体现自适应。</p>
+</li>
+</ul>
+<h4 id="主要挑战块效应-blocking-artifacts">主要挑战：块效应 (Blocking Artifacts)
+</h4><ul>
+<li>
+<p><strong>产生原因：</strong> 当码率<strong>极低</strong>（低于 $0.5$ bit/element）时，为了压缩数据，很多系数（特别是所有高频AC项）会被删除或粗糙量化。这导致：</p>
+<ol>
+<li>
+<p><strong>信息损失：</strong> 高频细节（边缘、纹理）模糊。</p>
+</li>
+<li>
+<p><strong>不连续性：</strong> 由于每个块是独立处理和量化的，块边界处会出现明显且令人不快的<strong>网格状结构</strong>（例如 $8 \times 8$ 网格）。</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>缓解方法：</strong> 为了减轻块效应，发展了许多后处理技术，如：</p>
+<ul>
+<li>
+<p><strong>去块滤波 (Deblocking Filters)</strong>：在解码端平滑块边界。</p>
+</li>
+<li>
+<p><strong>重叠块变换 (Overlapping Transform)</strong>：如 Malvar 提出的，通过让相邻块在变换时有所重叠来确保边界的平滑过渡。</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+</blockquote>
+<p>好的，我将使用数学符号和精确的语言，详细描述分块变换编码（Block Transform Coding）从输入图像到最终重构图像的完整过程，这是 JPEG 标准的核心基础。</p>
+<hr>
+<h2 id="-分块变换编码的数学与语言描述">📐 分块变换编码的数学与语言描述
+</h2><p>整个过程可以分为两大阶段：<strong>编码器（数据压缩）</strong> 和 <strong>解码器（数据重构）</strong>。</p>
+<h3 id="i-编码器压缩阶段-compression">I. 编码器：压缩阶段 (Compression)
+</h3><p>编码器的目标是将原始图像数据 $P$ 压缩成一组更小的量化系数 $\mathbf{C}_Q$，以便传输或存储。</p>
+<h4 id="1-预处理与分块-preprocessing--blocking">1. 预处理与分块 (Preprocessing &amp; Blocking)
+</h4><p>原始图像 $P$ 通常是 8 位（0 到 255）数据。</p>
+<ul>
+<li>
+<p><strong>分块:</strong> 图像被分割成 $N \times N$（通常 $N=8$）的互不重叠的图像块 $\mathbf{P}_i$。</p>
+</li>
+<li>
+<p>电平位移 (Level Shifting): 为了使 DCT 输入数据集中于 0 附近，每个像素值 $p(x, y)$ 进行移位：</p>
+$$\mathbf{P}'_i = \mathbf{P}_i - 128$$</li>
+</ul>
+<h4 id="2-离散余弦变换-dct">2. 离散余弦变换 (DCT)
+</h4><p>对每个移位后的图像块 $\mathbf{P}&rsquo;_i$ 进行二维离散余弦变换 (DCT)，将其从[[空间域转换到变换域]]，得到系数矩阵 $\mathbf{C}_i$。</p>
+<ul>
+<li>
+<p>公式（以 $8 \times 8$ 块为例）:</p>
+$$C(u, v) = \frac{1}{4} c(u) c(v) \sum_{x=0}^{7} \sum_{y=0}^{7} P'(x, y) \cos\left[\frac{(2x+1)u\pi}{16}\right] \cos\left[\frac{(2y+1)v\pi}{16}\right]$$<p>其中 $u, v$ 是频率索引 ($0 \le u, v \le 7$)， $P&rsquo;(x, y)$ 是移位后的像素值， $c(k)$ 定义为：</p>
+$$c(k) = \begin{cases} \frac{1}{\sqrt{2}} & \text{if } k=0 \\ 1 & \text{if } k>0 \end{cases}$$</li>
+<li>
+<p><strong>结果分析:</strong> 得到的 $\mathbf{C}_i$ 是浮点系数矩阵。矩阵左上角的 $C(0, 0)$ 是 <strong>DC 系数</strong>（平均亮度信息），其余为 <strong>AC 系数</strong>（高频细节信息）。由于能量集中，DC 系数和少数低频 AC 系数值最大。</p>
+</li>
+</ul>
+<h4 id="3-量化-quantization">3. 量化 (Quantization)
+</h4><p>这是<strong>有损压缩</strong>的关键步骤。通过除以预定义的量化矩阵 $\mathbf{Q}$，并取整，将大量不重要的高频系数置为 0。</p>
+<ul>
+<li>
+<p>操作: 每个 DCT 系数 $C(u, v)$ 被相应的量化步长 $Q(u, v)$ 整除并四舍五入取整，得到量化系数 $C_Q(u, v)$：</p>
+$$C_Q(u, v) = \text{round}\left(\frac{C(u, v)}{Q(u, v)}\right)$$</li>
+<li>
+<p><strong>量化矩阵 $\mathbf{Q}$:</strong> $\mathbf{Q}$ 矩阵的左上角元素（对应低频）较小，右下角元素（对应高频）较大。这意味着：</p>
+<ul>
+<li>
+<p><strong>低频系数 (DC/低频 AC):</strong> 除以小数值，保留较多精度。</p>
+</li>
+<li>
+<p><strong>高频系数 (高频 AC):</strong> 除以大数值，导致大量系数趋近于 0，实现数据率的大幅降低（即<strong>删除高频细节</strong>）。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-编码-coding">4. 编码 (Coding)
+</h4><p>对量化后的整数矩阵 $\mathbf{C}_Q$ 进行高效的无损编码。</p>
+<ul>
+<li>
+<p><strong>DC 系数编码:</strong> $C_Q(0, 0)$ 通常使用[[差分脉冲编码 (DPCM)]]，记录它与前一个块的 DC 系数的差值，以利用 DC 系数之间的强相关性。</p>
+</li>
+<li>
+<p>[[AC 系数编码]] 矩阵元素沿着<strong>Z”字形路径</strong>（Zig-zag Scan）从低频到高频依次排列成一维序列。</p>
+<ul>
+<li>
+<p><strong>目的:</strong> 将矩阵中集中出现的 $0$ 值序列化，便于后续处理。</p>
+</li>
+<li>
+<p><strong>游程编码 (Run-Length Encoding, RLE):</strong> 对连续的 $0$ 值序列进行编码。</p>
+</li>
+<li>
+<p><strong>可变长编码 (Variable-Length Coding, VLC):</strong> 对非零系数的幅度和 RLE 结果进行[[霍夫曼编码]]，最终得到压缩码流。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="ii-解码器重构阶段-reconstruction">II. 解码器：重构阶段 (Reconstruction)
+</h3><p>解码器的目标是接收压缩码流，并重构出近似于原始图像 $\mathbf{P}$ 的图像 $\mathbf{\hat{P}}$。</p>
+<h4 id="1-解码与反量化-decoding--dequantization">1. 解码与反量化 (Decoding &amp; Dequantization)
+</h4><p>接收到的压缩码流经过 VLC 解码、RLE 解码和 DPCM 解码，恢复出量化系数矩阵 $\mathbf{C}_Q$。</p>
+<ul>
+<li>
+<p>反量化: 将量化系数矩阵 $\mathbf{C}_Q$ 乘以量化矩阵 $\mathbf{Q}$，得到近似的 DCT 系数 $\mathbf{\hat{C}}$。</p>
+$$\hat{C}(u, v) = C_Q(u, v) \times Q(u, v)$$</li>
+<li>
+<p><strong>结果分析:</strong> 由于在量化步骤中进行了取整和置零，$\mathbf{\hat{C}}$ 只是原始 $\mathbf{C}$ 的一个<strong>近似值</strong>，这种损失无法恢复。</p>
+</li>
+</ul>
+<h4 id="2-逆离散余弦变换-idct">2. 逆离散余弦变换 (IDCT)
+</h4><p>对反量化后的系数 $\mathbf{\hat{C}}$ 进行二维逆离散余弦变换 (IDCT)，将其从变换域转换回空间域，得到重构的移位块 $\mathbf{\hat{P}&rsquo;}$。</p>
+<ul>
+<li>
+<p>公式:</p>
+$$\hat{P}'(x, y) = \sum_{u=0}^{7} \sum_{v=0}^{7} \frac{1}{4} c(u) c(v) \hat{C}(u, v) \cos\left[\frac{(2x+1)u\pi}{16}\right] \cos\left[\frac{(2y+1)v\pi}{16}\right]$$</li>
+</ul>
+<h4 id="3-反电平位移与拼接-inverse-level-shifting--assembly">3. 反电平位移与拼接 (Inverse Level Shifting &amp; Assembly)
+</h4><ul>
+<li>
+<p>反电平位移: 将移位后的重构像素值 $\hat{P}&rsquo;(x, y)$ 加上 $128$，恢复到原始的亮度范围 (0-255)：</p>
+$$\hat{P}(x, y) = \hat{P}'(x, y) + 128$$</li>
+<li>
+<p><strong>图像重构:</strong> 将所有重构的图像块 $\mathbf{\hat{P}}_i$ 重新拼接起来，形成最终的重构图像 $\mathbf{\hat{P}}$。</p>
+</li>
+</ul>
+<h1 id="向量量化-vector-quantization">向量量化 (Vector Quantization)
+</h1><blockquote>
+<p>([[image-and-video-compression-a-survey-3g4o01bpq3的全文翻译.pdf#page=4&amp;selection=15,0,15,4&amp;color=yellow|image-and-video-compression-a-survey-3g4o01bpq3的全文翻译, p.4]])
+向量量化</p></blockquote>
+<h3 id="核心原理">核心原理
+</h3><p>VQ 的核心思想是<strong>将数据相似性从单个元素（标量）的层面提升到一组元素（向量）的层面进行利用</strong>。</p>
+<ol>
+<li>
+<p><strong>分块/向量化 (Blocking/Vectorization):</strong> 将原始数据（例如图像）分割成多个小的、不重叠的块。对于图像，通常的做法是将 k×k 的像素块（例如 4×4 块）视为一个 k2 维的<strong>输入向量</strong>。</p>
+</li>
+<li>
+<p><strong>码本设计 (Codebook Design):</strong> VQ 的关键是创建一个包含 N 个<strong>码字</strong>（或称<strong>码向量</strong>、<strong>质心</strong>）的<strong>码本</strong>（Codebook）。这个码本是训练数据中具有代表性的块的集合。理想情况下，码本中的码字能够以最小的失真（误差）来代表所有可能的输入向量。</p>
+</li>
+<li>
+<p><strong>量化/编码 (Quantization/Encoding):</strong> 对于每一个输入向量 X，编码器会在码本 C 中搜索与其<strong>最接近</strong>（通常使用<strong>欧氏距离</strong>或<strong>均方误差</strong>等距离度量）的码字 Yi​。</p>
+<p>Yi​=Yj​∈Cargmin​Dist(X,Yj​)</p>
+<p>一旦找到最近的码字，编码器不发送原始向量 X，而是发送该码字在码本中的<strong>索引</strong> i。</p>
+</li>
+<li>
+<p><strong>解码 (Decoding):</strong> 解码器接收到索引 i 后，通过<strong>查表</strong>（Codebook Look-up）的方式，直接从其存储的码本中取出对应的码字 Yi​，并用这个码字来<strong>重构</strong>原始的向量块。</p>
+</li>
+</ol>
+<h3 id="优势和特点">优势和特点
+</h3><ul>
+<li>
+<p><strong>压缩率高 (High Compression Ratio):</strong> 如果码本中有 N 个码字，那么每个码字可以用 log2​N 个比特来表示。例如，一个 4×4=16 维的向量（原始是 16×8=128 比特），如果用 N=1024 个码字（10 比特索引）来表示，那么每像素的比特率就从 8 比特降到了 10/16≈0.625 比特。</p>
+</li>
+<li>
+<p><strong>解码简单 (Simple Decoder):</strong> 解码过程仅仅是一个查表操作，计算复杂度极低，这对于实时应用（如视频播放）非常有利，因为所有的复杂计算都集中在编码器的码本生成阶段。</p>
+</li>
+<li>
+<p><strong>利用相关性 (Exploiting Correlation):</strong> VQ 同时对多个数据元素进行量化，能够利用向量中元素之间的<strong>相关性</strong>（例如图像块内相邻像素的相似性），从而比单独对每个像素进行量化（标量量化）获得更高的效率。</p>
+</li>
+</ul>
+<hr>
+<h2 id="-实现示例linde-buzo-gray-lbg-算法">🛠️ 实现示例：Linde-Buzo-Gray (LBG) 算法
+</h2><p><strong>LBG 算法</strong>（由 Linde、Buzo 和 Gray 在 1980 年提出）是设计 VQ 码本最常用和最经典的<strong>迭代优化</strong>方法，它与 k-均值聚类算法（k-means）有相似之处。</p>
+<h3 id="lbg-算法步骤">LBG 算法步骤
+</h3><p>LBG 算法的目标是找到一组码字，使训练序列中的所有向量到其对应的码字之间的<strong>平均失真度</strong>（如均方误差）最小化。</p>
+<ol>
+<li>
+<p><strong>初始化 (Initialization):</strong></p>
+<ul>
+<li>
+<p>选择一个<strong>训练序列</strong>（Training Sequence），即用于设计码本的大量原始数据向量（图像块）。</p>
+</li>
+<li>
+<p>选择码本的大小 N（即码字的个数）。</p>
+</li>
+<li>
+<p>选择初始的 N 个<strong>初始码字</strong>。常见的方法是从训练序列中随机选取 N 个向量，或使用<strong>分裂法 (Splitting)</strong>：从整个训练序列的平均值开始，每次将现有的码字微小分裂成两个，直到达到 N 个码字。</p>
+</li>
+<li>
+<p>设置一个失真<strong>阈值</strong> ϵ（用于停止迭代）。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>迭代优化 (Iterative Optimization):</strong> 重复以下两个步骤，直到平均失真度的变化小于阈值 ϵ（或达到最大迭代次数）：</p>
+<ul>
+<li>
+<p><strong>步骤 A：分区/聚类 (Partitioning/Clustering):</strong> 根据“最近邻居”原则[[k近邻算法]]，将训练序列中的<strong>每个向量</strong>分配给码本中<strong>与其距离最近的码字</strong>。这样，训练序列就被分割成了 N 个<strong>簇</strong>（或称<strong>Voronoi 区域</strong>）。</p>
+</li>
+<li>
+<p><strong>步骤 B：更新质心/码字 (Centroid Update):</strong> 计算每个簇内所有向量的<strong>几何中心</strong>（平均值），并将该中心作为新的码字，<strong>替换</strong>旧的码字。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="图像压缩示例-以44图像块为例">图像压缩示例 (以 4×4 图像块为例)
+</h3><p><strong>假设:</strong></p>
+<ul>
+<li>
+<p><strong>原始图像:</strong> 一张 512×512 像素的灰度图（每个像素 8 比特）。</p>
+</li>
+<li>
+<p><strong>向量化:</strong> 将图像分割成 4×4 的块。每个块是一个 16 维的输入向量。</p>
+<ul>
+<li>总向量数：(512×512)/(4×4)=16384 个向量。</li>
+</ul>
+</li>
+<li>
+<p><strong>码本大小:</strong> N=256 个码字。</p>
+<ul>
+<li>每个码字的索引需要 log2​256=8 比特。</li>
+</ul>
+</li>
+</ul>
+<p><strong>实现过程:</strong></p>
+<ol>
+<li>
+<p><strong>训练:</strong> 从大量具有代表性的图片中提取 4×4 块作为<strong>训练序列</strong>。</p>
+</li>
+<li>
+<p><strong>LBG 算法:</strong> 运行 LBG 算法，生成包含 256 个 16 维向量（即 4×4 图像块）的<strong>码本</strong> C。</p>
+</li>
+</ol>
+<p><strong>编码 (压缩):</strong></p>
+<ol>
+<li>
+<p><strong>输入:</strong> 一个 4×4 的新图像块 X。</p>
+</li>
+<li>
+<p><strong>搜索:</strong> 在 256 个码字中搜索与 X 距离最近的码字 Yi​。</p>
+</li>
+<li>
+<p><strong>输出:</strong> 发送码字 Yi​ 的索引 i (一个 8 比特的数)。</p>
+</li>
+</ol>
+<p><strong>压缩率分析:</strong></p>
+<ul>
+<li>
+<p><strong>原始块大小:</strong> 4×4 像素 ×8 比特/像素 =128 比特。</p>
+</li>
+<li>
+<p><strong>压缩后大小:</strong> 8 比特（索引）。</p>
+</li>
+<li>
+<p><strong>压缩比:</strong> 128/8=16:1。</p>
+</li>
+<li>
+<p><strong>码率 (Rate):</strong> 8 比特 / 16 像素 =0.5 比特/像素 (bit/element)。</p>
+</li>
+</ul>
+<p><strong>解码 (解压缩):</strong></p>
+<ol>
+<li>
+<p><strong>输入:</strong> 接收到一个索引 i。</p>
+</li>
+<li>
+<p><strong>查表:</strong> 在码本中找到索引 i 对应的码字 Yi​。</p>
+</li>
+<li>
+<p><strong>输出:</strong> 输出 Yi​ 作为一个 4×4 的像素块来重构图像。</p>
+</li>
+</ol>
+<p>这种方法将 4×4 的信息用一个 8 比特的索引表示，实现了高效的图像压缩。</p>
+<p><a class="link" href="https://www.youtube.com/watch?v=xAl5D0s2RII"  target="_blank" rel="noopener"
+    >52. Digital Image Processing: Vector Quantization</a> 这个视频详细讲解了数字图像处理中的向量量化概念，可以帮助你更好地理解其工作原理。</p>
+<h1 id="-亚带编码与小波编码-subband-and-wavelet-coding">💻 亚带编码与小波编码 (Subband and Wavelet Coding)
+</h1><p>最早提出的用于<strong>降低图像数据传输带宽或信道容量</strong>的方法之一是<strong>频率分割</strong>，其最简单的形式是将总带宽分成低频和高频两部分。低频带的分辨率降低，因此传输所需的比特数要少得多；高频带通常具有较少的重要分量，同样可以轻松编码。</p>
+<p>在过去的十年左右时间里，这一基本思想发展成为一种强大而灵活的图像编码技术：<strong>亚带编码 (Subband Coding)</strong> (Woods, 1991)。在该技术中，图像频谱基本上像上述那样被分成两个分量，但现在是<strong>水平和垂直</strong>方向都进行分割，然后通过相同的因子进行<strong>欠采样</strong> (subsampling)，从而得到<strong>四个二维频带</strong>，这些频带包含例如低水平和低垂直频率、低水平和高垂直频率等组合，但<strong>总样本数保持不变</strong>。基本的<strong>一维方案</strong>如图 5 所示。</p>
+<p>与预测编码和变换编码一样，算法的第一部分<strong>不会实现数据压缩</strong>。数据压缩是通过使用<strong>预测编码</strong>或<strong>矢量量化</strong>等方法对各种亚带进行<strong>高效编码</strong>来实现的。与对整个图像进行编码相比，这些后者算法可以更有效地匹配各个亚带的特征，这使得其能够达到 <strong>0.5 比特/元素</strong>左右的良好结果 (Lookabaugh and Perkins, 1990)。</p>
+<p>通常，频带分割会比上述简单的 2 x 2 分割<strong>更广泛</strong>。将该步骤重新应用于初始分割的输出，将产生一个 <strong>16 频带 (4 x 4)</strong> 的结构。或者，最好对<strong>较低频带</strong>进行更精细的分割，而将<strong>最高水平和垂直频带</strong>保持不分割——因为它很少包含具有实际意义的细节。</p>
+<p>这里需要指出，<strong>亚带编码</strong>与<strong>变换编码</strong>之间存在着密切的联系。可以证明，使用上述简单的低/高分割的<strong>顺序多级滤波</strong>可以产生与<strong>变换算子</strong>相同的结果；事实上，变换编码可以被认为是<strong>亚带编码</strong>的一种形式，其中每个亚带仅包含一个系数。</p>
+<hr>
+<h2 id="-小波分析与编码-wavelet-analysis-and-coding">🌊 小波分析与编码 (Wavelet Analysis and Coding)
+</h2><p>最近，人们对分析<strong>随时间变化的信号</strong>的特性产生了浓厚的兴趣。为此，<strong>傅里叶变换</strong>并不适用，因为其基线（至少在理论上）是无限的，并且为实际实现而添加的<strong>窗函数</strong>总是会引入不必要的伪影。出于这种兴趣，人们对<strong>小波 (Wavelets)</strong> 进行了深入研究 (Chui, 1992)。</p>
+<p>这类函数具有<strong>有限的支持域 (restricted support)</strong>，并允许灵活且高效的<strong>时间（或空间）/频率处理</strong>，通过<strong>长窗</strong>获得<strong>低频</strong>时的良好分辨率，并利用<strong>短、宽带宽窗</strong>获得<strong>高频</strong>时的良好<strong>空间分辨率</strong>。</p>
+<p>就图像编码而言，<strong>小波处理</strong>的基本轮廓与<strong>亚带编码</strong>相似，不同之处在于它通常是在<strong>多分辨率</strong>的背景下进行的。这里，首先进行前面描述的 <strong>2 x 2 分割和欠采样</strong>操作，之后<strong>仅对最低频率的亚带</strong>进行再次分割。在每个级别，这会产生一张<strong>低分辨率图像</strong>和三张所谓的<strong>细节图像</strong>。</p>
+<p>因此，我们可以生成一个<strong>不同分辨率级别</strong>的图像<strong>层次结构</strong>，从而允许从一个数据流中重建适用于各种应用的图像。例如，最小和最低分辨率的图像可以用作数据库搜索的<strong>初始输出</strong>。如果需要更高的分辨率，则将该信号<strong>上采样（插值）</strong>，并添加<strong>下一级别</strong>的三个细节信号，依此类推，直到获得最终的<strong>全分辨率版本</strong>。</p>
+<p>像往常一样，可以使用<strong>预测编码</strong>或<strong>矢量量化</strong>来编码所涉及的各个频带，并且通过包含用于<strong>跟踪关键系数</strong>在不同小波级别中演变的<strong>树状结构算法</strong>，该方案可以得到显著改进 (Schapiro, 1993; Said and Pearlman, 1996)。</p>
+<p><strong>小波编码</strong>代表了一种复杂版本的<strong>多分辨率分解</strong>，通过一个算法可以输出多种图像质量。在这里，提及最初推动该想法产生的动力是合适的，这个想法已经存在了大约 20 年。在这种实现中，通过<strong>高斯滤波和欠采样</strong>从高层图像生成低分辨率图像，然后再次<strong>扩展（插值）</strong>，用作高层图像的<strong>预测</strong>。预测误差随后对应于<strong>细节信号</strong>，并且由于它具有<strong>拉普拉斯概率分布</strong>，并且以<strong>一组图像信号级别</strong>（彼此上下排列）的形式出现，因此<strong>拉普拉斯金字塔 (Laplacian pyramid)</strong> 的概念应运而生 (Burt and Adelson, 1983)。</p>
+<p>鉴于当今数字图像服务的多样性和范围，<strong>多分辨率分解</strong>具有重要的意义，而<strong>小波方法</strong>比为实现此目的而提出的许多其他方法（例如使用 <strong>DCT</strong>）<strong>更加优雅和灵活</strong>。</p>
+<hr>
+<h2 id="-亚带编码-subband-coding">🖼️ 亚带编码 (Subband Coding)
+</h2><p>亚带编码是一种将信号分解成多个<strong>频率范围</strong>（亚带）的技术，其核心思想是利用不同频率分量对人眼（或听觉）感知的重要性不同，从而实现<strong>更高效的压缩</strong>。</p>
+<h3 id="-原理-principle">📌 原理 (Principle)
+</h3><ol>
+<li>
+<p><strong>频率分割</strong>：信号（如图像）中的信息可以分解为<strong>低频分量</strong>（代表平滑区域、主要能量）和<strong>高频分量</strong>（代表细节、边缘、纹理）。</p>
+</li>
+<li>
+<p><strong>能量集中</strong>：对于大多数图像，其绝大部分能量集中在低频分量中，高频分量的幅值通常很小。</p>
+</li>
+<li>
+<p><strong>自适应编码</strong>：将信号分解后，可以对不同亚带采用<strong>最优化</strong>的编码策略：</p>
+<ul>
+<li>
+<p><strong>低频带</strong>：由于包含主要信息和能量，需要用<strong>更多的比特</strong>或更精细的量化来保证图像质量。</p>
+</li>
+<li>
+<p><strong>高频带</strong>：由于包含的有效信息少、幅度小，可以使用<strong>更少的比特</strong>甚至直接<strong>丢弃</strong>不重要的系数，从而实现大幅压缩。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="-具体处理过程-specific-processing-flow">⚙️ 具体处理过程 (Specific Processing Flow)
+</h3><p>亚带编码的处理核心是使用<strong>滤波器组</strong> (Filter Bank) 进行分解和重建。</p>
+<h4 id="1-信号分解编码器端---analysis-filter-bank"><strong>1. 信号分解（编码器端 - Analysis Filter Bank）</strong>
+</h4><p>以二维图像的 <strong>2x2 分割</strong>（最基本形式）为例：</p>
+<ol>
+<li>
+<p><strong>一维分解</strong>：</p>
+<ul>
+<li>
+<p>首先，沿<strong>水平方向</strong>对图像的每一行进行分解。使用一个[[滤波器]]<strong>低通滤波器 (Low-Pass Filter, LPF)</strong> 提取低频信息（平滑部分），和一个<strong>高通滤波器 (High-Pass Filter, HPF)</strong> 提取高频信息（边缘和细节）。==也就是使用卷积操作来处理图像==</p>
+</li>
+<li>
+<p>滤波后，结果的长度不变。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>欠采样 (Downsampling)</strong>：[[欠采样(subsample)]]根据奈奎斯特采样定理，由于滤波器将信号的带宽减半，因此可以将滤波后的结果进行 <strong>2 倍欠采样</strong>（每隔一个样本取一个），使样本总数减半。</p>
+</li>
+<li>
+<p><strong>二维分解</strong>2D-DW[[DWT]]T：</p>
+<ul>
+<li>
+<p>对上述水平分解得到的两个分量（水平低频和水平高频），再沿<strong>垂直方向</strong>对每一列重复 LPF 和 HPF 滤波及欠采样操作。</p>
+</li>
+<li>
+<p>最终，一幅 $N \times N$ 的图像被分解成<strong>四个</strong> $N/2 \times N/2$ 大小的亚带：</p>
+<ul>
+<li>
+<p><strong>LL (Low-Low)</strong>：水平和垂直都为低频。这是<strong>近似图像</strong>，包含了图像的大部分能量和肉眼可见的主要内容。</p>
+</li>
+<li>
+<p><strong>LH (Low-High)</strong>：水平低频、垂直高频。包含水平方向的边缘信息。</p>
+</li>
+<li>
+<p><strong>HL (High-Low)</strong>：水平高频、垂直低频。包含垂直方向的边缘信息。</p>
+</li>
+<li>
+<p><strong>HH (High-High)</strong>：水平和垂直都为高频。包含对角线细节或噪声。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>总样本数保持不变</strong>：$(N/2)^2 \times 4 = N^2$。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="2-亚带编码-coding"><strong>2. 亚带编码 (Coding)</strong>
+</h4><ul>
+<li>
+<p>对四个亚带进行<strong>量化</strong>和<strong>熵编码</strong>：</p>
+<ul>
+<li>
+<p>对 <strong>LL 亚带</strong>（最重要的），使用较精细的量化（分配更多比特）或采用<strong>预测编码</strong> (如 DPCM)。</p>
+</li>
+<li>
+<p>对 <strong>LH, HL, HH 亚带</strong>（细节信息），使用较粗糙的量化（分配较少比特），甚至对幅度小的系数直接量化为零，以实现压缩。</p>
+</li>
+<li>
+<p>最后，对量化后的系数进行<strong>熵编码</strong> (如霍夫曼编码、算术编码) 消除统计冗余。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-信号重建解码器端---synthesis-filter-bank"><strong>3. 信号重建（解码器端 - Synthesis Filter Bank）</strong>
+</h4><ol>
+<li>
+<p><strong>上采样 (Upsampling)</strong>：首先对接收到的亚带信号进行 <strong>2 倍上采样</strong>（在相邻样本间插入零）。</p>
+</li>
+<li>
+<p><strong>[[合成滤波]]</strong>：使用<strong>合成滤波器组</strong>（与分解滤波器组相匹配）对上采样的信号进行滤波，并加起来，以恢复原始信号。如果滤波器组设计得当（满足<strong>完美重建</strong>条件），就可以无损地恢复原始信号（或接近无损）。</p>
+</li>
+</ol>
+<h2 id="-小波编码-wavelet-coding">🌊 小波编码 (Wavelet Coding)
+</h2><p>小波编码是亚带编码的一种<strong>特殊且高级</strong>的形式，它通常在一个<strong>多分辨率</strong>（或分层）的背景下进行。</p>
+<h3 id="-原理-principle-1">📌 原理 (Principle)
+</h3><p>小波变换的核心在于：它允许在<strong>时域（或空域）和频域</strong>之间进行灵活的<strong>局部化</strong>分析。</p>
+<ol>
+<li>
+<p><strong>时-频局部化</strong>：不像傅里叶变换只有无限长的基函数，小波函数（Mother Wavelet）是<strong>有限持续时间</strong>的“小波”，这意味着小波变换不仅知道<strong>信号中包含哪些频率</strong>，还知道<strong>这些频率出现在信号的哪个位置（或图像的哪个区域）</strong>。</p>
+</li>
+<li>
+<p><strong>多分辨率分解</strong>：小波变换通过对<strong>低频亚带</strong>进行<strong>迭代</strong>分解（即<strong>金字塔结构</strong>），自然地提供了一个多层次、多尺度的图像表示。</p>
+</li>
+</ol>
+<h3 id="-具体处理过程多分辨率金字塔-multiresolution-pyramid">⚙️ 具体处理过程：多分辨率金字塔 (Multiresolution Pyramid)
+</h3><p>小波编码的关键在于其<strong>递归分解</strong>过程。</p>
+<h4 id="1-初始分解"><strong>1. 初始分解</strong>
+</h4><p>与亚带编码的第一步相同，图像首先被分解为 <strong>LL, LH, HL, HH</strong> 四个亚带。</p>
+<h4 id="2-迭代分解多分辨率"><strong>2. 迭代分解（多分辨率）</strong>
+</h4><p><strong>与传统亚带编码不同</strong>，小波编码只对<strong>LL 亚带</strong>（低频近似图像）进行递归的 2x2 分解。</p>
+<ul>
+<li>
+<p><strong>第一级分解</strong>：得到 $LL_1, LH_1, HL_1, HH_1$。</p>
+</li>
+<li>
+<p><strong>第二级分解</strong>：仅对 $LL_1$ 再进行分解，得到 $LL_2, LH_2, HL_2, HH_2$。</p>
+</li>
+<li>
+<p><strong>第三级分解</strong>：仅对 $LL_2$ 再进行分解，得到 $LL_3, LH_3, HL_3, HH_3$。</p>
+</li>
+</ul>
+<p>这个过程生成了一个<strong>多分辨率金字塔</strong>：</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th><strong>级别</strong></th>
+          <th><strong>亚带</strong></th>
+          <th><strong>描述</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>最低级</strong></td>
+          <td>$LL_N$</td>
+          <td><strong>最低分辨率</strong>的近似图像，包含最少、最平滑的信息。</td>
+      </tr>
+      <tr>
+          <td><strong>细节级</strong></td>
+          <td>$LH_k, HL_k, HH_k$ (k=1, 2, &hellip;, N)</td>
+          <td><strong>细节图像</strong>（Detail Images），包含了在不同分辨率级别上丢失的边缘和纹理信息。</td>
+      </tr>
+  </tbody>
+</table></div>
+<h4 id="3-优势渐进传输与多分辨率应用"><strong>3. 优势：渐进传输与多分辨率应用</strong>
+</h4><p>这种结构是小波编码（如 JPEG 2000 标准所采用）最大的优势：</p>
+<ul>
+<li>
+<p><strong>渐进式传输/解码 (Progressive Transmission)</strong>：可以先传输最低分辨率的 $LL_N$ 亚带，用户可以<strong>立即</strong>看到一个模糊但完整的图像。如果需要更高的质量，再依次传输更高分辨率的细节亚带 $LH_N, HL_N, HH_N$，然后是 $LL_{N-1}$ 的细节亚带，直到达到全分辨率。</p>
+</li>
+<li>
+<p><strong>应用</strong>：如原文所述，数据库搜索可以只使用 $LL_N$ 作为缩略图。网络应用可以根据带宽逐步加载细节。</p>
+</li>
+</ul>
+<h3 id="-例子jpeg-2000-图像压缩">💡 例子：JPEG 2000 图像压缩
+</h3><p>JPEG 2000（小波编码）相比于传统的 JPEG（DCT 变换编码），具有显著优势，核心就在于其多分辨率特性。</p>
+<ol>
+<li>
+<p><strong>分解</strong>：一张 1024x1024 的照片，经过三级小波分解后，得到一个 128x128 的 $LL_3$ 亚带（最低分辨率）和多个细节亚带。</p>
+</li>
+<li>
+<p><strong>传输过程</strong>：</p>
+<ul>
+<li>
+<p><strong>步骤 1</strong>：发送最低分辨率的 $LL_3$ 数据。用户屏幕上立即显示一个 1024x1024 但非常模糊的图像。</p>
+</li>
+<li>
+<p><strong>步骤 2</strong>：发送 $LH_3, HL_3, HH_3$ 数据。用户屏幕上的图像变得更清晰，但仍然有块状感。</p>
+</li>
+<li>
+<p><strong>步骤 3</strong>：发送 $LH_2, HL_2, HH_2$ 数据。图像细节进一步丰富，接近全分辨率。</p>
+</li>
+<li>
+<p>&hellip; 直到所有细节亚带传输完毕，最终得到原始的全分辨率图像。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="简要总结亚带编码-vs-小波编码">简要总结：亚带编码 vs. 小波编码
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th><strong>特性</strong></th>
+          <th><strong>亚带编码 (Subband Coding)</strong></th>
+          <th><strong>小波编码 (Wavelet Coding)</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>分解结构</strong></td>
+          <td><strong>均匀分割</strong>。图像频谱通常被 $M \times M$ 的网格均匀划分。</td>
+          <td><strong>多分辨率/金字塔结构</strong>。仅对最低频（LL）亚带进行递归分割。</td>
+      </tr>
+      <tr>
+          <td><strong>时/频特性</strong></td>
+          <td>侧重于<strong>频率分解</strong>和各频带的独立编码。</td>
+          <td>强调<strong>时空局部化</strong>和<strong>多分辨率表示</strong>。</td>
+      </tr>
+      <tr>
+          <td><strong>主要优势</strong></td>
+          <td>可以对各频带采用<strong>最优化</strong>的编码技术，适用于多种信号。</td>
+          <td>支持<strong>渐进式传输/解码</strong>，且图像质量在低比特率下通常优于传统方法（无块效应）。</td>
+      </tr>
+      <tr>
+          <td><strong>关系</strong></td>
+          <td>小波编码可以被视为亚带编码的一种<strong>特殊的、非均匀</strong>的、且<strong>完美重建</strong>的实现。</td>
+          <td>是现代图像编码（如 <strong>JPEG 2000</strong>）的基础。</td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/huyang/tags/%E5%8E%9F%E5%88%9B/">原创</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 Hu Yang
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+
+    
+<section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/huyang/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script><script type="text/javascript" src="/huyang/ts/custom.89d9bb2c3c071ae8a261f67661c22b84ef67ba7b7a885dabd2bbd9ebef84ed40.js" defer></script>
+
+
+    
+<script>
+    function backToTop() {
+      document.documentElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  
+    window.onload = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop > 0) {
+        totopBtn.style.display = 'inline'
+      } else {
+        totopBtn.style.display = 'none'
+      }
+    }
+  
+    window.onscroll = function () {
+      let scrollTop =
+        this.document.documentElement.scrollTop || this.document.body.scrollTop
+      let totopBtn = this.document.getElementById('back-to-top')
+      if (scrollTop < 200) {
+        totopBtn.style.display = 'none'
+      } else {
+        totopBtn.style.display = 'inline'
+        totopBtn.addEventListener('click', backToTop, false)
+      }
+    }
+  </script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+
+<a href="#" id="back-to-top" title="返回顶部"></a>
+
+
+<style>
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    background-color: var(--body-background);
+    box-shadow: var(--shadow-l2);
+    font-size: 20px;  
+    text-align: center;
+    line-height: 38px;  
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;  
+  }
+
+  #back-to-top:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    transform: rotate(135deg);
+    height: 8px;  
+    width: 8px;  
+    border-width: 0 0 2px 2px;
+    border-color: var(--back-to-top-color);
+    border-style: solid;
+  }
+
+  #back-to-top:hover {
+    transform: scale(1.1);  
+    background-color: var(--accent-background);  
+  }
+
+  #back-to-top:hover:before {
+    border-color: var(--accent-color);  
+  }
+
+   
+  @media screen and (max-width: 768px) {
+    #back-to-top {
+      bottom: 5px;
+      right: var(--container-padding);
+      width: 30px;  
+      height: 30px;
+      font-size: 16px;
+      line-height: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #back-to-top {
+      bottom: 10px;
+      right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1536px) {
+    #back-to-top {
+      bottom: 15px;
+      right: 25px;
+       
+    }
+  }
+</style>
+
+
+
+<script>
+    let s1 = '2025-5-18'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+
+
+    </body>
+</html>
