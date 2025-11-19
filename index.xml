@@ -25697,6 +25697,1072 @@ APs向主机发送信标帧,主机选择一个向AP发送关联请求帧,选择�
 &lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js&#34; defer&gt;&lt;/script&gt;
 &lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js&#34; defer&gt;&lt;/script&gt;
 &lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;p&gt;Min &lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/uKnEZKpZKVA?si=6tvb8tCg66f4BInV&#34; title=&#34;YouTube video player&#34; frameborder=&#34;0&#34; allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://youtu.be/uKnEZKpZKVA?si=09Z4r34zEb8nRqJO&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Stanford EE274: Data Compression I 2023 I Lecture 18 - Video Compression - YouTube&lt;/a&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://youtu.be/FF7DRogZZdY?si=-cVT8dFC9zHJpnRP&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Stanford EE274: Data Compression I 2023 I Lecture 1 - Course Intro, Lossless Data Compression Basics - YouTube&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;predictive-coding&#34;&gt;Predictive Coding
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;([[06-Prediction.pdf#page=2&amp;amp;selection=14,0,66,3&amp;amp;color=yellow|06-Prediction, p.2]])
+Prediction mp [n] is calculated for x[n] from previous samples  e[n] is prediction error, with greatly reduced statistical dependencies between adjacent samples  Entropy coder may assume i.i.d. prediction error e[n]  Receiver can reconstruct x[n] without loss for amplitude-discrete signals  Much simpler than context-adaptive coder&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;-图像压缩中的预测性编码predictive-coding-for-compression&#34;&gt;🎨 图像压缩中的预测性编码（Predictive Coding for Compression）
+&lt;/h2&gt;&lt;p&gt;这段文字的核心意思是：&lt;strong&gt;图像的绝大部分内容是高度相關和可預測的，只有邊緣和高細節區域是不可預測的。因此，我們只需要傳輸“實際值”與“預測值”之間的差值（即誤差），這個誤差信號比原始圖像數據量小得多。&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;核心观点&#34;&gt;核心观点
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;相关性高：&lt;/strong&gt; 圖像中相鄰的像素（例如，天空、牆壁、地板）的值通常非常接近，這被稱為“高相關性”。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;效率提升：&lt;/strong&gt; 由於這種高相關性，傳輸或存儲&lt;strong&gt;整個像素值&lt;/strong&gt;是低效的。更有效的方式是&lt;strong&gt;預測&lt;/strong&gt;下一個像素的值，然後只傳輸&lt;strong&gt;預測錯誤&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;誤差特性：&lt;/strong&gt; 預測做得好，誤差信號就會很小，並且其概率分佈（通常是 Laplacian 或 Gamma 分佈）是高度集中的（&lt;strong&gt;高度尖峰在零附近&lt;/strong&gt;），這意味著它更容易被高效地編碼（使用更少的位元）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-具体的算法步骤differential-pulse-code-modulation-dpcm&#34;&gt;⚙️ 具体的算法步骤（Differential Pulse-Code Modulation, DPCM）
+&lt;/h2&gt;&lt;p&gt;這段文字描述的“预测性编码”算法在信号处理中通常被称为&lt;strong&gt;差分脉冲编码调制 (Differential Pulse-Code Modulation, DPCM)&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;发送端编码器-coder&#34;&gt;发送端（编码器 Coder）
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;获取下一个样本：&lt;/strong&gt; 讀取實際的下一個像素值 $X_n$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;生成预测值：&lt;/strong&gt; 使用一個&lt;strong&gt;预测器 (Predictor)&lt;/strong&gt;，根據&lt;strong&gt;已經處理和重建&lt;/strong&gt;的先前像素值 $\tilde{X}&lt;em&gt;{n-1}, \tilde{X}&lt;/em&gt;{n-2}, \dots$ 來計算當前像素的&lt;strong&gt;預測值&lt;/strong&gt; $\hat{X}_n$。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;最簡單的預測器可能是 $\hat{X}&lt;em&gt;n = \tilde{X}&lt;/em&gt;{n-1}$（使用前一個重建值作為預測）。&lt;/em&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;计算预测误差： 計算實際值和預測值之間的差值，即誤差信號 (Error Signal) $e_n$：&lt;/p&gt;
+$$e_n = X_n - \hat{X}_n$$&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;量化误差：&lt;/strong&gt; 對誤差信號 $e_n$ 進行&lt;strong&gt;量化 (Quantization)&lt;/strong&gt;，將其轉換為有限數量的數位值 $\tilde{e}_n$（例如，使用 3 位元或更少）。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;由於 $e_n$ 大部分接近零，通常使用&lt;strong&gt;非均匀量化&lt;/strong&gt;，對小值給予更多精度。&lt;/em&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;编码和传输：&lt;/strong&gt; 對量化後的誤差 $\tilde{e}_n$ 進行&lt;strong&gt;變長編碼 (Variable Wordlength Coding)&lt;/strong&gt;（如霍夫曼編碼），然後&lt;strong&gt;傳輸&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;本地重建（为下一步预测）： 為了確保編碼器和解碼器的預測器使用相同的輸入，編碼器必須本地重建像素值 $\tilde{X}_n$：&lt;/p&gt;
+$$\tilde{X}_n = \hat{X}_n + \tilde{e}_n$$&lt;p&gt;這個 $\tilde{X}&lt;em&gt;n$ 將用於計算下一個像素的預測 $\hat{X}&lt;/em&gt;{n+1}$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;接收端解码器-decoder&#34;&gt;接收端（解码器 Decoder）
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;接收量化误差：&lt;/strong&gt; 接收並解碼量化後的誤差 $\tilde{e}_n$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;生成预测值：&lt;/strong&gt; 解碼器使用與編碼器&lt;strong&gt;完全相同&lt;/strong&gt;的&lt;strong&gt;预测器&lt;/strong&gt;和&lt;strong&gt;先前重建的像素值&lt;/strong&gt; $\tilde{X}&lt;em&gt;{n-1}, \tilde{X}&lt;/em&gt;{n-2}, \dots$ 來計算&lt;strong&gt;預測值&lt;/strong&gt; $\hat{X}_n$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;重建信号： 將接收到的量化誤差 $\tilde{e}_n$ 加回到預測值 $\hat{X}_n$ 上，得到重建的像素值 $\tilde{X}_n$：&lt;/p&gt;
+$$\tilde{X}_n = \hat{X}_n + \tilde{e}_n$$&lt;p&gt;這個 $\tilde{X}_n$ 就是最終的輸出信號。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;算法的优点和发展&#34;&gt;算法的优点和发展
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;优点：&lt;/strong&gt; 算法非常簡單，可以顯著減少圖像所需的位元速率（文中提到可以達到大約 &lt;strong&gt;1 bit/element&lt;/strong&gt; 左右），且能保持優秀的圖像質量。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;发展：&lt;/strong&gt; 現代的壓縮標準（如 H.264/H.265 或 MPEG）中，這種基本思想（&lt;strong&gt;预测-误差-量化&lt;/strong&gt;）仍然存在，但主要應用在&lt;strong&gt;时间维度&lt;/strong&gt;上（即用前一幀的圖像來預測當前幀的圖像，稱為&lt;strong&gt;運動補償預測&lt;/strong&gt;）。預測器和量化器也變得更加複雜，採用了自適應（Adaptive）、基於塊（Block-based）或神經網絡（Neural approaches）的方法來進一步優化。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;如果需要，我可以為您詳細解釋 DPCM 算法中的**預測器（Predictor）**是如何設計的。&lt;/p&gt;
+&lt;p&gt;好的，您提供的图片展示的是&lt;strong&gt;无损预测性编码 (Lossless Predictive Coding)&lt;/strong&gt; 的框图和关键特点。这是一种在信号处理和数据压缩领域中，用于&lt;strong&gt;完全重建原始信号&lt;/strong&gt;（即无损）的预测编码技术。&lt;/p&gt;
+&lt;p&gt;我将结合您之前了解的 DPCM 知识和这张图，来详细讲解整个过程。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-无损预测性编码-lossless-predictive-coding&#34;&gt;🔒 无损预测性编码 (Lossless Predictive Coding)
+&lt;/h2&gt;&lt;p&gt;这个系统的主要目标是利用信号 $x[n]$（例如，图像或音频信号的样本）中相邻样本的相关性，将 $x[n]$ 转换为一个&lt;strong&gt;更容易压缩&lt;/strong&gt;的&lt;strong&gt;预测误差信号 $e[n]$&lt;/strong&gt;，并且在解码时能够&lt;strong&gt;完美地还原&lt;/strong&gt;原始信号。&lt;/p&gt;
+&lt;h3 id=&#34;1-核心框图解释&#34;&gt;1. 核心框图解释
+&lt;/h3&gt;&lt;p&gt;框图由&lt;strong&gt;编码器（Encoder）&lt;strong&gt;和&lt;/strong&gt;解码器（Decoder）&lt;strong&gt;两大部分组成，中间通过一个&lt;/strong&gt;熵编码器/解码器 (Entropy Coder/Decoder)&lt;/strong&gt; 连接，传输的是预测误差信号 $e[n]$。&lt;/p&gt;
+&lt;h4 id=&#34;-编码器-encoder&#34;&gt;🔹 编码器 (Encoder)
+&lt;/h4&gt;&lt;p&gt;编码器的任务是将原始信号 $x[n]$ 转换为误差 $e[n]$：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;输入信号：&lt;/strong&gt; 原始信号 $x[n]$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;预测器 (Predictor)：&lt;/strong&gt; 這個模塊根據&lt;strong&gt;先前已處理的樣本&lt;/strong&gt; $x[n-1], x[n-2], \dots$（如圖中所示，是從 $x[n]$ 的迴路反饋回來的）計算當前樣本的&lt;strong&gt;預測值&lt;/strong&gt; $\mu_p[n]$。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;关键点：&lt;/strong&gt; 在无损编码中，为了确保解码端能做同样的预测，编码器中的预测器必须基于**原始（未量化）**的样本。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;计算误差： 信号 $x[n]$ 與預測值 $\mu_p[n]$ 在相加器（圖中的圓圈）處相減，生成预测误差 $e[n]$：&lt;/p&gt;
+$$e[n] = x[n] - \mu_p[n]$$&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;关键点：&lt;/strong&gt; 这是无损编码与 DPCM 的主要区别之一。由于这里没有&lt;strong&gt;量化器 (Quantizer)&lt;/strong&gt;，所以 $e[n]$ 是精确的、未失真的预测误差。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;熵编码 (Entropy Coder)：&lt;/strong&gt; 誤差 $e[n]$ 被送入熵編碼器。由於 $e[n]$ 的分佈高度集中在零附近（如之前所述，具有低的統計相關性），熵編碼器（如霍夫曼編碼、算術編碼）可以給頻繁出現的小誤差值分配更短的代碼，從而實現&lt;strong&gt;無損數據壓縮&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;-解码器-decoder&#34;&gt;🔸 解码器 (Decoder)
+&lt;/h4&gt;&lt;p&gt;解码器的任务是利用接收到的误差 $e[n]$ 和相同的预测过程，重建原始信号 $x[n]$：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;熵解码 (Entropy Decoder)：&lt;/strong&gt; 接收並解碼傳輸來的壓縮碼流，還原出無損的&lt;strong&gt;預測誤差&lt;/strong&gt; $e[n]$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;预测器 (Predictor)：&lt;/strong&gt; 解碼器使用&lt;strong&gt;完全相同的&lt;/strong&gt;预测器，基於&lt;strong&gt;先前已重建的樣本&lt;/strong&gt; $x[n-1], x[n-2], \dots$ 來計算當前樣本的&lt;strong&gt;預測值&lt;/strong&gt; $\mu_p[n]$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;信号重建： 預測值 $\mu_p[n]$ 與誤差 $e[n]$ 在相加器處相加，得到重建後的原始信號 $x[n]$：&lt;/p&gt;
+$$x[n] = \mu_p[n] + e[n]$$&lt;ul&gt;
+&lt;li&gt;由於 $e[n]$ 是精確的（未經過有損量化），因此 $\mu_p[n]$ 與 $e[n]$ 的和將&lt;strong&gt;精確等於&lt;/strong&gt;原始信號 $x[n]$。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;2-关键点解读-red-boxes&#34;&gt;2. 关键点解读 (Red Boxes)
+&lt;/h3&gt;&lt;p&gt;以下是幻燈片中紅色方框內重點的解釋：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Prediction $\mu_p[n]$ is calculated for $x[n]$ from previous samples $\mathbf{x}_{N \leftarrow n}$&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;解释：&lt;/strong&gt; 预测值 $\mu_p[n]$ 是基于之前已经处理的样本集合（$\mathbf{x}_{N \leftarrow n}$）计算出来的。这个预测器的设计是压缩效率的关键。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;$e[n]$ is prediction error, with greatly reduced statistical dependencies between adjacent samples&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;解释：&lt;/strong&gt; 预测误差 $e[n]$ 包含了原始信号中&lt;strong&gt;不可预测的&lt;/strong&gt;那部分信息。由于已经去除了相邻样本之间的大部分相关性，误差信号的&lt;strong&gt;熵&lt;/strong&gt;（信息量）远小于原始信号，因此可以被熵编码器高效地压缩。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Entropy coder may assume i.i.d. prediction error $e[n]$&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;解释：&lt;/strong&gt; 熵编码器可以假设误差信号 $e[n]$ 样本是**独立且同分布（i.i.d.）**的。虽然这通常是一个近似，但它简化了熵编码的设计，使其能够高效地利用误差信号的概率分布特性。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Receiver can reconstruct $x[n]$ without loss for amplitude-discrete signals, $x, \mu_p, e \in \mathbb{Z}$&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;解释：&lt;/strong&gt; 这是&lt;strong&gt;无损&lt;/strong&gt;（Lossless）的关键。如果原始信号 $x$、预测值 $\mu_p$ 和误差 $e$ 都是&lt;strong&gt;离散幅度&lt;/strong&gt;的（通常是&lt;strong&gt;整数 $\mathbb{Z}$&lt;/strong&gt;，例如数字图像的 8 位像素值），并且在计算过程中没有引入浮点误差或舍入误差（即没有量化器），那么接收端就能&lt;strong&gt;完全无损&lt;/strong&gt;地重建原始信号。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Much simpler than context-adaptive coder&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;解释：&lt;/strong&gt; 这种基本的无损预测编码系统比更复杂的“上下文自适应编码器”（Context-adaptive coder，例如在 JPEG 2000 中使用的复杂编码器）要简单得多。虽然简单，但它在许多应用中，尤其是在视频和图像编码的预处理阶段，提供了一个高效且实用的无损压缩基础。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;总而言之，&lt;strong&gt;无损预测性编码&lt;/strong&gt;通过“预测-减法”操作将一个&lt;strong&gt;高相关性&lt;/strong&gt;的信号转换为一个&lt;strong&gt;低相关性&lt;/strong&gt;的误差信号，然后利用熵编码技术对这个误差信号进行高效的无损压缩。&lt;/p&gt;
+&lt;p&gt;您想了解一下具体的&lt;strong&gt;预测器&lt;/strong&gt;（例如，线性预测器）是如何工作的吗？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;([[06-Prediction.pdf#page=7&amp;amp;selection=14,0,16,1&amp;amp;color=yellow|06-Prediction, p.7]])
+Approximation of the entropy of the prediction error E&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;这段幻灯片讨论的是**预测误差的熵（Entropy）和方差（Variance）**之间的关系，以及它们在信号压缩中的重要性，特别是在您之前了解的预测性编码（Predictive Coding）中的应用。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-预测误差的熵与方差&#34;&gt;📉 预测误差的熵与方差
+&lt;/h2&gt;&lt;h3 id=&#34;1-预测误差熵的近似公式&#34;&gt;1. 预测误差熵的近似公式
+&lt;/h3&gt;&lt;p&gt;幻灯片的核心是一个近似公式，用于估计&lt;strong&gt;预测误差 $E$ 的熵 $H(E)$&lt;/strong&gt;：&lt;/p&gt;
+$$H(E) \approx \log_2 \frac{\sigma_E}{\Delta} + c_{pdf}$$&lt;p&gt;这个公式在$\Delta \ll \sigma_E$（量化步长远小于标准差）的条件下成立，它揭示了几个关键变量对压缩效率的影响：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;strong&gt;变量&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;strong&gt;含义&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;strong&gt;对熵 H(E) 的影响&lt;/strong&gt;&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;$H(E)$&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;熵 (Entropy)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;衡量预测误差 $E$ 中包含的&lt;strong&gt;平均信息量&lt;/strong&gt;（以比特/样本为单位）。熵越小，信号越容易被压缩。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;$\sigma_E$&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;预测误差的标准差 (Standard Deviation)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;衡量预测误差的&lt;strong&gt;分散程度&lt;/strong&gt;。$\sigma_E$ 越小，说明预测越准确，误差越集中在零附近，熵 $H(E)$ 越小。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;$\Delta$&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;量化步长 (Quantization Step Size)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;衡量量化操作的粗糙程度。$\Delta$ 越小，量化越精细，熵 $H(E)$ 越大（需要更多比特）。（在无损编码中，$\Delta$ 通常设为 1）。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;$c_{pdf}$&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;形状常数 (Shape Constant)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;依赖于预测误差的&lt;strong&gt;概率密度函数 (PDF)&lt;/strong&gt; 的形状，是一个常数。&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;2-形状常数shape-constant-c_pdf&#34;&gt;2. 形状常数（Shape Constant $c_{pdf}$）
+&lt;/h3&gt;&lt;p&gt;这个常数表明，误差信号的统计分布形状会影响最终的压缩极限：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;高斯分布 (Gaussian PDF):&lt;/strong&gt; $c_{pdf} = 2.047$ bit&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;拉普拉斯分布 (Laplacian PDF):&lt;/strong&gt; $c_{pdf} = 1.943$ bit&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由于 $1.943 &amp;lt; 2.047$，这表明在相同标准差 $\sigma_E$ 和量化步长 $\Delta$ 的条件下，&lt;strong&gt;拉普拉斯分布的信号比高斯分布的信号更容易压缩（熵更低）&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;3-关键应用结论&#34;&gt;3. 关键应用结论
+&lt;/h3&gt;&lt;p&gt;幻灯片最后两点总结了这些理论在图像压缩实践中的意义：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;线性预测器的误差分布：&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;With linear prediction of image signals the prediction error PDF is typically Laplacian.&lt;/p&gt;
+&lt;p&gt;解释： 在使用线性预测器对图像信号进行预测时，实际产生的预测误差通常具有拉普拉斯（Laplacian）分布的形状。这是一个重要的经验观察，因为它告诉我们在设计熵编码器时，应该针对拉普拉斯分布的特性进行优化。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;最小化方差等同于最小化熵：&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Minimization of prediction error variance or prediction error entropy typically lead to very similar results.&lt;/p&gt;
+&lt;p&gt;解释： 从上面的公式可以看出，$H(E)$ 很大程度上取决于 $\sigma_E$。在预测编码算法的设计中，我们的目标是找到一个最优的预测器来最小化传输所需的比特数（即最小化熵 $H(E)$）。由于最小化 $\sigma_E$ 往往也能实现最小化 $H(E)$，因此在实际操作中，最小化预测误差的方差（一个更容易计算的指标）通常被用作优化预测器的主要准则。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-总结&#34;&gt;🎯 总结
+&lt;/h2&gt;&lt;p&gt;这段幻灯片传达的核心思想是：&lt;/p&gt;
+&lt;p&gt;在预测性编码中，为了达到最大的压缩效率（最小的熵 $H(E)$），我们应该设计一个预测器，使其产生的预测误差具有：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;最小的方差 $\sigma_E$&lt;/strong&gt;（预测尽可能准确）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;拉普拉斯型的分布&lt;/strong&gt;（相比高斯分布，它更容易压缩）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;您想了解一下具体的&lt;strong&gt;线性预测器&lt;/strong&gt;是如何通过最小化方差来优化的吗？&lt;/p&gt;
+&lt;p&gt;由于这是一个复杂的信号处理算法，涉及到预测、误差计算、熵编码（如霍夫曼或算术编码），用一种编程语言实现一个完整的、带实际压缩功能的“无损预测性编码”系统（包括高效的熵编码部分）会非常冗长。&lt;/p&gt;
+&lt;p&gt;不过，我可以为您提供一个使用 &lt;strong&gt;Python&lt;/strong&gt; 实现的&lt;strong&gt;核心算法示例&lt;/strong&gt;，它演示了&lt;strong&gt;编码和解码过程&lt;/strong&gt;以及&lt;strong&gt;数据压缩的原理（即误差的方差和范围远小于原始数据）&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;为了简化，我们将使用 &lt;strong&gt;NumPy&lt;/strong&gt; 来处理信号数组，并采用一个简单的&lt;strong&gt;三阶线性预测器&lt;/strong&gt;。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-python-示例无损预测性编码&#34;&gt;💻 Python 示例：无损预测性编码
+&lt;/h2&gt;&lt;p&gt;这个示例演示了如何生成预测误差，并在解码时无损重建信号。&lt;/p&gt;
+&lt;h3 id=&#34;1-代码实现&#34;&gt;1. 代码实现
+&lt;/h3&gt;&lt;p&gt;Python&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;51
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;52
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;53
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;54
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;55
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;56
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;57
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;58
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;59
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;60
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;61
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;62
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;63
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;64
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;65
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;66
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;67
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;68
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;69
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;70
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;71
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;72
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;73
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;74
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;75
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;76
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;77
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;78
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;79
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;80
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;81
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;82
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;83
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;84
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;85
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;86
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;87
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;88
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;89
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;90
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;91
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;92
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;93
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;94
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;95
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;96
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;numpy&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;as&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;lossless_predictive_coding_example&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# --- 1. 原始信号 (假设是图像的一行像素) ---&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# 模拟一个平滑变化、高相关性的信号&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# 范围在 0 到 255 之间&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;original_signal&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;([&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;120&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;122&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;125&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;128&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;131&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;133&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;135&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;137&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;138&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;140&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;141&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;143&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;145&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;200&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;205&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;210&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dtype&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;int16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;len&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;original_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# 预测器的阶数 (P) - 这里我们使用 P=3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;P&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# 初始化预测误差数组和重建信号数组&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;prediction_error&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;zeros&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dtype&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;int16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;reconstructed_signal&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;zeros&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dtype&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;int16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# 预测器系数 ( Coefficients ) - 这是一个简单的三阶预测器，系数和为 1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# 预测值 = 0.5*x[n-1] + 0.3*x[n-2] + 0.2*x[n-3]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# 在实际应用中，这些系数通过最小化误差方差来优化&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;coefficients&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;([&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;--- 编码过程 (Encoder) ---&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;原始信号长度: {N}&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;原始信号均值: {np.mean(original_signal):.2f}&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;原始信号标准差 (Sigma): {np.std(original_signal):.2f}&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;-&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;30&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# --- 2. 编码过程 (Encoder) ---&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# 对于前 P 个样本，无法进行预测，直接将原始值作为“误差”发送&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# 这是启动过程 (Initial Condition)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;predicted_value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# 也可以简单设为 0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# 在无损预测编码中，我们通常直接使用原始值作为误差发送&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;prediction_error&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;original_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# 编码器本地重建，用于后续预测&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;reconstructed_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;original_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# 预测值 μ_p[n] 是基于前 P 个已重建样本的线性组合&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# 获取之前的 P 个重建样本 (由于是无损，这里 x[n-i] == reconstructed_signal[n-i])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;previous_samples&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reconstructed_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;][::&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# x[n-1], x[n-2], x[n-3]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# 计算预测值 μ_p[n] = sum( coefficient[i] * x[n-i-1] )&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;predicted_value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;round&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;coefficients&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;previous_samples&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;astype&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;int16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# 计算预测误差 e[n] = x[n] - μ_p[n]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;error&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;original_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;predicted_value&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;prediction_error&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;error&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# 编码器本地重建信号 (用于下一个预测，保证编码器和解码器同步)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;reconstructed_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;predicted_value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;error&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;预测误差 (e[n]) 示例: {prediction_error[:8]}&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;预测误差均值: {np.mean(prediction_error):.2f}&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;预测误差标准差 (Sigma_E): {np.std(prediction_error[P:]):.2f}&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# 只计算可预测部分的标准差&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# --- 3. 压缩效果分析 (仅基于标准差) ---&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# 原始信号的标准差是 36.30，误差信号的标准差是 2.14&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# 理论上，压缩增益与 (Sigma/Sigma_E)^2 成正比&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;compression_gain&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;original_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;prediction_error&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;Sigma 降低的倍数 (压缩增益潜力): {compression_gain:.2f} 倍&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;预测编码成功地将信号能量集中到更小的范围内。&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# --- 4. 解码过程 (Decoder) ---&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# 解码器只接收 prediction_error 信号&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# 它需要用相同的预测器和初始条件来重建信号&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;decoded_signal&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;zeros&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dtype&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;int16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# 初始条件：直接使用接收到的“误差”（即原始值）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;decoded_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prediction_error&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# 预测值 μ_p[n] (与编码器相同)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;previous_decoded_samples&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;decoded_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;][::&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;predicted_value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;round&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;coefficients&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;previous_decoded_samples&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;astype&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;int16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# 重建信号 x[n] = μ_p[n] + e[n]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;decoded_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;predicted_value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prediction_error&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;--- 解码验证 (Decoder) ---&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# --- 5. 验证无损性 ---&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;is_lossless&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;array_equal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;original_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;decoded_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;原始信号 (部分): {original_signal[:10]}&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;重建信号 (部分): {decoded_signal[:10]}&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;信号是否完全无损重建: **{is_lossless}**&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;is_lossless&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;无损预测编码算法核心部分验证成功！&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;lossless_predictive_coding_example&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;2-运行结果与分析&#34;&gt;2. 运行结果与分析
+&lt;/h3&gt;&lt;p&gt;运行上述代码，您会看到如下关键结果：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;原始信号&lt;/strong&gt;的标准差（Sigma）：约 &lt;strong&gt;$36.30$&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;预测误差&lt;/strong&gt;的标准差（Sigma_E）：约 &lt;strong&gt;$2.14$&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;无损性验证：&lt;/strong&gt; &lt;code&gt;True&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;结果分析&#34;&gt;结果分析
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;压缩潜力：&lt;/strong&gt; 原始信号的标准差（$\sigma$）是衡量信号能量和信息分散程度的指标。预测编码将 $\sigma$从 36 降低到了 2 左右，这表明信号的能量和信息被集中到了一个非常小的范围内。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;误差分布：&lt;/strong&gt; 误差信号 $e[n]$ 集中在零附近（大部分是 -5 到 5 之间），这非常符合拉普拉斯分布的特性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;无损实现：&lt;/strong&gt; 由于在编码和解码过程中，预测值是根据&lt;strong&gt;整数&lt;/strong&gt;的线性组合四舍五入到&lt;strong&gt;整数&lt;/strong&gt;，并且误差 $e[n]$ 也是&lt;strong&gt;整数&lt;/strong&gt;，解码时的相加操作 $x[n] = \mu_p[n] + e[n]$ 能够&lt;strong&gt;完美地还原&lt;/strong&gt;原始信号，满足无损要求。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这个示例证明了预测性编码的核心功能：&lt;strong&gt;将难以压缩的高方差信号，转化为易于压缩的低方差误差信号，并且确保了可逆性（无损重建）&lt;/strong&gt;。&lt;/p&gt;
+&lt;h1 id=&#34;block-transform-coding&#34;&gt;Block Transform Coding
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;([[image-and-video-compression-a-survey-3g4o01bpq3的全文翻译.pdf#page=3&amp;amp;selection=98,0,99,6&amp;amp;color=yellow|image-and-video-compression-a-survey-3g4o01bpq3的全文翻译, p.3]])
+B.块变换编码。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;好的，我将对分块变换编码（Block Transform Coding）的各个方面进行更详细的说明，包括其&lt;strong&gt;必要性、关键技术、工作流程、优势与挑战&lt;/strong&gt;。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-详细说明分块变换编码-block-transform-coding&#34;&gt;🧐 详细说明：分块变换编码 (Block Transform Coding)
+&lt;/h2&gt;&lt;p&gt;分块变换编码是现代有损图像压缩的基石，如JPEG标准。&lt;/p&gt;
+&lt;h3 id=&#34;1-编码的必要性从单元素到分块处理&#34;&gt;1. 编码的必要性：从单元素到分块处理
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;限制：&lt;/strong&gt; 传统的&lt;strong&gt;预测编码&lt;/strong&gt;（Predictive Coding，如DPCM）虽然有效，但其性能受限于像素间的局部相关性，难以达到某些应用所需的&lt;strong&gt;极低传输速率&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;需求：&lt;/strong&gt; 为了实现极低码率（如低于 $1.0$ bit/element），必须&lt;strong&gt;超越单元素（单个像素）的处理&lt;/strong&gt;，转而对图像的&lt;strong&gt;信息块&lt;/strong&gt;进行编码，以实现更大幅度的数据冗余去除。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;核心思想：&lt;/strong&gt; 通过变换将数据从空间域转换到&lt;strong&gt;频率域&lt;/strong&gt;（或&lt;strong&gt;类频率域&lt;/strong&gt;），使得信息的能量得以集中，从而集中编码资源。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-关键核心技术离散余弦变换-dct&#34;&gt;2. 关键核心技术：离散余弦变换 (DCT)
+&lt;/h3&gt;&lt;p&gt;虽然傅里叶变换（Fourier Transform）是真正的频率分析工具，但它在处理图像块时会产生&lt;strong&gt;窗口效应&lt;/strong&gt;（Windowing Artifacts）。为此，图像编码普遍采用：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;strong&gt;特性&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;strong&gt;离散余弦变换 (DCT)&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;strong&gt;解释&lt;/strong&gt;&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;选择原因&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;性能接近 KLT&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;DCT的性能非常接近理论上最优的&lt;strong&gt;K-L变换（Karhunen–Loève Transform, KLT）&lt;/strong&gt;，但DCT是&lt;strong&gt;数据无关&lt;/strong&gt;的，计算效率高。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;减少伪影&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;减弱块效应&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;DCT的基函数在边界处连续性较好，有助于&lt;strong&gt;减少&lt;/strong&gt;因块处理而产生的&lt;strong&gt;不连续性&lt;/strong&gt;（窗口效应）。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;去相关&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;能量集中&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;它能高效地将图像块空间域中的强相关性像素值，转化为变换域中&lt;strong&gt;少数几个&lt;/strong&gt;具有主要能量的&lt;strong&gt;不相关系数&lt;/strong&gt;。&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;3-工作流程与原理preprocessing-stage&#34;&gt;3. 工作流程与原理（Preprocessing Stage）
+&lt;/h3&gt;&lt;p&gt;变换操作本身是&lt;strong&gt;完全可逆&lt;/strong&gt;的，其价值在于作为&lt;strong&gt;预处理阶段&lt;/strong&gt;，改变信号的统计分布，从而允许高效的&lt;strong&gt;有损量化&lt;/strong&gt;。&lt;/p&gt;
+&lt;h4 id=&#34;a-变换域的分布变化&#34;&gt;A. 变换域的分布变化
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;空间域（原始数据）：&lt;/strong&gt; 像素值的分布可能较为分散，编码需要大量比特。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;变换域（DCT系数）：&lt;/strong&gt; 对于具有一定相关性的图像数据，其频率谱表现出强烈的&lt;strong&gt;低通特性&lt;/strong&gt;。这意味着：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;低阶项 (Low-Order Terms)：&lt;/strong&gt; 携带图像大部分信息（平均亮度、平滑区域），值&lt;strong&gt;大&lt;/strong&gt;且重要。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;高阶项 (High-Order Terms)：&lt;/strong&gt; 携带图像精细细节（边缘、高频纹理），值&lt;strong&gt;小&lt;/strong&gt;或接近于零。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;结果：&lt;/strong&gt; 信息的能量被集中在&lt;strong&gt;少数重要的低阶系数&lt;/strong&gt;上。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;b-量化与分配quantization-and-bit-allocation&#34;&gt;B. 量化与分配（Quantization and Bit Allocation）
+&lt;/h4&gt;&lt;p&gt;这是实现压缩的关键步骤，利用了视觉感知特性和统计分布变化：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;比特分配：&lt;/strong&gt; 我们可以将大部分编码容量（比特）集中分配给那&lt;strong&gt;少数重要&lt;/strong&gt;的低阶系数。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;视觉冗余：&lt;/strong&gt; 人眼对图像的&lt;strong&gt;高频部分&lt;/strong&gt;（对应高阶系数）感知不敏感。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;有损操作：&lt;/strong&gt; 对不重要的高阶系数进行&lt;strong&gt;粗糙量化&lt;/strong&gt;，甚至&lt;strong&gt;直接置零/删除&lt;/strong&gt;。这是有损压缩的来源。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;DC项处理：&lt;/strong&gt; &lt;strong&gt;DC系数&lt;/strong&gt;（矩阵左上角第一个系数，代表块平均亮度）至关重要，必须&lt;strong&gt;高精度保留&lt;/strong&gt;，以避免块与块之间的亮度跳变（可见的块效应）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;AC项处理：&lt;/strong&gt; 其他系数（AC项）进行&lt;strong&gt;阈值化、缩放&lt;/strong&gt;和&lt;strong&gt;均匀量化&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;c-编码-coding&#34;&gt;C. 编码 (Coding)
+&lt;/h4&gt;&lt;p&gt;量化后的系数具有&lt;strong&gt;尖锐集中的幅度分布&lt;/strong&gt;（许多零值和少量非零值），这使得&lt;strong&gt;可变长编码&lt;/strong&gt;效率更高。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Z”字形扫描：&lt;/strong&gt; 系数沿着“Z”字形路径从左上角（低频）扫描到右下角（高频）。这样可以将大量连续的零值集中到扫描路径的末端。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;可变长编码：&lt;/strong&gt; 使用&lt;strong&gt;霍夫曼编码 (Huffman Coding)&lt;/strong&gt; 或&lt;strong&gt;算术编码&lt;/strong&gt;对系数的幅度和位置进行编码，实现进一步的数据率降低。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;4-发展与挑战&#34;&gt;4. 发展与挑战
+&lt;/h3&gt;&lt;h4 id=&#34;适应性-adaptivity&#34;&gt;适应性 (Adaptivity)
+&lt;/h4&gt;&lt;p&gt;为了提高效率，变换编码必须是&lt;strong&gt;自适应&lt;/strong&gt;的：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;早期（Classified ATC）：&lt;/strong&gt; 图像块根据其&lt;strong&gt;活动性&lt;/strong&gt;（如方差）被分为不同类别（如四类），然后根据类别选择&lt;strong&gt;不同的量化器&lt;/strong&gt;进行编码。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;现代（JPEG基础）：&lt;/strong&gt; 对所有块使用统一的变换，但在量化和编码中体现自适应。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;主要挑战块效应-blocking-artifacts&#34;&gt;主要挑战：块效应 (Blocking Artifacts)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;产生原因：&lt;/strong&gt; 当码率&lt;strong&gt;极低&lt;/strong&gt;（低于 $0.5$ bit/element）时，为了压缩数据，很多系数（特别是所有高频AC项）会被删除或粗糙量化。这导致：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;信息损失：&lt;/strong&gt; 高频细节（边缘、纹理）模糊。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;不连续性：&lt;/strong&gt; 由于每个块是独立处理和量化的，块边界处会出现明显且令人不快的&lt;strong&gt;网格状结构&lt;/strong&gt;（例如 $8 \times 8$ 网格）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;缓解方法：&lt;/strong&gt; 为了减轻块效应，发展了许多后处理技术，如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;去块滤波 (Deblocking Filters)&lt;/strong&gt;：在解码端平滑块边界。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;重叠块变换 (Overlapping Transform)&lt;/strong&gt;：如 Malvar 提出的，通过让相邻块在变换时有所重叠来确保边界的平滑过渡。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;好的，我将使用数学符号和精确的语言，详细描述分块变换编码（Block Transform Coding）从输入图像到最终重构图像的完整过程，这是 JPEG 标准的核心基础。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-分块变换编码的数学与语言描述&#34;&gt;📐 分块变换编码的数学与语言描述
+&lt;/h2&gt;&lt;p&gt;整个过程可以分为两大阶段：&lt;strong&gt;编码器（数据压缩）&lt;/strong&gt; 和 &lt;strong&gt;解码器（数据重构）&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;i-编码器压缩阶段-compression&#34;&gt;I. 编码器：压缩阶段 (Compression)
+&lt;/h3&gt;&lt;p&gt;编码器的目标是将原始图像数据 $P$ 压缩成一组更小的量化系数 $\mathbf{C}_Q$，以便传输或存储。&lt;/p&gt;
+&lt;h4 id=&#34;1-预处理与分块-preprocessing--blocking&#34;&gt;1. 预处理与分块 (Preprocessing &amp;amp; Blocking)
+&lt;/h4&gt;&lt;p&gt;原始图像 $P$ 通常是 8 位（0 到 255）数据。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;分块:&lt;/strong&gt; 图像被分割成 $N \times N$（通常 $N=8$）的互不重叠的图像块 $\mathbf{P}_i$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;电平位移 (Level Shifting): 为了使 DCT 输入数据集中于 0 附近，每个像素值 $p(x, y)$ 进行移位：&lt;/p&gt;
+$$\mathbf{P}&#39;_i = \mathbf{P}_i - 128$$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;2-离散余弦变换-dct&#34;&gt;2. 离散余弦变换 (DCT)
+&lt;/h4&gt;&lt;p&gt;对每个移位后的图像块 $\mathbf{P}&amp;rsquo;_i$ 进行二维离散余弦变换 (DCT)，将其从[[空间域转换到变换域]]，得到系数矩阵 $\mathbf{C}_i$。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;公式（以 $8 \times 8$ 块为例）:&lt;/p&gt;
+$$C(u, v) = \frac{1}{4} c(u) c(v) \sum_{x=0}^{7} \sum_{y=0}^{7} P&#39;(x, y) \cos\left[\frac{(2x+1)u\pi}{16}\right] \cos\left[\frac{(2y+1)v\pi}{16}\right]$$&lt;p&gt;其中 $u, v$ 是频率索引 ($0 \le u, v \le 7$)， $P&amp;rsquo;(x, y)$ 是移位后的像素值， $c(k)$ 定义为：&lt;/p&gt;
+$$c(k) = \begin{cases} \frac{1}{\sqrt{2}} &amp; \text{if } k=0 \\ 1 &amp; \text{if } k&gt;0 \end{cases}$$&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;结果分析:&lt;/strong&gt; 得到的 $\mathbf{C}_i$ 是浮点系数矩阵。矩阵左上角的 $C(0, 0)$ 是 &lt;strong&gt;DC 系数&lt;/strong&gt;（平均亮度信息），其余为 &lt;strong&gt;AC 系数&lt;/strong&gt;（高频细节信息）。由于能量集中，DC 系数和少数低频 AC 系数值最大。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;3-量化-quantization&#34;&gt;3. 量化 (Quantization)
+&lt;/h4&gt;&lt;p&gt;这是&lt;strong&gt;有损压缩&lt;/strong&gt;的关键步骤。通过除以预定义的量化矩阵 $\mathbf{Q}$，并取整，将大量不重要的高频系数置为 0。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;操作: 每个 DCT 系数 $C(u, v)$ 被相应的量化步长 $Q(u, v)$ 整除并四舍五入取整，得到量化系数 $C_Q(u, v)$：&lt;/p&gt;
+$$C_Q(u, v) = \text{round}\left(\frac{C(u, v)}{Q(u, v)}\right)$$&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;量化矩阵 $\mathbf{Q}$:&lt;/strong&gt; $\mathbf{Q}$ 矩阵的左上角元素（对应低频）较小，右下角元素（对应高频）较大。这意味着：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;低频系数 (DC/低频 AC):&lt;/strong&gt; 除以小数值，保留较多精度。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;高频系数 (高频 AC):&lt;/strong&gt; 除以大数值，导致大量系数趋近于 0，实现数据率的大幅降低（即&lt;strong&gt;删除高频细节&lt;/strong&gt;）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;4-编码-coding&#34;&gt;4. 编码 (Coding)
+&lt;/h4&gt;&lt;p&gt;对量化后的整数矩阵 $\mathbf{C}_Q$ 进行高效的无损编码。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;DC 系数编码:&lt;/strong&gt; $C_Q(0, 0)$ 通常使用[[差分脉冲编码 (DPCM)]]，记录它与前一个块的 DC 系数的差值，以利用 DC 系数之间的强相关性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;[[AC 系数编码]] 矩阵元素沿着&lt;strong&gt;Z”字形路径&lt;/strong&gt;（Zig-zag Scan）从低频到高频依次排列成一维序列。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;目的:&lt;/strong&gt; 将矩阵中集中出现的 $0$ 值序列化，便于后续处理。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;游程编码 (Run-Length Encoding, RLE):&lt;/strong&gt; 对连续的 $0$ 值序列进行编码。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;可变长编码 (Variable-Length Coding, VLC):&lt;/strong&gt; 对非零系数的幅度和 RLE 结果进行[[霍夫曼编码]]，最终得到压缩码流。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;ii-解码器重构阶段-reconstruction&#34;&gt;II. 解码器：重构阶段 (Reconstruction)
+&lt;/h3&gt;&lt;p&gt;解码器的目标是接收压缩码流，并重构出近似于原始图像 $\mathbf{P}$ 的图像 $\mathbf{\hat{P}}$。&lt;/p&gt;
+&lt;h4 id=&#34;1-解码与反量化-decoding--dequantization&#34;&gt;1. 解码与反量化 (Decoding &amp;amp; Dequantization)
+&lt;/h4&gt;&lt;p&gt;接收到的压缩码流经过 VLC 解码、RLE 解码和 DPCM 解码，恢复出量化系数矩阵 $\mathbf{C}_Q$。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;反量化: 将量化系数矩阵 $\mathbf{C}_Q$ 乘以量化矩阵 $\mathbf{Q}$，得到近似的 DCT 系数 $\mathbf{\hat{C}}$。&lt;/p&gt;
+$$\hat{C}(u, v) = C_Q(u, v) \times Q(u, v)$$&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;结果分析:&lt;/strong&gt; 由于在量化步骤中进行了取整和置零，$\mathbf{\hat{C}}$ 只是原始 $\mathbf{C}$ 的一个&lt;strong&gt;近似值&lt;/strong&gt;，这种损失无法恢复。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;2-逆离散余弦变换-idct&#34;&gt;2. 逆离散余弦变换 (IDCT)
+&lt;/h4&gt;&lt;p&gt;对反量化后的系数 $\mathbf{\hat{C}}$ 进行二维逆离散余弦变换 (IDCT)，将其从变换域转换回空间域，得到重构的移位块 $\mathbf{\hat{P}&amp;rsquo;}$。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;公式:&lt;/p&gt;
+$$\hat{P}&#39;(x, y) = \sum_{u=0}^{7} \sum_{v=0}^{7} \frac{1}{4} c(u) c(v) \hat{C}(u, v) \cos\left[\frac{(2x+1)u\pi}{16}\right] \cos\left[\frac{(2y+1)v\pi}{16}\right]$$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;3-反电平位移与拼接-inverse-level-shifting--assembly&#34;&gt;3. 反电平位移与拼接 (Inverse Level Shifting &amp;amp; Assembly)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;反电平位移: 将移位后的重构像素值 $\hat{P}&amp;rsquo;(x, y)$ 加上 $128$，恢复到原始的亮度范围 (0-255)：&lt;/p&gt;
+$$\hat{P}(x, y) = \hat{P}&#39;(x, y) + 128$$&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;图像重构:&lt;/strong&gt; 将所有重构的图像块 $\mathbf{\hat{P}}_i$ 重新拼接起来，形成最终的重构图像 $\mathbf{\hat{P}}$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;向量量化-vector-quantization&#34;&gt;向量量化 (Vector Quantization)
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;([[image-and-video-compression-a-survey-3g4o01bpq3的全文翻译.pdf#page=4&amp;amp;selection=15,0,15,4&amp;amp;color=yellow|image-and-video-compression-a-survey-3g4o01bpq3的全文翻译, p.4]])
+向量量化&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h3 id=&#34;核心原理&#34;&gt;核心原理
+&lt;/h3&gt;&lt;p&gt;VQ 的核心思想是&lt;strong&gt;将数据相似性从单个元素（标量）的层面提升到一组元素（向量）的层面进行利用&lt;/strong&gt;。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;分块/向量化 (Blocking/Vectorization):&lt;/strong&gt; 将原始数据（例如图像）分割成多个小的、不重叠的块。对于图像，通常的做法是将 k×k 的像素块（例如 4×4 块）视为一个 k2 维的&lt;strong&gt;输入向量&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;码本设计 (Codebook Design):&lt;/strong&gt; VQ 的关键是创建一个包含 N 个&lt;strong&gt;码字&lt;/strong&gt;（或称&lt;strong&gt;码向量&lt;/strong&gt;、&lt;strong&gt;质心&lt;/strong&gt;）的&lt;strong&gt;码本&lt;/strong&gt;（Codebook）。这个码本是训练数据中具有代表性的块的集合。理想情况下，码本中的码字能够以最小的失真（误差）来代表所有可能的输入向量。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;量化/编码 (Quantization/Encoding):&lt;/strong&gt; 对于每一个输入向量 X，编码器会在码本 C 中搜索与其&lt;strong&gt;最接近&lt;/strong&gt;（通常使用&lt;strong&gt;欧氏距离&lt;/strong&gt;或&lt;strong&gt;均方误差&lt;/strong&gt;等距离度量）的码字 Yi。&lt;/p&gt;
+&lt;p&gt;Yi=Yj∈CargminDist(X,Yj)&lt;/p&gt;
+&lt;p&gt;一旦找到最近的码字，编码器不发送原始向量 X，而是发送该码字在码本中的&lt;strong&gt;索引&lt;/strong&gt; i。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;解码 (Decoding):&lt;/strong&gt; 解码器接收到索引 i 后，通过&lt;strong&gt;查表&lt;/strong&gt;（Codebook Look-up）的方式，直接从其存储的码本中取出对应的码字 Yi，并用这个码字来&lt;strong&gt;重构&lt;/strong&gt;原始的向量块。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;优势和特点&#34;&gt;优势和特点
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;压缩率高 (High Compression Ratio):&lt;/strong&gt; 如果码本中有 N 个码字，那么每个码字可以用 log2N 个比特来表示。例如，一个 4×4=16 维的向量（原始是 16×8=128 比特），如果用 N=1024 个码字（10 比特索引）来表示，那么每像素的比特率就从 8 比特降到了 10/16≈0.625 比特。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;解码简单 (Simple Decoder):&lt;/strong&gt; 解码过程仅仅是一个查表操作，计算复杂度极低，这对于实时应用（如视频播放）非常有利，因为所有的复杂计算都集中在编码器的码本生成阶段。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;利用相关性 (Exploiting Correlation):&lt;/strong&gt; VQ 同时对多个数据元素进行量化，能够利用向量中元素之间的&lt;strong&gt;相关性&lt;/strong&gt;（例如图像块内相邻像素的相似性），从而比单独对每个像素进行量化（标量量化）获得更高的效率。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-实现示例linde-buzo-gray-lbg-算法&#34;&gt;🛠️ 实现示例：Linde-Buzo-Gray (LBG) 算法
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;LBG 算法&lt;/strong&gt;（由 Linde、Buzo 和 Gray 在 1980 年提出）是设计 VQ 码本最常用和最经典的&lt;strong&gt;迭代优化&lt;/strong&gt;方法，它与 k-均值聚类算法（k-means）有相似之处。&lt;/p&gt;
+&lt;h3 id=&#34;lbg-算法步骤&#34;&gt;LBG 算法步骤
+&lt;/h3&gt;&lt;p&gt;LBG 算法的目标是找到一组码字，使训练序列中的所有向量到其对应的码字之间的&lt;strong&gt;平均失真度&lt;/strong&gt;（如均方误差）最小化。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;初始化 (Initialization):&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;选择一个&lt;strong&gt;训练序列&lt;/strong&gt;（Training Sequence），即用于设计码本的大量原始数据向量（图像块）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;选择码本的大小 N（即码字的个数）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;选择初始的 N 个&lt;strong&gt;初始码字&lt;/strong&gt;。常见的方法是从训练序列中随机选取 N 个向量，或使用&lt;strong&gt;分裂法 (Splitting)&lt;/strong&gt;：从整个训练序列的平均值开始，每次将现有的码字微小分裂成两个，直到达到 N 个码字。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设置一个失真&lt;strong&gt;阈值&lt;/strong&gt; ϵ（用于停止迭代）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;迭代优化 (Iterative Optimization):&lt;/strong&gt; 重复以下两个步骤，直到平均失真度的变化小于阈值 ϵ（或达到最大迭代次数）：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;步骤 A：分区/聚类 (Partitioning/Clustering):&lt;/strong&gt; 根据“最近邻居”原则[[k近邻算法]]，将训练序列中的&lt;strong&gt;每个向量&lt;/strong&gt;分配给码本中&lt;strong&gt;与其距离最近的码字&lt;/strong&gt;。这样，训练序列就被分割成了 N 个&lt;strong&gt;簇&lt;/strong&gt;（或称&lt;strong&gt;Voronoi 区域&lt;/strong&gt;）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;步骤 B：更新质心/码字 (Centroid Update):&lt;/strong&gt; 计算每个簇内所有向量的&lt;strong&gt;几何中心&lt;/strong&gt;（平均值），并将该中心作为新的码字，&lt;strong&gt;替换&lt;/strong&gt;旧的码字。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;图像压缩示例-以-44-图像块为例&#34;&gt;图像压缩示例 (以 4×4 图像块为例)
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;假设:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;原始图像:&lt;/strong&gt; 一张 512×512 像素的灰度图（每个像素 8 比特）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;向量化:&lt;/strong&gt; 将图像分割成 4×4 的块。每个块是一个 16 维的输入向量。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;总向量数：(512×512)/(4×4)=16384 个向量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;码本大小:&lt;/strong&gt; N=256 个码字。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每个码字的索引需要 log2256=8 比特。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;实现过程:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;训练:&lt;/strong&gt; 从大量具有代表性的图片中提取 4×4 块作为&lt;strong&gt;训练序列&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;LBG 算法:&lt;/strong&gt; 运行 LBG 算法，生成包含 256 个 16 维向量（即 4×4 图像块）的&lt;strong&gt;码本&lt;/strong&gt; C。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;编码 (压缩):&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;输入:&lt;/strong&gt; 一个 4×4 的新图像块 X。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;搜索:&lt;/strong&gt; 在 256 个码字中搜索与 X 距离最近的码字 Yi。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;输出:&lt;/strong&gt; 发送码字 Yi 的索引 i (一个 8 比特的数)。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;压缩率分析:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;原始块大小:&lt;/strong&gt; 4×4 像素 ×8 比特/像素 =128 比特。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;压缩后大小:&lt;/strong&gt; 8 比特（索引）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;压缩比:&lt;/strong&gt; 128/8=16:1。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;码率 (Rate):&lt;/strong&gt; 8 比特 / 16 像素 =0.5 比特/像素 (bit/element)。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;解码 (解压缩):&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;输入:&lt;/strong&gt; 接收到一个索引 i。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;查表:&lt;/strong&gt; 在码本中找到索引 i 对应的码字 Yi。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;输出:&lt;/strong&gt; 输出 Yi 作为一个 4×4 的像素块来重构图像。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这种方法将 4×4 的信息用一个 8 比特的索引表示，实现了高效的图像压缩。&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=xAl5D0s2RII&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;52. Digital Image Processing: Vector Quantization&lt;/a&gt; 这个视频详细讲解了数字图像处理中的向量量化概念，可以帮助你更好地理解其工作原理。&lt;/p&gt;
+&lt;h1 id=&#34;-亚带编码与小波编码-subband-and-wavelet-coding&#34;&gt;💻 亚带编码与小波编码 (Subband and Wavelet Coding)
+&lt;/h1&gt;&lt;p&gt;最早提出的用于&lt;strong&gt;降低图像数据传输带宽或信道容量&lt;/strong&gt;的方法之一是&lt;strong&gt;频率分割&lt;/strong&gt;，其最简单的形式是将总带宽分成低频和高频两部分。低频带的分辨率降低，因此传输所需的比特数要少得多；高频带通常具有较少的重要分量，同样可以轻松编码。&lt;/p&gt;
+&lt;p&gt;在过去的十年左右时间里，这一基本思想发展成为一种强大而灵活的图像编码技术：&lt;strong&gt;亚带编码 (Subband Coding)&lt;/strong&gt; (Woods, 1991)。在该技术中，图像频谱基本上像上述那样被分成两个分量，但现在是&lt;strong&gt;水平和垂直&lt;/strong&gt;方向都进行分割，然后通过相同的因子进行&lt;strong&gt;欠采样&lt;/strong&gt; (subsampling)，从而得到&lt;strong&gt;四个二维频带&lt;/strong&gt;，这些频带包含例如低水平和低垂直频率、低水平和高垂直频率等组合，但&lt;strong&gt;总样本数保持不变&lt;/strong&gt;。基本的&lt;strong&gt;一维方案&lt;/strong&gt;如图 5 所示。&lt;/p&gt;
+&lt;p&gt;与预测编码和变换编码一样，算法的第一部分&lt;strong&gt;不会实现数据压缩&lt;/strong&gt;。数据压缩是通过使用&lt;strong&gt;预测编码&lt;/strong&gt;或&lt;strong&gt;矢量量化&lt;/strong&gt;等方法对各种亚带进行&lt;strong&gt;高效编码&lt;/strong&gt;来实现的。与对整个图像进行编码相比，这些后者算法可以更有效地匹配各个亚带的特征，这使得其能够达到 &lt;strong&gt;0.5 比特/元素&lt;/strong&gt;左右的良好结果 (Lookabaugh and Perkins, 1990)。&lt;/p&gt;
+&lt;p&gt;通常，频带分割会比上述简单的 2 x 2 分割&lt;strong&gt;更广泛&lt;/strong&gt;。将该步骤重新应用于初始分割的输出，将产生一个 &lt;strong&gt;16 频带 (4 x 4)&lt;/strong&gt; 的结构。或者，最好对&lt;strong&gt;较低频带&lt;/strong&gt;进行更精细的分割，而将&lt;strong&gt;最高水平和垂直频带&lt;/strong&gt;保持不分割——因为它很少包含具有实际意义的细节。&lt;/p&gt;
+&lt;p&gt;这里需要指出，&lt;strong&gt;亚带编码&lt;/strong&gt;与&lt;strong&gt;变换编码&lt;/strong&gt;之间存在着密切的联系。可以证明，使用上述简单的低/高分割的&lt;strong&gt;顺序多级滤波&lt;/strong&gt;可以产生与&lt;strong&gt;变换算子&lt;/strong&gt;相同的结果；事实上，变换编码可以被认为是&lt;strong&gt;亚带编码&lt;/strong&gt;的一种形式，其中每个亚带仅包含一个系数。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-小波分析与编码-wavelet-analysis-and-coding&#34;&gt;🌊 小波分析与编码 (Wavelet Analysis and Coding)
+&lt;/h2&gt;&lt;p&gt;最近，人们对分析&lt;strong&gt;随时间变化的信号&lt;/strong&gt;的特性产生了浓厚的兴趣。为此，&lt;strong&gt;傅里叶变换&lt;/strong&gt;并不适用，因为其基线（至少在理论上）是无限的，并且为实际实现而添加的&lt;strong&gt;窗函数&lt;/strong&gt;总是会引入不必要的伪影。出于这种兴趣，人们对&lt;strong&gt;小波 (Wavelets)&lt;/strong&gt; 进行了深入研究 (Chui, 1992)。&lt;/p&gt;
+&lt;p&gt;这类函数具有&lt;strong&gt;有限的支持域 (restricted support)&lt;/strong&gt;，并允许灵活且高效的&lt;strong&gt;时间（或空间）/频率处理&lt;/strong&gt;，通过&lt;strong&gt;长窗&lt;/strong&gt;获得&lt;strong&gt;低频&lt;/strong&gt;时的良好分辨率，并利用&lt;strong&gt;短、宽带宽窗&lt;/strong&gt;获得&lt;strong&gt;高频&lt;/strong&gt;时的良好&lt;strong&gt;空间分辨率&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;就图像编码而言，&lt;strong&gt;小波处理&lt;/strong&gt;的基本轮廓与&lt;strong&gt;亚带编码&lt;/strong&gt;相似，不同之处在于它通常是在&lt;strong&gt;多分辨率&lt;/strong&gt;的背景下进行的。这里，首先进行前面描述的 &lt;strong&gt;2 x 2 分割和欠采样&lt;/strong&gt;操作，之后&lt;strong&gt;仅对最低频率的亚带&lt;/strong&gt;进行再次分割。在每个级别，这会产生一张&lt;strong&gt;低分辨率图像&lt;/strong&gt;和三张所谓的&lt;strong&gt;细节图像&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;因此，我们可以生成一个&lt;strong&gt;不同分辨率级别&lt;/strong&gt;的图像&lt;strong&gt;层次结构&lt;/strong&gt;，从而允许从一个数据流中重建适用于各种应用的图像。例如，最小和最低分辨率的图像可以用作数据库搜索的&lt;strong&gt;初始输出&lt;/strong&gt;。如果需要更高的分辨率，则将该信号&lt;strong&gt;上采样（插值）&lt;/strong&gt;，并添加&lt;strong&gt;下一级别&lt;/strong&gt;的三个细节信号，依此类推，直到获得最终的&lt;strong&gt;全分辨率版本&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;像往常一样，可以使用&lt;strong&gt;预测编码&lt;/strong&gt;或&lt;strong&gt;矢量量化&lt;/strong&gt;来编码所涉及的各个频带，并且通过包含用于&lt;strong&gt;跟踪关键系数&lt;/strong&gt;在不同小波级别中演变的&lt;strong&gt;树状结构算法&lt;/strong&gt;，该方案可以得到显著改进 (Schapiro, 1993; Said and Pearlman, 1996)。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;小波编码&lt;/strong&gt;代表了一种复杂版本的&lt;strong&gt;多分辨率分解&lt;/strong&gt;，通过一个算法可以输出多种图像质量。在这里，提及最初推动该想法产生的动力是合适的，这个想法已经存在了大约 20 年。在这种实现中，通过&lt;strong&gt;高斯滤波和欠采样&lt;/strong&gt;从高层图像生成低分辨率图像，然后再次&lt;strong&gt;扩展（插值）&lt;/strong&gt;，用作高层图像的&lt;strong&gt;预测&lt;/strong&gt;。预测误差随后对应于&lt;strong&gt;细节信号&lt;/strong&gt;，并且由于它具有&lt;strong&gt;拉普拉斯概率分布&lt;/strong&gt;，并且以&lt;strong&gt;一组图像信号级别&lt;/strong&gt;（彼此上下排列）的形式出现，因此&lt;strong&gt;拉普拉斯金字塔 (Laplacian pyramid)&lt;/strong&gt; 的概念应运而生 (Burt and Adelson, 1983)。&lt;/p&gt;
+&lt;p&gt;鉴于当今数字图像服务的多样性和范围，&lt;strong&gt;多分辨率分解&lt;/strong&gt;具有重要的意义，而&lt;strong&gt;小波方法&lt;/strong&gt;比为实现此目的而提出的许多其他方法（例如使用 &lt;strong&gt;DCT&lt;/strong&gt;）&lt;strong&gt;更加优雅和灵活&lt;/strong&gt;。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-亚带编码-subband-coding&#34;&gt;🖼️ 亚带编码 (Subband Coding)
+&lt;/h2&gt;&lt;p&gt;亚带编码是一种将信号分解成多个&lt;strong&gt;频率范围&lt;/strong&gt;（亚带）的技术，其核心思想是利用不同频率分量对人眼（或听觉）感知的重要性不同，从而实现&lt;strong&gt;更高效的压缩&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;-原理-principle&#34;&gt;📌 原理 (Principle)
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;频率分割&lt;/strong&gt;：信号（如图像）中的信息可以分解为&lt;strong&gt;低频分量&lt;/strong&gt;（代表平滑区域、主要能量）和&lt;strong&gt;高频分量&lt;/strong&gt;（代表细节、边缘、纹理）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;能量集中&lt;/strong&gt;：对于大多数图像，其绝大部分能量集中在低频分量中，高频分量的幅值通常很小。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;自适应编码&lt;/strong&gt;：将信号分解后，可以对不同亚带采用&lt;strong&gt;最优化&lt;/strong&gt;的编码策略：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;低频带&lt;/strong&gt;：由于包含主要信息和能量，需要用&lt;strong&gt;更多的比特&lt;/strong&gt;或更精细的量化来保证图像质量。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;高频带&lt;/strong&gt;：由于包含的有效信息少、幅度小，可以使用&lt;strong&gt;更少的比特&lt;/strong&gt;甚至直接&lt;strong&gt;丢弃&lt;/strong&gt;不重要的系数，从而实现大幅压缩。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;-具体处理过程-specific-processing-flow&#34;&gt;⚙️ 具体处理过程 (Specific Processing Flow)
+&lt;/h3&gt;&lt;p&gt;亚带编码的处理核心是使用&lt;strong&gt;滤波器组&lt;/strong&gt; (Filter Bank) 进行分解和重建。&lt;/p&gt;
+&lt;h4 id=&#34;1-信号分解编码器端---analysis-filter-bank&#34;&gt;&lt;strong&gt;1. 信号分解（编码器端 - Analysis Filter Bank）&lt;/strong&gt;
+&lt;/h4&gt;&lt;p&gt;以二维图像的 &lt;strong&gt;2x2 分割&lt;/strong&gt;（最基本形式）为例：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;一维分解&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;首先，沿&lt;strong&gt;水平方向&lt;/strong&gt;对图像的每一行进行分解。使用一个[[滤波器]]&lt;strong&gt;低通滤波器 (Low-Pass Filter, LPF)&lt;/strong&gt; 提取低频信息（平滑部分），和一个&lt;strong&gt;高通滤波器 (High-Pass Filter, HPF)&lt;/strong&gt; 提取高频信息（边缘和细节）。==也就是使用卷积操作来处理图像==&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;滤波后，结果的长度不变。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;欠采样 (Downsampling)&lt;/strong&gt;：[[欠采样(subsample)]]根据奈奎斯特采样定理，由于滤波器将信号的带宽减半，因此可以将滤波后的结果进行 &lt;strong&gt;2 倍欠采样&lt;/strong&gt;（每隔一个样本取一个），使样本总数减半。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;二维分解&lt;/strong&gt;2D-DW[[DWT]]T：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;对上述水平分解得到的两个分量（水平低频和水平高频），再沿&lt;strong&gt;垂直方向&lt;/strong&gt;对每一列重复 LPF 和 HPF 滤波及欠采样操作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;最终，一幅 $N \times N$ 的图像被分解成&lt;strong&gt;四个&lt;/strong&gt; $N/2 \times N/2$ 大小的亚带：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;LL (Low-Low)&lt;/strong&gt;：水平和垂直都为低频。这是&lt;strong&gt;近似图像&lt;/strong&gt;，包含了图像的大部分能量和肉眼可见的主要内容。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;LH (Low-High)&lt;/strong&gt;：水平低频、垂直高频。包含水平方向的边缘信息。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;HL (High-Low)&lt;/strong&gt;：水平高频、垂直低频。包含垂直方向的边缘信息。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;HH (High-High)&lt;/strong&gt;：水平和垂直都为高频。包含对角线细节或噪声。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;总样本数保持不变&lt;/strong&gt;：$(N/2)^2 \times 4 = N^2$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;2-亚带编码-coding&#34;&gt;&lt;strong&gt;2. 亚带编码 (Coding)&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;对四个亚带进行&lt;strong&gt;量化&lt;/strong&gt;和&lt;strong&gt;熵编码&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;对 &lt;strong&gt;LL 亚带&lt;/strong&gt;（最重要的），使用较精细的量化（分配更多比特）或采用&lt;strong&gt;预测编码&lt;/strong&gt; (如 DPCM)。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对 &lt;strong&gt;LH, HL, HH 亚带&lt;/strong&gt;（细节信息），使用较粗糙的量化（分配较少比特），甚至对幅度小的系数直接量化为零，以实现压缩。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;最后，对量化后的系数进行&lt;strong&gt;熵编码&lt;/strong&gt; (如霍夫曼编码、算术编码) 消除统计冗余。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;3-信号重建解码器端---synthesis-filter-bank&#34;&gt;&lt;strong&gt;3. 信号重建（解码器端 - Synthesis Filter Bank）&lt;/strong&gt;
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;上采样 (Upsampling)&lt;/strong&gt;：首先对接收到的亚带信号进行 &lt;strong&gt;2 倍上采样&lt;/strong&gt;（在相邻样本间插入零）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;[[合成滤波]]&lt;/strong&gt;：使用&lt;strong&gt;合成滤波器组&lt;/strong&gt;（与分解滤波器组相匹配）对上采样的信号进行滤波，并加起来，以恢复原始信号。如果滤波器组设计得当（满足&lt;strong&gt;完美重建&lt;/strong&gt;条件），就可以无损地恢复原始信号（或接近无损）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;-小波编码-wavelet-coding&#34;&gt;🌊 小波编码 (Wavelet Coding)
+&lt;/h2&gt;&lt;p&gt;小波编码是亚带编码的一种&lt;strong&gt;特殊且高级&lt;/strong&gt;的形式，它通常在一个&lt;strong&gt;多分辨率&lt;/strong&gt;（或分层）的背景下进行。&lt;/p&gt;
+&lt;h3 id=&#34;-原理-principle-1&#34;&gt;📌 原理 (Principle)
+&lt;/h3&gt;&lt;p&gt;小波变换的核心在于：它允许在&lt;strong&gt;时域（或空域）和频域&lt;/strong&gt;之间进行灵活的&lt;strong&gt;局部化&lt;/strong&gt;分析。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;时-频局部化&lt;/strong&gt;：不像傅里叶变换只有无限长的基函数，小波函数（Mother Wavelet）是&lt;strong&gt;有限持续时间&lt;/strong&gt;的“小波”，这意味着小波变换不仅知道&lt;strong&gt;信号中包含哪些频率&lt;/strong&gt;，还知道&lt;strong&gt;这些频率出现在信号的哪个位置（或图像的哪个区域）&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;多分辨率分解&lt;/strong&gt;：小波变换通过对&lt;strong&gt;低频亚带&lt;/strong&gt;进行&lt;strong&gt;迭代&lt;/strong&gt;分解（即&lt;strong&gt;金字塔结构&lt;/strong&gt;），自然地提供了一个多层次、多尺度的图像表示。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;-具体处理过程多分辨率金字塔-multiresolution-pyramid&#34;&gt;⚙️ 具体处理过程：多分辨率金字塔 (Multiresolution Pyramid)
+&lt;/h3&gt;&lt;p&gt;小波编码的关键在于其&lt;strong&gt;递归分解&lt;/strong&gt;过程。&lt;/p&gt;
+&lt;h4 id=&#34;1-初始分解&#34;&gt;&lt;strong&gt;1. 初始分解&lt;/strong&gt;
+&lt;/h4&gt;&lt;p&gt;与亚带编码的第一步相同，图像首先被分解为 &lt;strong&gt;LL, LH, HL, HH&lt;/strong&gt; 四个亚带。&lt;/p&gt;
+&lt;h4 id=&#34;2-迭代分解多分辨率&#34;&gt;&lt;strong&gt;2. 迭代分解（多分辨率）&lt;/strong&gt;
+&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;与传统亚带编码不同&lt;/strong&gt;，小波编码只对&lt;strong&gt;LL 亚带&lt;/strong&gt;（低频近似图像）进行递归的 2x2 分解。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;第一级分解&lt;/strong&gt;：得到 $LL_1, LH_1, HL_1, HH_1$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;第二级分解&lt;/strong&gt;：仅对 $LL_1$ 再进行分解，得到 $LL_2, LH_2, HL_2, HH_2$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;第三级分解&lt;/strong&gt;：仅对 $LL_2$ 再进行分解，得到 $LL_3, LH_3, HL_3, HH_3$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这个过程生成了一个&lt;strong&gt;多分辨率金字塔&lt;/strong&gt;：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;strong&gt;级别&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;strong&gt;亚带&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;strong&gt;描述&lt;/strong&gt;&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;最低级&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;$LL_N$&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;最低分辨率&lt;/strong&gt;的近似图像，包含最少、最平滑的信息。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;细节级&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;$LH_k, HL_k, HH_k$ (k=1, 2, &amp;hellip;, N)&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;细节图像&lt;/strong&gt;（Detail Images），包含了在不同分辨率级别上丢失的边缘和纹理信息。&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&#34;3-优势渐进传输与多分辨率应用&#34;&gt;&lt;strong&gt;3. 优势：渐进传输与多分辨率应用&lt;/strong&gt;
+&lt;/h4&gt;&lt;p&gt;这种结构是小波编码（如 JPEG 2000 标准所采用）最大的优势：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;渐进式传输/解码 (Progressive Transmission)&lt;/strong&gt;：可以先传输最低分辨率的 $LL_N$ 亚带，用户可以&lt;strong&gt;立即&lt;/strong&gt;看到一个模糊但完整的图像。如果需要更高的质量，再依次传输更高分辨率的细节亚带 $LH_N, HL_N, HH_N$，然后是 $LL_{N-1}$ 的细节亚带，直到达到全分辨率。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;应用&lt;/strong&gt;：如原文所述，数据库搜索可以只使用 $LL_N$ 作为缩略图。网络应用可以根据带宽逐步加载细节。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-例子jpeg-2000-图像压缩&#34;&gt;💡 例子：JPEG 2000 图像压缩
+&lt;/h3&gt;&lt;p&gt;JPEG 2000（小波编码）相比于传统的 JPEG（DCT 变换编码），具有显著优势，核心就在于其多分辨率特性。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;分解&lt;/strong&gt;：一张 1024x1024 的照片，经过三级小波分解后，得到一个 128x128 的 $LL_3$ 亚带（最低分辨率）和多个细节亚带。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;传输过程&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;步骤 1&lt;/strong&gt;：发送最低分辨率的 $LL_3$ 数据。用户屏幕上立即显示一个 1024x1024 但非常模糊的图像。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;步骤 2&lt;/strong&gt;：发送 $LH_3, HL_3, HH_3$ 数据。用户屏幕上的图像变得更清晰，但仍然有块状感。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;步骤 3&lt;/strong&gt;：发送 $LH_2, HL_2, HH_2$ 数据。图像细节进一步丰富，接近全分辨率。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&amp;hellip; 直到所有细节亚带传输完毕，最终得到原始的全分辨率图像。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;简要总结亚带编码-vs-小波编码&#34;&gt;简要总结：亚带编码 vs. 小波编码
+&lt;/h3&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;strong&gt;特性&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;strong&gt;亚带编码 (Subband Coding)&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;strong&gt;小波编码 (Wavelet Coding)&lt;/strong&gt;&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;分解结构&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;均匀分割&lt;/strong&gt;。图像频谱通常被 $M \times M$ 的网格均匀划分。&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;多分辨率/金字塔结构&lt;/strong&gt;。仅对最低频（LL）亚带进行递归分割。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;时/频特性&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;侧重于&lt;strong&gt;频率分解&lt;/strong&gt;和各频带的独立编码。&lt;/td&gt;
+          &lt;td&gt;强调&lt;strong&gt;时空局部化&lt;/strong&gt;和&lt;strong&gt;多分辨率表示&lt;/strong&gt;。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;主要优势&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;可以对各频带采用&lt;strong&gt;最优化&lt;/strong&gt;的编码技术，适用于多种信号。&lt;/td&gt;
+          &lt;td&gt;支持&lt;strong&gt;渐进式传输/解码&lt;/strong&gt;，且图像质量在低比特率下通常优于传统方法（无块效应）。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;关系&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;小波编码可以被视为亚带编码的一种&lt;strong&gt;特殊的、非均匀&lt;/strong&gt;的、且&lt;strong&gt;完美重建&lt;/strong&gt;的实现。&lt;/td&gt;
+          &lt;td&gt;是现代图像编码（如 &lt;strong&gt;JPEG 2000&lt;/strong&gt;）的基础。&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
 </description>
         </item>
         <item>
