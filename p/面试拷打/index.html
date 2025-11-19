@@ -408,13 +408,13 @@
     </li>
     <li><a href="#一三次握手-three-way-handshake">一、三次握手 (Three-Way Handshake)</a>
       <ol>
-        <li><a href="#过程详解">过程详解：</a></li>
+        <li><a href="#过程详解">过程详解</a></li>
         <li><a href="#为什么是三次而不是两次">为什么是三次，而不是两次？</a></li>
       </ol>
     </li>
     <li><a href="#二四次挥手-four-way-wavehand">二、四次挥手 (Four-Way Wavehand)</a>
       <ol>
-        <li><a href="#过程详解-1">过程详解：</a></li>
+        <li><a href="#过程详解-1">过程详解</a></li>
         <li><a href="#为什么需要四次挥手">为什么需要四次挥手？</a></li>
         <li><a href="#为什么客户端最后需要-time-wait-状态并等待-2msl">为什么客户端最后需要 TIME-WAIT 状态并等待 2MSL？</a></li>
         <li><a href="#总结图示">总结图示</a></li>
@@ -436,40 +436,26 @@
         <li><a href="#1-构造函数-constructor">1. 构造函数 (Constructor)</a>
           <ol>
             <li><a href="#什么是构造函数">什么是构造函数？</a></li>
-            <li><a href="#构造函数的特点">构造函数的特点：</a></li>
-            <li><a href="#构造函数的类型">构造函数的类型：</a></li>
+            <li><a href="#构造函数的特点">构造函数的特点</a></li>
+            <li><a href="#构造函数的类型">构造函数的类型</a></li>
           </ol>
         </li>
         <li><a href="#2-析构函数-destructor">2. 析构函数 (Destructor)</a>
           <ol>
             <li><a href="#什么是析构函数">什么是析构函数？</a></li>
-            <li><a href="#析构函数的特点">析构函数的特点：</a></li>
+            <li><a href="#析构函数的特点">析构函数的特点</a></li>
           </ol>
         </li>
         <li><a href="#总结与对比">总结与对比</a></li>
         <li><a href="#核心结论">核心结论</a></li>
         <li><a href="#1-演化史从生成器到异步io">1. 演化史：从生成器到异步IO</a></li>
-        <li><a href="#2-关键概念与实现机制">2. 关键概念与实现机制</a>
-          <ol>
-            <li><a href="#a-可等待对象-awaitable">a. 可等待对象 (Awaitable)</a></li>
-            <li><a href="#b-事件循环-event-loop---大脑">b. 事件循环 (Event Loop) - 大脑</a></li>
-            <li><a href="#c-await-关键字---信号灯">c. <code>await</code> 关键字 - 信号灯</a></li>
-          </ol>
-        </li>
-        <li><a href="#3-工作流程详解">3. 工作流程详解</a></li>
-        <li><a href="#4-底层实现与生成器的联系">4. 底层实现：与生成器的联系</a></li>
-        <li><a href="#总结">总结</a></li>
         <li><a href="#1-为什么需要索引-从暴力搜索说起">1. 为什么需要索引？—— 从暴力搜索说起</a></li>
         <li><a href="#2-索引的本质是什么">2. 索引的本质是什么？</a></li>
         <li><a href="#3-milvus中常见的索引类型如何看图索骥">3. Milvus中常见的索引类型（如何“看图索骥”）</a>
           <ol>
             <li><a href="#a-基于量化的索引相当于分区">a. 基于量化的索引（相当于“分区”）</a></li>
-            <li><a href="#b-基于图的索引相当于人际关系网">b. 基于图的索引（相当于“人际关系网”）</a></li>
-            <li><a href="#c-基于树的索引相当于决策树">c. 基于树的索引（相当于“决策树”）</a></li>
           </ol>
         </li>
-        <li><a href="#4-索引与向量存储的关系">4. 索引与向量存储的关系</a></li>
-        <li><a href="#总结-1">总结</a></li>
         <li><a href="#1-核心范式与设计哲学">1. 核心范式与设计哲学</a></li>
         <li><a href="#2-关键特性对比">2. 关键特性对比</a>
           <ol>
@@ -488,11 +474,8 @@
         <li><a href="#详细解释与类比">详细解释与类比</a>
           <ol>
             <li><a href="#1-栈-stack">1. 栈 (Stack)</a></li>
-            <li><a href="#2-堆-heap">2. 堆 (Heap)</a></li>
           </ol>
         </li>
-        <li><a href="#常见问题与误区-faq">常见问题与误区 (FAQ)</a></li>
-        <li><a href="#总结-2">总结</a></li>
         <li><a href="#一核心概念什么是内存泄漏">一、核心概念：什么是内存泄漏？</a></li>
         <li><a href="#二为什么会发生内存泄漏">二、为什么会发生内存泄漏？</a></li>
         <li><a href="#三内存泄漏有什么后果">三、内存泄漏有什么后果？</a></li>
@@ -502,10 +485,9 @@
             <li><a href="#避免策略-prevention">避免策略 (Prevention)</a></li>
           </ol>
         </li>
-        <li><a href="#总结-3">总结</a></li>
+        <li><a href="#总结">总结</a></li>
       </ol>
     </li>
-    <li><a href="#舍友的面试信息">舍友的面试信息:</a></li>
   </ol>
 </nav>
         </div>
@@ -578,7 +560,7 @@
 
 
                 <time class="article-time--reading">
-                    24 minute read
+                    26 minute read
                 </time>
             </div>
         
@@ -1184,6 +1166,14 @@
 <ol>
 <li>
 <p>HTTP各个版本的介绍:</p>
+<ul>
+<li>HTTP 首先是在 HTTP0.9 的时候只有请求体,没有请求头,并且只有 get 方法,没有响应码.</li>
+<li>HTTP1.0 的时候增加了请求头和多种的请求方法 post 和 head 并且增加了响应码,但是对于每一次的 HTTP 都需要建立一次 TCP 连接</li>
+<li>HTTP1.1 的时候增加了 keep-alive 字段,可以在一个 TCP 连接中建立长久连接,并且建立了 pipeline 机制,运行客户端在没有接收到 HTTP 相应包的时候连续发送多个请求包,而无需等待上一个相应返回;使用 host 头,运行一个屋里服务器上托管多个域名;但是存在着队头阻塞和头部过长的问题.</li>
+<li>HTTP2.0 使用的是二进制协议,将原来的文本传输转换成了二级制进行传输,提高了传输的效率;建立了多路复用的机制,可以让客户端交替地发送响应包和请求包,而不会被阻塞;使用了头部压缩算法,消除了冗余的头部;建立了服务器推送的机制,服务器可以直接向客户端推送他需要的资源,而不需要等待客户端解析完 html 以后再请求资源,节省了时间;但是仍然存在着 TCP 队头阻塞的情况</li>
+<li>HTTP3.0 启用 TCP 转而使用 QUIC 协议来实现,从而集成了TCP的可靠连接,HTTP2.0 的多路复用和 TLS 的安全性.
+解决了 TCP 队头阻塞的问题,为每一个流都建立了独立的可靠连接,一个流的阻塞并不会影响其他流的传输.将加密和连接合并,只需要使用 1RTT 就可以建立加密和连接,加速了连接的开销,加快了连接的速度.</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code></code></pre></td>
@@ -1240,7 +1230,11 @@
 <hr>
 <h3 id="各版本详解">各版本详解
 </h3><h4 id="1-http09---单行协议">1. HTTP/0.9 - 单行协议
-</h4><p>这是HTTP的最初版本，极其简单。</p>
+</h4></blockquote>
+</li>
+</ol>
+<blockquote>
+<p>这是HTTP的最初版本，极其简单。</p>
 <ul>
 <li><strong>请求</strong>：只有一种方法 <code>GET</code>。</li>
 <li><strong>请求格式</strong>：<code>GET /index.html</code>。</li>
@@ -1349,7 +1343,7 @@
 <li><strong>安全</strong>：从明文传输到通过HTTPS（HTTP over TLS）成为事实上的标准，再到HTTP/3将加密内置于协议核心。</li>
 </ol>
 <p>目前，<strong>HTTP/1.1</strong> 仍是主流，但 <strong>HTTP/2</strong> 的覆盖率已经非常高。<strong>HTTP/3</strong> 作为未来标准，正在被越来越多的主流浏览器（Chrome, Firefox, Edge）、CDN服务商（Cloudflare, Google）和大型网站所支持和部署。</p></blockquote>
-</li>
+<ol start="2">
 <li>
 <p>fastapi的相关知识:</p>
 <div class="highlight"><div class="chroma">
@@ -1381,7 +1375,11 @@
 <hr>
 <h3 id="二核心知识如何使用-fastapi">二、核心知识：如何使用 FastAPI
 </h3><h4 id="1-安装">1. 安装
-</h4><div class="highlight"><div class="chroma">
+</h4></blockquote>
+</li>
+</ol>
+<blockquote>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -1452,26 +1450,30 @@
 <p>这些文档允许你直接调用和测试你的 API，无需使用 Postman 等外部工具。</p>
 <h4 id="5-核心组件概念">5. 核心组件概念
 </h4><ul>
-<li><strong>路径操作</strong>：将 URL 路径（如 <code>/items</code>）和 HTTP 方法（如 <code>GET</code>, <code>POST</code>) 组合起来。
+<li>
+<p><strong>路径操作</strong>：将 URL 路径（如 <code>/items</code>）和 HTTP 方法（如 <code>GET</code>, <code>POST</code>) 组合起来。</p>
 <ul>
 <li><code>@app.get(‘/‘)</code></li>
 <li><code>@app.post(‘/items/‘)</code></li>
 <li><code>@app.put(‘/items/{item_id}’)</code></li>
 </ul>
 </li>
-<li><strong>路径参数</strong>：URL 路径的一部分，用 <code>{}</code> 声明。
+<li>
+<p><strong>路径参数</strong>：URL 路径的一部分，用 <code>{}</code> 声明。</p>
 <ul>
 <li><code>@app.get(‘/items/{item_id}’)</code></li>
 <li><code>async def read_item(item_id: int): ...</code> # 类型注解提供验证和转换</li>
 </ul>
 </li>
-<li><strong>查询参数</strong>：作为 URL 中 <code>?</code> 之后的键值对出现的函数参数。
+<li>
+<p><strong>查询参数</strong>：作为 URL 中 <code>?</code> 之后的键值对出现的函数参数。</p>
 <ul>
 <li><code>async def read_item(skip: int = 0, limit: int = 10): ...</code></li>
 <li>访问 <code>/items/?skip=20&amp;limit=10</code></li>
 </ul>
 </li>
-<li><strong>请求体（Body）</strong>：用于发送数据（通常用于 POST、PUT 请求）。使用 Pydantic 模型来定义结构。
+<li>
+<p><strong>请求体（Body）</strong>：用于发送数据（通常用于 POST、PUT 请求）。使用 Pydantic 模型来定义结构。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1499,7 +1501,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div></li>
-<li><strong>Pydantic 模型</strong>：这是 FastAPI 的基石。它用于定义数据模型，并自动处理：
+<li>
+<p><strong>Pydantic 模型</strong>：这是 FastAPI 的基石。它用于定义数据模型，并自动处理：</p>
 <ul>
 <li><strong>数据验证</strong>：如果数据无效，返回清晰的错误信息。</li>
 <li><strong>数据转换</strong>：将输入的 JSON 转换为 Python 对象，将 Python 对象转换为输出的 JSON。</li>
@@ -1584,14 +1587,24 @@
 </li>
 </ul>
 <p>这种设计使得开发者只需关注业务逻辑（<em>What</em> to do），而框架则高效地处理了所有技术细节（<em>How</em> to do）。</p></blockquote>
-</li>
-<li>
-<p>REASFUL接口的知识:</p>
+<ol start="3">
+<li>REASFUL接口的知识:</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl">   RESTful是一种基于HTTP协议的设计风格，其核心思想是将网络上的任何实体都抽象为资源，并通过统一的接口（即HTTP方法
+</span></span><span class="line"><span class="cl">    ，如GET、POST、PUT、DELETE）来对资源进行操作；它强调服务端不应保存客户端状态，即无状态性，使得每次请求都包含了
+</span></span><span class="line"><span class="cl">    处理该次请求所需的全部信息，从而提高了系统的可伸缩性和可靠性；同时，资源的表现层与资源本身分离，允许客户端通过A
+</span></span><span class="line"><span class="cl">    ccept头请求不同的数据格式（如JSON、XML），最终目标是构建出层次清晰、易于维护和扩展的Web服务。
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>好的，我们来系统地讲解 <strong>RESTful API</strong> 的知识。这是一个非常重要的 Web 开发概念，理解它对于设计和构建现代、可扩展的 Web 服务至关重要。</p>
@@ -1780,7 +1793,7 @@
 <li><strong>通用性</strong>：基于 HTTP 协议，任何支持 HTTP 的客户端都可以与之交互，语言无关。</li>
 </ol>
 <p>FastAPI 这样的现代框架极大地简化了构建高质量、符合 RESTful 原则的 API 的过程，帮助你自动处理数据验证、序列化和文档生成，让你能更专注于业务逻辑本身。</p></blockquote>
-</li>
+<ol start="4">
 <li>
 <p>C++构造函数和析构函数能不能被继承:</p>
 <div class="highlight"><div class="chroma">
@@ -1831,7 +1844,11 @@
 <hr>
 <h3 id="实现机制详解">实现机制详解
 </h3><h4 id="1-虚函数表-vtable">1. 虚函数表 (vtable)
-</h4><ul>
+</h4></blockquote>
+</li>
+</ol>
+<blockquote>
+<ul>
 <li>编译器会为<strong>每一个包含虚函数的类</strong>（或者从包含虚函数的类派生而来的类）自动生成一个<strong>虚函数表</strong>。</li>
 <li>这是一个静态数组，在编译时就已确定，存放在程序的<strong>只读数据段（如 .rodata）</strong>。</li>
 <li>表中的每一个元素都是一个<strong>函数指针</strong>，指向该类可用的虚函数的实际实现。</li>
@@ -1990,7 +2007,7 @@
 <li><strong>为何析构函数应为虚函数</strong>：如果基类析构函数不是虚的，那么通过基类指针删除一个派生类对象，只会调用基类的析构函数，导致<strong>派生类的部分资源泄漏</strong>。定义为虚函数后，调用过程会通过 vtable 正确找到派生类的析构函数，从而保证完整的析构流程。</li>
 </ol>
 <p>这个机制是 C++ 高效实现运行时常量的经典设计，理解它对于编写正确的面向对象 C++ 程序至关重要。</p></blockquote>
-</li>
+<ol start="6">
 <li>
 <p>TCP的三次握手和四次挥手:</p>
 <div class="highlight"><div class="chroma">
@@ -2014,7 +2031,7 @@
 <hr>
 <h2 id="一三次握手-three-way-handshake">一、三次握手 (Three-Way Handshake)
 </h2><p><strong>目的</strong>：客户端和服务器之间建立 TCP 连接，同步双方的序列号，并交换 TCP 窗口大小信息。</p>
-<h3 id="过程详解">过程详解：
+<h3 id="过程详解">过程详解
 </h3><p>假设客户端（Client）想要与服务器（Server）建立连接。</p>
 <ol>
 <li>
@@ -2071,7 +2088,7 @@
 <hr>
 <h2 id="二四次挥手-four-way-wavehand">二、四次挥手 (Four-Way Wavehand)
 </h2><p><strong>目的</strong>：客户端和服务器之间断开 TCP 连接。由于 TCP 连接是<strong>全双工</strong>的（数据可以双向独立传输），因此每个方向都必须单独进行关闭。</p>
-<h3 id="过程详解-1">过程详解：
+<h3 id="过程详解-1">过程详解
 </h3><p>假设客户端（Client）主动发起关闭连接。</p>
 <ol>
 <li>
@@ -2146,7 +2163,10 @@
 </ol>
 <hr>
 <h3 id="总结图示">总结图示
-</h3><p><strong>三次握手 (建立连接)</strong></p>
+</h3><p><strong>三次握手 (建立连接)</strong></p></blockquote>
+</li>
+</ol>
+<blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -2183,7 +2203,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
-</li>
+<ol start="7">
 <li>
 <p>OSI模型:</p>
 <div class="highlight"><div class="chroma">
@@ -2195,7 +2215,7 @@
 </div><blockquote>
 <p>好的，我们来详细讲解 OSI（Open Systems Interconnection）模型，即开放式系统互联模型。</p>
 <h3 id="概述">概述
-</h3><p><strong>OSI 模型</strong>是一个由国际标准化组织（ISO）提出的<strong>概念性框架</strong>，用于描述网络通信系统中各种功能应该如何被划分和组织。它的核心目的是使不同厂商生产的各种硬件和软件能够相互通信，实现** interoperability（互操作性）**。</p>
+</h3><p><strong>OSI 模型</strong>是一个由国际标准化组织（ISO）提出的<strong>概念性框架</strong>，用于描述网络通信系统中各种功能应该如何被划分和组织。它的核心目的是使不同厂商生产的各种硬件和软件能够相互通信，实现<strong>interoperability（互操作性）</strong>。</p>
 <p>它并不是一个具体的协议，而是一个理解和设计网络体系的<strong>理论模型</strong>。现实中，TCP/IP 协议簇是互联网的实际执行标准，但 OSI 模型因其清晰的结构，仍然是理解和排查网络问题的黄金标准。</p>
 <hr>
 <h3 id="七层结构">七层结构
@@ -2269,7 +2289,11 @@
 <hr>
 <h3 id="各层详细功能">各层详细功能
 </h3><h4 id="1-物理层-physical-layer">1. 物理层 (Physical Layer)
-</h4><ul>
+</h4></blockquote>
+</li>
+</ol>
+<blockquote>
+<ul>
 <li><strong>功能</strong>：负责在物理介质上透明地传输原始的<strong>比特流</strong>（0 和 1）。它关心的是电压高低、光信号闪灭、线缆接口形状、传输速率等物理特性。</li>
 <li><strong>关键概念</strong>：比特同步、带宽、调制解调。</li>
 <li><strong>设备</strong>：<strong>集线器 (Hub)</strong>、<strong>中继器 (Repeater)</strong>、网线、光纤、无线电波。</li>
@@ -2406,7 +2430,7 @@
   </tbody>
 </table></div>
 <p><strong>总结</strong>：OSI 模型是一个完美的、逻辑清晰的理论框架，帮助我们模块化地理解和设计网络。虽然现实中的网络协议并不完全严格遵循它，但它提供的分层思想是所有网络技术的基础。</p></blockquote>
-</li>
+<ol start="8">
 <li>
 <p>C++构造函数和析构函数讲解:</p>
 <div class="highlight"><div class="chroma">
@@ -2420,15 +2444,19 @@
 <hr>
 <h3 id="1-构造函数-constructor">1. 构造函数 (Constructor)
 </h3><h4 id="什么是构造函数">什么是构造函数？
-</h4><p>构造函数是一种特殊的成员函数，它在<strong>创建类的新对象时自动调用</strong>。它的主要目的是<strong>初始化对象</strong>，即为对象的数据成员设置初始值。</p>
-<h4 id="构造函数的特点">构造函数的特点：
+</h4></blockquote>
+</li>
+</ol>
+<blockquote>
+<p>构造函数是一种特殊的成员函数，它在<strong>创建类的新对象时自动调用</strong>。它的主要目的是<strong>初始化对象</strong>，即为对象的数据成员设置初始值。</p>
+<h4 id="构造函数的特点">构造函数的特点
 </h4><ol>
 <li><strong>与类同名</strong>：构造函数的名称必须与类名完全相同。</li>
 <li><strong>无返回类型</strong>：它没有返回值，甚至不能使用 <code>void</code>。</li>
 <li><strong>自动调用</strong>：当对象被创建时（例如通过 <code>ClassName obj;</code> 或 <code>new ClassName</code>），编译器会自动调用构造函数。</li>
 <li><strong>可以重载</strong>：一个类可以有多个参数列表不同的构造函数（即重载构造函数），从而提供多种初始化对象的方式。</li>
 </ol>
-<h4 id="构造函数的类型">构造函数的类型：
+<h4 id="构造函数的类型">构造函数的类型
 </h4><h5 id="a-默认构造函数-default-constructor">a. 默认构造函数 (Default Constructor)
 </h5><ul>
 <li><strong>定义</strong>：不接受任何参数的构造函数。</li>
@@ -2630,7 +2658,7 @@
 <h3 id="2-析构函数-destructor">2. 析构函数 (Destructor)
 </h3><h4 id="什么是析构函数">什么是析构函数？
 </h4><p>析构函数是另一种特殊的成员函数，它在<strong>对象被销毁时自动调用</strong>。它的主要目的是<strong>释放对象在生命周期内获取的资源</strong>，如动态分配的内存、文件句柄、网络连接等。</p>
-<h4 id="析构函数的特点">析构函数的特点：
+<h4 id="析构函数的特点">析构函数的特点
 </h4><ol>
 <li><strong>名称是 <code>~</code> 加类名</strong>：例如 <code>~MyClass()</code>。</li>
 <li><strong>无参数，无返回类型</strong>：析构函数不能接受任何参数，也不能被重载（一个类只有一个析构函数）。</li>
@@ -2752,7 +2780,7 @@
 </table></div>
 <p><strong>核心原则（RAII）</strong>：
 构造函数和析构函数是 C++ <strong>资源获取即初始化 (RAII)</strong> 理念的核心。资源（如内存）的获取应该在构造函数中完成，而资源的释放则在析构函数中完成。这确保了资源的生命周期与对象的生命周期严格绑定，<strong>避免了资源泄漏</strong>，是编写安全、高效 C++ 代码的关键。</p></blockquote>
-</li>
+<ol start="9">
 <li>
 <p>讲解CONTEXT工程:</p>
 <div class="highlight"><div class="chroma">
@@ -2814,226 +2842,176 @@
 <h3 id="1-演化史从生成器到异步io">1. 演化史：从生成器到异步IO
 </h3><p>要理解 <code>async</code>/<code>await</code>，必须知道它的前身：<strong>生成器</strong>。</p>
 <ol>
-<li>
-<p><strong>生成器 (Generator)</strong>： 使用 <code>yield</code> 关键字的函数。它可以<strong>暂停</strong>执行并向调用者<strong>返回一个值</strong>，后续可以从暂停的地方<strong>恢复</strong>执行。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">simple_generator</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Start&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">x</span> <span class="o">=</span> <span class="k">yield</span> <span class="mi">1</span>  <span class="c1"># Pause and return 1</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Resumed with </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">yield</span> <span class="mi">2</span>      <span class="c1"># Pause and return 2</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">gen</span> <span class="o">=</span> <span class="n">simple_generator</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">value1</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>   <span class="c1"># Output: &#34;Start&#34;, value1 is 1</span>
-</span></span><span class="line"><span class="cl"><span class="n">value2</span> <span class="o">=</span> <span class="n">gen</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># Output: &#34;Resumed with 42&#34;, value2 is 2</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ul>
-<li><code>yield</code>： 暂停函数，返回一个值。</li>
-<li><code>.send(value)</code>： 恢复函数，并传入一个值（该值成为 <code>yield</code> 表达式的结果）。</li>
-</ul>
-</li>
-<li>
-<p><strong>协程 (Coroutine)</strong>： Python 3.4 的 <code>asyncio</code> 库利用生成器的这个“暂停和恢复”的特性，将其<strong>强化为协程</strong>。一个生成器函数被 <code>@asyncio.coroutine</code> 装饰，并使用 <code>yield from</code> 来等待其他协程。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Python 3.4 style</span>
-</span></span><span class="line"><span class="cl"><span class="nd">@asyncio.coroutine</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">old_style_coroutine</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="k">yield from</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Done&#34;</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>这时，“生成器”正式变成了可以相互协作调度的“协程”。</p>
-</li>
-<li>
-<p><strong>原生协程 (Native Coroutine)</strong>： Python 3.5 引入了专用的关键字 <code>async</code> 和 <code>await</code>，使语法更清晰，并与生成器彻底区分开。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Python 3.5+ style</span>
-</span></span><span class="line"><span class="cl"><span class="k">async</span> <span class="k">def</span> <span class="nf">native_coroutine</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Done&#34;</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><code>async def</code> 定义的函数是<strong>原生协程函数</strong>，调用它返回一个<strong>协程对象</strong>，而不是直接执行。<code>await</code> 的作用类似于 <code>yield from</code>，但专门用于等待可等待对象。</p>
+<li><strong>生成器 (Generator)</strong>： 使用 <code>yield</code> 关键字的函数。它可以<strong>暂停</strong>执行并向调用者<strong>返回一个值</strong>，后续可以从暂停的地方<strong>恢复</strong>执行。</li>
+</ol></blockquote>
 </li>
 </ol>
-<hr>
-<h3 id="2-关键概念与实现机制">2. 关键概念与实现机制
-</h3><h4 id="a-可等待对象-awaitable">a. 可等待对象 (Awaitable)
-</h4><p>任何实现了 <code>__await__()</code> 方法的对象。<code>await</code> 关键字后面必须是一个可等待对象。主要分为三类：</p>
-<ol>
-<li><strong>协程 (Coroutine)</strong>： <code>async def</code> 定义的函数返回的对象。</li>
-<li><strong>任务 (Task)</strong>： 用于并发地调度协程。<code>asyncio.create_task()</code> 的返回值。</li>
-<li><strong>Future</strong>： 一个<strong>底层回调对象</strong>，代表一个异步操作的<strong>最终结果</strong>。它是 <code>Task</code> 的基类。通常用户不直接操作。</li>
-</ol>
-<h4 id="b-事件循环-event-loop---大脑">b. 事件循环 (Event Loop) - 大脑
-</h4><p>这是整个异步机制的核心，是一个<strong>无限循环</strong>。它做两件事：</p>
-<ol>
-<li><strong>轮询</strong>： 不断地检查哪些 <code>Future</code> 对象已经完成（例如，一个网络请求收到了响应，一个定时器超时了）。</li>
-<li><strong>调度</strong>： 一旦某个 <code>Future</code> 完成，事件循环就<strong>恢复</strong>正在等待这个 <code>Future</code> 的<strong>协程</strong>。</li>
-</ol>
-<p>可以把事件循环想象成一个高效的<strong>调度员</strong>，它管理着一个任务列表（协程、回调等），知道每个任务在等待什么（IO操作、睡眠等）。当某个资源就绪时，它就通知对应的任务：“你要等的东西准备好了，继续干吧”。</p>
-<h4 id="c-await-关键字---信号灯">c. <code>await</code> 关键字 - 信号灯
-</h4><p><code>await some_awaitable</code> 做了以下几件事：</p>
-<ol>
-<li><strong>暂停当前协程</strong>： 执行到 <code>await</code> 时，当前协程立即<strong>暂停</strong>。</li>
-<li><strong>向事件循环注册回调</strong>： 它告诉事件循环：“我（当前协程）现在要等 <code>some_awaitable</code> 完成。等它完成后，<strong>请你回调我，让我继续执行</strong>。”</li>
-<li><strong>交出控制权</strong>： 将 CPU 的控制权<strong>交还给事件循环</strong>。事件循环此时可以去找其他已经准备就绪的协程来执行。</li>
-</ol>
-<p><strong>这就是单线程实现并发的关键</strong>：一个协程在等待 IO 时，线程不会傻等，而是去执行其他协程。</p>
-<hr>
-<h3 id="3-工作流程详解">3. 工作流程详解
-</h3><p>让我们通过一个例子，拆解整个生命周期：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">asyncio</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">async</span> <span class="k">def</span> <span class="nf">say_after</span><span class="p">(</span><span class="n">delay</span><span class="p">,</span> <span class="n">what</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span> <span class="c1"># 1. 遇到第一个 await</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">what</span><span class="p">)</span>                <span class="c1"># 4. 被事件循环唤醒后，继续执行</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="n">task1</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">say_after</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;hello&#39;</span><span class="p">))</span> <span class="c1"># 创建任务1</span>
-</span></span><span class="line"><span class="cl">    <span class="n">task2</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">say_after</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;world&#39;</span><span class="p">))</span> <span class="c1"># 创建任务2</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">await</span> <span class="n">task1</span> <span class="c1"># 2. 等待任务1完成</span>
-</span></span><span class="line"><span class="cl">    <span class="k">await</span> <span class="n">task2</span> <span class="c1"># 5. 等待任务2完成</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span> <span class="c1"># 启动事件循环</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ol>
-<li><strong>启动</strong>： <code>asyncio.run(main())</code> 创建一个新的事件循环，并开始运行 <code>main()</code> 协程。</li>
-<li><strong>创建任务</strong>： <code>asyncio.create_task()</code> 将 <code>say_after</code> 协程<strong>包装成一个 <code>Task</code> 对象</strong>，并<strong>立即将其加入到事件循环的调度队列中</strong>。此时，两个 <code>say_after</code> 协程都开始执行。</li>
-<li><strong>首次 <code>await</code></strong>：
-<ul>
-<li><code>task1</code> 和 <code>task2</code> 几乎同时执行到 <code>await asyncio.sleep(delay)</code>。</li>
-<li>它们都暂停执行，并向事件循环注册：“请在哪哪毫秒后唤醒我”。</li>
-<li><strong>控制权回到事件循环</strong>。</li>
-</ul>
-</li>
-<li><strong>事件循环工作</strong>：
-<ul>
-<li>事件循环发现现在没有立刻可以运行的协程（都在睡眠），但它有两个定时器在倒计时。</li>
-<li>它等待（通过 <code>selectors</code> 模块），直到 <strong>1 秒后</strong>，<code>task1</code> 的睡眠到期。</li>
-<li>事件循环将 <code>task1</code> 的状态标记为“完成”，并将其<strong>放回可运行队列</strong>。</li>
-<li>事件循环找到 <code>task1</code> 并恢复其执行。<code>task1</code> 打印 <code>'hello'</code>，然后真正执行完毕。</li>
-</ul>
-</li>
-<li><strong>等待完成</strong>：
-<ul>
-<li><code>main</code> 函数中的 <code>await task1</code> 发现 <code>task1</code> 已经完成，于是继续向下执行。</li>
-<li>它遇到 <code>await task2</code>，此时 <code>task2</code> 可能还在睡眠（才过去1秒，它要睡2秒）。</li>
-<li><code>main</code> 协程因此暂停，<strong>控制权再次交还给事件循环</strong>。</li>
-</ul>
-</li>
-<li><strong>最终结束</strong>：
-<ul>
-<li>事件循环又等了1秒，<code>task2</code> 的睡眠到期。</li>
-<li>事件循环唤醒 <code>task2</code>，它打印 <code>'world'</code> 并完成。</li>
-<li>事件循环看到 <code>main</code> 在等待的 <code>task2</code> 也完成了，就恢复 <code>main</code> 协程。</li>
-<li><code>main</code> 执行完毕，事件循环退出。</li>
-</ul>
-</li>
-</ol>
-<p>整个过程只在 <strong>1 个线程</strong>中完成，总耗时约 <strong>2 秒</strong>（而不是 1+2=3 秒），实现了并发。</p>
-<hr>
-<h3 id="4-底层实现与生成器的联系">4. 底层实现：与生成器的联系
-</h3><p>尽管用了新语法，底层依然与生成器密切相关。</p>
-<ul>
-<li><code>async def</code> 函数在底层创建的是一个<strong>生成器函数</strong>的变种。</li>
-<li><code>await</code> 语句编译后，本质上就是一个 <code>yield from</code>。</li>
-<li>当你 <code>await</code> 一个 <code>Future</code> 时，代码大致相当于：
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 伪代码：await future 的近似实现</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="fm">__await__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">done</span><span class="p">():</span> 
-</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="bp">self</span>  <span class="c1"># 这里将 Future 本身 yield 出去，暂停协程</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="c1"># 恢复后，返回结果</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div>事件循环在 <code>yield self</code> 这里拿到这个 <code>Future</code>，并将其添加到监视列表中。</li>
-</ul>
-<h3 id="总结">总结
-</h3><div class="table-wrapper"><table>
-  <thead>
-      <tr>
-          <th style="text-align: left">特性</th>
-          <th style="text-align: left">实现机制</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td style="text-align: left"><strong>如何暂停？</strong></td>
-          <td style="text-align: left">通过 <code>await</code> 关键字，其底层是 <code>yield</code> 或 <code>yield from</code>，将协程的执行状态（帧栈、指令指针等）冻结。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>如何恢复？</strong></td>
-          <td style="text-align: left">事件循环在它等待的资源就绪后（如 IO 完成、超时），通过 <code>.send(None)</code> 或类似方法恢复协程。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>如何并发？</strong></td>
-          <td style="text-align: left">单线程内，一个协程因 <code>await</code> 暂停时，事件循环立即调度执行另一个已就绪的协程。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>为何高效？</strong></td>
-          <td style="text-align: left"><strong>用户态调度</strong>，切换代价极低（只是一个函数调用）。<strong>非阻塞IO</strong>，等待期间线程不被占用。</td>
-      </tr>
-  </tbody>
-</table></div>
-<p>简单来说，<strong><code>async</code>/<code>await</code> 是提供给开发者的一套友好语法糖，其背后是一套基于生成器、Future 和事件循环的成熟并发框架</strong>。它让开发者可以用看似同步的代码风格，写出高性能的异步应用程序。</p></blockquote>
-</li>
+<blockquote>
+</blockquote>
+<pre><code>&gt;     ```python
+&gt;     def simple_generator():
+&gt;         print(&quot;Start&quot;)
+&gt;         x = yield 1  # Pause and return 1
+&gt;         print(f&quot;Resumed with {x}&quot;)
+&gt;         yield 2      # Pause and return 2
+&gt;                 
+&gt;     gen = simple_generator()
+&gt;     value1 = next(gen)   # Output: &quot;Start&quot;, value1 is 1
+&gt;     value2 = gen.send(42) # Output: &quot;Resumed with 42&quot;, value2 is 2
+&gt;     ```
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code>&gt;     * `yield`： 暂停函数，返回一个值。
+&gt;     * `.send(value)`： 恢复函数，并传入一个值（该值成为 `yield` 表达式的结果）。
+&gt;
+&gt; 2. **协程 (Coroutine)**： Python 3.4 的 `asyncio` 库利用生成器的这个“暂停和恢复”的特性，将其**强化为协程**。一个生成器函数被 `@asyncio.coroutine` 装饰，并使用 `yield from` 来等待其他协程。
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code>&gt;     ```python
+&gt;     # Python 3.4 style
+&gt;     @asyncio.coroutine
+&gt;     def old_style_coroutine():
+&gt;         yield from asyncio.sleep(1)
+&gt;         print(&quot;Done&quot;)
+&gt;     ```
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code>&gt;     这时，“生成器”正式变成了可以相互协作调度的“协程”。
+&gt;
+&gt; 3. **原生协程 (Native Coroutine)**： Python 3.5 引入了专用的关键字 `async` 和 `await`，使语法更清晰，并与生成器彻底区分开。
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code>&gt;     ```python
+&gt;     # Python 3.5+ style
+&gt;     async def native_coroutine():
+&gt;         await asyncio.sleep(1)
+&gt;         print(&quot;Done&quot;)
+&gt;     ```
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code>&gt;     `async def` 定义的函数是**原生协程函数**，调用它返回一个**协程对象**，而不是直接执行。`await` 的作用类似于 `yield from`，但专门用于等待可等待对象。
+&gt;
+&gt; ---
+&gt;
+&gt; ### 2. 关键概念与实现机制
+&gt;
+&gt; #### a. 可等待对象 (Awaitable)
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code>&gt; 任何实现了 `__await__()` 方法的对象。`await` 关键字后面必须是一个可等待对象。主要分为三类：
+&gt; 1. **协程 (Coroutine)**： `async def` 定义的函数返回的对象。
+&gt; 2. **任务 (Task)**： 用于并发地调度协程。`asyncio.create_task()` 的返回值。
+&gt; 3. **Future**： 一个**底层回调对象**，代表一个异步操作的**最终结果**。它是 `Task` 的基类。通常用户不直接操作。
+&gt;
+&gt; #### b. 事件循环 (Event Loop) - 大脑
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code>&gt; 这是整个异步机制的核心，是一个**无限循环**。它做两件事：
+&gt; 1. **轮询**： 不断地检查哪些 `Future` 对象已经完成（例如，一个网络请求收到了响应，一个定时器超时了）。
+&gt; 2. **调度**： 一旦某个 `Future` 完成，事件循环就**恢复**正在等待这个 `Future` 的**协程**。
+&gt;
+&gt; 可以把事件循环想象成一个高效的**调度员**，它管理着一个任务列表（协程、回调等），知道每个任务在等待什么（IO操作、睡眠等）。当某个资源就绪时，它就通知对应的任务：“你要等的东西准备好了，继续干吧”。
+&gt;
+&gt; #### c. `await` 关键字 - 信号灯
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code>&gt; `await some_awaitable` 做了以下几件事：
+&gt; 1. **暂停当前协程**： 执行到 `await` 时，当前协程立即**暂停**。
+&gt; 2. **向事件循环注册回调**： 它告诉事件循环：“我（当前协程）现在要等 `some_awaitable` 完成。等它完成后，**请你回调我，让我继续执行**。”
+&gt; 3. **交出控制权**： 将 CPU 的控制权**交还给事件循环**。事件循环此时可以去找其他已经准备就绪的协程来执行。
+&gt;
+&gt; **这就是单线程实现并发的关键**：一个协程在等待 IO 时，线程不会傻等，而是去执行其他协程。
+&gt;
+&gt; ---
+&gt;
+&gt; ### 3. 工作流程详解
+&gt;
+&gt; 让我们通过一个例子，拆解整个生命周期：
+&gt;
+&gt; ```python
+&gt; import asyncio
+&gt; 
+&gt; async def say_after(delay, what):
+&gt;     await asyncio.sleep(delay) # 1. 遇到第一个 await
+&gt;     print(what)                # 4. 被事件循环唤醒后，继续执行
+&gt; 
+&gt; async def main():
+&gt;     task1 = asyncio.create_task(say_after(1, 'hello')) # 创建任务1
+&gt;     task2 = asyncio.create_task(say_after(2, 'world')) # 创建任务2
+&gt; 
+&gt;     await task1 # 2. 等待任务1完成
+&gt;     await task2 # 5. 等待任务2完成
+&gt; 
+&gt; asyncio.run(main()) # 启动事件循环
+&gt; ```
+&gt;
+&gt; 1. **启动**： `asyncio.run(main())` 创建一个新的事件循环，并开始运行 `main()` 协程。
+&gt; 2. **创建任务**： `asyncio.create_task()` 将 `say_after` 协程**包装成一个 `Task` 对象**，并**立即将其加入到事件循环的调度队列中**。此时，两个 `say_after` 协程都开始执行。
+&gt; 3. **首次 `await`**：
+&gt;     * `task1` 和 `task2` 几乎同时执行到 `await asyncio.sleep(delay)`。
+&gt;     * 它们都暂停执行，并向事件循环注册：“请在哪哪毫秒后唤醒我”。
+&gt;     * **控制权回到事件循环**。
+&gt; 4. **事件循环工作**：
+&gt;     * 事件循环发现现在没有立刻可以运行的协程（都在睡眠），但它有两个定时器在倒计时。
+&gt;     * 它等待（通过 `selectors` 模块），直到 **1 秒后**，`task1` 的睡眠到期。
+&gt;     * 事件循环将 `task1` 的状态标记为“完成”，并将其**放回可运行队列**。
+&gt;     * 事件循环找到 `task1` 并恢复其执行。`task1` 打印 `'hello'`，然后真正执行完毕。
+&gt; 5. **等待完成**：
+&gt;     * `main` 函数中的 `await task1` 发现 `task1` 已经完成，于是继续向下执行。
+&gt;     * 它遇到 `await task2`，此时 `task2` 可能还在睡眠（才过去1秒，它要睡2秒）。
+&gt;     * `main` 协程因此暂停，**控制权再次交还给事件循环**。
+&gt; 6. **最终结束**：
+&gt;     * 事件循环又等了1秒，`task2` 的睡眠到期。
+&gt;     * 事件循环唤醒 `task2`，它打印 `'world'` 并完成。
+&gt;     * 事件循环看到 `main` 在等待的 `task2` 也完成了，就恢复 `main` 协程。
+&gt;     * `main` 执行完毕，事件循环退出。
+&gt;
+&gt; 整个过程只在 **1 个线程**中完成，总耗时约 **2 秒**（而不是 1+2=3 秒），实现了并发。
+&gt;
+&gt; ---
+&gt;
+&gt; ### 4. 底层实现：与生成器的联系
+&gt;
+&gt; 尽管用了新语法，底层依然与生成器密切相关。
+&gt;
+&gt; * `async def` 函数在底层创建的是一个**生成器函数**的变种。
+&gt; * `await` 语句编译后，本质上就是一个 `yield from`。
+&gt; * 当你 `await` 一个 `Future` 时，代码大致相当于：
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code>&gt;     ```python
+&gt;     # 伪代码：await future 的近似实现
+&gt;     def __await__(self):
+&gt;         if not self.done(): 
+&gt;             yield self  # 这里将 Future 本身 yield 出去，暂停协程
+&gt;         return self.result() # 恢复后，返回结果
+&gt;     ```
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code>&gt;     事件循环在 `yield self` 这里拿到这个 `Future`，并将其添加到监视列表中。
+&gt;
+&gt; ### 总结
+&gt;
+&gt; | 特性           | 实现机制                                                     |
+&gt; | :------------- | :----------------------------------------------------------- |
+&gt; | **如何暂停？** | 通过 `await` 关键字，其底层是 `yield` 或 `yield from`，将协程的执行状态（帧栈、指令指针等）冻结。 |
+&gt; | **如何恢复？** | 事件循环在它等待的资源就绪后（如 IO 完成、超时），通过 `.send(None)` 或类似方法恢复协程。 |
+&gt; | **如何并发？** | 单线程内，一个协程因 `await` 暂停时，事件循环立即调度执行另一个已就绪的协程。 |
+&gt; | **为何高效？** | **用户态调度**，切换代价极低（只是一个函数调用）。**非阻塞IO**，等待期间线程不被占用。 |
+&gt;
+&gt; 简单来说，**`async`/`await` 是提供给开发者的一套友好语法糖，其背后是一套基于生成器、Future 和事件循环的成熟并发框架**。它让开发者可以用看似同步的代码风格，写出高性能的异步应用程序。
+</code></pre>
+<ol start="11">
 <li>
 <p>Milvous向量数据库向量存储(索引)</p>
 <div class="highlight"><div class="chroma">
@@ -3070,94 +3048,68 @@
 <h3 id="3-milvus中常见的索引类型如何看图索骥">3. Milvus中常见的索引类型（如何“看图索骥”）
 </h3><p>Milvus支持多种索引类型，适用于不同的场景（精度/速度/内存的权衡）。以下是几种主流的：</p>
 <h4 id="a-基于量化的索引相当于分区">a. 基于量化的索引（相当于“分区”）
-</h4><p><strong>思想</strong>：将高维向量空间划分成多个“区域”（聚类），每个区域用一个代表向量（质心）来表示。搜索时，先找到查询向量所在的或附近的区域，然后只在这个区域的向量里进行精细搜索。</p>
-<ul>
-<li><strong>IVF_FLAT / IVF_SQ8 / IVF_PQ</strong>：
-<ul>
-<li><strong>工作原理</strong>：
-<ol>
-<li><strong>训练</strong>：先用K-Means等算法对所有向量进行聚类，得到<code>nlist</code>个聚类中心（比如1024个）。</li>
-<li><strong>分配</strong>：将每个原始向量分配到离它最近的那个聚类中心所在的“桶”里。</li>
-<li><strong>搜索</strong>：查询时，先计算查询向量与所有聚类中心的距离，找到最近的<code>nprobe</code>个（比如8个）聚类中心。然后只在这<code>nprobe</code>个“桶”内部的向量中进行精确（或进一步量化）搜索。</li>
+</h4></blockquote>
+</li>
 </ol>
-</li>
-<li><strong>类比</strong>：好比在一个大型图书馆里，先把书按主题（历史、科学、文学&hellip;）分到不同的房间（聚类）。你要找一本历史书，就不用去科学和文学房间里翻了，直接去历史房间找就行。<code>nprobe</code>相当于你决定去“历史”和“考古”这两个最相关的房间找。</li>
-</ul>
-</li>
-</ul>
-<h4 id="b-基于图的索引相当于人际关系网">b. 基于图的索引（相当于“人际关系网”）
-</h4><p><strong>思想</strong>：将向量构建成一张图，每个向量是一个节点，节点之间通过边连接，相似的向量之间才有边。搜索时，从一些入口节点开始，沿着“越来越相似”的边进行“漫步”式搜索，快速逼近目标。</p>
-<ul>
-<li><strong>HNSW（Hierarchical Navigable Small World）</strong>： 这是目前最流行、性能最好的ANN索引之一。
-<ul>
-<li><strong>工作原理</strong>：
-<ol>
-<li><strong>分层</strong>：构建一个多层图结构。底层（第0层）包含所有向量，越高层包含的向量越少，相当于一个“高速公路”网络。</li>
-<li><strong>搜索</strong>：从最高层的某个节点开始，因为节点少，可以快速定位到目标的大致区域。然后逐层向下，在更精细的层中搜索，直到最底层找到最相似的邻居。</li>
-</ol>
-</li>
-<li><strong>类比</strong>：想象你要在全球找人。
-<ul>
-<li><strong>底层</strong>：所有街道（所有向量）。</li>
-<li><strong>最高层</strong>：国际航班线路（少量核心枢纽）。
-你先坐国际航班（最高层）飞到目标国家，再转国内航班（中间层），最后打车在街道（底层）上找到具体地址。这比一条街一条街找快无数倍。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="c-基于树的索引相当于决策树">c. 基于树的索引（相当于“决策树”）
-</h4><ul>
-<li><strong>ANNOY（Approximate Nearest Neighbors Oh Yeah）</strong>：
-<ul>
-<li><strong>工作原理</strong>：通过不断递归地随机超平面来分割向量空间，构建一颗或多颗二叉树。搜索时，从根节点开始向下遍历，找到所在的叶子节点，然后在这个叶子节点内进行搜索。</li>
-<li><strong>类比</strong>：玩“20个问题”游戏：“是动物吗？” -&gt; “是哺乳动物吗？” -&gt; &hellip; 通过一系列问题快速缩小范围。</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="4-索引与向量存储的关系">4. 索引与向量存储的关系
-</h3><p>这是一个非常重要的点：</p>
-<ul>
-<li><strong>索引 (Index)</strong>：是<strong>加速查询</strong>的数据结构（如HNSW图、IVF的聚类中心列表）。它通常保存在<strong>内存 (RAM)</strong> 中，因为搜索需要极快的随机访问速度。</li>
-<li><strong>原始向量数据 (Vector Data)</strong>：是原始的向量本身。它可以有不同的存储方式以平衡性能和成本：
-<ul>
-<li><strong>FLAT</strong>：原样存储，不压缩。用于保证100%精确率的暴力搜索，或作为其他索引的底层数据。</li>
-<li><strong>SQ8</strong>：将原始<code>float</code>向量压缩为<code>8-bit integer</code>，显著减少内存占用，精度损失很小。</li>
-<li><strong>磁盘</strong>：甚至可以只将索引加载到内存，而将原始向量数据放在磁盘上，需要时再通过索引定位到磁盘位置去读取，极大节省内存成本。</li>
-</ul>
-</li>
-</ul>
-<p>在Milvus中，你<strong>先插入数据（向量）</strong>，<strong>后创建索引</strong>。创建索引后，Milvus会自动管理索引和原始数据之间的关系。</p>
-<h3 id="总结-1">总结
-</h3><div class="table-wrapper"><table>
-  <thead>
-      <tr>
-          <th style="text-align: left">特性</th>
-          <th style="text-align: left">解释</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td style="text-align: left"><strong>是什么？</strong></td>
-          <td style="text-align: left">一种为了<strong>加速相似性搜索</strong>而预先构建的<strong>专用数据结构</strong>。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>为什么需要？</strong></td>
-          <td style="text-align: left">避免暴力搜索的<strong>性能灾难</strong>，实现毫秒级的海量向量检索。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>核心权衡？</strong></td>
-          <td style="text-align: left"><strong>精度 vs 速度 vs 内存</strong>。索引都是近似搜索，需要在三者之间取得平衡。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>在Milvus中如何工作？</strong></td>
-          <td style="text-align: left">1. <strong>插入</strong>原始向量数据。<br>2. <strong>选择</strong>一种索引类型（如HNSW, IVF_PQ）和参数。<br>3. <strong>创建</strong>索引，Milvus后台进行预处理。<br>4. <strong>搜索</strong>时，使用索引快速定位候选集，极大减少计算量。</td>
-      </tr>
-  </tbody>
-</table></div>
-<p>所以，当你在Milvus中为一个集合（Collection）创建索引时，你本质上是在告诉Milvus：“请用我选择的这种算法和参数，为我整理好这些数据，以便我以后能飞快地找到相似的东西。”</p></blockquote>
-</li>
+<blockquote>
+</blockquote>
+<pre><code>&gt; **思想**：将高维向量空间划分成多个“区域”（聚类），每个区域用一个代表向量（质心）来表示。搜索时，先找到查询向量所在的或附近的区域，然后只在这个区域的向量里进行精细搜索。
+&gt;
+&gt; * **IVF_FLAT / IVF_SQ8 / IVF_PQ**：
+&gt;   * **工作原理**：
+&gt;         1. **训练**：先用K-Means等算法对所有向量进行聚类，得到`nlist`个聚类中心（比如1024个）。
+&gt;         2. **分配**：将每个原始向量分配到离它最近的那个聚类中心所在的“桶”里。
+&gt;         3. **搜索**：查询时，先计算查询向量与所有聚类中心的距离，找到最近的`nprobe`个（比如8个）聚类中心。然后只在这`nprobe`个“桶”内部的向量中进行精确（或进一步量化）搜索。
+&gt;   * **类比**：好比在一个大型图书馆里，先把书按主题（历史、科学、文学...）分到不同的房间（聚类）。你要找一本历史书，就不用去科学和文学房间里翻了，直接去历史房间找就行。`nprobe`相当于你决定去“历史”和“考古”这两个最相关的房间找。
+&gt;
+&gt; #### b. 基于图的索引（相当于“人际关系网”）
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code>&gt; **思想**：将向量构建成一张图，每个向量是一个节点，节点之间通过边连接，相似的向量之间才有边。搜索时，从一些入口节点开始，沿着“越来越相似”的边进行“漫步”式搜索，快速逼近目标。
+&gt;
+&gt; * **HNSW（Hierarchical Navigable Small World）**： 这是目前最流行、性能最好的ANN索引之一。
+&gt;   * **工作原理**：
+&gt;         1. **分层**：构建一个多层图结构。底层（第0层）包含所有向量，越高层包含的向量越少，相当于一个“高速公路”网络。
+&gt;         2. **搜索**：从最高层的某个节点开始，因为节点少，可以快速定位到目标的大致区域。然后逐层向下，在更精细的层中搜索，直到最底层找到最相似的邻居。
+&gt;   * **类比**：想象你要在全球找人。
+&gt;     * **底层**：所有街道（所有向量）。
+&gt;     * **最高层**：国际航班线路（少量核心枢纽）。
+&gt;         你先坐国际航班（最高层）飞到目标国家，再转国内航班（中间层），最后打车在街道（底层）上找到具体地址。这比一条街一条街找快无数倍。
+&gt;
+&gt; #### c. 基于树的索引（相当于“决策树”）
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code>&gt; * **ANNOY（Approximate Nearest Neighbors Oh Yeah）**：
+&gt;   * **工作原理**：通过不断递归地随机超平面来分割向量空间，构建一颗或多颗二叉树。搜索时，从根节点开始向下遍历，找到所在的叶子节点，然后在这个叶子节点内进行搜索。
+&gt;   * **类比**：玩“20个问题”游戏：“是动物吗？” -&gt; “是哺乳动物吗？” -&gt; ... 通过一系列问题快速缩小范围。
+&gt;
+&gt; ---
+&gt;
+&gt; ### 4. 索引与向量存储的关系
+&gt;
+&gt; 这是一个非常重要的点：
+&gt; * **索引 (Index)**：是**加速查询**的数据结构（如HNSW图、IVF的聚类中心列表）。它通常保存在**内存 (RAM)** 中，因为搜索需要极快的随机访问速度。
+&gt; * **原始向量数据 (Vector Data)**：是原始的向量本身。它可以有不同的存储方式以平衡性能和成本：
+&gt;   * **FLAT**：原样存储，不压缩。用于保证100%精确率的暴力搜索，或作为其他索引的底层数据。
+&gt;   * **SQ8**：将原始`float`向量压缩为`8-bit integer`，显著减少内存占用，精度损失很小。
+&gt;   * **磁盘**：甚至可以只将索引加载到内存，而将原始向量数据放在磁盘上，需要时再通过索引定位到磁盘位置去读取，极大节省内存成本。
+&gt;
+&gt; 在Milvus中，你**先插入数据（向量）**，**后创建索引**。创建索引后，Milvus会自动管理索引和原始数据之间的关系。
+&gt;
+&gt; ### 总结
+&gt;
+&gt; | 特性                     | 解释                                                         |
+&gt; | :----------------------- | :----------------------------------------------------------- |
+&gt; | **是什么？**             | 一种为了**加速相似性搜索**而预先构建的**专用数据结构**。     |
+&gt; | **为什么需要？**         | 避免暴力搜索的**性能灾难**，实现毫秒级的海量向量检索。       |
+&gt; | **核心权衡？**           | **精度 vs 速度 vs 内存**。索引都是近似搜索，需要在三者之间取得平衡。 |
+&gt; | **在Milvus中如何工作？** | 1. **插入**原始向量数据。&lt;br&gt;2. **选择**一种索引类型（如HNSW, IVF_PQ）和参数。&lt;br&gt;3. **创建**索引，Milvus后台进行预处理。&lt;br&gt;4. **搜索**时，使用索引快速定位候选集，极大减少计算量。 |
+&gt;
+&gt; 所以，当你在Milvus中为一个集合（Collection）创建索引时，你本质上是在告诉Milvus：“请用我选择的这种算法和参数，为我整理好这些数据，以便我以后能飞快地找到相似的东西。”
+</code></pre>
+<ol start="12">
 <li>
 <p>C和C++的区别:</p>
 <div class="highlight"><div class="chroma">
@@ -3206,7 +3158,11 @@
 <hr>
 <h3 id="2-关键特性对比">2. 关键特性对比
 </h3><h4 id="a-面向对象编程-oop">a. 面向对象编程 (OOP)
-</h4><p>这是最显著的区别。</p>
+</h4></blockquote>
+</li>
+</ol>
+<blockquote>
+<p>这是最显著的区别。</p>
 <ul>
 <li>
 <p><strong>C</strong>：<strong>不支持</strong>面向对象。没有类的概念。你可以用 <code>struct</code> 来封装数据，但 <code>struct</code> 不能包含函数（方法）。要实现类似“对象”的行为，需要手动将函数指针放在结构体里，这是一种非常原始和容易出错的模拟。</p>
@@ -3238,10 +3194,10 @@
 </span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Point(%d, %d)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Point</span> <span class="n">p1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">print_point</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">iNnt</span> <span class="n">t</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Point</span> <span class="n">p1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">print_point</span><span class="p">};</span>
 </span></span><span class="line"><span class="cl">    <span class="n">p1</span><span class="p">.</span><span class="nf">print</span><span class="p">(</span><span class="n">p1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p1</span><span class="p">.</span><span class="n">y</span><span class="p">);</span> <span class="c1">// 笨拙的调用方式
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span> 
 </span></span></code></pre></td></tr></table>
 </div>
 </div></li>
@@ -3288,7 +3244,8 @@
 </ul>
 <h4 id="b-内存管理">b. 内存管理
 </h4><ul>
-<li><strong>C</strong>： 只有 <code>malloc()</code>, <code>calloc()</code>, <code>realloc()</code> 和 <code>free()</code>。需要手动计算内存大小并进行类型转换。
+<li>
+<p><strong>C</strong>： 只有 <code>malloc()</code>, <code>calloc()</code>, <code>realloc()</code> 和 <code>free()</code>。需要手动计算内存大小并进行类型转换。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -3300,7 +3257,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div></li>
-<li><strong>C++</strong>： 除了支持 C 的方式，还引入了<strong>运算符 <code>new</code> 和 <code>delete</code></strong>。它们更安全、更方便，因为它们会自动计算类型大小、进行类型转换，并会调用对象的<strong>构造函数</strong>和<strong>析构函数</strong>。
+<li>
+<p><strong>C++</strong>： 除了支持 C 的方式，还引入了<strong>运算符 <code>new</code> 和 <code>delete</code></strong>。它们更安全、更方便，因为它们会自动计算类型大小、进行类型转换，并会调用对象的<strong>构造函数</strong>和<strong>析构函数</strong>。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -3323,13 +3281,20 @@
 </ul>
 <h4 id="c-函数特性">c. 函数特性
 </h4><ul>
-<li><strong>C</strong>： 不支持函数重载（同一作用域内不能有同名函数）、默认参数或引用传递。</li>
-<li><strong>C++</strong>：
-<ul>
-<li><strong>函数重载</strong>：允许同名函数，只要参数列表不同。</li>
-<li><strong>默认参数</strong>：函数参数可以指定默认值。</li>
-<li><strong>引用传递</strong>：提供了“引用” (<code>&amp;</code>) 的概念，作为指针的替代品，语法更简洁安全。</li>
-</ul>
+<li>
+<p><strong>C</strong>： 不支持函数重载（同一作用域内不能有同名函数）、默认参数或引用传递。</p>
+</li>
+<li>
+<p><strong>C++</strong>：</p>
+</li>
+<li>
+<p><strong>函数重载</strong>：允许同名函数，只要参数列表不同。</p>
+</li>
+<li>
+<p><strong>默认参数</strong>：函数参数可以指定默认值。</p>
+</li>
+<li>
+<p><strong>引用传递</strong>：提供了“引用” (<code>&amp;</code>) 的概念，作为指针的替代品，语法更简洁安全。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -3366,8 +3331,11 @@
 </ul>
 <h4 id="d-泛型编程">d. 泛型编程
 </h4><ul>
-<li><strong>C</strong>： 不支持。要实现通用操作（比如一个能处理任何类型的排序函数），通常需要使用 <code>void*</code> 指针和函数指针，代码复杂且极不安全。</li>
-<li><strong>C++</strong>： 通过<strong>模板 (Templates)</strong> 支持。可以编写与类型无关的通用代码。
+<li>
+<p><strong>C</strong>： 不支持。要实现通用操作（比如一个能处理任何类型的排序函数），通常需要使用 <code>void*</code> 指针和函数指针，代码复杂且极不安全。</p>
+</li>
+<li>
+<p><strong>C++</strong>： 通过<strong>模板 (Templates)</strong> 支持。可以编写与类型无关的通用代码。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -3404,7 +3372,8 @@
 </span></span><span class="line"><span class="cl"><span class="n">MyVector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">strVec</span><span class="p">;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div>C++ 标准库（STL）的容器（如 <code>vector</code>, <code>map</code>）和算法（如 <code>sort</code>, <code>find</code>）都是基于模板构建的，这是 C++ 强大功能的体现。</li>
+</div><p>C++ 标准库（STL）的容器（如 <code>vector</code>, <code>map</code>）和算法（如 <code>sort</code>, <code>find</code>）都是基于模板构建的，这是 C++ 强大功能的体现。</p>
+</li>
 </ul>
 <h4 id="e-异常处理">e. 异常处理
 </h4><ul>
@@ -3413,8 +3382,11 @@
 </ul>
 <h4 id="f-输入输出">f. 输入输出
 </h4><ul>
-<li><strong>C</strong>： 使用 <code>printf</code>, <code>scanf</code> 等函数。需要指定格式符（如 <code>%d</code>, <code>%s</code>），类型不安全（如果格式符和变量类型不匹配会导致运行时错误）。</li>
-<li><strong>C++</strong>： 使用<strong>流（Stream）</strong> 对象 <code>cin</code>, <code>cout</code>, <code>cerr</code>。使用 <code>&lt;&lt;</code>（输出操作符）和 <code>&gt;&gt;</code>（输入操作符），编译器会自动处理类型，更安全、更现代。
+<li>
+<p><strong>C</strong>： 使用 <code>printf</code>, <code>scanf</code> 等函数。需要指定格式符（如 <code>%d</code>, <code>%s</code>），类型不安全（如果格式符和变量类型不匹配会导致运行时错误）。</p>
+</li>
+<li>
+<p><strong>C++</strong>： 使用<strong>流（Stream）</strong> 对象 <code>cin</code>, <code>cout</code>, <code>cerr</code>。使用 <code>&lt;&lt;</code>（输出操作符）和 <code>&gt;&gt;</code>（输入操作符），编译器会自动处理类型，更安全、更现代。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -3506,25 +3478,37 @@
 <ul>
 <li>
 <p><strong>选择 C，如果</strong>：</p>
-<ul>
-<li>你开发的是操作系统、嵌入式固件、硬件驱动程序等底层系统软件。</li>
-<li>项目极度追求性能和控制，需要手动管理每一个字节。</li>
-<li>目标平台的资源极其有限（如单片机），容不下 C++ 运行时的开销。</li>
-<li>项目非常小，或者需要与大量现有的 C 代码库集成。</li>
-</ul>
+</li>
+<li>
+<p>你开发的是操作系统、嵌入式固件、硬件驱动程序等底层系统软件。</p>
+</li>
+<li>
+<p>项目极度追求性能和控制，需要手动管理每一个字节。</p>
+</li>
+<li>
+<p>目标平台的资源极其有限（如单片机），容不下 C++ 运行时的开销。</p>
+</li>
+<li>
+<p>项目非常小，或者需要与大量现有的 C 代码库集成。</p>
 </li>
 <li>
 <p><strong>选择 C++，如果</strong>：</p>
-<ul>
-<li>你开发的是大型、复杂的应用程序（如桌面软件、游戏、数据库）。</li>
-<li>你需要构建复杂的抽象，并希望提高代码的可维护性、可复用性和可扩展性。</li>
-<li>你希望利用丰富的标准库（STL）和第三方库来提升开发效率。</li>
-<li>项目需要面向对象或泛型编程的特性来更好地建模问题。</li>
-</ul>
+</li>
+<li>
+<p>你开发的是大型、复杂的应用程序（如桌面软件、游戏、数据库）。</p>
+</li>
+<li>
+<p>你需要构建复杂的抽象，并希望提高代码的可维护性、可复用性和可扩展性。</p>
+</li>
+<li>
+<p>你希望利用丰富的标准库（STL）和第三方库来提升开发效率。</p>
+</li>
+<li>
+<p>项目需要面向对象或泛型编程的特性来更好地建模问题。</p>
 </li>
 </ul>
 <p>总而言之，C 是“基础”和“控制”，而 C++ 是“工程”和“抽象”。两者都是极其强大且经久不衰的语言。</p></blockquote>
-</li>
+<ol start="13">
 <li>
 <p>栈和堆的区别:</p>
 <div class="highlight"><div class="chroma">
@@ -3614,116 +3598,75 @@
 </li>
 <li>
 <p><strong>代码示例 (C++)</strong>：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">stackVar</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">// &#39;stackVar&#39; 在栈上分配
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// ... 函数结束，&#39;stackVar&#39; 被自动释放
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
-<li>
-<p><strong>优点</strong>：极速、自动管理、无碎片。</p>
 </li>
-<li>
-<p><strong>缺点</strong>：空间有限、生命周期短暂、数据大小必须在编译期确定。</p>
-</li>
-</ul>
-<h4 id="2-堆-heap">2. 堆 (Heap)
-</h4><p>堆更像是一个巨大的“全局内存池”。程序可以在运行时申请任意大小的内存块，并且可以以任何顺序释放它们。</p>
-<ul>
-<li>
-<p><strong>工作原理</strong>：程序通过调用如 <code>malloc()</code> (C) 或 <code>new</code> (C++) 来向操作系统申请一块指定大小的内存。操作系统在堆中找到一个足够大的空闲块分配给它，并返回一个指向该内存块的<strong>指针</strong>。程序员负责在数据不再使用时，通过 <code>free()</code> (C) 或 <code>delete</code> (C++) 释放该内存。</p>
-</li>
-<li>
-<p><strong>代码示例 (C++)</strong>：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">bar</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// 在堆上分配一个整数，用指针heapPtr管理它
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span><span class="o">*</span> <span class="n">heapPtr</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span> 
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// ... 使用这个整数
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">    <span class="k">delete</span> <span class="n">heapPtr</span><span class="p">;</span> <span class="c1">// **必须手动释放**，否则内存泄漏！
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">heapPtr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span> <span class="c1">// 避免成为野指针
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
-<li>
-<p><strong>优点</strong>：空间巨大、生命周期灵活、大小在运行时决定。</p>
-</li>
-<li>
-<p><strong>缺点</strong>：分配和释放速度慢、可能产生内存碎片、管理不当会导致严重错误（内存泄漏、野指针）。</p>
-</li>
-</ul>
-<hr>
-<h3 id="常见问题与误区-faq">常见问题与误区 (FAQ)
-</h3><ol>
-<li>
-<p><strong>数据结构中的“堆”和内存中的“堆”是一个概念吗？</strong></p>
-<ul>
-<li><strong>不是</strong>。这是中文翻译造成的歧义。</li>
-<li>数据结构中的堆（Heap）是一种特殊的<strong>树形结构</strong>（如二叉堆），常用于实现优先队列。</li>
-<li>内存中的堆（Heap）指的是<strong>内存管理区域</strong>，名称来源于“一堆可用的内存”。</li>
-<li>两者是完全不同的概念。</li>
-</ul>
-</li>
-<li>
-<p><strong>“栈溢出”和“内存泄漏”是什么意思？</strong></p>
-<ul>
-<li><strong>栈溢出 (Stack Overflow)</strong>：通常由过深的递归或过大的局部变量（如 <code>int hugeArray[1000000]</code>）导致，耗尽了有限的栈空间。</li>
-<li><strong>内存泄漏 (Memory Leak)</strong>：发生在<strong>堆</strong>上。程序申请了内存（<code>new</code>）但忘记了释放（<code>delete</code>），导致这块内存无法被再次使用，最终可能耗尽所有可用内存。</li>
-</ul>
-</li>
-<li>
-<p><strong>Java/Python/Go 这些语言也有堆和栈吗？</strong></p>
-<ul>
-<li><strong>有</strong>。这些语言在运行时同样需要栈来管理函数调用和局部变量。<strong>对象</strong>（Object）也几乎总是分配在堆上。</li>
-<li><strong>关键区别</strong>在于：这些语言引入了<strong>垃圾回收（Garbage Collection, GC）</strong> 机制。程序员不需要手动 <code>delete</code>，GC 会自动追踪不再被引用的堆内存并进行回收。这大大减少了内存管理的负担，但代价是额外的性能开销和回收时机的不确定性。</li>
-</ul>
+</ul></blockquote>
 </li>
 </ol>
-<h3 id="总结-2">总结
-</h3><div class="table-wrapper"><table>
-  <thead>
-      <tr>
-          <th style="text-align: left">场景</th>
-          <th style="text-align: left">选择</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td style="text-align: left"><strong>生命周期随函数结束而结束的、小的、确定的数据</strong></td>
-          <td style="text-align: left">使用<strong>栈</strong>（如局部变量、函数参数）。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>生命周期需要跨函数、大的、编译期大小未知的数据</strong></td>
-          <td style="text-align: left">使用<strong>堆</strong>（如动态数组、大型对象、需要在函数间共享的数据）。</td>
-      </tr>
-  </tbody>
-</table></div>
-<p>理解栈和堆的区别对于写出高效、安全、稳定的程序至关重要，尤其是在使用 C/C++ 这类需要手动管理内存的语言时。</p></blockquote>
-</li>
+<blockquote>
+</blockquote>
+<pre><code>&gt;     ```cpp
+&gt;     void foo() {
+&gt;         int stackVar = 10; // 'stackVar' 在栈上分配
+&gt;         // ... 函数结束，'stackVar' 被自动释放
+&gt;     }
+&gt;     ```
+&gt;
+&gt; * **优点**：极速、自动管理、无碎片。
+&gt; * **缺点**：空间有限、生命周期短暂、数据大小必须在编译期确定。
+&gt;
+&gt; #### 2. 堆 (Heap)
+&gt;
+&gt; 堆更像是一个巨大的“全局内存池”。程序可以在运行时申请任意大小的内存块，并且可以以任何顺序释放它们。
+&gt;
+&gt; * **工作原理**：程序通过调用如 `malloc()` (C) 或 `new` (C++) 来向操作系统申请一块指定大小的内存。操作系统在堆中找到一个足够大的空闲块分配给它，并返回一个指向该内存块的**指针**。程序员负责在数据不再使用时，通过 `free()` (C) 或 `delete` (C++) 释放该内存。
+&gt;
+&gt; * **代码示例 (C++)**：
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code>&gt;     ```cpp
+&gt;     void bar() {
+&gt;         // 在堆上分配一个整数，用指针heapPtr管理它
+&gt;         int* heapPtr = new int(20); 
+&gt;                 
+&gt;         // ... 使用这个整数
+&gt;                 
+&gt;         delete heapPtr; // **必须手动释放**，否则内存泄漏！
+&gt;         heapPtr = nullptr; // 避免成为野指针
+&gt;     }
+&gt;     ```
+&gt;
+&gt; * **优点**：空间巨大、生命周期灵活、大小在运行时决定。
+&gt; * **缺点**：分配和释放速度慢、可能产生内存碎片、管理不当会导致严重错误（内存泄漏、野指针）。
+&gt;
+&gt; ---
+&gt;
+&gt; ### 常见问题与误区 (FAQ)
+&gt;
+&gt; 1. **数据结构中的“堆”和内存中的“堆”是一个概念吗？**
+&gt;     * **不是**。这是中文翻译造成的歧义。
+&gt;     * 数据结构中的堆（Heap）是一种特殊的**树形结构**（如二叉堆），常用于实现优先队列。
+&gt;     * 内存中的堆（Heap）指的是**内存管理区域**，名称来源于“一堆可用的内存”。
+&gt;     * 两者是完全不同的概念。
+&gt;
+&gt; 2. **“栈溢出”和“内存泄漏”是什么意思？**
+&gt;     * **栈溢出 (Stack Overflow)**：通常由过深的递归或过大的局部变量（如 `int hugeArray[1000000]`）导致，耗尽了有限的栈空间。
+&gt;     * **内存泄漏 (Memory Leak)**：发生在**堆**上。程序申请了内存（`new`）但忘记了释放（`delete`），导致这块内存无法被再次使用，最终可能耗尽所有可用内存。
+&gt;
+&gt; 3. **Java/Python/Go 这些语言也有堆和栈吗？**
+&gt;     * **有**。这些语言在运行时同样需要栈来管理函数调用和局部变量。**对象**（Object）也几乎总是分配在堆上。
+&gt;     * **关键区别**在于：这些语言引入了**垃圾回收（Garbage Collection, GC）** 机制。程序员不需要手动 `delete`，GC 会自动追踪不再被引用的堆内存并进行回收。这大大减少了内存管理的负担，但代价是额外的性能开销和回收时机的不确定性。
+&gt;
+&gt; ### 总结
+&gt;
+&gt; | 场景                                               | 选择                                                         |
+&gt; | :------------------------------------------------- | :----------------------------------------------------------- |
+&gt; | **生命周期随函数结束而结束的、小的、确定的数据**   | 使用**栈**（如局部变量、函数参数）。                         |
+&gt; | **生命周期需要跨函数、大的、编译期大小未知的数据** | 使用**堆**（如动态数组、大型对象、需要在函数间共享的数据）。 |
+&gt;
+&gt; 理解栈和堆的区别对于写出高效、安全、稳定的程序至关重要，尤其是在使用 C/C++ 这类需要手动管理内存的语言时。
+</code></pre>
+<ol start="14">
 <li>
 <p>内存泄漏:</p>
 <div class="highlight"><div class="chroma">
@@ -3750,9 +3693,12 @@
 <h3 id="二为什么会发生内存泄漏">二、为什么会发生内存泄漏？
 </h3><p>内存泄漏的根本原因是<strong>内存管理不当</strong>。常见的情况有：</p>
 <ol>
-<li>
-<p><strong>直接遗忘</strong> (Most Common)
-程序员分配了内存，但后来完全忘记了需要释放它。</p>
+<li><strong>直接遗忘</strong> (Most Common)
+程序员分配了内存，但后来完全忘记了需要释放它。</li>
+</ol></blockquote>
+</li>
+</ol>
+<blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -3764,14 +3710,14 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">leak</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">);</span> <span class="c1">// 分配了内存
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// ... 使用 ptr
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span><span class="p">;</span> <span class="c1">// 函数结束，ptr 是局部变量被销毁了，但它指向的堆内存还在！
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>             <span class="c1">// 没有 free(ptr)，内存泄漏了。
+</span></span><span class="line"><span class="cl">   <span class="kt">int</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">);</span> <span class="c1">// 分配了内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="c1">// ... 使用 ptr
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">return</span><span class="p">;</span> <span class="c1">// 函数结束，ptr 是局部变量被销毁了，但它指向的堆内存还在！
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// 没有 free(ptr)，内存泄漏了。
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div></li>
+</div><ol start="2">
 <li>
 <p><strong>丢失地址（Lost Address）</strong>
 指针被重新赋值，覆盖了之前分配的内存地址，导致再也找不到那块内存来释放它。</p>
@@ -3860,7 +3806,8 @@
 <h3 id="四如何检测和避免内存泄漏">四、如何检测和避免内存泄漏？
 </h3><h4 id="检测工具-detection">检测工具 (Detection)
 </h4><ul>
-<li><strong>Valgrind (Linux/Mac)</strong>： 神器级别的内存调试工具。可以非常精确地定位泄漏的位置和大小。
+<li>
+<p><strong>Valgrind (Linux/Mac)</strong>： 神器级别的内存调试工具。可以非常精确地定位泄漏的位置和大小。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -3870,7 +3817,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div></li>
-<li><strong>AddressSanitizer (ASan)</strong>： Google 开发的高速内存错误检测器，被集成在 GCC 和 Clang 编译器中。性能开销比 Valgrind 小。
+<li>
+<p><strong>AddressSanitizer (ASan)</strong>： Google 开发的高速内存错误检测器，被集成在 GCC 和 Clang 编译器中。性能开销比 Valgrind 小。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -3880,8 +3828,12 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div></li>
-<li><strong>Visual Studio Debugger (Windows)</strong>： 内置了强大的内存泄漏检测功能。</li>
-<li><strong>智能指针</strong>： 使用它们本身就是一种“避免”泄漏的方法。</li>
+<li>
+<p><strong>Visual Studio Debugger (Windows)</strong>： 内置了强大的内存泄漏检测功能。</p>
+</li>
+<li>
+<p><strong>智能指针</strong>： 使用它们本身就是一种“避免”泄漏的方法。</p>
+</li>
 </ul>
 <h4 id="避免策略-prevention">避免策略 (Prevention)
 </h4><ol>
@@ -3931,7 +3883,7 @@
 <p><strong>尽量使用标准库容器</strong>：如 <code>std::vector</code>, <code>std::string</code>, <code>std::map</code> 等。它们内部自己管理内存，你几乎不需要直接 <code>new</code>/<code>delete</code>。</p>
 </li>
 </ol>
-<h3 id="总结-3">总结
+<h3 id="总结">总结
 </h3><div class="table-wrapper"><table>
   <thead>
       <tr>
@@ -3963,18 +3915,16 @@
   </tbody>
 </table></div>
 <p>理解并避免内存泄漏，是成为一名成熟程序员的关键一步。</p></blockquote>
-<h2 id="舍友的面试信息">舍友的面试信息:
-</h2><ol>
-<li>什么二叉树有什么衍生都用来干什么的</li>
-<li>虚函数表是做什么的</li>
-<li>map和unordered_map的区别,怎么实现的</li>
-<li>HTTP和HTTPS有什么区别</li>
-<li>REASTFUL API实现</li>
-<li>索引的底层实现</li>
-<li>前后端通信的机制是什么</li>
-</ol>
-</li>
-</ol>
+<pre><code>## 舍友的面试信息
+
+1. 什么二叉树有什么衍生都用来干什么的
+2. 虚函数表是做什么的
+3. map和unordered_map的区别,怎么实现的
+4. HTTP和HTTPS有什么区别
+5. REASTFUL API实现
+6. 索引的底层实现
+7. 前后端通信的机制是什么
+</code></pre>
 
 </section>
 

@@ -604,6 +604,14 @@
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;HTTP各个版本的介绍:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HTTP 首先是在 HTTP0.9 的时候只有请求体,没有请求头,并且只有 get 方法,没有响应码.&lt;/li&gt;
+&lt;li&gt;HTTP1.0 的时候增加了请求头和多种的请求方法 post 和 head 并且增加了响应码,但是对于每一次的 HTTP 都需要建立一次 TCP 连接&lt;/li&gt;
+&lt;li&gt;HTTP1.1 的时候增加了 keep-alive 字段,可以在一个 TCP 连接中建立长久连接,并且建立了 pipeline 机制,运行客户端在没有接收到 HTTP 相应包的时候连续发送多个请求包,而无需等待上一个相应返回;使用 host 头,运行一个屋里服务器上托管多个域名;但是存在着队头阻塞和头部过长的问题.&lt;/li&gt;
+&lt;li&gt;HTTP2.0 使用的是二进制协议,将原来的文本传输转换成了二级制进行传输,提高了传输的效率;建立了多路复用的机制,可以让客户端交替地发送响应包和请求包,而不会被阻塞;使用了头部压缩算法,消除了冗余的头部;建立了服务器推送的机制,服务器可以直接向客户端推送他需要的资源,而不需要等待客户端解析完 html 以后再请求资源,节省了时间;但是仍然存在着 TCP 队头阻塞的情况&lt;/li&gt;
+&lt;li&gt;HTTP3.0 启用 TCP 转而使用 QUIC 协议来实现,从而集成了TCP的可靠连接,HTTP2.0 的多路复用和 TLS 的安全性.
+解决了 TCP 队头阻塞的问题,为每一个流都建立了独立的可靠连接,一个流的阻塞并不会影响其他流的传输.将加密和连接合并,只需要使用 1RTT 就可以建立加密和连接,加速了连接的开销,加快了连接的速度.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
@@ -660,7 +668,11 @@
 &lt;hr&gt;
 &lt;h3 id=&#34;各版本详解&#34;&gt;各版本详解
 &lt;/h3&gt;&lt;h4 id=&#34;1-http09---单行协议&#34;&gt;1. HTTP/0.9 - 单行协议
-&lt;/h4&gt;&lt;p&gt;这是HTTP的最初版本，极其简单。&lt;/p&gt;
+&lt;/h4&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是HTTP的最初版本，极其简单。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;请求&lt;/strong&gt;：只有一种方法 &lt;code&gt;GET&lt;/code&gt;。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;请求格式&lt;/strong&gt;：&lt;code&gt;GET /index.html&lt;/code&gt;。&lt;/li&gt;
@@ -769,7 +781,7 @@
 &lt;li&gt;&lt;strong&gt;安全&lt;/strong&gt;：从明文传输到通过HTTPS（HTTP over TLS）成为事实上的标准，再到HTTP/3将加密内置于协议核心。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;目前，&lt;strong&gt;HTTP/1.1&lt;/strong&gt; 仍是主流，但 &lt;strong&gt;HTTP/2&lt;/strong&gt; 的覆盖率已经非常高。&lt;strong&gt;HTTP/3&lt;/strong&gt; 作为未来标准，正在被越来越多的主流浏览器（Chrome, Firefox, Edge）、CDN服务商（Cloudflare, Google）和大型网站所支持和部署。&lt;/p&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;ol start=&#34;2&#34;&gt;
 &lt;li&gt;
 &lt;p&gt;fastapi的相关知识:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -801,7 +813,11 @@
 &lt;hr&gt;
 &lt;h3 id=&#34;二核心知识如何使用-fastapi&#34;&gt;二、核心知识：如何使用 FastAPI
 &lt;/h3&gt;&lt;h4 id=&#34;1-安装&#34;&gt;1. 安装
-&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;/h4&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
@@ -872,26 +888,30 @@
 &lt;p&gt;这些文档允许你直接调用和测试你的 API，无需使用 Postman 等外部工具。&lt;/p&gt;
 &lt;h4 id=&#34;5-核心组件概念&#34;&gt;5. 核心组件概念
 &lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;路径操作&lt;/strong&gt;：将 URL 路径（如 &lt;code&gt;/items&lt;/code&gt;）和 HTTP 方法（如 &lt;code&gt;GET&lt;/code&gt;, &lt;code&gt;POST&lt;/code&gt;) 组合起来。
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;路径操作&lt;/strong&gt;：将 URL 路径（如 &lt;code&gt;/items&lt;/code&gt;）和 HTTP 方法（如 &lt;code&gt;GET&lt;/code&gt;, &lt;code&gt;POST&lt;/code&gt;) 组合起来。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;@app.get(‘/‘)&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;@app.post(‘/items/‘)&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;@app.put(‘/items/{item_id}’)&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;路径参数&lt;/strong&gt;：URL 路径的一部分，用 &lt;code&gt;{}&lt;/code&gt; 声明。
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;路径参数&lt;/strong&gt;：URL 路径的一部分，用 &lt;code&gt;{}&lt;/code&gt; 声明。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;@app.get(‘/items/{item_id}’)&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;async def read_item(item_id: int): ...&lt;/code&gt; # 类型注解提供验证和转换&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;查询参数&lt;/strong&gt;：作为 URL 中 &lt;code&gt;?&lt;/code&gt; 之后的键值对出现的函数参数。
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;查询参数&lt;/strong&gt;：作为 URL 中 &lt;code&gt;?&lt;/code&gt; 之后的键值对出现的函数参数。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;async def read_item(skip: int = 0, limit: int = 10): ...&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;访问 &lt;code&gt;/items/?skip=20&amp;amp;limit=10&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;请求体（Body）&lt;/strong&gt;：用于发送数据（通常用于 POST、PUT 请求）。使用 Pydantic 模型来定义结构。
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;请求体（Body）&lt;/strong&gt;：用于发送数据（通常用于 POST、PUT 请求）。使用 Pydantic 模型来定义结构。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -919,7 +939,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Pydantic 模型&lt;/strong&gt;：这是 FastAPI 的基石。它用于定义数据模型，并自动处理：
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Pydantic 模型&lt;/strong&gt;：这是 FastAPI 的基石。它用于定义数据模型，并自动处理：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;数据验证&lt;/strong&gt;：如果数据无效，返回清晰的错误信息。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;数据转换&lt;/strong&gt;：将输入的 JSON 转换为 Python 对象，将 Python 对象转换为输出的 JSON。&lt;/li&gt;
@@ -1004,14 +1025,24 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;这种设计使得开发者只需关注业务逻辑（&lt;em&gt;What&lt;/em&gt; to do），而框架则高效地处理了所有技术细节（&lt;em&gt;How&lt;/em&gt; to do）。&lt;/p&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;REASFUL接口的知识:&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;REASFUL接口的知识:&lt;/li&gt;
+&lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   RESTful是一种基于HTTP协议的设计风格，其核心思想是将网络上的任何实体都抽象为资源，并通过统一的接口（即HTTP方法
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ，如GET、POST、PUT、DELETE）来对资源进行操作；它强调服务端不应保存客户端状态，即无状态性，使得每次请求都包含了
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    处理该次请求所需的全部信息，从而提高了系统的可伸缩性和可靠性；同时，资源的表现层与资源本身分离，允许客户端通过A
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ccept头请求不同的数据格式（如JSON、XML），最终目标是构建出层次清晰、易于维护和扩展的Web服务。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;blockquote&gt;
 &lt;p&gt;好的，我们来系统地讲解 &lt;strong&gt;RESTful API&lt;/strong&gt; 的知识。这是一个非常重要的 Web 开发概念，理解它对于设计和构建现代、可扩展的 Web 服务至关重要。&lt;/p&gt;
@@ -1200,7 +1231,7 @@
 &lt;li&gt;&lt;strong&gt;通用性&lt;/strong&gt;：基于 HTTP 协议，任何支持 HTTP 的客户端都可以与之交互，语言无关。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;FastAPI 这样的现代框架极大地简化了构建高质量、符合 RESTful 原则的 API 的过程，帮助你自动处理数据验证、序列化和文档生成，让你能更专注于业务逻辑本身。&lt;/p&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;ol start=&#34;4&#34;&gt;
 &lt;li&gt;
 &lt;p&gt;C++构造函数和析构函数能不能被继承:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -1251,7 +1282,11 @@
 &lt;hr&gt;
 &lt;h3 id=&#34;实现机制详解&#34;&gt;实现机制详解
 &lt;/h3&gt;&lt;h4 id=&#34;1-虚函数表-vtable&#34;&gt;1. 虚函数表 (vtable)
-&lt;/h4&gt;&lt;ul&gt;
+&lt;/h4&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
 &lt;li&gt;编译器会为&lt;strong&gt;每一个包含虚函数的类&lt;/strong&gt;（或者从包含虚函数的类派生而来的类）自动生成一个&lt;strong&gt;虚函数表&lt;/strong&gt;。&lt;/li&gt;
 &lt;li&gt;这是一个静态数组，在编译时就已确定，存放在程序的&lt;strong&gt;只读数据段（如 .rodata）&lt;/strong&gt;。&lt;/li&gt;
 &lt;li&gt;表中的每一个元素都是一个&lt;strong&gt;函数指针&lt;/strong&gt;，指向该类可用的虚函数的实际实现。&lt;/li&gt;
@@ -1410,7 +1445,7 @@
 &lt;li&gt;&lt;strong&gt;为何析构函数应为虚函数&lt;/strong&gt;：如果基类析构函数不是虚的，那么通过基类指针删除一个派生类对象，只会调用基类的析构函数，导致&lt;strong&gt;派生类的部分资源泄漏&lt;/strong&gt;。定义为虚函数后，调用过程会通过 vtable 正确找到派生类的析构函数，从而保证完整的析构流程。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;这个机制是 C++ 高效实现运行时常量的经典设计，理解它对于编写正确的面向对象 C++ 程序至关重要。&lt;/p&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;ol start=&#34;6&#34;&gt;
 &lt;li&gt;
 &lt;p&gt;TCP的三次握手和四次挥手:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -1434,7 +1469,7 @@
 &lt;hr&gt;
 &lt;h2 id=&#34;一三次握手-three-way-handshake&#34;&gt;一、三次握手 (Three-Way Handshake)
 &lt;/h2&gt;&lt;p&gt;&lt;strong&gt;目的&lt;/strong&gt;：客户端和服务器之间建立 TCP 连接，同步双方的序列号，并交换 TCP 窗口大小信息。&lt;/p&gt;
-&lt;h3 id=&#34;过程详解&#34;&gt;过程详解：
+&lt;h3 id=&#34;过程详解&#34;&gt;过程详解
 &lt;/h3&gt;&lt;p&gt;假设客户端（Client）想要与服务器（Server）建立连接。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -1491,7 +1526,7 @@
 &lt;hr&gt;
 &lt;h2 id=&#34;二四次挥手-four-way-wavehand&#34;&gt;二、四次挥手 (Four-Way Wavehand)
 &lt;/h2&gt;&lt;p&gt;&lt;strong&gt;目的&lt;/strong&gt;：客户端和服务器之间断开 TCP 连接。由于 TCP 连接是&lt;strong&gt;全双工&lt;/strong&gt;的（数据可以双向独立传输），因此每个方向都必须单独进行关闭。&lt;/p&gt;
-&lt;h3 id=&#34;过程详解-1&#34;&gt;过程详解：
+&lt;h3 id=&#34;过程详解-1&#34;&gt;过程详解
 &lt;/h3&gt;&lt;p&gt;假设客户端（Client）主动发起关闭连接。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -1566,7 +1601,10 @@
 &lt;/ol&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;总结图示&#34;&gt;总结图示
-&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;三次握手 (建立连接)&lt;/strong&gt;&lt;/p&gt;
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;三次握手 (建立连接)&lt;/strong&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -1603,7 +1641,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;ol start=&#34;7&#34;&gt;
 &lt;li&gt;
 &lt;p&gt;OSI模型:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -1615,7 +1653,7 @@
 &lt;/div&gt;&lt;blockquote&gt;
 &lt;p&gt;好的，我们来详细讲解 OSI（Open Systems Interconnection）模型，即开放式系统互联模型。&lt;/p&gt;
 &lt;h3 id=&#34;概述&#34;&gt;概述
-&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;OSI 模型&lt;/strong&gt;是一个由国际标准化组织（ISO）提出的&lt;strong&gt;概念性框架&lt;/strong&gt;，用于描述网络通信系统中各种功能应该如何被划分和组织。它的核心目的是使不同厂商生产的各种硬件和软件能够相互通信，实现** interoperability（互操作性）**。&lt;/p&gt;
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;OSI 模型&lt;/strong&gt;是一个由国际标准化组织（ISO）提出的&lt;strong&gt;概念性框架&lt;/strong&gt;，用于描述网络通信系统中各种功能应该如何被划分和组织。它的核心目的是使不同厂商生产的各种硬件和软件能够相互通信，实现&lt;strong&gt;interoperability（互操作性）&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;它并不是一个具体的协议，而是一个理解和设计网络体系的&lt;strong&gt;理论模型&lt;/strong&gt;。现实中，TCP/IP 协议簇是互联网的实际执行标准，但 OSI 模型因其清晰的结构，仍然是理解和排查网络问题的黄金标准。&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;七层结构&#34;&gt;七层结构
@@ -1689,7 +1727,11 @@
 &lt;hr&gt;
 &lt;h3 id=&#34;各层详细功能&#34;&gt;各层详细功能
 &lt;/h3&gt;&lt;h4 id=&#34;1-物理层-physical-layer&#34;&gt;1. 物理层 (Physical Layer)
-&lt;/h4&gt;&lt;ul&gt;
+&lt;/h4&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;功能&lt;/strong&gt;：负责在物理介质上透明地传输原始的&lt;strong&gt;比特流&lt;/strong&gt;（0 和 1）。它关心的是电压高低、光信号闪灭、线缆接口形状、传输速率等物理特性。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;关键概念&lt;/strong&gt;：比特同步、带宽、调制解调。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;设备&lt;/strong&gt;：&lt;strong&gt;集线器 (Hub)&lt;/strong&gt;、&lt;strong&gt;中继器 (Repeater)&lt;/strong&gt;、网线、光纤、无线电波。&lt;/li&gt;
@@ -1826,7 +1868,7 @@
   &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;&lt;strong&gt;总结&lt;/strong&gt;：OSI 模型是一个完美的、逻辑清晰的理论框架，帮助我们模块化地理解和设计网络。虽然现实中的网络协议并不完全严格遵循它，但它提供的分层思想是所有网络技术的基础。&lt;/p&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;ol start=&#34;8&#34;&gt;
 &lt;li&gt;
 &lt;p&gt;C++构造函数和析构函数讲解:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -1840,15 +1882,19 @@
 &lt;hr&gt;
 &lt;h3 id=&#34;1-构造函数-constructor&#34;&gt;1. 构造函数 (Constructor)
 &lt;/h3&gt;&lt;h4 id=&#34;什么是构造函数&#34;&gt;什么是构造函数？
-&lt;/h4&gt;&lt;p&gt;构造函数是一种特殊的成员函数，它在&lt;strong&gt;创建类的新对象时自动调用&lt;/strong&gt;。它的主要目的是&lt;strong&gt;初始化对象&lt;/strong&gt;，即为对象的数据成员设置初始值。&lt;/p&gt;
-&lt;h4 id=&#34;构造函数的特点&#34;&gt;构造函数的特点：
+&lt;/h4&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;构造函数是一种特殊的成员函数，它在&lt;strong&gt;创建类的新对象时自动调用&lt;/strong&gt;。它的主要目的是&lt;strong&gt;初始化对象&lt;/strong&gt;，即为对象的数据成员设置初始值。&lt;/p&gt;
+&lt;h4 id=&#34;构造函数的特点&#34;&gt;构造函数的特点
 &lt;/h4&gt;&lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;与类同名&lt;/strong&gt;：构造函数的名称必须与类名完全相同。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;无返回类型&lt;/strong&gt;：它没有返回值，甚至不能使用 &lt;code&gt;void&lt;/code&gt;。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;自动调用&lt;/strong&gt;：当对象被创建时（例如通过 &lt;code&gt;ClassName obj;&lt;/code&gt; 或 &lt;code&gt;new ClassName&lt;/code&gt;），编译器会自动调用构造函数。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;可以重载&lt;/strong&gt;：一个类可以有多个参数列表不同的构造函数（即重载构造函数），从而提供多种初始化对象的方式。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h4 id=&#34;构造函数的类型&#34;&gt;构造函数的类型：
+&lt;h4 id=&#34;构造函数的类型&#34;&gt;构造函数的类型
 &lt;/h4&gt;&lt;h5 id=&#34;a-默认构造函数-default-constructor&#34;&gt;a. 默认构造函数 (Default Constructor)
 &lt;/h5&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;定义&lt;/strong&gt;：不接受任何参数的构造函数。&lt;/li&gt;
@@ -2050,7 +2096,7 @@
 &lt;h3 id=&#34;2-析构函数-destructor&#34;&gt;2. 析构函数 (Destructor)
 &lt;/h3&gt;&lt;h4 id=&#34;什么是析构函数&#34;&gt;什么是析构函数？
 &lt;/h4&gt;&lt;p&gt;析构函数是另一种特殊的成员函数，它在&lt;strong&gt;对象被销毁时自动调用&lt;/strong&gt;。它的主要目的是&lt;strong&gt;释放对象在生命周期内获取的资源&lt;/strong&gt;，如动态分配的内存、文件句柄、网络连接等。&lt;/p&gt;
-&lt;h4 id=&#34;析构函数的特点&#34;&gt;析构函数的特点：
+&lt;h4 id=&#34;析构函数的特点&#34;&gt;析构函数的特点
 &lt;/h4&gt;&lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;名称是 &lt;code&gt;~&lt;/code&gt; 加类名&lt;/strong&gt;：例如 &lt;code&gt;~MyClass()&lt;/code&gt;。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;无参数，无返回类型&lt;/strong&gt;：析构函数不能接受任何参数，也不能被重载（一个类只有一个析构函数）。&lt;/li&gt;
@@ -2172,7 +2218,7 @@
 &lt;/table&gt;
 &lt;p&gt;&lt;strong&gt;核心原则（RAII）&lt;/strong&gt;：
 构造函数和析构函数是 C++ &lt;strong&gt;资源获取即初始化 (RAII)&lt;/strong&gt; 理念的核心。资源（如内存）的获取应该在构造函数中完成，而资源的释放则在析构函数中完成。这确保了资源的生命周期与对象的生命周期严格绑定，&lt;strong&gt;避免了资源泄漏&lt;/strong&gt;，是编写安全、高效 C++ 代码的关键。&lt;/p&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;ol start=&#34;9&#34;&gt;
 &lt;li&gt;
 &lt;p&gt;讲解CONTEXT工程:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -2234,226 +2280,176 @@
 &lt;h3 id=&#34;1-演化史从生成器到异步io&#34;&gt;1. 演化史：从生成器到异步IO
 &lt;/h3&gt;&lt;p&gt;要理解 &lt;code&gt;async&lt;/code&gt;/&lt;code&gt;await&lt;/code&gt;，必须知道它的前身：&lt;strong&gt;生成器&lt;/strong&gt;。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;生成器 (Generator)&lt;/strong&gt;： 使用 &lt;code&gt;yield&lt;/code&gt; 关键字的函数。它可以&lt;strong&gt;暂停&lt;/strong&gt;执行并向调用者&lt;strong&gt;返回一个值&lt;/strong&gt;，后续可以从暂停的地方&lt;strong&gt;恢复&lt;/strong&gt;执行。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;simple_generator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Start&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;yield&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# Pause and return 1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Resumed with &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;yield&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;      &lt;span class=&#34;c1&#34;&gt;# Pause and return 2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;gen&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;simple_generator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;value1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;gen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;   &lt;span class=&#34;c1&#34;&gt;# Output: &amp;#34;Start&amp;#34;, value1 is 1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;value2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gen&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;send&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;42&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# Output: &amp;#34;Resumed with 42&amp;#34;, value2 is 2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;yield&lt;/code&gt;： 暂停函数，返回一个值。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.send(value)&lt;/code&gt;： 恢复函数，并传入一个值（该值成为 &lt;code&gt;yield&lt;/code&gt; 表达式的结果）。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;协程 (Coroutine)&lt;/strong&gt;： Python 3.4 的 &lt;code&gt;asyncio&lt;/code&gt; 库利用生成器的这个“暂停和恢复”的特性，将其&lt;strong&gt;强化为协程&lt;/strong&gt;。一个生成器函数被 &lt;code&gt;@asyncio.coroutine&lt;/code&gt; 装饰，并使用 &lt;code&gt;yield from&lt;/code&gt; 来等待其他协程。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Python 3.4 style&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@asyncio.coroutine&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;old_style_coroutine&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;yield from&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;asyncio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sleep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Done&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;这时，“生成器”正式变成了可以相互协作调度的“协程”。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;原生协程 (Native Coroutine)&lt;/strong&gt;： Python 3.5 引入了专用的关键字 &lt;code&gt;async&lt;/code&gt; 和 &lt;code&gt;await&lt;/code&gt;，使语法更清晰，并与生成器彻底区分开。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Python 3.5+ style&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;async&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;native_coroutine&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;await&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;asyncio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sleep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Done&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;code&gt;async def&lt;/code&gt; 定义的函数是&lt;strong&gt;原生协程函数&lt;/strong&gt;，调用它返回一个&lt;strong&gt;协程对象&lt;/strong&gt;，而不是直接执行。&lt;code&gt;await&lt;/code&gt; 的作用类似于 &lt;code&gt;yield from&lt;/code&gt;，但专门用于等待可等待对象。&lt;/p&gt;
+&lt;li&gt;&lt;strong&gt;生成器 (Generator)&lt;/strong&gt;： 使用 &lt;code&gt;yield&lt;/code&gt; 关键字的函数。它可以&lt;strong&gt;暂停&lt;/strong&gt;执行并向调用者&lt;strong&gt;返回一个值&lt;/strong&gt;，后续可以从暂停的地方&lt;strong&gt;恢复&lt;/strong&gt;执行。&lt;/li&gt;
+&lt;/ol&gt;&lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;2-关键概念与实现机制&#34;&gt;2. 关键概念与实现机制
-&lt;/h3&gt;&lt;h4 id=&#34;a-可等待对象-awaitable&#34;&gt;a. 可等待对象 (Awaitable)
-&lt;/h4&gt;&lt;p&gt;任何实现了 &lt;code&gt;__await__()&lt;/code&gt; 方法的对象。&lt;code&gt;await&lt;/code&gt; 关键字后面必须是一个可等待对象。主要分为三类：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;协程 (Coroutine)&lt;/strong&gt;： &lt;code&gt;async def&lt;/code&gt; 定义的函数返回的对象。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;任务 (Task)&lt;/strong&gt;： 用于并发地调度协程。&lt;code&gt;asyncio.create_task()&lt;/code&gt; 的返回值。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Future&lt;/strong&gt;： 一个&lt;strong&gt;底层回调对象&lt;/strong&gt;，代表一个异步操作的&lt;strong&gt;最终结果&lt;/strong&gt;。它是 &lt;code&gt;Task&lt;/code&gt; 的基类。通常用户不直接操作。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4 id=&#34;b-事件循环-event-loop---大脑&#34;&gt;b. 事件循环 (Event Loop) - 大脑
-&lt;/h4&gt;&lt;p&gt;这是整个异步机制的核心，是一个&lt;strong&gt;无限循环&lt;/strong&gt;。它做两件事：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;轮询&lt;/strong&gt;： 不断地检查哪些 &lt;code&gt;Future&lt;/code&gt; 对象已经完成（例如，一个网络请求收到了响应，一个定时器超时了）。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;调度&lt;/strong&gt;： 一旦某个 &lt;code&gt;Future&lt;/code&gt; 完成，事件循环就&lt;strong&gt;恢复&lt;/strong&gt;正在等待这个 &lt;code&gt;Future&lt;/code&gt; 的&lt;strong&gt;协程&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;可以把事件循环想象成一个高效的&lt;strong&gt;调度员&lt;/strong&gt;，它管理着一个任务列表（协程、回调等），知道每个任务在等待什么（IO操作、睡眠等）。当某个资源就绪时，它就通知对应的任务：“你要等的东西准备好了，继续干吧”。&lt;/p&gt;
-&lt;h4 id=&#34;c-await-关键字---信号灯&#34;&gt;c. &lt;code&gt;await&lt;/code&gt; 关键字 - 信号灯
-&lt;/h4&gt;&lt;p&gt;&lt;code&gt;await some_awaitable&lt;/code&gt; 做了以下几件事：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;暂停当前协程&lt;/strong&gt;： 执行到 &lt;code&gt;await&lt;/code&gt; 时，当前协程立即&lt;strong&gt;暂停&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;向事件循环注册回调&lt;/strong&gt;： 它告诉事件循环：“我（当前协程）现在要等 &lt;code&gt;some_awaitable&lt;/code&gt; 完成。等它完成后，&lt;strong&gt;请你回调我，让我继续执行&lt;/strong&gt;。”&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;交出控制权&lt;/strong&gt;： 将 CPU 的控制权&lt;strong&gt;交还给事件循环&lt;/strong&gt;。事件循环此时可以去找其他已经准备就绪的协程来执行。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;这就是单线程实现并发的关键&lt;/strong&gt;：一个协程在等待 IO 时，线程不会傻等，而是去执行其他协程。&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;3-工作流程详解&#34;&gt;3. 工作流程详解
-&lt;/h3&gt;&lt;p&gt;让我们通过一个例子，拆解整个生命周期：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;asyncio&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;async&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;say_after&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delay&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;what&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;await&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;asyncio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sleep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delay&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# 1. 遇到第一个 await&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;what&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;                &lt;span class=&#34;c1&#34;&gt;# 4. 被事件循环唤醒后，继续执行&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;async&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;task1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;asyncio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;create_task&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;say_after&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;hello&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# 创建任务1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;task2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;asyncio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;create_task&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;say_after&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;world&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# 创建任务2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;await&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;task1&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# 2. 等待任务1完成&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;await&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;task2&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# 5. 等待任务2完成&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;asyncio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# 启动事件循环&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;启动&lt;/strong&gt;： &lt;code&gt;asyncio.run(main())&lt;/code&gt; 创建一个新的事件循环，并开始运行 &lt;code&gt;main()&lt;/code&gt; 协程。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;创建任务&lt;/strong&gt;： &lt;code&gt;asyncio.create_task()&lt;/code&gt; 将 &lt;code&gt;say_after&lt;/code&gt; 协程&lt;strong&gt;包装成一个 &lt;code&gt;Task&lt;/code&gt; 对象&lt;/strong&gt;，并&lt;strong&gt;立即将其加入到事件循环的调度队列中&lt;/strong&gt;。此时，两个 &lt;code&gt;say_after&lt;/code&gt; 协程都开始执行。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;首次 &lt;code&gt;await&lt;/code&gt;&lt;/strong&gt;：
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;task1&lt;/code&gt; 和 &lt;code&gt;task2&lt;/code&gt; 几乎同时执行到 &lt;code&gt;await asyncio.sleep(delay)&lt;/code&gt;。&lt;/li&gt;
-&lt;li&gt;它们都暂停执行，并向事件循环注册：“请在哪哪毫秒后唤醒我”。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;控制权回到事件循环&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;事件循环工作&lt;/strong&gt;：
-&lt;ul&gt;
-&lt;li&gt;事件循环发现现在没有立刻可以运行的协程（都在睡眠），但它有两个定时器在倒计时。&lt;/li&gt;
-&lt;li&gt;它等待（通过 &lt;code&gt;selectors&lt;/code&gt; 模块），直到 &lt;strong&gt;1 秒后&lt;/strong&gt;，&lt;code&gt;task1&lt;/code&gt; 的睡眠到期。&lt;/li&gt;
-&lt;li&gt;事件循环将 &lt;code&gt;task1&lt;/code&gt; 的状态标记为“完成”，并将其&lt;strong&gt;放回可运行队列&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;事件循环找到 &lt;code&gt;task1&lt;/code&gt; 并恢复其执行。&lt;code&gt;task1&lt;/code&gt; 打印 &lt;code&gt;&#39;hello&#39;&lt;/code&gt;，然后真正执行完毕。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;等待完成&lt;/strong&gt;：
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;main&lt;/code&gt; 函数中的 &lt;code&gt;await task1&lt;/code&gt; 发现 &lt;code&gt;task1&lt;/code&gt; 已经完成，于是继续向下执行。&lt;/li&gt;
-&lt;li&gt;它遇到 &lt;code&gt;await task2&lt;/code&gt;，此时 &lt;code&gt;task2&lt;/code&gt; 可能还在睡眠（才过去1秒，它要睡2秒）。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;main&lt;/code&gt; 协程因此暂停，&lt;strong&gt;控制权再次交还给事件循环&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;最终结束&lt;/strong&gt;：
-&lt;ul&gt;
-&lt;li&gt;事件循环又等了1秒，&lt;code&gt;task2&lt;/code&gt; 的睡眠到期。&lt;/li&gt;
-&lt;li&gt;事件循环唤醒 &lt;code&gt;task2&lt;/code&gt;，它打印 &lt;code&gt;&#39;world&#39;&lt;/code&gt; 并完成。&lt;/li&gt;
-&lt;li&gt;事件循环看到 &lt;code&gt;main&lt;/code&gt; 在等待的 &lt;code&gt;task2&lt;/code&gt; 也完成了，就恢复 &lt;code&gt;main&lt;/code&gt; 协程。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;main&lt;/code&gt; 执行完毕，事件循环退出。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;整个过程只在 &lt;strong&gt;1 个线程&lt;/strong&gt;中完成，总耗时约 &lt;strong&gt;2 秒&lt;/strong&gt;（而不是 1+2=3 秒），实现了并发。&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;4-底层实现与生成器的联系&#34;&gt;4. 底层实现：与生成器的联系
-&lt;/h3&gt;&lt;p&gt;尽管用了新语法，底层依然与生成器密切相关。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;async def&lt;/code&gt; 函数在底层创建的是一个&lt;strong&gt;生成器函数&lt;/strong&gt;的变种。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;await&lt;/code&gt; 语句编译后，本质上就是一个 &lt;code&gt;yield from&lt;/code&gt;。&lt;/li&gt;
-&lt;li&gt;当你 &lt;code&gt;await&lt;/code&gt; 一个 &lt;code&gt;Future&lt;/code&gt; 时，代码大致相当于：
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 伪代码：await future 的近似实现&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;fm&#34;&gt;__await__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;done&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt; 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;yield&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# 这里将 Future 本身 yield 出去，暂停协程&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# 恢复后，返回结果&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;事件循环在 &lt;code&gt;yield self&lt;/code&gt; 这里拿到这个 &lt;code&gt;Future&lt;/code&gt;，并将其添加到监视列表中。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;总结&#34;&gt;总结
-&lt;/h3&gt;&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th style=&#34;text-align: left&#34;&gt;特性&lt;/th&gt;
-          &lt;th style=&#34;text-align: left&#34;&gt;实现机制&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;如何暂停？&lt;/strong&gt;&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;通过 &lt;code&gt;await&lt;/code&gt; 关键字，其底层是 &lt;code&gt;yield&lt;/code&gt; 或 &lt;code&gt;yield from&lt;/code&gt;，将协程的执行状态（帧栈、指令指针等）冻结。&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;如何恢复？&lt;/strong&gt;&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;事件循环在它等待的资源就绪后（如 IO 完成、超时），通过 &lt;code&gt;.send(None)&lt;/code&gt; 或类似方法恢复协程。&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;如何并发？&lt;/strong&gt;&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;单线程内，一个协程因 &lt;code&gt;await&lt;/code&gt; 暂停时，事件循环立即调度执行另一个已就绪的协程。&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;为何高效？&lt;/strong&gt;&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;用户态调度&lt;/strong&gt;，切换代价极低（只是一个函数调用）。&lt;strong&gt;非阻塞IO&lt;/strong&gt;，等待期间线程不被占用。&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;简单来说，&lt;strong&gt;&lt;code&gt;async&lt;/code&gt;/&lt;code&gt;await&lt;/code&gt; 是提供给开发者的一套友好语法糖，其背后是一套基于生成器、Future 和事件循环的成熟并发框架&lt;/strong&gt;。它让开发者可以用看似同步的代码风格，写出高性能的异步应用程序。&lt;/p&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;     ```python
+&amp;gt;     def simple_generator():
+&amp;gt;         print(&amp;quot;Start&amp;quot;)
+&amp;gt;         x = yield 1  # Pause and return 1
+&amp;gt;         print(f&amp;quot;Resumed with {x}&amp;quot;)
+&amp;gt;         yield 2      # Pause and return 2
+&amp;gt;                 
+&amp;gt;     gen = simple_generator()
+&amp;gt;     value1 = next(gen)   # Output: &amp;quot;Start&amp;quot;, value1 is 1
+&amp;gt;     value2 = gen.send(42) # Output: &amp;quot;Resumed with 42&amp;quot;, value2 is 2
+&amp;gt;     ```
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;     * `yield`： 暂停函数，返回一个值。
+&amp;gt;     * `.send(value)`： 恢复函数，并传入一个值（该值成为 `yield` 表达式的结果）。
+&amp;gt;
+&amp;gt; 2. **协程 (Coroutine)**： Python 3.4 的 `asyncio` 库利用生成器的这个“暂停和恢复”的特性，将其**强化为协程**。一个生成器函数被 `@asyncio.coroutine` 装饰，并使用 `yield from` 来等待其他协程。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;     ```python
+&amp;gt;     # Python 3.4 style
+&amp;gt;     @asyncio.coroutine
+&amp;gt;     def old_style_coroutine():
+&amp;gt;         yield from asyncio.sleep(1)
+&amp;gt;         print(&amp;quot;Done&amp;quot;)
+&amp;gt;     ```
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;     这时，“生成器”正式变成了可以相互协作调度的“协程”。
+&amp;gt;
+&amp;gt; 3. **原生协程 (Native Coroutine)**： Python 3.5 引入了专用的关键字 `async` 和 `await`，使语法更清晰，并与生成器彻底区分开。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;     ```python
+&amp;gt;     # Python 3.5+ style
+&amp;gt;     async def native_coroutine():
+&amp;gt;         await asyncio.sleep(1)
+&amp;gt;         print(&amp;quot;Done&amp;quot;)
+&amp;gt;     ```
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;     `async def` 定义的函数是**原生协程函数**，调用它返回一个**协程对象**，而不是直接执行。`await` 的作用类似于 `yield from`，但专门用于等待可等待对象。
+&amp;gt;
+&amp;gt; ---
+&amp;gt;
+&amp;gt; ### 2. 关键概念与实现机制
+&amp;gt;
+&amp;gt; #### a. 可等待对象 (Awaitable)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; 任何实现了 `__await__()` 方法的对象。`await` 关键字后面必须是一个可等待对象。主要分为三类：
+&amp;gt; 1. **协程 (Coroutine)**： `async def` 定义的函数返回的对象。
+&amp;gt; 2. **任务 (Task)**： 用于并发地调度协程。`asyncio.create_task()` 的返回值。
+&amp;gt; 3. **Future**： 一个**底层回调对象**，代表一个异步操作的**最终结果**。它是 `Task` 的基类。通常用户不直接操作。
+&amp;gt;
+&amp;gt; #### b. 事件循环 (Event Loop) - 大脑
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; 这是整个异步机制的核心，是一个**无限循环**。它做两件事：
+&amp;gt; 1. **轮询**： 不断地检查哪些 `Future` 对象已经完成（例如，一个网络请求收到了响应，一个定时器超时了）。
+&amp;gt; 2. **调度**： 一旦某个 `Future` 完成，事件循环就**恢复**正在等待这个 `Future` 的**协程**。
+&amp;gt;
+&amp;gt; 可以把事件循环想象成一个高效的**调度员**，它管理着一个任务列表（协程、回调等），知道每个任务在等待什么（IO操作、睡眠等）。当某个资源就绪时，它就通知对应的任务：“你要等的东西准备好了，继续干吧”。
+&amp;gt;
+&amp;gt; #### c. `await` 关键字 - 信号灯
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; `await some_awaitable` 做了以下几件事：
+&amp;gt; 1. **暂停当前协程**： 执行到 `await` 时，当前协程立即**暂停**。
+&amp;gt; 2. **向事件循环注册回调**： 它告诉事件循环：“我（当前协程）现在要等 `some_awaitable` 完成。等它完成后，**请你回调我，让我继续执行**。”
+&amp;gt; 3. **交出控制权**： 将 CPU 的控制权**交还给事件循环**。事件循环此时可以去找其他已经准备就绪的协程来执行。
+&amp;gt;
+&amp;gt; **这就是单线程实现并发的关键**：一个协程在等待 IO 时，线程不会傻等，而是去执行其他协程。
+&amp;gt;
+&amp;gt; ---
+&amp;gt;
+&amp;gt; ### 3. 工作流程详解
+&amp;gt;
+&amp;gt; 让我们通过一个例子，拆解整个生命周期：
+&amp;gt;
+&amp;gt; ```python
+&amp;gt; import asyncio
+&amp;gt; 
+&amp;gt; async def say_after(delay, what):
+&amp;gt;     await asyncio.sleep(delay) # 1. 遇到第一个 await
+&amp;gt;     print(what)                # 4. 被事件循环唤醒后，继续执行
+&amp;gt; 
+&amp;gt; async def main():
+&amp;gt;     task1 = asyncio.create_task(say_after(1, &#39;hello&#39;)) # 创建任务1
+&amp;gt;     task2 = asyncio.create_task(say_after(2, &#39;world&#39;)) # 创建任务2
+&amp;gt; 
+&amp;gt;     await task1 # 2. 等待任务1完成
+&amp;gt;     await task2 # 5. 等待任务2完成
+&amp;gt; 
+&amp;gt; asyncio.run(main()) # 启动事件循环
+&amp;gt; ```
+&amp;gt;
+&amp;gt; 1. **启动**： `asyncio.run(main())` 创建一个新的事件循环，并开始运行 `main()` 协程。
+&amp;gt; 2. **创建任务**： `asyncio.create_task()` 将 `say_after` 协程**包装成一个 `Task` 对象**，并**立即将其加入到事件循环的调度队列中**。此时，两个 `say_after` 协程都开始执行。
+&amp;gt; 3. **首次 `await`**：
+&amp;gt;     * `task1` 和 `task2` 几乎同时执行到 `await asyncio.sleep(delay)`。
+&amp;gt;     * 它们都暂停执行，并向事件循环注册：“请在哪哪毫秒后唤醒我”。
+&amp;gt;     * **控制权回到事件循环**。
+&amp;gt; 4. **事件循环工作**：
+&amp;gt;     * 事件循环发现现在没有立刻可以运行的协程（都在睡眠），但它有两个定时器在倒计时。
+&amp;gt;     * 它等待（通过 `selectors` 模块），直到 **1 秒后**，`task1` 的睡眠到期。
+&amp;gt;     * 事件循环将 `task1` 的状态标记为“完成”，并将其**放回可运行队列**。
+&amp;gt;     * 事件循环找到 `task1` 并恢复其执行。`task1` 打印 `&#39;hello&#39;`，然后真正执行完毕。
+&amp;gt; 5. **等待完成**：
+&amp;gt;     * `main` 函数中的 `await task1` 发现 `task1` 已经完成，于是继续向下执行。
+&amp;gt;     * 它遇到 `await task2`，此时 `task2` 可能还在睡眠（才过去1秒，它要睡2秒）。
+&amp;gt;     * `main` 协程因此暂停，**控制权再次交还给事件循环**。
+&amp;gt; 6. **最终结束**：
+&amp;gt;     * 事件循环又等了1秒，`task2` 的睡眠到期。
+&amp;gt;     * 事件循环唤醒 `task2`，它打印 `&#39;world&#39;` 并完成。
+&amp;gt;     * 事件循环看到 `main` 在等待的 `task2` 也完成了，就恢复 `main` 协程。
+&amp;gt;     * `main` 执行完毕，事件循环退出。
+&amp;gt;
+&amp;gt; 整个过程只在 **1 个线程**中完成，总耗时约 **2 秒**（而不是 1+2=3 秒），实现了并发。
+&amp;gt;
+&amp;gt; ---
+&amp;gt;
+&amp;gt; ### 4. 底层实现：与生成器的联系
+&amp;gt;
+&amp;gt; 尽管用了新语法，底层依然与生成器密切相关。
+&amp;gt;
+&amp;gt; * `async def` 函数在底层创建的是一个**生成器函数**的变种。
+&amp;gt; * `await` 语句编译后，本质上就是一个 `yield from`。
+&amp;gt; * 当你 `await` 一个 `Future` 时，代码大致相当于：
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;     ```python
+&amp;gt;     # 伪代码：await future 的近似实现
+&amp;gt;     def __await__(self):
+&amp;gt;         if not self.done(): 
+&amp;gt;             yield self  # 这里将 Future 本身 yield 出去，暂停协程
+&amp;gt;         return self.result() # 恢复后，返回结果
+&amp;gt;     ```
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;     事件循环在 `yield self` 这里拿到这个 `Future`，并将其添加到监视列表中。
+&amp;gt;
+&amp;gt; ### 总结
+&amp;gt;
+&amp;gt; | 特性           | 实现机制                                                     |
+&amp;gt; | :------------- | :----------------------------------------------------------- |
+&amp;gt; | **如何暂停？** | 通过 `await` 关键字，其底层是 `yield` 或 `yield from`，将协程的执行状态（帧栈、指令指针等）冻结。 |
+&amp;gt; | **如何恢复？** | 事件循环在它等待的资源就绪后（如 IO 完成、超时），通过 `.send(None)` 或类似方法恢复协程。 |
+&amp;gt; | **如何并发？** | 单线程内，一个协程因 `await` 暂停时，事件循环立即调度执行另一个已就绪的协程。 |
+&amp;gt; | **为何高效？** | **用户态调度**，切换代价极低（只是一个函数调用）。**非阻塞IO**，等待期间线程不被占用。 |
+&amp;gt;
+&amp;gt; 简单来说，**`async`/`await` 是提供给开发者的一套友好语法糖，其背后是一套基于生成器、Future 和事件循环的成熟并发框架**。它让开发者可以用看似同步的代码风格，写出高性能的异步应用程序。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;11&#34;&gt;
 &lt;li&gt;
 &lt;p&gt;Milvous向量数据库向量存储(索引)&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -2490,94 +2486,68 @@
 &lt;h3 id=&#34;3-milvus中常见的索引类型如何看图索骥&#34;&gt;3. Milvus中常见的索引类型（如何“看图索骥”）
 &lt;/h3&gt;&lt;p&gt;Milvus支持多种索引类型，适用于不同的场景（精度/速度/内存的权衡）。以下是几种主流的：&lt;/p&gt;
 &lt;h4 id=&#34;a-基于量化的索引相当于分区&#34;&gt;a. 基于量化的索引（相当于“分区”）
-&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;思想&lt;/strong&gt;：将高维向量空间划分成多个“区域”（聚类），每个区域用一个代表向量（质心）来表示。搜索时，先找到查询向量所在的或附近的区域，然后只在这个区域的向量里进行精细搜索。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;IVF_FLAT / IVF_SQ8 / IVF_PQ&lt;/strong&gt;：
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;工作原理&lt;/strong&gt;：
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;训练&lt;/strong&gt;：先用K-Means等算法对所有向量进行聚类，得到&lt;code&gt;nlist&lt;/code&gt;个聚类中心（比如1024个）。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;分配&lt;/strong&gt;：将每个原始向量分配到离它最近的那个聚类中心所在的“桶”里。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;搜索&lt;/strong&gt;：查询时，先计算查询向量与所有聚类中心的距离，找到最近的&lt;code&gt;nprobe&lt;/code&gt;个（比如8个）聚类中心。然后只在这&lt;code&gt;nprobe&lt;/code&gt;个“桶”内部的向量中进行精确（或进一步量化）搜索。&lt;/li&gt;
+&lt;/h4&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;类比&lt;/strong&gt;：好比在一个大型图书馆里，先把书按主题（历史、科学、文学&amp;hellip;）分到不同的房间（聚类）。你要找一本历史书，就不用去科学和文学房间里翻了，直接去历史房间找就行。&lt;code&gt;nprobe&lt;/code&gt;相当于你决定去“历史”和“考古”这两个最相关的房间找。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;b-基于图的索引相当于人际关系网&#34;&gt;b. 基于图的索引（相当于“人际关系网”）
-&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;思想&lt;/strong&gt;：将向量构建成一张图，每个向量是一个节点，节点之间通过边连接，相似的向量之间才有边。搜索时，从一些入口节点开始，沿着“越来越相似”的边进行“漫步”式搜索，快速逼近目标。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;HNSW（Hierarchical Navigable Small World）&lt;/strong&gt;： 这是目前最流行、性能最好的ANN索引之一。
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;工作原理&lt;/strong&gt;：
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;分层&lt;/strong&gt;：构建一个多层图结构。底层（第0层）包含所有向量，越高层包含的向量越少，相当于一个“高速公路”网络。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;搜索&lt;/strong&gt;：从最高层的某个节点开始，因为节点少，可以快速定位到目标的大致区域。然后逐层向下，在更精细的层中搜索，直到最底层找到最相似的邻居。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;类比&lt;/strong&gt;：想象你要在全球找人。
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;底层&lt;/strong&gt;：所有街道（所有向量）。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;最高层&lt;/strong&gt;：国际航班线路（少量核心枢纽）。
-你先坐国际航班（最高层）飞到目标国家，再转国内航班（中间层），最后打车在街道（底层）上找到具体地址。这比一条街一条街找快无数倍。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;c-基于树的索引相当于决策树&#34;&gt;c. 基于树的索引（相当于“决策树”）
-&lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;ANNOY（Approximate Nearest Neighbors Oh Yeah）&lt;/strong&gt;：
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;工作原理&lt;/strong&gt;：通过不断递归地随机超平面来分割向量空间，构建一颗或多颗二叉树。搜索时，从根节点开始向下遍历，找到所在的叶子节点，然后在这个叶子节点内进行搜索。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;类比&lt;/strong&gt;：玩“20个问题”游戏：“是动物吗？” -&amp;gt; “是哺乳动物吗？” -&amp;gt; &amp;hellip; 通过一系列问题快速缩小范围。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;4-索引与向量存储的关系&#34;&gt;4. 索引与向量存储的关系
-&lt;/h3&gt;&lt;p&gt;这是一个非常重要的点：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;索引 (Index)&lt;/strong&gt;：是&lt;strong&gt;加速查询&lt;/strong&gt;的数据结构（如HNSW图、IVF的聚类中心列表）。它通常保存在&lt;strong&gt;内存 (RAM)&lt;/strong&gt; 中，因为搜索需要极快的随机访问速度。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;原始向量数据 (Vector Data)&lt;/strong&gt;：是原始的向量本身。它可以有不同的存储方式以平衡性能和成本：
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;FLAT&lt;/strong&gt;：原样存储，不压缩。用于保证100%精确率的暴力搜索，或作为其他索引的底层数据。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;SQ8&lt;/strong&gt;：将原始&lt;code&gt;float&lt;/code&gt;向量压缩为&lt;code&gt;8-bit integer&lt;/code&gt;，显著减少内存占用，精度损失很小。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;磁盘&lt;/strong&gt;：甚至可以只将索引加载到内存，而将原始向量数据放在磁盘上，需要时再通过索引定位到磁盘位置去读取，极大节省内存成本。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;在Milvus中，你&lt;strong&gt;先插入数据（向量）&lt;/strong&gt;，&lt;strong&gt;后创建索引&lt;/strong&gt;。创建索引后，Milvus会自动管理索引和原始数据之间的关系。&lt;/p&gt;
-&lt;h3 id=&#34;总结-1&#34;&gt;总结
-&lt;/h3&gt;&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th style=&#34;text-align: left&#34;&gt;特性&lt;/th&gt;
-          &lt;th style=&#34;text-align: left&#34;&gt;解释&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;是什么？&lt;/strong&gt;&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;一种为了&lt;strong&gt;加速相似性搜索&lt;/strong&gt;而预先构建的&lt;strong&gt;专用数据结构&lt;/strong&gt;。&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;为什么需要？&lt;/strong&gt;&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;避免暴力搜索的&lt;strong&gt;性能灾难&lt;/strong&gt;，实现毫秒级的海量向量检索。&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;核心权衡？&lt;/strong&gt;&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;精度 vs 速度 vs 内存&lt;/strong&gt;。索引都是近似搜索，需要在三者之间取得平衡。&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;在Milvus中如何工作？&lt;/strong&gt;&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;1. &lt;strong&gt;插入&lt;/strong&gt;原始向量数据。&lt;br&gt;2. &lt;strong&gt;选择&lt;/strong&gt;一种索引类型（如HNSW, IVF_PQ）和参数。&lt;br&gt;3. &lt;strong&gt;创建&lt;/strong&gt;索引，Milvus后台进行预处理。&lt;br&gt;4. &lt;strong&gt;搜索&lt;/strong&gt;时，使用索引快速定位候选集，极大减少计算量。&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;所以，当你在Milvus中为一个集合（Collection）创建索引时，你本质上是在告诉Milvus：“请用我选择的这种算法和参数，为我整理好这些数据，以便我以后能飞快地找到相似的东西。”&lt;/p&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; **思想**：将高维向量空间划分成多个“区域”（聚类），每个区域用一个代表向量（质心）来表示。搜索时，先找到查询向量所在的或附近的区域，然后只在这个区域的向量里进行精细搜索。
+&amp;gt;
+&amp;gt; * **IVF_FLAT / IVF_SQ8 / IVF_PQ**：
+&amp;gt;   * **工作原理**：
+&amp;gt;         1. **训练**：先用K-Means等算法对所有向量进行聚类，得到`nlist`个聚类中心（比如1024个）。
+&amp;gt;         2. **分配**：将每个原始向量分配到离它最近的那个聚类中心所在的“桶”里。
+&amp;gt;         3. **搜索**：查询时，先计算查询向量与所有聚类中心的距离，找到最近的`nprobe`个（比如8个）聚类中心。然后只在这`nprobe`个“桶”内部的向量中进行精确（或进一步量化）搜索。
+&amp;gt;   * **类比**：好比在一个大型图书馆里，先把书按主题（历史、科学、文学...）分到不同的房间（聚类）。你要找一本历史书，就不用去科学和文学房间里翻了，直接去历史房间找就行。`nprobe`相当于你决定去“历史”和“考古”这两个最相关的房间找。
+&amp;gt;
+&amp;gt; #### b. 基于图的索引（相当于“人际关系网”）
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; **思想**：将向量构建成一张图，每个向量是一个节点，节点之间通过边连接，相似的向量之间才有边。搜索时，从一些入口节点开始，沿着“越来越相似”的边进行“漫步”式搜索，快速逼近目标。
+&amp;gt;
+&amp;gt; * **HNSW（Hierarchical Navigable Small World）**： 这是目前最流行、性能最好的ANN索引之一。
+&amp;gt;   * **工作原理**：
+&amp;gt;         1. **分层**：构建一个多层图结构。底层（第0层）包含所有向量，越高层包含的向量越少，相当于一个“高速公路”网络。
+&amp;gt;         2. **搜索**：从最高层的某个节点开始，因为节点少，可以快速定位到目标的大致区域。然后逐层向下，在更精细的层中搜索，直到最底层找到最相似的邻居。
+&amp;gt;   * **类比**：想象你要在全球找人。
+&amp;gt;     * **底层**：所有街道（所有向量）。
+&amp;gt;     * **最高层**：国际航班线路（少量核心枢纽）。
+&amp;gt;         你先坐国际航班（最高层）飞到目标国家，再转国内航班（中间层），最后打车在街道（底层）上找到具体地址。这比一条街一条街找快无数倍。
+&amp;gt;
+&amp;gt; #### c. 基于树的索引（相当于“决策树”）
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; * **ANNOY（Approximate Nearest Neighbors Oh Yeah）**：
+&amp;gt;   * **工作原理**：通过不断递归地随机超平面来分割向量空间，构建一颗或多颗二叉树。搜索时，从根节点开始向下遍历，找到所在的叶子节点，然后在这个叶子节点内进行搜索。
+&amp;gt;   * **类比**：玩“20个问题”游戏：“是动物吗？” -&amp;gt; “是哺乳动物吗？” -&amp;gt; ... 通过一系列问题快速缩小范围。
+&amp;gt;
+&amp;gt; ---
+&amp;gt;
+&amp;gt; ### 4. 索引与向量存储的关系
+&amp;gt;
+&amp;gt; 这是一个非常重要的点：
+&amp;gt; * **索引 (Index)**：是**加速查询**的数据结构（如HNSW图、IVF的聚类中心列表）。它通常保存在**内存 (RAM)** 中，因为搜索需要极快的随机访问速度。
+&amp;gt; * **原始向量数据 (Vector Data)**：是原始的向量本身。它可以有不同的存储方式以平衡性能和成本：
+&amp;gt;   * **FLAT**：原样存储，不压缩。用于保证100%精确率的暴力搜索，或作为其他索引的底层数据。
+&amp;gt;   * **SQ8**：将原始`float`向量压缩为`8-bit integer`，显著减少内存占用，精度损失很小。
+&amp;gt;   * **磁盘**：甚至可以只将索引加载到内存，而将原始向量数据放在磁盘上，需要时再通过索引定位到磁盘位置去读取，极大节省内存成本。
+&amp;gt;
+&amp;gt; 在Milvus中，你**先插入数据（向量）**，**后创建索引**。创建索引后，Milvus会自动管理索引和原始数据之间的关系。
+&amp;gt;
+&amp;gt; ### 总结
+&amp;gt;
+&amp;gt; | 特性                     | 解释                                                         |
+&amp;gt; | :----------------------- | :----------------------------------------------------------- |
+&amp;gt; | **是什么？**             | 一种为了**加速相似性搜索**而预先构建的**专用数据结构**。     |
+&amp;gt; | **为什么需要？**         | 避免暴力搜索的**性能灾难**，实现毫秒级的海量向量检索。       |
+&amp;gt; | **核心权衡？**           | **精度 vs 速度 vs 内存**。索引都是近似搜索，需要在三者之间取得平衡。 |
+&amp;gt; | **在Milvus中如何工作？** | 1. **插入**原始向量数据。&amp;lt;br&amp;gt;2. **选择**一种索引类型（如HNSW, IVF_PQ）和参数。&amp;lt;br&amp;gt;3. **创建**索引，Milvus后台进行预处理。&amp;lt;br&amp;gt;4. **搜索**时，使用索引快速定位候选集，极大减少计算量。 |
+&amp;gt;
+&amp;gt; 所以，当你在Milvus中为一个集合（Collection）创建索引时，你本质上是在告诉Milvus：“请用我选择的这种算法和参数，为我整理好这些数据，以便我以后能飞快地找到相似的东西。”
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;12&#34;&gt;
 &lt;li&gt;
 &lt;p&gt;C和C++的区别:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -2626,7 +2596,11 @@
 &lt;hr&gt;
 &lt;h3 id=&#34;2-关键特性对比&#34;&gt;2. 关键特性对比
 &lt;/h3&gt;&lt;h4 id=&#34;a-面向对象编程-oop&#34;&gt;a. 面向对象编程 (OOP)
-&lt;/h4&gt;&lt;p&gt;这是最显著的区别。&lt;/p&gt;
+&lt;/h4&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是最显著的区别。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;C&lt;/strong&gt;：&lt;strong&gt;不支持&lt;/strong&gt;面向对象。没有类的概念。你可以用 &lt;code&gt;struct&lt;/code&gt; 来封装数据，但 &lt;code&gt;struct&lt;/code&gt; 不能包含函数（方法）。要实现类似“对象”的行为，需要手动将函数指针放在结构体里，这是一种非常原始和容易出错的模拟。&lt;/p&gt;
@@ -2658,10 +2632,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Point(%d, %d)&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;Point&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;print_point&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;iNnt&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;t&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;Point&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;print_point&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;p1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;p1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 笨拙的调用方式
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/li&gt;
@@ -2708,7 +2682,8 @@
 &lt;/ul&gt;
 &lt;h4 id=&#34;b-内存管理&#34;&gt;b. 内存管理
 &lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;C&lt;/strong&gt;： 只有 &lt;code&gt;malloc()&lt;/code&gt;, &lt;code&gt;calloc()&lt;/code&gt;, &lt;code&gt;realloc()&lt;/code&gt; 和 &lt;code&gt;free()&lt;/code&gt;。需要手动计算内存大小并进行类型转换。
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;C&lt;/strong&gt;： 只有 &lt;code&gt;malloc()&lt;/code&gt;, &lt;code&gt;calloc()&lt;/code&gt;, &lt;code&gt;realloc()&lt;/code&gt; 和 &lt;code&gt;free()&lt;/code&gt;。需要手动计算内存大小并进行类型转换。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -2720,7 +2695,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;C++&lt;/strong&gt;： 除了支持 C 的方式，还引入了&lt;strong&gt;运算符 &lt;code&gt;new&lt;/code&gt; 和 &lt;code&gt;delete&lt;/code&gt;&lt;/strong&gt;。它们更安全、更方便，因为它们会自动计算类型大小、进行类型转换，并会调用对象的&lt;strong&gt;构造函数&lt;/strong&gt;和&lt;strong&gt;析构函数&lt;/strong&gt;。
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;C++&lt;/strong&gt;： 除了支持 C 的方式，还引入了&lt;strong&gt;运算符 &lt;code&gt;new&lt;/code&gt; 和 &lt;code&gt;delete&lt;/code&gt;&lt;/strong&gt;。它们更安全、更方便，因为它们会自动计算类型大小、进行类型转换，并会调用对象的&lt;strong&gt;构造函数&lt;/strong&gt;和&lt;strong&gt;析构函数&lt;/strong&gt;。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -2743,13 +2719,20 @@
 &lt;/ul&gt;
 &lt;h4 id=&#34;c-函数特性&#34;&gt;c. 函数特性
 &lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;C&lt;/strong&gt;： 不支持函数重载（同一作用域内不能有同名函数）、默认参数或引用传递。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;C++&lt;/strong&gt;：
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;函数重载&lt;/strong&gt;：允许同名函数，只要参数列表不同。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;默认参数&lt;/strong&gt;：函数参数可以指定默认值。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;引用传递&lt;/strong&gt;：提供了“引用” (&lt;code&gt;&amp;amp;&lt;/code&gt;) 的概念，作为指针的替代品，语法更简洁安全。&lt;/li&gt;
-&lt;/ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;C&lt;/strong&gt;： 不支持函数重载（同一作用域内不能有同名函数）、默认参数或引用传递。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;C++&lt;/strong&gt;：&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;函数重载&lt;/strong&gt;：允许同名函数，只要参数列表不同。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;默认参数&lt;/strong&gt;：函数参数可以指定默认值。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;引用传递&lt;/strong&gt;：提供了“引用” (&lt;code&gt;&amp;amp;&lt;/code&gt;) 的概念，作为指针的替代品，语法更简洁安全。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -2786,8 +2769,11 @@
 &lt;/ul&gt;
 &lt;h4 id=&#34;d-泛型编程&#34;&gt;d. 泛型编程
 &lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;C&lt;/strong&gt;： 不支持。要实现通用操作（比如一个能处理任何类型的排序函数），通常需要使用 &lt;code&gt;void*&lt;/code&gt; 指针和函数指针，代码复杂且极不安全。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;C++&lt;/strong&gt;： 通过&lt;strong&gt;模板 (Templates)&lt;/strong&gt; 支持。可以编写与类型无关的通用代码。
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;C&lt;/strong&gt;： 不支持。要实现通用操作（比如一个能处理任何类型的排序函数），通常需要使用 &lt;code&gt;void*&lt;/code&gt; 指针和函数指针，代码复杂且极不安全。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;C++&lt;/strong&gt;： 通过&lt;strong&gt;模板 (Templates)&lt;/strong&gt; 支持。可以编写与类型无关的通用代码。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -2824,7 +2810,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;MyVector&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;strVec&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;C++ 标准库（STL）的容器（如 &lt;code&gt;vector&lt;/code&gt;, &lt;code&gt;map&lt;/code&gt;）和算法（如 &lt;code&gt;sort&lt;/code&gt;, &lt;code&gt;find&lt;/code&gt;）都是基于模板构建的，这是 C++ 强大功能的体现。&lt;/li&gt;
+&lt;/div&gt;&lt;p&gt;C++ 标准库（STL）的容器（如 &lt;code&gt;vector&lt;/code&gt;, &lt;code&gt;map&lt;/code&gt;）和算法（如 &lt;code&gt;sort&lt;/code&gt;, &lt;code&gt;find&lt;/code&gt;）都是基于模板构建的，这是 C++ 强大功能的体现。&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;e-异常处理&#34;&gt;e. 异常处理
 &lt;/h4&gt;&lt;ul&gt;
@@ -2833,8 +2820,11 @@
 &lt;/ul&gt;
 &lt;h4 id=&#34;f-输入输出&#34;&gt;f. 输入输出
 &lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;C&lt;/strong&gt;： 使用 &lt;code&gt;printf&lt;/code&gt;, &lt;code&gt;scanf&lt;/code&gt; 等函数。需要指定格式符（如 &lt;code&gt;%d&lt;/code&gt;, &lt;code&gt;%s&lt;/code&gt;），类型不安全（如果格式符和变量类型不匹配会导致运行时错误）。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;C++&lt;/strong&gt;： 使用&lt;strong&gt;流（Stream）&lt;/strong&gt; 对象 &lt;code&gt;cin&lt;/code&gt;, &lt;code&gt;cout&lt;/code&gt;, &lt;code&gt;cerr&lt;/code&gt;。使用 &lt;code&gt;&amp;lt;&amp;lt;&lt;/code&gt;（输出操作符）和 &lt;code&gt;&amp;gt;&amp;gt;&lt;/code&gt;（输入操作符），编译器会自动处理类型，更安全、更现代。
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;C&lt;/strong&gt;： 使用 &lt;code&gt;printf&lt;/code&gt;, &lt;code&gt;scanf&lt;/code&gt; 等函数。需要指定格式符（如 &lt;code&gt;%d&lt;/code&gt;, &lt;code&gt;%s&lt;/code&gt;），类型不安全（如果格式符和变量类型不匹配会导致运行时错误）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;C++&lt;/strong&gt;： 使用&lt;strong&gt;流（Stream）&lt;/strong&gt; 对象 &lt;code&gt;cin&lt;/code&gt;, &lt;code&gt;cout&lt;/code&gt;, &lt;code&gt;cerr&lt;/code&gt;。使用 &lt;code&gt;&amp;lt;&amp;lt;&lt;/code&gt;（输出操作符）和 &lt;code&gt;&amp;gt;&amp;gt;&lt;/code&gt;（输入操作符），编译器会自动处理类型，更安全、更现代。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -2926,25 +2916,37 @@
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;选择 C，如果&lt;/strong&gt;：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;你开发的是操作系统、嵌入式固件、硬件驱动程序等底层系统软件。&lt;/li&gt;
-&lt;li&gt;项目极度追求性能和控制，需要手动管理每一个字节。&lt;/li&gt;
-&lt;li&gt;目标平台的资源极其有限（如单片机），容不下 C++ 运行时的开销。&lt;/li&gt;
-&lt;li&gt;项目非常小，或者需要与大量现有的 C 代码库集成。&lt;/li&gt;
-&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;你开发的是操作系统、嵌入式固件、硬件驱动程序等底层系统软件。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;项目极度追求性能和控制，需要手动管理每一个字节。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;目标平台的资源极其有限（如单片机），容不下 C++ 运行时的开销。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;项目非常小，或者需要与大量现有的 C 代码库集成。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;选择 C++，如果&lt;/strong&gt;：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;你开发的是大型、复杂的应用程序（如桌面软件、游戏、数据库）。&lt;/li&gt;
-&lt;li&gt;你需要构建复杂的抽象，并希望提高代码的可维护性、可复用性和可扩展性。&lt;/li&gt;
-&lt;li&gt;你希望利用丰富的标准库（STL）和第三方库来提升开发效率。&lt;/li&gt;
-&lt;li&gt;项目需要面向对象或泛型编程的特性来更好地建模问题。&lt;/li&gt;
-&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;你开发的是大型、复杂的应用程序（如桌面软件、游戏、数据库）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;你需要构建复杂的抽象，并希望提高代码的可维护性、可复用性和可扩展性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;你希望利用丰富的标准库（STL）和第三方库来提升开发效率。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;项目需要面向对象或泛型编程的特性来更好地建模问题。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;总而言之，C 是“基础”和“控制”，而 C++ 是“工程”和“抽象”。两者都是极其强大且经久不衰的语言。&lt;/p&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;ol start=&#34;13&#34;&gt;
 &lt;li&gt;
 &lt;p&gt;栈和堆的区别:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -3034,116 +3036,75 @@
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;代码示例 (C++)&lt;/strong&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;foo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;stackVar&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// &amp;#39;stackVar&amp;#39; 在栈上分配
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;// ... 函数结束，&amp;#39;stackVar&amp;#39; 被自动释放
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;：极速、自动管理、无碎片。&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;：空间有限、生命周期短暂、数据大小必须在编译期确定。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;2-堆-heap&#34;&gt;2. 堆 (Heap)
-&lt;/h4&gt;&lt;p&gt;堆更像是一个巨大的“全局内存池”。程序可以在运行时申请任意大小的内存块，并且可以以任何顺序释放它们。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;工作原理&lt;/strong&gt;：程序通过调用如 &lt;code&gt;malloc()&lt;/code&gt; (C) 或 &lt;code&gt;new&lt;/code&gt; (C++) 来向操作系统申请一块指定大小的内存。操作系统在堆中找到一个足够大的空闲块分配给它，并返回一个指向该内存块的&lt;strong&gt;指针&lt;/strong&gt;。程序员负责在数据不再使用时，通过 &lt;code&gt;free()&lt;/code&gt; (C) 或 &lt;code&gt;delete&lt;/code&gt; (C++) 释放该内存。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;代码示例 (C++)&lt;/strong&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;bar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;// 在堆上分配一个整数，用指针heapPtr管理它
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;heapPtr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;// ... 使用这个整数
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;delete&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;heapPtr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// **必须手动释放**，否则内存泄漏！
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;n&#34;&gt;heapPtr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;nullptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 避免成为野指针
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;：空间巨大、生命周期灵活、大小在运行时决定。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;：分配和释放速度慢、可能产生内存碎片、管理不当会导致严重错误（内存泄漏、野指针）。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;常见问题与误区-faq&#34;&gt;常见问题与误区 (FAQ)
-&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;数据结构中的“堆”和内存中的“堆”是一个概念吗？&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;不是&lt;/strong&gt;。这是中文翻译造成的歧义。&lt;/li&gt;
-&lt;li&gt;数据结构中的堆（Heap）是一种特殊的&lt;strong&gt;树形结构&lt;/strong&gt;（如二叉堆），常用于实现优先队列。&lt;/li&gt;
-&lt;li&gt;内存中的堆（Heap）指的是&lt;strong&gt;内存管理区域&lt;/strong&gt;，名称来源于“一堆可用的内存”。&lt;/li&gt;
-&lt;li&gt;两者是完全不同的概念。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;“栈溢出”和“内存泄漏”是什么意思？&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;栈溢出 (Stack Overflow)&lt;/strong&gt;：通常由过深的递归或过大的局部变量（如 &lt;code&gt;int hugeArray[1000000]&lt;/code&gt;）导致，耗尽了有限的栈空间。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;内存泄漏 (Memory Leak)&lt;/strong&gt;：发生在&lt;strong&gt;堆&lt;/strong&gt;上。程序申请了内存（&lt;code&gt;new&lt;/code&gt;）但忘记了释放（&lt;code&gt;delete&lt;/code&gt;），导致这块内存无法被再次使用，最终可能耗尽所有可用内存。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Java/Python/Go 这些语言也有堆和栈吗？&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;有&lt;/strong&gt;。这些语言在运行时同样需要栈来管理函数调用和局部变量。&lt;strong&gt;对象&lt;/strong&gt;（Object）也几乎总是分配在堆上。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;关键区别&lt;/strong&gt;在于：这些语言引入了&lt;strong&gt;垃圾回收（Garbage Collection, GC）&lt;/strong&gt; 机制。程序员不需要手动 &lt;code&gt;delete&lt;/code&gt;，GC 会自动追踪不再被引用的堆内存并进行回收。这大大减少了内存管理的负担，但代价是额外的性能开销和回收时机的不确定性。&lt;/li&gt;
-&lt;/ul&gt;
+&lt;/ul&gt;&lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;总结-2&#34;&gt;总结
-&lt;/h3&gt;&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th style=&#34;text-align: left&#34;&gt;场景&lt;/th&gt;
-          &lt;th style=&#34;text-align: left&#34;&gt;选择&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;生命周期随函数结束而结束的、小的、确定的数据&lt;/strong&gt;&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;使用&lt;strong&gt;栈&lt;/strong&gt;（如局部变量、函数参数）。&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;生命周期需要跨函数、大的、编译期大小未知的数据&lt;/strong&gt;&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;使用&lt;strong&gt;堆&lt;/strong&gt;（如动态数组、大型对象、需要在函数间共享的数据）。&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;理解栈和堆的区别对于写出高效、安全、稳定的程序至关重要，尤其是在使用 C/C++ 这类需要手动管理内存的语言时。&lt;/p&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;     ```cpp
+&amp;gt;     void foo() {
+&amp;gt;         int stackVar = 10; // &#39;stackVar&#39; 在栈上分配
+&amp;gt;         // ... 函数结束，&#39;stackVar&#39; 被自动释放
+&amp;gt;     }
+&amp;gt;     ```
+&amp;gt;
+&amp;gt; * **优点**：极速、自动管理、无碎片。
+&amp;gt; * **缺点**：空间有限、生命周期短暂、数据大小必须在编译期确定。
+&amp;gt;
+&amp;gt; #### 2. 堆 (Heap)
+&amp;gt;
+&amp;gt; 堆更像是一个巨大的“全局内存池”。程序可以在运行时申请任意大小的内存块，并且可以以任何顺序释放它们。
+&amp;gt;
+&amp;gt; * **工作原理**：程序通过调用如 `malloc()` (C) 或 `new` (C++) 来向操作系统申请一块指定大小的内存。操作系统在堆中找到一个足够大的空闲块分配给它，并返回一个指向该内存块的**指针**。程序员负责在数据不再使用时，通过 `free()` (C) 或 `delete` (C++) 释放该内存。
+&amp;gt;
+&amp;gt; * **代码示例 (C++)**：
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;     ```cpp
+&amp;gt;     void bar() {
+&amp;gt;         // 在堆上分配一个整数，用指针heapPtr管理它
+&amp;gt;         int* heapPtr = new int(20); 
+&amp;gt;                 
+&amp;gt;         // ... 使用这个整数
+&amp;gt;                 
+&amp;gt;         delete heapPtr; // **必须手动释放**，否则内存泄漏！
+&amp;gt;         heapPtr = nullptr; // 避免成为野指针
+&amp;gt;     }
+&amp;gt;     ```
+&amp;gt;
+&amp;gt; * **优点**：空间巨大、生命周期灵活、大小在运行时决定。
+&amp;gt; * **缺点**：分配和释放速度慢、可能产生内存碎片、管理不当会导致严重错误（内存泄漏、野指针）。
+&amp;gt;
+&amp;gt; ---
+&amp;gt;
+&amp;gt; ### 常见问题与误区 (FAQ)
+&amp;gt;
+&amp;gt; 1. **数据结构中的“堆”和内存中的“堆”是一个概念吗？**
+&amp;gt;     * **不是**。这是中文翻译造成的歧义。
+&amp;gt;     * 数据结构中的堆（Heap）是一种特殊的**树形结构**（如二叉堆），常用于实现优先队列。
+&amp;gt;     * 内存中的堆（Heap）指的是**内存管理区域**，名称来源于“一堆可用的内存”。
+&amp;gt;     * 两者是完全不同的概念。
+&amp;gt;
+&amp;gt; 2. **“栈溢出”和“内存泄漏”是什么意思？**
+&amp;gt;     * **栈溢出 (Stack Overflow)**：通常由过深的递归或过大的局部变量（如 `int hugeArray[1000000]`）导致，耗尽了有限的栈空间。
+&amp;gt;     * **内存泄漏 (Memory Leak)**：发生在**堆**上。程序申请了内存（`new`）但忘记了释放（`delete`），导致这块内存无法被再次使用，最终可能耗尽所有可用内存。
+&amp;gt;
+&amp;gt; 3. **Java/Python/Go 这些语言也有堆和栈吗？**
+&amp;gt;     * **有**。这些语言在运行时同样需要栈来管理函数调用和局部变量。**对象**（Object）也几乎总是分配在堆上。
+&amp;gt;     * **关键区别**在于：这些语言引入了**垃圾回收（Garbage Collection, GC）** 机制。程序员不需要手动 `delete`，GC 会自动追踪不再被引用的堆内存并进行回收。这大大减少了内存管理的负担，但代价是额外的性能开销和回收时机的不确定性。
+&amp;gt;
+&amp;gt; ### 总结
+&amp;gt;
+&amp;gt; | 场景                                               | 选择                                                         |
+&amp;gt; | :------------------------------------------------- | :----------------------------------------------------------- |
+&amp;gt; | **生命周期随函数结束而结束的、小的、确定的数据**   | 使用**栈**（如局部变量、函数参数）。                         |
+&amp;gt; | **生命周期需要跨函数、大的、编译期大小未知的数据** | 使用**堆**（如动态数组、大型对象、需要在函数间共享的数据）。 |
+&amp;gt;
+&amp;gt; 理解栈和堆的区别对于写出高效、安全、稳定的程序至关重要，尤其是在使用 C/C++ 这类需要手动管理内存的语言时。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;14&#34;&gt;
 &lt;li&gt;
 &lt;p&gt;内存泄漏:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -3170,9 +3131,12 @@
 &lt;h3 id=&#34;二为什么会发生内存泄漏&#34;&gt;二、为什么会发生内存泄漏？
 &lt;/h3&gt;&lt;p&gt;内存泄漏的根本原因是&lt;strong&gt;内存管理不当&lt;/strong&gt;。常见的情况有：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;直接遗忘&lt;/strong&gt; (Most Common)
-程序员分配了内存，但后来完全忘记了需要释放它。&lt;/p&gt;
+&lt;li&gt;&lt;strong&gt;直接遗忘&lt;/strong&gt; (Most Common)
+程序员分配了内存，但后来完全忘记了需要释放它。&lt;/li&gt;
+&lt;/ol&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -3184,14 +3148,14 @@
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;leak&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ptr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;malloc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;sizeof&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 分配了内存
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;// ... 使用 ptr
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 函数结束，ptr 是局部变量被销毁了，但它指向的堆内存还在！
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;             &lt;span class=&#34;c1&#34;&gt;// 没有 free(ptr)，内存泄漏了。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ptr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;malloc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;sizeof&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 分配了内存
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;   &lt;span class=&#34;c1&#34;&gt;// ... 使用 ptr
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;   &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 函数结束，ptr 是局部变量被销毁了，但它指向的堆内存还在！
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;            &lt;span class=&#34;c1&#34;&gt;// 没有 free(ptr)，内存泄漏了。
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
+&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;丢失地址（Lost Address）&lt;/strong&gt;
 指针被重新赋值，覆盖了之前分配的内存地址，导致再也找不到那块内存来释放它。&lt;/p&gt;
@@ -3280,7 +3244,8 @@
 &lt;h3 id=&#34;四如何检测和避免内存泄漏&#34;&gt;四、如何检测和避免内存泄漏？
 &lt;/h3&gt;&lt;h4 id=&#34;检测工具-detection&#34;&gt;检测工具 (Detection)
 &lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Valgrind (Linux/Mac)&lt;/strong&gt;： 神器级别的内存调试工具。可以非常精确地定位泄漏的位置和大小。
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Valgrind (Linux/Mac)&lt;/strong&gt;： 神器级别的内存调试工具。可以非常精确地定位泄漏的位置和大小。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -3290,7 +3255,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;AddressSanitizer (ASan)&lt;/strong&gt;： Google 开发的高速内存错误检测器，被集成在 GCC 和 Clang 编译器中。性能开销比 Valgrind 小。
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;AddressSanitizer (ASan)&lt;/strong&gt;： Google 开发的高速内存错误检测器，被集成在 GCC 和 Clang 编译器中。性能开销比 Valgrind 小。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -3300,8 +3266,12 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Visual Studio Debugger (Windows)&lt;/strong&gt;： 内置了强大的内存泄漏检测功能。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;智能指针&lt;/strong&gt;： 使用它们本身就是一种“避免”泄漏的方法。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Visual Studio Debugger (Windows)&lt;/strong&gt;： 内置了强大的内存泄漏检测功能。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;智能指针&lt;/strong&gt;： 使用它们本身就是一种“避免”泄漏的方法。&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;避免策略-prevention&#34;&gt;避免策略 (Prevention)
 &lt;/h4&gt;&lt;ol&gt;
@@ -3351,7 +3321,7 @@
 &lt;p&gt;&lt;strong&gt;尽量使用标准库容器&lt;/strong&gt;：如 &lt;code&gt;std::vector&lt;/code&gt;, &lt;code&gt;std::string&lt;/code&gt;, &lt;code&gt;std::map&lt;/code&gt; 等。它们内部自己管理内存，你几乎不需要直接 &lt;code&gt;new&lt;/code&gt;/&lt;code&gt;delete&lt;/code&gt;。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;总结-3&#34;&gt;总结
+&lt;h3 id=&#34;总结&#34;&gt;总结
 &lt;/h3&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
@@ -3383,18 +3353,16 @@
   &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;理解并避免内存泄漏，是成为一名成熟程序员的关键一步。&lt;/p&gt;&lt;/blockquote&gt;
-&lt;h2 id=&#34;舍友的面试信息&#34;&gt;舍友的面试信息:
-&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;什么二叉树有什么衍生都用来干什么的&lt;/li&gt;
-&lt;li&gt;虚函数表是做什么的&lt;/li&gt;
-&lt;li&gt;map和unordered_map的区别,怎么实现的&lt;/li&gt;
-&lt;li&gt;HTTP和HTTPS有什么区别&lt;/li&gt;
-&lt;li&gt;REASTFUL API实现&lt;/li&gt;
-&lt;li&gt;索引的底层实现&lt;/li&gt;
-&lt;li&gt;前后端通信的机制是什么&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;## 舍友的面试信息
+
+1. 什么二叉树有什么衍生都用来干什么的
+2. 虚函数表是做什么的
+3. map和unordered_map的区别,怎么实现的
+4. HTTP和HTTPS有什么区别
+5. REASTFUL API实现
+6. 索引的底层实现
+7. 前后端通信的机制是什么
+&lt;/code&gt;&lt;/pre&gt;
 </description>
         </item>
         <item>
@@ -24363,6 +24331,20 @@ APs向主机发送信标帧,主机选择一个向AP发送关联请求帧,选择�
 &lt;/ol&gt;
 &lt;p&gt;管理者使用SNMP(Simple Network Management Protocol)来获取设备信息(MIB)&lt;/p&gt;
 &lt;p&gt;网络配置协议:NETCONF 使用RFC(remote procedure call),格式为xml,是一种配置的语言,可以使用yang这种编程语言来编写.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>视频压缩前置简单知识</title>
+        <link>https://114514yangyi.github.io/huyang/p/%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E5%89%8D%E7%BD%AE%E7%AE%80%E5%8D%95%E7%9F%A5%E8%AF%86/</link>
+        <pubDate>Tue, 20 May 2025 11:54:10 +0800</pubDate>
+        
+        <guid>https://114514yangyi.github.io/huyang/p/%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E5%89%8D%E7%BD%AE%E7%AE%80%E5%8D%95%E7%9F%A5%E8%AF%86/</guid>
+        <description>&lt;img src="https://114514yangyi.github.io/huyang/img/%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E5%89%8D%E7%BD%AE%E7%AE%80%E5%8D%95%E7%9F%A5%E8%AF%86_cover.png" alt="Featured image of post 视频压缩前置简单知识" /&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;//cdn.jsdelivr.net/npm/katex/dist/katex.min.css&#34;&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/math-code.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/katex.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/render-katex.js&#34; defer&gt;&lt;/script&gt;
+&lt;script src=&#34;//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js&#34; defer&gt;&lt;/script&gt;
 </description>
         </item>
         <item>
